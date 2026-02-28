@@ -1,0 +1,44 @@
+@use '../variables' as *
+@use '../mixins/span' as *
+@use "sass:color"
+
+$gutter: 18px
+$inputBorder: 18px
+
+.login-header 
+    // height: 14vh
+    // width: 65vw
+    background-color: $blacker
+    grid-area: 3 / 4 / 5 / 10
+    min-width: 0
+    min-height: 0
+    font-size: 7rem
+    display: inline-grid
+    align-items: center
+    justify-items: center
+    font-style: italic
+    letter-spacing: 0.5rem
+    user-select: none
+    pointer-events: none
+
+.login-body
+    background-color: $blacker
+    border-radius: $inputBorder + $gutter
+    grid-area: 7 / 4 / 9 / 10 
+    display: grid
+    grid-template-rows: 1fr 1fr 10%
+    grid-template-columns: repeat(12, 1fr)
+    padding: $gutter
+    gap: $gutter
+    & > input 
+        border-radius: $inputBorder
+        grid-column: 12 span
+        background-color: color.adjust($blacker, $lightness: 10%)
+    & > button
+        background-color: $accent
+        border-radius: $inputBorder
+        color: $blacker
+        font: 0.8rem 'Hollow'
+        grid-column: 6 / 8
+        align-items: center
+        line-height: 0

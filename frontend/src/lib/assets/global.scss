@@ -1,0 +1,17 @@
+@use "./variables" as *;
+@import url("fonts/Hollow.css");
+
+body { 
+    font-family: 'Hollow';
+    background-color: $whiter;
+    margin: calc(0.5vw + 0.5vh);
+    color: $whiter;
+}
+
+p, h1, h2, h3, h4, h5, h6 {
+    background-clip: content-box;
+    background-color: $blacker;
+    color: $whiter;
+    //padding: 0.5rem;
+    //gap: 1rem;
+}
