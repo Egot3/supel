@@ -26,19 +26,23 @@ $inputBorder: 18px
     border-radius: $inputBorder + $gutter
     grid-area: 7 / 4 / 9 / 10 
     display: grid
-    grid-template-rows: 1fr 1fr 10%
+    grid-template-rows: 1fr 1fr 20%
     grid-template-columns: repeat(12, 1fr)
     padding: $gutter
     gap: $gutter
     & > input 
         border-radius: $inputBorder
         grid-column: 12 span
-        background-color: color.adjust($blacker, $lightness: 10%)
+        background-color: color.adjust($blacker, $hue: 180deg)
+        font: 0.8rem 'Hollow'
+        padding-left: 0.5rem
+        color: $whiter
+
     & > button
         background-color: $accent
         border-radius: $inputBorder
         color: $blacker
         font: 0.8rem 'Hollow'
-        grid-column: 6 / 8
+        grid-column: 5 / 9
         align-items: center
         line-height: 0
