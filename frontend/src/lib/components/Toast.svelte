@@ -1,15 +1,17 @@
 <script lang="ts">
-    import { onDestroy } from "svelte";
-	
-    let { cooked, children } = $props()
+	import { onDestroy } from 'svelte';
 
-    const timer = setTimeout(()=>{
-        cooked(false)
-    })
+	let { cooked, children } = $props();
+
+	const timer = setTimeout(() => {
+		cooked(true);
+	}, 2000);
+
+	onDestroy(() => clearTimeout(timer));
 </script>
 
-<button class="Bread" onclick={()=> cooked(true)}>
-    {@render children()}
+<button class="bread" onclick={() => cooked(true)}>
+	{@render children()}
 </button>
 
 <style lang="sass">
