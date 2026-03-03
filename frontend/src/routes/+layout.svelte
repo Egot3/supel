@@ -4,9 +4,12 @@
 	import '$lib/assets/styles/toaster.sass';
 	import { setContext } from 'svelte';
 	let { children } = $props();
-	let messages: Array<unknown> = $state([]);
+	let messages: Map<string, unknown> = $state(new Map<string, unknown>());
 	const sendBread = (message: unknown) => {
-		messages.push(message);
+		console.log('adding element to map');
+		messages.set(crypto.randomUUID(), message);
+		messages = new Map(messages);
+		console.log(messages);
 	};
 	setContext('sendBread', sendBread);
 </script>

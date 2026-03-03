@@ -4,13 +4,13 @@
 	let { cooked, children } = $props();
 
 	const timer = setTimeout(() => {
-		cooked(true);
+		cooked();
 	}, 2000);
 
 	onDestroy(() => clearTimeout(timer));
 </script>
 
-<button class="bread" onclick={() => cooked(true)}>
+<button class="bread" onclick={() => cooked()}>
 	{@render children()}
 </button>
 
