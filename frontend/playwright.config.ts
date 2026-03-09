@@ -1,6 +1,22 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-	webServer: { command: 'npm run build && npm run preview', port: 4173 },
-	testDir: 'e2e'
+	testDir: 'e2e',
+	workers: 1,
+	use: {
+		video: 'retain-on-failure',
+		baseURL: 'http://localhost:5173/',
+		trace: 'on-first-retry'
+	},
+	webServer: [
+		{
+			command: 'ts-node e2e/mocks/mock-user.ts',
+			url: 'http://localhost:5003/',
+			timeout: 10000
+		},
+		{
+			command: 'yarn run dev',
+			url: 'http://localhost:5173/'
+		}
+	]
 });

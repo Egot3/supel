@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	import Toaster from '$lib/components/Toaster.svelte';
 	import '$lib/assets/styles/login.sass';
-	import type { PageProps } from './$types';
-	import { getContext } from 'svelte';
+	import { setAuthToken } from '$lib/requestUtils/setAuthToken';
 
-	const sendBread: (e: unknown) => void = getContext('sendBread');
+	// import type { PageProps } from './$types';
+	// import { getContext } from 'svelte';
 
-	/** @type {import('./$types').PageProps} */
-	let { form }: PageProps = $props();
+	//const sendBread: (e: unknown) => void = getContext('sendBread');
+
+	///** @type {import('./$types').PageProps} */
+	//let { form }: PageProps = $props();
+	let errorMessage = $state('');
 </script>
 
 <div class="login-header">LOGIN</div>
@@ -16,12 +18,18 @@
 	class="login-body"
 	action="?/login"
 	method="POST"
-	use:enhance={({ formElement, formData, action, cancel }) => {
+	use:enhance={() => {
+		//ah, yes (({})=>{({})=>{{}}})
 		return async ({ result }) => {
 			await applyAction(result);
-
-			if (form?.digitRequired) {
-				sendBread('Digit is required');
+			if (result.type === 'failure') {
+				console.log(result.data);
+				const e = result.data?.['errorMessage'];
+				errorMessage = e ? String(e) : 'login failed';
+			} else {
+				if (result.type === 'success') {
+					setAuthToken(String(result.data!['token']));
+				}
 			}
 		};
 	}}
@@ -29,5 +37,7 @@
 	<input id="email" type="email" name="email" placeholder="unbelivableemail@zmail.com" required />
 	<input id="password" type="password" name="password" placeholder="123987" required />
 
-	<button type="submit"> SUBMIT </button>
+	<p class="error">{errorMessage}</p>
+
+	<button name="submit" type="submit"> SUBMIT </button>
 </form>
