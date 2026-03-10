@@ -103,7 +103,7 @@ test('register with whitespace in password', async ({ page }) => {
 	await expect(page.locator('form p.error')).toContainText('whitespace');
 });
 
-test('register with right credits', async ({ page }) => {
+test('register with right credits', async ({ page, request }) => {
 	await page.goto('/register');
 	await page.fill('input[name="email"]', `test-${randomBytes(4).toString('hex')}@example.com`);
 	await page.fill('input[name="password"]', 'PASSword12345!!!');
@@ -114,4 +114,5 @@ test('register with right credits', async ({ page }) => {
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(100);
 	await expect(page).toHaveURL('/');
+	await request.post('http://localhost:5003/clear');
 });

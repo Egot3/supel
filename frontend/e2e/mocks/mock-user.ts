@@ -5,7 +5,7 @@ console.log('entered mocking server');
 const mock = express();
 mock.use(express.json());
 
-const users: { [key: string]: { password: string; nickname: string } } = {};
+let users: { [key: string]: { password: string; nickname: string } } = {};
 
 const t =
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -55,6 +55,11 @@ mock.post('/api/user/login', (req, res) => {
 			errorMessage: 'Session terminated, bad password or email'
 		});
 	}
+});
+
+mock.post('/clear', (_, res) => {
+	users = {} as { [key: string]: { password: string; nickname: string } };
+	res.status(204);
 });
 
 const PORT = 5003;

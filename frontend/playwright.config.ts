@@ -15,6 +15,11 @@ export default defineConfig({
 			timeout: 10000
 		},
 		{
+			command: 'ts-node e2e/mocks/mock-post.ts',
+			url: 'http://localhost:5004/',
+			timeout: 10000
+		},
+		{
 			command: 'yarn run dev',
 			url: 'http://localhost:5173/'
 		}
