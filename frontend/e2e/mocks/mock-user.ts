@@ -5,7 +5,7 @@ console.log('entered mocking server');
 const mock = express();
 mock.use(express.json());
 
-let users: { [key: string]: { password: string; nickname: string } } = {};
+let users: { [key: string]: { password: string; nickname: string; token: string } } = {};
 
 const t =
 	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
@@ -31,7 +31,8 @@ mock.post('/api/user/register', (req, res) => {
 	console.log('are right');
 	users[email] = {
 		password: password,
-		nickname: nickname
+		nickname: nickname,
+		token: t
 	};
 
 	res.status(200).json({
@@ -57,8 +58,18 @@ mock.post('/api/user/login', (req, res) => {
 	}
 });
 
+mock.get('/api/user/:token', (req, res) => {
+	const reqUserToken = req.params.token;
+
+	const found = Object.values(users).some((userData) => {
+		return userData.token === reqUserToken;
+	});
+
+	res.status(found ? 204 : 404).send();
+});
+
 mock.post('/clear', (_, res) => {
-	users = {} as { [key: string]: { password: string; nickname: string } };
+	users = {} as { [key: string]: { password: string; nickname: string; token: string } };
 	res.status(204);
 });
 

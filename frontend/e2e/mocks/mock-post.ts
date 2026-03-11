@@ -1,3 +1,4 @@
+import axios from 'axios';
 import express from 'express';
 
 const mock = express();
@@ -26,11 +27,20 @@ mock.get('/api/post', (req, res) => {
 	size = Number(size);
 
 	res.status(200).json({
-		items: posts.slice(Number(page) * Number(size), Number(page + 1) * Number(size))
+		items: posts.slice(Number(page) * Number(size), Number(page + 1) * Number(size)),
+		page: page,
+		size: size,
+		total: posts.length
 	});
 });
 
-mock.post('/api/post', (req, res) => {
+mock.post('/api/post', async (req, res) => {
+	const token = req.get('Authorization')?.split(' ')[1];
+	const response = await axios.get(`http://localhost:5003/${token}`);
+	if (response.status === 204) {
+		res.status(401);
+	}
+
 	const { caption, text, attachment } = req.body;
 
 	posts.push({ caption: caption, text: text, attached: attachment });
