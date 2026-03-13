@@ -3,6 +3,20 @@
 @use "sass:color"
 @use "sass:math"
 
+.news-post
+    display: inline-flex
+    background: $accent
+    align-items: center
+    justify-content: center
+    font-size: 3rem
+    font-style: italic
+    cursor: pointer
+    -webkit-user-select: none
+    -moz-user-select: none
+    -ms-user-select: none
+    user-select: none
+    
+
 .news-header
     background-color: $blacker
     grid-area: 1 / 3 / 3 / 11
@@ -18,13 +32,19 @@
     pointer-events: none
 
 .news-wrapper
-    display: grid
-    grid-template-columns: repeat(3, 1fr) //что?..
+    // display: grid
+    // grid-template-columns: repeat(3, 1fr) //что?..
     background: $blacker
     grid-column: 2 / 12
     grid-row: 4/12
     overflow: scroll
+    margin: 0
+    // padding: 0
     //border-radius: 1vh
-    padding: 1rem
-    gap: 1rem
-    grid-template-rows: masonry
+    padding: 0.5rem
+    // gap: 1rem
+    // grid-template-rows: masonry
+
+.masonry
+    grid-template-columns: repeat(3, 1fr) !important
+    

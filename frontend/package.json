@@ -23,6 +23,7 @@
 		"@sveltejs/kit": "^2.50.2",
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@types/express": "^5.0.6",
+		"@types/masonry-layout": "^4.2.8",
 		"@types/node": "^24",
 		"eslint": "^9.39.2",
 		"eslint-config-prettier": "^10.1.8",
@@ -44,8 +45,7 @@
 	},
 	"dependencies": {
 		"axios": "^1.13.6",
-		"imagesloaded": "^5.0.0",
-		"masonry-layout": "^4.2.2",
-		"scss": "^0.2.4"
+		"scss": "^0.2.4",
+		"svelte-masonry": "^0.1.5"
 	}
 }

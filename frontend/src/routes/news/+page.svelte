@@ -1,13 +1,18 @@
 <script lang="ts">
 	import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
+	import Masonry from 'svelte-masonry'; //прошу, не садите меня за фронт
 </script>
 
+<div class="news-post">POST</div>
+
 <div class="news-header">NEWS</div>
+
 <div class="news-wrapper">
-	<New
-		caption="1"
-		text="Ex mollit dolor dolor nostrud aliqua. Deserunt velit veniam non anim esse. Velit consectetur consectetur voluptate laboris laborum minim eu eiusmod cillum tempor pariatur ipsum amet velit.
+	<Masonry colWidth="16rem">
+		<New
+			caption="1"
+			text="Ex mollit dolor dolor nostrud aliqua. Deserunt velit veniam non anim esse. Velit consectetur consectetur voluptate laboris laborum minim eu eiusmod cillum tempor pariatur ipsum amet velit.
 
 Qui qui deserunt fugiat tempor laboris magna reprehenderit velit officia deserunt officia. Officia cupidatat sint fugiat commodo. Qui consequat magna anim anim ad amet est amet ut occaecat. Occaecat ipsum nulla adipisicing est. Ullamco fugiat veniam ad ad occaecat veniam et ullamco quis. Magna ut reprehenderit non labore occaecat.
 
@@ -24,8 +29,17 @@ Qui labore exercitation laboris aute ad in cupidatat sit consequat ad deserunt. 
 Nulla ipsum culpa adipisicing et esse elit. Mollit minim tempor non fugiat ipsum Lorem tempor consectetur dolor. Amet reprehenderit id incididunt dolore ipsum anim ut. Sint laborum ea sit labore commodo velit veniam sint reprehenderit. Amet amet consectetur esse adipisicing magna commodo laboris duis exercitation ad. Ad incididunt qui elit deserunt et aute adipisicing in consectetur aliqua velit mollit.
 
 Deserunt reprehenderit non minim laboris do enim anim nulla excepteur. Non Lorem consequat cillum tempor do Lorem velit aliqua occaecat occaecat. Eu laboris anim proident sint culpa velit ut in enim non occaecat consectetur aliqua."
-	/>
-	<New caption="1" text="lorem" />
-	<New caption="1" text="lorem" />
-	<New caption="1" text="lorem" />
+		/>
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+		<New caption="1" text="lorem" />
+	</Masonry>
 </div>

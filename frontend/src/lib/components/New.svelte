@@ -22,6 +22,7 @@
     @use '../assets/_variables' as *
     @use 'sass:math'
     .new
+        //margin: 0.5rem
         background: $blacker
         border: $whiter 0.5rem solid
         padding: 1rem
@@ -33,7 +34,7 @@
 
     .text
         min-height: 2rem
-        max-height: 30rem
+        max-height: 10rem
         overflow: scroll
         -ms-overflow-style: none
         scrollbar-width: none  //--ux
