@@ -1,0 +1,53 @@
+@font-face {
+	font-family: 'Hollow';
+	src: url('fonts//Hollow.ttf');
+	font-weight: normal;
+	font-style: normal;
+	line-height: 0;
+	font-display: swap;
+}
+
+@import 'tailwindcss';
+
+@theme {
+	--color-dark: #2a2e29;
+	--color-dark-compliment: #2d292e;
+	--color-light: #e3d2c2;
+	--color-accent: #f26e50;
+
+	--spacing-gutter: 0.5rem;
+	--spacing-border: 0.5rem;
+
+	--font-hollow: 'Hollow';
+}
+
+@layer base {
+	body {
+		font-family: 'Hollow';
+		background-color: var(--color-light);
+		margin: calc(0.5vw + 0.5vh);
+		color: var(--color-light);
+		overflow: hidden;
+	}
+
+	p,
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		background-clip: content-box;
+		background-color: var(--color-light);
+		color: var(--color-dark);
+	}
+
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+}

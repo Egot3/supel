@@ -1,24 +1,23 @@
 <script lang="ts">
+	import { Card } from 'flowbite-svelte';
 	const { imageLink = '', caption, text } = $props();
 </script>
 
 <!-- /*got the joke? News are not countable*/ -->
-<div class="new">
-	{#if imageLink}
-		<img src={imageLink} alt="" class="img" />
-	{/if}
-	<div class="text-container">
-		<p class="caption">
+<Card img={imageLink} class="mb-2 break-inside-avoid">
+	<div class="m-6">
+		<h5 class="mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20">
 			{caption}
-		</p>
-		<br />
-		<div class="text">
+		</h5>
+		<p
+			class="mb-3 leading-tight font-normal bg-dark text-light font-hollow min-h-8 max-h-80 overflow-scroll no-scrollbar mask-[linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]"
+		>
 			{text}
-		</div>
+		</p>
 	</div>
-</div>
+</Card>
 
-<style lang="sass">
+<!-- <style lang="sass">
     @use '../assets/_variables' as *
     @use 'sass:math'
     .new
@@ -61,4 +60,4 @@
     //     grid-column: 5 / 9
     // .new:nth-child(3n+3)
     //     grid-column: 9 / 13
-</style>
+</style> -->

@@ -1,45 +1,81 @@
 <script lang="ts">
-	import '$lib/assets/styles/news.sass';
+	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
-	import Masonry from 'svelte-masonry'; //прошу, не садите меня за фронт
+	import { Gallery } from 'flowbite-svelte';
+	const itemsRaw = [
+		{ id: '1', text: '1', caption: '2' },
+		{ id: '2', text: '1', caption: '2' },
+		{ id: '3', text: '1', caption: '2' },
+		{ id: '4', text: '1', caption: '2' },
+		{
+			id: '5',
+			text: 'Cillum excepteur nisi exercitation do eu. Reprehenderit cupidatat ea consectetur ad tempor. Veniam non duis cupidatat in nulla esse occaecat enim officia nisi eu ullamco ipsum. Esse fugiat aliqua non sint. Deserunt est cillum ipsum adipisicing est ullamco.',
+			caption: '2'
+		},
+		{ id: '6', text: '1', caption: '2' },
+		{ id: '7', text: '1', caption: '2' },
+		{ id: '8', text: '1', caption: '2' },
+		{ id: '9', text: '1', caption: '2' },
+		{ id: '10', text: '1', caption: '2' },
+		{ id: '11', text: '1', caption: '2' },
+		{ id: '12', text: '1', caption: '2' },
+		{
+			id: '13',
+			text: 'Cillum excepteur nisi exercitation do eu. Reprehenderit cupidatat ea consectetur ad tempor. Veniam non duis cupidatat in nulla esse occaecat enim officia nisi eu ullamco ipsum. Esse fugiat aliqua non sint. Deserunt est cillum ipsum adipisicing est ullamco.',
+			caption: '2'
+		},
+		{ id: '14', text: '1', caption: '2' },
+		{ id: '15', text: '1', caption: '2' },
+		{ id: '16', text: '1', caption: '2' },
+		{ id: '17', text: '1', caption: '2' },
+		{ id: '18', text: '1', caption: '2' },
+		{ id: '19', text: '1', caption: '2' }
+	];
+
+	const dismantle = <T,>(inputArr: Array<T>, amount: number): Array<Array<T>> => {
+		const arrOfDismantled: Array<Array<T>> = Array.from({ length: amount }, () => []);
+		inputArr.forEach((element, idx) => {
+			arrOfDismantled[idx % amount].push(element);
+		});
+		return arrOfDismantled;
+	};
+
+	const items = $derived(dismantle(itemsRaw, 4));
 </script>
 
-<div class="news-post">POST</div>
+<div
+	class="inline-flex bg-accent items-center justify-center text-5xl font-hollow italic cursor-pointer select-none row-start-1"
+>
+	POST
+</div>
 
-<div class="news-header">NEWS</div>
+<div
+	class="col-start-3 row-start-1 col-end-11 row-end-3 bg-dark text-[clamp(1rem,10vh,7rem)] inline-grid items-center justify-center italic font-hollow tracking-[0.5rem] select-none pointer-events-none"
+>
+	NEWS
+</div>
 
-<div class="news-wrapper">
-	<Masonry colWidth="16rem">
-		<New
-			caption="1"
-			text="Ex mollit dolor dolor nostrud aliqua. Deserunt velit veniam non anim esse. Velit consectetur consectetur voluptate laboris laborum minim eu eiusmod cillum tempor pariatur ipsum amet velit.
-
-Qui qui deserunt fugiat tempor laboris magna reprehenderit velit officia deserunt officia. Officia cupidatat sint fugiat commodo. Qui consequat magna anim anim ad amet est amet ut occaecat. Occaecat ipsum nulla adipisicing est. Ullamco fugiat veniam ad ad occaecat veniam et ullamco quis. Magna ut reprehenderit non labore occaecat.
-
-Occaecat duis voluptate laboris ut tempor nisi velit. Proident nostrud labore eiusmod commodo do cupidatat ex fugiat eu enim commodo aliquip. Voluptate ipsum nulla consectetur ut nostrud anim culpa exercitation nisi laborum ad exercitation elit anim. Aute et enim velit eu id veniam velit reprehenderit dolor ullamco nostrud aliqua commodo. Voluptate Lorem nulla commodo esse laborum occaecat amet. In sunt enim mollit elit fugiat proident do. Labore eiusmod irure deserunt sint aute ipsum in et consequat.
-
-Mollit occaecat consectetur ullamco aute laboris ut est tempor aliqua Lorem. Sunt commodo cupidatat fugiat est aliquip. Elit veniam sunt sint officia qui adipisicing fugiat est sunt. Culpa qui aute minim ex voluptate magna consequat minim ad. Ullamco irure proident Lorem dolor. Ex deserunt labore non aute minim eiusmod pariatur Lorem consequat ullamco eiusmod esse in aliquip.
-
-Nostrud officia dolor excepteur velit non sint fugiat adipisicing et cupidatat fugiat dolore sit aliqua. Consectetur elit ad tempor enim est amet. Sit elit non commodo fugiat occaecat sit irure ad irure elit mollit enim. Commodo do aliqua et pariatur sint ullamco cillum dolor. Cillum laborum sit incididunt exercitation laborum est ex aute.
-
-Incididunt id mollit magna eu ex in sit ea officia deserunt dolor reprehenderit aute. Commodo exercitation cupidatat exercitation labore nulla magna anim laboris non magna consequat quis. Consequat reprehenderit voluptate labore exercitation ad ipsum non eiusmod esse. Consectetur proident amet commodo esse sunt do.
-
-Qui labore exercitation laboris aute ad in cupidatat sit consequat ad deserunt. Lorem exercitation qui elit eu. Nostrud non minim ea reprehenderit sint.
-
-Nulla ipsum culpa adipisicing et esse elit. Mollit minim tempor non fugiat ipsum Lorem tempor consectetur dolor. Amet reprehenderit id incididunt dolore ipsum anim ut. Sint laborum ea sit labore commodo velit veniam sint reprehenderit. Amet amet consectetur esse adipisicing magna commodo laboris duis exercitation ad. Ad incididunt qui elit deserunt et aute adipisicing in consectetur aliqua velit mollit.
-
-Deserunt reprehenderit non minim laboris do enim anim nulla excepteur. Non Lorem consequat cillum tempor do Lorem velit aliqua occaecat occaecat. Eu laboris anim proident sint culpa velit ut in enim non occaecat consectetur aliqua."
-		/>
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-		<New caption="1" text="lorem" />
-	</Masonry>
+<div class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll">
+	<Gallery class="grid-cols-2 md:grid-cols-4 gap-4 p-4">
+		<Gallery>
+			{#each items[0] as item (item.id)}
+				<New caption={item.caption} text={item.text} />
+			{/each}
+		</Gallery>
+		<Gallery>
+			{#each items[1] as item (item.id)}
+				<New caption={item.caption} text={item.text} />
+			{/each}
+		</Gallery>
+		<Gallery>
+			{#each items[2] as item (item.id)}
+				<New caption={item.caption} text={item.text} />
+			{/each}
+		</Gallery>
+		<Gallery>
+			{#each items[3] as item (item.id)}
+				<New caption={item.caption} text={item.text} />
+			{/each}
+		</Gallery>
+	</Gallery>
 </div>
