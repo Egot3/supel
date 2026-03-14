@@ -81,6 +81,7 @@
 	</Gallery> -->
 
 	<div class="flex flex-row gap-4 p-4">
+		<!-- nuh-uh -->
 		{#each items as column}
 			<div class="flex flex-col gap-4 flex-1">
 				{#each column as item (item.id)}
