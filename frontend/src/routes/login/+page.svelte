@@ -55,7 +55,10 @@
 		required
 	/>
 
-	<p class="flex items-center col-span-12 bg-dark font-hollow text-[0.8rem] text-accent pl-2">
+	<p
+		id="error"
+		class="flex items-center col-span-12 bg-dark font-hollow text-[0.8rem] text-accent pl-2"
+	>
 		{errorMessage}
 	</p>
 

@@ -10,29 +10,33 @@ test('posting unauthorized', async ({ page, request }) => {
 		});
 	}
 
-	randomPosts.forEach(async (post) => {
+	const promises = randomPosts.map(async (post) => {
 		await request.post('http://localhost:5004/api/post', {
 			data: post
 		});
 	});
 
-	page.waitForTimeout(204);
+	await Promise.all(promises);
 	const found = (await (await request.get('http://localhost:5004/api/post')).json()).total;
+
+	console.log(found);
+
+	await page.waitForTimeout(400);
 	expect(found).toBeFalsy();
 	await request.post('http://localhost:5004/clear');
 });
 
-test('loading content with authorization', async ({ request, browser }) => {
-	const token = (await (await request.post('http://localhost:5003/api/user/register')).json())
-		.token;
-
-	const ctx = await browser.newContext({
-		extraHTTPHeaders: {
-			Authorization: `Bearer ${token}`
+test('loading content with authorization', async ({ request, page }) => {
+	const regRes = await request.post('http://localhost:5003/api/user/register', {
+		data: {
+			email: 'example@email.com',
+			password: 'PASSword123456789!!!',
+			nickname: 'none'
 		}
 	});
+	const { token } = await regRes.json();
 
-	const page = await ctx.newPage();
+	page.waitForTimeout(400);
 
 	const randomPosts: { caption: string; text: string }[] = [];
 	for (let i = 0; i < 20; i++) {
@@ -42,25 +46,28 @@ test('loading content with authorization', async ({ request, browser }) => {
 		});
 	}
 
-	randomPosts.forEach(async (post) => {
-		await request.post('http://localhost:5004/api/post', {
-			data: post
-		});
-	});
+	await Promise.all(
+		randomPosts.map(async (post) => {
+			await request.post('http://localhost:5004/api/post', {
+				data: post,
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+		})
+	);
 
-	await page.waitForTimeout(200);
 	await page.goto('/news');
+	await expect(page.locator('.new')).toHaveCount(20);
 
-	const actualPosts = await page.locator('.new').all();
+	const actualPosts = await page.locator('.new').evaluateAll((elements) =>
+		elements.map((e) => ({
+			caption: e.querySelector('.caption')?.textContent ?? '',
+			text: e.querySelector('.text')?.textContent ?? ''
+		}))
+	);
 
-	actualPosts.forEach(async (actualPost) => {
-		expect(
-			randomPosts.includes({
-				caption: String(await actualPost.locator('.caption').textContent()),
-				text: String(await actualPost.locator('.text').textContent())
-			})
-		).toBe(true);
-	});
+	expect(actualPosts).toEqual(expect.arrayContaining(randomPosts));
 
 	await request.post('http://localhost:5004/clear');
 	await request.post('http://localhost:5003/clear');

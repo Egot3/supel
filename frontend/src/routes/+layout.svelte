@@ -25,9 +25,7 @@
 <div class="toaster">
 	<Toaster bind:messages />
 </div>
-<div
-	style="display: grid; grid-template: repeat(12, 1fr) / repeat(12, 1fr); height: 100vh; width:100vw"
->
+<div class="grid grid-cols-12 grid-rows-12 h-screen w-screen">
 	<div class="avatar-wrapper"></div>
 	{@render children()}
 </div>

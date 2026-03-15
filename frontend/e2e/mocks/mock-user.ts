@@ -65,12 +65,14 @@ mock.get('/api/user/:token', (req, res) => {
 		return userData.token === reqUserToken;
 	});
 
-	res.status(found ? 204 : 404).send();
+	console.log('user found: ', found);
+
+	res.status(found ? 204 : 401).send('No such user');
 });
 
 mock.post('/clear', (_, res) => {
 	users = {} as { [key: string]: { password: string; nickname: string; token: string } };
-	res.status(204);
+	res.status(204).send();
 });
 
 const PORT = 5003;

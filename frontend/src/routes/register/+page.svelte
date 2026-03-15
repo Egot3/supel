@@ -67,6 +67,7 @@
 
 	<p
 		class="flex rounded-lg items-center col-span-12 bg-dark font-hollow text-[0.8rem] text-accent pl-2"
+		id="error"
 	>
 		{errorMessage}
 	</p>

@@ -1,43 +1,41 @@
 <script lang="ts">
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
+	import { withoutAuth } from '$lib/requestUtils/axiosConfigs';
+	import axios from 'axios';
+	import { Button, Spinner } from 'flowbite-svelte';
+
 	interface newInterface {
 		id: string;
 		text: string;
 		caption: string;
 		imageLink?: string;
 	}
-	const itemsRaw: Array<newInterface> = [
-		{ id: '1', text: '1', caption: '2' },
-		{ id: '2', text: '1', caption: '2' },
-		{ id: '3', text: '1', caption: '2' },
-		{ id: '4', text: '1', caption: '2' },
-		{
-			id: '5',
-			text: 'Cillum excepteur nisi exercitation do eu. Reprehenderit cupidatat ea consectetur ad tempor. Veniam non duis cupidatat in nulla esse occaecat enim officia nisi eu ullamco ipsum. Esse fugiat aliqua non sint. Deserunt est cillum ipsum adipisicing est ullamco.',
-			caption: '2'
-		},
-		{ id: '6', text: '1', caption: '2' },
-		{ id: '7', text: '1', caption: '2' },
-		{ id: '8', text: '1', caption: '2' },
-		{ id: '9', text: '1', caption: '2' },
-		{ id: '10', text: '1', caption: '2' },
-		{ id: '11', text: '1', caption: '2' },
-		{ id: '12', text: '1', caption: '2' },
-		{
-			id: '13',
-			text: 'Cillum excepteur nisi exercitation do eu. Reprehenderit cupidatat ea consectetur ad tempor. Veniam non duis cupidatat in nulla esse occaecat enim officia nisi eu ullamco ipsum. Esse fugiat aliqua non sint. Deserunt est cillum ipsum adipisicing est ullamco.',
-			caption: '2'
-		},
-		{ id: '14', text: '1', caption: '2' },
-		{ id: '15', text: '1', caption: '2' },
-		{ id: '16', text: '1', caption: '2' },
-		{ id: '17', text: '1', caption: '2' },
-		{ id: '18', text: '1', caption: '2' },
-		{ id: '19', text: '1', caption: '2' }
-	];
+
+	let page = 0;
+	const size = 50;
+
+	const itemsRaw: Array<newInterface> = $state([]);
+
+	async function fetchNextPage() {
+		loading = true;
+		const cfg = withoutAuth(`http://localhost:5004/api/post?page=${page}&size=${size}`, 'get');
+		axios(cfg)
+			.then((res) => {
+				itemsRaw.push(...res.data.items);
+				console.log(res.data);
+				if ((page + 1) * size < res.data.total) {
+					page++;
+				}
+			})
+			.catch((reason) => console.log(reason))
+			.finally(() => (loading = false));
+	}
 
 	function dismantle(toDismantle: newInterface[], k: number): newInterface[][] {
+		if (toDismantle.length == 0) {
+			return [];
+		}
 		const sorted = [...toDismantle].sort((a, b) => b.text.length - a.text.length);
 		const bins: newInterface[][] = Array.from({ length: k }, () => []);
 		const sums = new Array(k).fill(0);
@@ -72,15 +70,30 @@
 		return bins;
 	}
 
+	let isAtBottom = false;
+	let loading = $state(false);
+
+	function handleScroll(event: UIEvent) {
+		const element = event.currentTarget;
+		const { scrollTop, scrollHeight, clientHeight } = element; // оно есть
+		const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
+
+		if (atBottom !== isAtBottom) {
+			isAtBottom = atBottom;
+			if (atBottom) {
+				fetchNextPage();
+			}
+		}
+	}
+
+	fetchNextPage();
+
 	const items = $derived(dismantle(itemsRaw, 4));
 </script>
 
-/* eslint-disable svelte/require-each-key */ /* eslint-disable svelte/require-each-key */
-<div
-	class="inline-flex bg-accent items-center justify-center text-5xl font-hollow italic cursor-pointer select-none row-start-1"
->
+<!-- <PostAction>
 	POST
-</div>
+</PostAction> -->
 
 <div
 	class="col-start-3 row-start-1 col-end-11 row-end-3 bg-dark text-[clamp(1rem,10vh,7rem)] inline-grid items-center justify-center italic font-hollow tracking-[0.5rem] select-none pointer-events-none"
@@ -88,38 +101,31 @@
 	NEWS
 </div>
 
-<div class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll">
-	<!-- <Gallery class="grid-cols-2 md:grid-cols-4 gap-4 p-4">
-		<Gallery>
-			{#each items[0] as item (item.id)}
-				<New caption={item.caption} text={item.text} />
+<div
+	class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll min-h-full min-w-fit inline-grid columns-1 grid-rows-1"
+	// та самая сетка 1 на 1
+	onscroll={handleScroll}
+>
+	{#if items.length}
+		<div class="flex flex-row gap-gutter p-gutter max-w-[100ch]">
+			{#each items as column, i (i)}
+				<div class="flex flex-col gap-4 flex-1 max-w-8">
+					{#each column as item (item.id)}
+						<New caption={item.caption} text={item.text} />
+					{/each}
+				</div>
 			{/each}
-		</Gallery>
-		<Gallery>
-			{#each items[1] as item (item.id)}
-				<New caption={item.caption} text={item.text} />
-			{/each}
-		</Gallery>
-		<Gallery>
-			{#each items[2] as item (item.id)}
-				<New caption={item.caption} text={item.text} />
-			{/each}
-		</Gallery>
-		<Gallery>
-			{#each items[3] as item (item.id)}
-				<New caption={item.caption} text={item.text} />
-			{/each}
-		</Gallery>
-	</Gallery> -->
-
-	<div class="flex flex-row gap-gutter p-gutter">
-		<!-- nuh-uh -->
-		{#each items as column, i (i)}
-			<div class="flex flex-col gap-4 flex-1">
-				{#each column as item (item.id)}
-					<New caption={item.caption} text={item.text} />
-				{/each}
-			</div>
-		{/each}
-	</div>
+		</div>
+	{:else}
+		<div class="flex justify-center items-center self-center justify-self-center flex-col">
+			no news
+			<Button class="bg-accent p-2" size="xl" onclick={fetchNextPage}>
+				{#if loading}
+					<Spinner class="me-3" size="16" color="gray" />Loading ...
+				{:else}
+					Reload
+				{/if}
+			</Button>
+		</div>
+	{/if}
 </div>
