@@ -1,8 +1,13 @@
 <script lang="ts">
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
-	import { idGenerator } from 'flowbite-svelte';
-	const itemsRaw = [
+	interface newInterface {
+		id: string;
+		text: string;
+		caption: string;
+		imageLink?: string;
+	}
+	const itemsRaw: Array<newInterface> = [
 		{ id: '1', text: '1', caption: '2' },
 		{ id: '2', text: '1', caption: '2' },
 		{ id: '3', text: '1', caption: '2' },
@@ -32,13 +37,40 @@
 		{ id: '19', text: '1', caption: '2' }
 	];
 
-	const dismantle = <T,>(inputArr: Array<T>, amount: number): Array<Array<T>> => {
-		const arrOfDismantled: Array<Array<T>> = Array.from({ length: amount }, () => []);
-		inputArr.forEach((element, idx) => {
-			arrOfDismantled[idx % amount].push(element);
-		});
-		return arrOfDismantled;
-	};
+	function dismantle(toDismantle: newInterface[], k: number): newInterface[][] {
+		const sorted = [...toDismantle].sort((a, b) => b.text.length - a.text.length);
+		const bins: newInterface[][] = Array.from({ length: k }, () => []);
+		const sums = new Array(k).fill(0);
+
+		for (const n of sorted) {
+			let minIndex = 0;
+			for (let i = 1; i < k; i++) {
+				if (sums[i] < sums[minIndex]) minIndex = i;
+			}
+			bins[minIndex].push(n);
+			let captionHeigth = (n.caption.length * 1.5) / 6;
+			let textHeight = n.text.length / 6; //не спрашивайте, вообще без понятия
+
+			if (captionHeigth > 20) {
+				captionHeigth = 20;
+			} else {
+				if (captionHeigth < 6) {
+					captionHeigth = 6;
+				}
+			}
+
+			if (textHeight > 70) {
+				textHeight = 70;
+			} else {
+				if (textHeight < 8) {
+					textHeight = 8;
+				}
+			}
+
+			sums[minIndex] += captionHeigth + textHeight + 1.5;
+		}
+		return bins;
+	}
 
 	const items = $derived(dismantle(itemsRaw, 4));
 </script>
@@ -80,9 +112,9 @@
 		</Gallery>
 	</Gallery> -->
 
-	<div class="flex flex-row gap-4 p-4">
+	<div class="flex flex-row gap-gutter p-gutter">
 		<!-- nuh-uh -->
-		{#each items as column}
+		{#each items as column, i (i)}
 			<div class="flex flex-col gap-4 flex-1">
 				{#each column as item (item.id)}
 					<New caption={item.caption} text={item.text} />
