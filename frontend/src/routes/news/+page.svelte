@@ -102,14 +102,14 @@
 </div>
 
 <div
-	class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll min-h-full min-w-fit inline-grid columns-1 grid-rows-1"
+	class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll min-h-full inline-grid columns-1 grid-rows-1"
 	// та самая сетка 1 на 1
 	onscroll={handleScroll}
 >
 	{#if items.length}
-		<div class="flex flex-row gap-gutter p-gutter max-w-[100ch]">
+		<div class="flex flex-row gap-gutter p-gutter min-w-0">
 			{#each items as column, i (i)}
-				<div class="flex flex-col gap-4 flex-1 max-w-8">
+				<div class="flex flex-col gap-4 flex-1 min-w-0">
 					{#each column as item (item.id)}
 						<New caption={item.caption} text={item.text} />
 					{/each}

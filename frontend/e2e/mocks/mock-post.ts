@@ -39,7 +39,7 @@ mock.get('/api/post', (req, res) => {
 				return {
 					id: id,
 					caption: caption.slice(0, 10),
-					text: text.slice(0, 100),
+					text: text.slice(0, 500),
 					attached: attached
 				};
 			}),
