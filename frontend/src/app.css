@@ -10,10 +10,47 @@
 @import 'tailwindcss';
 
 @theme {
+	/* legacy-compitability moment */
 	--color-dark: #2a2e29;
 	--color-dark-compliment: #2d292e;
 	--color-light: #e3d2c2;
 	--color-accent: #f26e50;
+
+	--color-coral-50: #fff2f0;
+	--color-coral-100: #feddd7;
+	--color-coral-200: #fbbbad;
+	--color-coral-300: #f7947e;
+	--color-coral-400: #f48066;
+	--color-coral-500: #f26e50;
+	--color-coral-600: #e74a27;
+	--color-coral-700: #c03920;
+	--color-coral-800: #8f2f19;
+	--color-coral-900: #671e0e;
+	--color-coral-950: #39160e;
+
+	--color-forest-50: #f4f7f3;
+	--color-forest-100: #e3ebe1;
+	--color-forest-200: #c3d4bf;
+	--color-forest-300: #9ab595;
+	--color-forest-400: #6d9168;
+	--color-forest-500: #4f7249;
+	--color-forest-600: #3d5a38;
+	--color-forest-700: #334b2f;
+	--color-forest-800: #2d3f29;
+	--color-forest-900: #2a2e29;
+	--color-forest-950: #141a13;
+
+	--color-linen-50: #faf6f2;
+	--color-linen-100: #f3ebe1;
+	--color-linen-200: #e3d2c2;
+	--color-linen-300: #ceb99f;
+	--color-linen-400: #b89878;
+	--color-linen-500: #a07a57;
+	--color-linen-600: #856040;
+	--color-linen-700: #664833;
+	--color-linen-800: #4a3225;
+	--color-linen-900: #2e1e16;
+	--color-linen-950: #190e0a;
 
 	--spacing-gutter: 1rem;
 	--spacing-border: 0.5rem;
