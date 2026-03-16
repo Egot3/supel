@@ -5,7 +5,16 @@
 
 	import axios from 'axios';
 
-	import { Button, Spinner, Modal } from 'flowbite-svelte';
+	import {
+		Button,
+		Spinner,
+		Modal,
+		Label,
+		Input,
+		Helper,
+		Textarea,
+		Fileupload
+	} from 'flowbite-svelte';
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 
@@ -106,21 +115,54 @@
 	form
 	bind:open={popupModal}
 	size="xs"
-	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 open:flex flex-col w-full p-gutter rounded-lg divide-y text-linen-200 pointer-events-auto my-auto mx-auto max-w-md"
+	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter"
 	transition={slide}
-	permanent
+	dismissable={false}
 >
-	<div class="text-left">
-		<MailBoxOutline class="mx-left mb-4 h-12 w-12 text-light bg-dark" />
-		<h2 class="mb-5 text-lg font-normal text-light bg-dark">New constructor</h2>
-		<div class="space-x-2 bg-dark text-light">
-			<Button
-				type="submit"
-				value="yes"
-				class="text-center font-medium inline-flex items-center justify-center text-linen-200 bg-coral-700 hover:bg-coral-800 dark:bg-coral-600 dark:hover:bg-coral-700 focus-within:ring-coral-300 dark:focus-within:ring-coral-900 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
-				color="red">Post now</Button
-			>
-		</div>
+	<h2 class="mb-5 text-lg font-normal flex text-light bg-dark">
+		<MailBoxOutline class="mx-left mb-2 h-6 w-6 text-light bg-dark" />
+		New constructor
+	</h2>
+
+	<div class="text-left space-y-0.5">
+		<Label for="caption">Caption</Label>
+		<Input
+			name="caption"
+			placeholder="extremly cool and original caption"
+			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+		/>
+		<Helper></Helper>
+
+		<Label for="text">Body</Label>
+		<Textarea
+			name="text"
+			placeholder="even cooler, originaler and longer text"
+			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+		/>
+		<Helper></Helper>
+
+		<Label for="image">Uploaded image</Label>
+		<Fileupload
+			name="image"
+			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+		>
+			<!-- <img /> -->
+		</Fileupload>
+	</div>
+
+	<div class="space-x-2 bg-dark text-light mt-6">
+		<Button
+			type="submit"
+			value="post"
+			class="text-center font-medium inline-flex items-center justify-center text-linen-200 bg-coral-700 hover:bg-coral-800 dark:bg-coral-600 dark:hover:bg-coral-700 focus-within:ring-coral-300 dark:focus-within:ring-coral-900 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
+			color="red">Post now</Button
+		>
+		<Button
+			type="submit"
+			value="cancel"
+			class="text-center font-medium inline-flex items-center justify-center text-linen-900 bg-transparent border border-linen-200 dark:border-linen-600 hover:bg-linen-100 dark:bg-linen-800 dark:text-linen-400 hover:text-primary-700 focus-within:text-primary-700 dark:focus-within:text-linen-50 dark:hover:text-linen-50 dark:hover:bg-linen-700 focus-within:ring-linen-200 dark:focus-within:ring-linen-700 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
+			color="red">Forget it(cancel)</Button
+		>
 	</div>
 </Modal>
 
