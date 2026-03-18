@@ -72,3 +72,31 @@ test('loading content with authorization', async ({ request, page }) => {
 	await request.post('http://localhost:5004/clear');
 	await request.post('http://localhost:5003/clear');
 });
+
+test('manual postion', async ({ page, request }) => {
+	await page.goto('/news');
+
+	//getting to new
+	await expect(page.locator('button[name="postingButton"]')).toBeVisible();
+	await page.click('button[name="postingButton"]');
+	await page.waitForTimeout(400);
+
+	//filling the new
+	await page.fill('input[name="caption"]', 'Extremly original and interesting caption');
+	await page.fill(
+		'input[name="text"]',
+		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	);
+	await page.click('button[name="goPostIt"]');
+	await page.waitForTimeout(400);
+
+	//checking my genius new
+	await expect(page.locator('.new>.caption')).toHaveText(
+		'Extremly original and interesting caption'
+	);
+	await expect(page.locator('.new>.text')).toHaveText(
+		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	);
+
+	await request.post('http://localhost:5004/clear');
+});

@@ -110,8 +110,10 @@
 	// let imagePath = $state(''); TBU
 </script>
 
-<Button onclick={() => (popupModal = true)} class="bg-coral-500 col-start-1 text-4xl italic"
-	>New new</Button
+<Button
+	onclick={() => (popupModal = true)}
+	name="postingButton"
+	class="bg-coral-500 col-start-1 text-4xl italic">New new</Button
 >
 <!-- my genius knows no border-radius -->
 
@@ -169,6 +171,7 @@
 		<Button
 			type="submit"
 			value="post"
+			name="goPostIt"
 			class="text-center font-medium inline-flex items-center justify-center text-linen-200 bg-coral-700 hover:bg-coral-800 dark:bg-coral-600 dark:hover:bg-coral-700 focus-within:ring-coral-300 dark:focus-within:ring-coral-900 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
 			color="red">Post now</Button
 		>
