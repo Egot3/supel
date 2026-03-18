@@ -104,6 +104,10 @@
 	const items = $derived(dismantle(itemsRaw, 4));
 
 	let popupModal = $state(false);
+
+	let captionText = $state('');
+	let bodyText = $state('');
+	// let imagePath = $state(''); TBU
 </script>
 
 <Button onclick={() => (popupModal = true)} class="bg-coral-500 col-start-1 text-4xl italic"
@@ -115,7 +119,7 @@
 	form
 	bind:open={popupModal}
 	size="xs"
-	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter"
+	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter mt-12 justify-self-center"
 	transition={slide}
 	dismissable={false}
 >
@@ -124,30 +128,41 @@
 		New constructor
 	</h2>
 
-	<div class="text-left space-y-0.5">
-		<Label for="caption">Caption</Label>
-		<Input
-			name="caption"
-			placeholder="extremly cool and original caption"
-			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
-		/>
-		<Helper></Helper>
+	<div class="text-left space-y-0.5 grid grid-cols-[65%_35%]">
+		<div>
+			<Label for="caption">Caption</Label>
+			<Input
+				name="caption"
+				placeholder="extremly cool and original caption"
+				class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+				bind:value={captionText}
+			/>
+			<Helper></Helper>
 
-		<Label for="text">Body</Label>
-		<Textarea
-			name="text"
-			placeholder="even cooler, originaler and longer text"
-			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
-		/>
-		<Helper></Helper>
+			<Label for="text">Body</Label>
+			<Textarea
+				name="text"
+				placeholder="even cooler, originaler and longer text"
+				class="rounded-lg w-full bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2 resize-none"
+				rows={5}
+				bind:value={bodyText}
+			/>
+			<Helper></Helper>
 
-		<Label for="image">Uploaded image</Label>
-		<Fileupload
-			name="image"
-			class="rounded-lg col-span-12 bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
-		>
-			<!-- <img /> -->
-		</Fileupload>
+			<Label for="image">Uploaded image</Label>
+			<Fileupload
+				name="image"
+				class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+			>
+				<!-- <img /> -->
+			</Fileupload>
+		</div>
+		<div class="ml-10 mr-10">
+			<New
+				caption={captionText ? captionText : 'Preview'}
+				text={bodyText ? bodyText : 'Your text could be here'}
+			/>
+		</div>
 	</div>
 
 	<div class="space-x-2 bg-dark text-light mt-6">
