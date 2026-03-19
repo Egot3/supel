@@ -1,5 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { randomBytes } from 'crypto';
+import { test } from './fixtures';
 
 test('posting unauthorized', async ({ page, request }) => {
 	const randomPosts: { caption: string; text: string }[] = [];
@@ -18,8 +19,6 @@ test('posting unauthorized', async ({ page, request }) => {
 
 	await Promise.all(promises);
 	const found = (await (await request.get('http://localhost:5004/api/post')).json()).total;
-
-	console.log(found);
 
 	await page.waitForTimeout(400);
 	expect(found).toBeFalsy();

@@ -1,5 +1,6 @@
-import { expect, test } from '@playwright/test';
+import { expect } from '@playwright/test';
 import { randomBytes } from 'crypto';
+import { test } from './fixtures';
 
 test('register page has form', async ({ page }) => {
 	await page.goto('/register');
