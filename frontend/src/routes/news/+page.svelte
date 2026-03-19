@@ -2,7 +2,6 @@
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
 	import { withoutAuth } from '$lib/requestUtils/axiosConfigs';
-	import { redirect } from '@sveltejs/kit';
 
 	import axios from 'axios';
 
