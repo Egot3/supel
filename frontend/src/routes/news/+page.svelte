@@ -2,6 +2,7 @@
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
 	import { withoutAuth } from '$lib/requestUtils/axiosConfigs';
+	import { redirect } from '@sveltejs/kit';
 
 	import axios from 'axios';
 
@@ -18,6 +19,10 @@
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 
+	if (!axios.defaults.headers.common['Authorization']) {
+		redirect(308, '/register');
+	}
+
 	interface newInterface {
 		id: string;
 		text: string;
@@ -32,7 +37,7 @@
 
 	async function fetchNextPage() {
 		loading = true;
-		const cfg = withoutAuth(`http://localhost:5004/api/post?page=${page}&size=${size}`, 'get');
+		const cfg = withoutAuth(`http://localhost:5004/api/post?page=${page}&size=${size}`, 'get', {});
 		axios(cfg)
 			.then((res) => {
 				itemsRaw.push(...res.data.items);
@@ -118,70 +123,73 @@
 <!-- my genius knows no border-radius -->
 
 <Modal
-	form
 	bind:open={popupModal}
 	size="xs"
 	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter mt-12 justify-self-center"
 	transition={slide}
 	dismissable={false}
 >
-	<h2 class="mb-5 text-lg font-normal flex text-light bg-dark">
-		<MailBoxOutline class="mx-left mb-2 h-6 w-6 text-light bg-dark" />
-		New constructor
-	</h2>
+	<form action="?/post" method="POST">
+		<h2 class="mb-5 text-lg font-normal flex text-light bg-dark">
+			<MailBoxOutline class="mx-left mb-2 h-6 w-6 text-light bg-dark" />
+			New constructor
+		</h2>
 
-	<div class="text-left space-y-0.5 grid grid-cols-[65%_35%]">
-		<div>
-			<Label for="caption">Caption</Label>
-			<Input
-				name="caption"
-				placeholder="extremly cool and original caption"
-				class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
-				bind:value={captionText}
-			/>
-			<Helper></Helper>
+		<div class="text-left space-y-0.5 grid grid-cols-[65%_35%]">
+			<div>
+				<Label for="caption">Caption</Label>
+				<Input
+					name="caption"
+					placeholder="extremly cool and original caption"
+					class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+					bind:value={captionText}
+				/>
+				<Helper></Helper>
 
-			<Label for="text">Body</Label>
-			<Textarea
-				name="text"
-				placeholder="even cooler, originaler and longer text"
-				class="rounded-lg w-full bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2 resize-none"
-				rows={5}
-				bind:value={bodyText}
-			/>
-			<Helper></Helper>
+				<Label for="text">Body</Label>
+				<Textarea
+					name="text"
+					placeholder="even cooler, originaler and longer text"
+					class="rounded-lg w-full bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2 resize-none"
+					rows={5}
+					bind:value={bodyText}
+				/>
+				<Helper></Helper>
 
-			<Label for="image">Uploaded image</Label>
-			<Fileupload
-				name="image"
-				class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+				<Label for="image">Uploaded image</Label>
+				<Fileupload
+					type="image"
+					name="image"
+					class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+				>
+					<!-- <img /> -->
+				</Fileupload>
+			</div>
+			<div class="ml-10 mr-10">
+				<New
+					caption={captionText ? captionText : 'Preview'}
+					text={bodyText ? bodyText : 'Your text could be here'}
+				/>
+			</div>
+		</div>
+
+		<div class="space-x-2 bg-dark text-light mt-6">
+			<Button
+				type="submit"
+				value="post"
+				name="goPostIt"
+				class="text-center font-medium inline-flex items-center justify-center text-linen-200 bg-coral-700 hover:bg-coral-800 dark:bg-coral-600 dark:hover:bg-coral-700 focus-within:ring-coral-300 dark:focus-within:ring-coral-900 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
+				color="red">Post now</Button
 			>
-				<!-- <img /> -->
-			</Fileupload>
+			<Button
+				// type="cancel"
+				value="cancel"
+				onclick={() => (popupModal = false)}
+				class="text-center font-medium inline-flex items-center justify-center text-linen-900 bg-transparent border border-linen-200 dark:border-linen-600 hover:bg-linen-100 dark:bg-linen-800 dark:text-linen-400 hover:text-primary-700 focus-within:text-primary-700 dark:focus-within:text-linen-50 dark:hover:text-linen-50 dark:hover:bg-linen-700 focus-within:ring-linen-200 dark:focus-within:ring-linen-700 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
+				color="dark">cancel</Button
+			>
 		</div>
-		<div class="ml-10 mr-10">
-			<New
-				caption={captionText ? captionText : 'Preview'}
-				text={bodyText ? bodyText : 'Your text could be here'}
-			/>
-		</div>
-	</div>
-
-	<div class="space-x-2 bg-dark text-light mt-6">
-		<Button
-			type="submit"
-			value="post"
-			name="goPostIt"
-			class="text-center font-medium inline-flex items-center justify-center text-linen-200 bg-coral-700 hover:bg-coral-800 dark:bg-coral-600 dark:hover:bg-coral-700 focus-within:ring-coral-300 dark:focus-within:ring-coral-900 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
-			color="red">Post now</Button
-		>
-		<Button
-			type="submit"
-			value="cancel"
-			class="text-center font-medium inline-flex items-center justify-center text-linen-900 bg-transparent border border-linen-200 dark:border-linen-600 hover:bg-linen-100 dark:bg-linen-800 dark:text-linen-400 hover:text-primary-700 focus-within:text-primary-700 dark:focus-within:text-linen-50 dark:hover:text-linen-50 dark:hover:bg-linen-700 focus-within:ring-linen-200 dark:focus-within:ring-linen-700 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
-			color="red">Forget it(cancel)</Button
-		>
-	</div>
+	</form>
 </Modal>
 
 <div
@@ -208,9 +216,9 @@
 	{:else}
 		<div class="flex justify-center items-center self-center justify-self-center flex-col">
 			no news
-			<Button class="bg-accent p-2" size="xl" onclick={fetchNextPage}>
+			<Button class="bg-accent p-2 w-l" size="xl" onclick={fetchNextPage}>
 				{#if loading}
-					<Spinner class="me-3" size="16" color="gray" />Loading ...
+					<Spinner class="me-3" size="4" color="gray" />Loading...
 				{:else}
 					Reload
 				{/if}

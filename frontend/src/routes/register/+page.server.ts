@@ -5,7 +5,7 @@ import axios from 'axios';
  @satisfies {import{'./$types'}.actions;}
  */
 export const actions = {
-	register: async ({ request, url }) => {
+	register: async ({ request, url, cookies }) => {
 		const data = await request.formData();
 
 		const email = data.get('email');
@@ -124,7 +124,8 @@ export const actions = {
 		if (url.searchParams.has('redirectTo')) {
 			redirect(303, url.searchParams.get('redirectTo')!);
 		}
-		redirect(308, '/');
+		cookies.set('token', token, { path: '/' });
+
 		return { success: true, token: token };
 	}
 };
