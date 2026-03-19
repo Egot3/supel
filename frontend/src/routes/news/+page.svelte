@@ -19,10 +19,6 @@
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 
-	if (!axios.defaults.headers.common['Authorization']) {
-		redirect(308, '/register');
-	}
-
 	interface newInterface {
 		id: string;
 		text: string;

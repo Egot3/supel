@@ -1,15 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
-	//import '$lib/assets/styles/login.sass';
-	import { setAuthToken } from '$lib/requestUtils/setAuthToken';
 
-	// import type { PageProps } from './$types';
-	// import { getContext } from 'svelte';
-
-	//const sendBread: (e: unknown) => void = getContext('sendBread');
-
-	///** @type {import('./$types').PageProps} */
-	//let { form }: PageProps = $props();
 	let errorMessage = $state('');
 </script>
 
@@ -30,10 +21,6 @@
 				console.log(result.data);
 				const e = result.data?.['errorMessage'];
 				errorMessage = e ? String(e) : 'login failed';
-			} else {
-				if (result.type === 'success') {
-					setAuthToken(String(result.data!['token']));
-				}
 			}
 		};
 	}}

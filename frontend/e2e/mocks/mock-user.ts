@@ -35,6 +35,12 @@ mock.post('/api/user/register', (req, res) => {
 		token: t
 	};
 
+	console.log('returning with 200');
+	res.cookie('auth_token', t, {
+		httpOnly: true,
+		maxAge: 36000, //10h
+		sameSite: 'strict'
+	});
 	res.status(200).json({
 		token: t
 	});
@@ -46,6 +52,11 @@ mock.post('/api/user/login', (req, res) => {
 	const passwordMatch = users[email] && users[email].password === password;
 
 	if (passwordMatch) {
+		res.cookie('auth_token', t, {
+			httpOnly: true,
+			maxAge: 36000, //10h
+			sameSite: 'strict'
+		});
 		res.status(200).json({
 			token: t
 		});

@@ -121,11 +121,12 @@ export const actions = {
 
 		const token = tokenResponse.data.token;
 
-		if (url.searchParams.has('redirectTo')) {
-			redirect(303, url.searchParams.get('redirectTo')!);
-		}
-		cookies.set('token', token, { path: '/' });
+		cookies.set('auth_token', token, { path: '/' });
 
-		return { success: true, token: token };
+		if (url.searchParams.has('redirectTo')) {
+			throw redirect(303, url.searchParams.get('redirectTo')!);
+		} else {
+			throw redirect(303, '/news');
+		}
 	}
 };

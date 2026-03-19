@@ -5,7 +5,7 @@ import axios from 'axios';
  @satisfies {import{'./$types'}.actions;}
  */
 export const actions: Actions = {
-	login: async ({ request, url }) => {
+	login: async ({ request, url, cookies }) => {
 		//ох, зря я сюда полез
 
 		console.log('Login fired');
@@ -90,15 +90,13 @@ export const actions: Actions = {
 		}
 		const token = tokenResponse.data.token;
 
+		cookies.set('auth_token', token, { path: '/' });
+
 		if (url.searchParams.has('redirectTo')) {
-			redirect(303, url.searchParams.get('redirectTo')!);
+			throw redirect(303, url.searchParams.get('redirectTo')!);
+		} else {
+			console.log('threw a redirect to /news');
+			throw redirect(303, '/news');
 		}
-
-		//localStorage.setItem("token", token)
-
-		return {
-			success: true,
-			token: token
-		};
 	}
 };

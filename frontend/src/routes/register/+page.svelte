@@ -2,8 +2,6 @@
 	import { applyAction, enhance } from '$app/forms';
 	//import '$lib/assets/styles/register.sass';
 	import '$lib/requestUtils/setAuthToken';
-	import { setAuthToken } from '$lib/requestUtils/setAuthToken';
-	import { redirect } from '@sveltejs/kit';
 
 	let errorMessage = $state('');
 </script>
@@ -20,16 +18,15 @@
 	use:enhance={() => {
 		//ah, yes (({})=>{({})=>{{}}})
 		return async ({ result }) => {
+			console.log('applying action');
 			await applyAction(result);
+			console.log('applied');
 			if (result.type === 'failure') {
 				console.log(result.data);
 				const e = result.data?.['errorMessage'];
 				errorMessage = e ? String(e) : 'login failed';
 			} else {
-				if (result.type === 'success') {
-					setAuthToken(String(result.data!['token']));
-					redirect(305, '/');
-				}
+				console.log('still hope');
 			}
 		};
 	}}
