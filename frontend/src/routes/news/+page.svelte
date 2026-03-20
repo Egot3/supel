@@ -17,6 +17,7 @@
 	} from 'flowbite-svelte';
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
+	import { applyAction, enhance } from '$app/forms';
 
 	interface newInterface {
 		id: string;
@@ -124,7 +125,21 @@
 	transition={slide}
 	dismissable={false}
 >
-	<form action="?/post" method="POST">
+	<form
+		action="?/post"
+		method="POST"
+		use:enhance={() => {
+			//ah, yes (({})=>{({})=>{{}}})
+			return async ({ result }) => {
+				await applyAction(result);
+				if (result.type === 'failure') {
+					console.log(result.data);
+					const e = result.data?.['errorMessage'];
+					console.log(e);
+				}
+			};
+		}}
+	>
 		<h2 class="mb-5 text-lg font-normal flex text-light bg-dark">
 			<MailBoxOutline class="mx-left mb-2 h-6 w-6 text-light bg-dark" />
 			New constructor
@@ -143,7 +158,8 @@
 
 				<Label for="text">Body</Label>
 				<Textarea
-					name="text"
+					required
+					name="textArea"
 					placeholder="even cooler, originaler and longer text"
 					class="rounded-lg w-full bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2 resize-none"
 					rows={5}
@@ -161,10 +177,7 @@
 				</Fileupload>
 			</div>
 			<div class="ml-10 mr-10">
-				<New
-					caption={captionText ? captionText : 'Preview'}
-					text={bodyText ? bodyText : 'Your text could be here'}
-				/>
+				<New caption={captionText ?? 'Preview'} text={bodyText ?? 'Your text could be here'} />
 			</div>
 		</div>
 
@@ -211,7 +224,7 @@
 	{:else}
 		<div class="flex justify-center items-center self-center justify-self-center flex-col">
 			no news
-			<Button class="bg-accent p-2 w-l" size="xl" onclick={fetchNextPage}>
+			<Button class="bg-accent p-2 w-l" size="xl" name="reload" onclick={fetchNextPage}>
 				{#if loading}
 					<Spinner class="me-3" size="4" color="gray" />Loading...
 				{:else}

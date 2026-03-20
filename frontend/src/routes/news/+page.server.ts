@@ -7,7 +7,7 @@ export const actions = {
 		const data = await request.formData();
 
 		const caption = data.get('caption');
-		const text = data.get('text');
+		const text = data.get('textArea');
 
 		const token = cookies.get('token');
 
