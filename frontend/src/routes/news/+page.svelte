@@ -18,6 +18,7 @@
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
 	import { slide } from 'svelte/transition';
 	import { applyAction, enhance } from '$app/forms';
+	import { innerWidth } from 'svelte/reactivity/window';
 
 	interface newInterface {
 		id: string;
@@ -107,7 +108,7 @@
 
 	fetchNextPage();
 
-	const items = $derived(dismantle(itemsRaw, 4));
+	const items = $derived(dismantle(itemsRaw, Math.ceil(innerWidth.current! / 400)));
 
 	let popupModal = $state(false);
 
@@ -119,14 +120,16 @@
 <Button
 	onclick={() => (popupModal = true)}
 	name="postingButton"
-	class="bg-coral-500 col-start-1 text-4xl italic">New new</Button
+	class="bg-coral-500 col-start-1 text-[clamp(1rem,3vh,3rem)] italic">New new</Button
 >
 <!-- my genius knows no border-radius -->
+
+{console.log(innerWidth.current)}
 
 <Modal
 	bind:open={popupModal}
 	size="xs"
-	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter mt-12 justify-self-center"
+	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter mt-12 justify-self-center overflow-scroll leading-[-1rem]"
 	transition={slide}
 	dismissable={false}
 >
