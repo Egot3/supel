@@ -14,7 +14,7 @@ test('login with no digit password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('digits');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('digits');
 });
 
 test('login with no lowercase password', async ({ page }) => {
@@ -25,7 +25,7 @@ test('login with no lowercase password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('lowercase');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('lowercase');
 });
 
 test('login with no uppercase password', async ({ page }) => {
@@ -36,7 +36,7 @@ test('login with no uppercase password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('UPPERCASE');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('UPPERCASE');
 });
 
 test('login with small password length', async ({ page }) => {
@@ -47,7 +47,7 @@ test('login with small password length', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('longer');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('longer');
 });
 
 test('login with big password length', async ({ page }) => {
@@ -61,7 +61,7 @@ test('login with big password length', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('shorter');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('shorter');
 });
 
 test('login with whitespace in password', async ({ page }) => {
@@ -72,5 +72,5 @@ test('login with whitespace in password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('whitespace');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('whitespace');
 });

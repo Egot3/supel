@@ -17,7 +17,7 @@ test('register with unequal passwords', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('unequal');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('unequal');
 });
 
 test('register with no digit password', async ({ page }) => {
@@ -30,7 +30,7 @@ test('register with no digit password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('digits');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('digits');
 });
 
 test('register with no lowercase password', async ({ page }) => {
@@ -43,7 +43,7 @@ test('register with no lowercase password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('lowercase');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('lowercase');
 });
 
 test('register with no uppercase password', async ({ page }) => {
@@ -56,7 +56,7 @@ test('register with no uppercase password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('UPPERCASE');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('UPPERCASE');
 });
 
 test('register with small password length', async ({ page }) => {
@@ -69,7 +69,7 @@ test('register with small password length', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('longer');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('longer');
 });
 
 test('register with big password length', async ({ page }) => {
@@ -88,7 +88,7 @@ test('register with big password length', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('shorter');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('shorter');
 });
 
 test('register with whitespace in password', async ({ page }) => {
@@ -101,7 +101,7 @@ test('register with whitespace in password', async ({ page }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page.locator('form p#error')).toContainText('whitespace');
+	await expect(page.locator('form div .passwordTooltip')).toContainText('whitespace');
 });
 
 test('register with right credits', async ({ page, request }) => {

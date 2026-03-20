@@ -32,7 +32,7 @@
 >
 	<div class="col-span-12">
 		<label for="email">Email</label>
-		<Tooltip class="bg-accent" isOpen={errorType === 'EMAIL'} reference="#email"
+		<Tooltip class="bg-accent emailTooltip" isOpen={errorType === 'EMAIL'} reference="#email"
 			>{errorMessage}</Tooltip
 		>
 		<input
@@ -47,8 +47,10 @@
 
 	<div class="col-span-12">
 		<label for="password">Password</label>
-		<Tooltip class="bg-accent" isOpen={errorType === 'PASSWORD'} reference="#password"
-			>{errorMessage}</Tooltip
+		<Tooltip
+			class="bg-accent passwordTooltip"
+			isOpen={errorType === 'PASSWORD'}
+			reference="#password">{errorMessage}</Tooltip
 		>
 		<input
 			id="password"
