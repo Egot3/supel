@@ -213,7 +213,7 @@
 </Modal>
 
 <div
-	class="col-start-3 row-start-1 col-end-11 row-end-3 bg-dark text-[clamp(1rem,10vh,7rem)] inline-grid items-center justify-center italic font-hollow tracking-[0.5rem] select-none pointer-events-none"
+	class="col-start-3 row-start-1 col-end-11 row-end-3 bg-dark text-[min(clamp(1rem,10vh,7rem),clamp(1rem,10vw,7rem))] inline-grid items-center justify-center italic font-hollow tracking-[0.5rem] select-none pointer-events-none"
 >
 	NEWS
 </div>
