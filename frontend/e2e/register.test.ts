@@ -114,6 +114,6 @@ test('register with right credits', async ({ page, request }) => {
 
 	await page.click('button[name="submit"]');
 	await page.waitForTimeout(300);
-	await expect(page).toHaveURL('/');
+	await expect(page).toHaveURL('/news');
 	await request.post('http://localhost:5003/clear');
 });
