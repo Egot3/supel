@@ -36,8 +36,13 @@
 		const cfg = withoutAuth(`http://localhost:5004/api/post?page=${page}&size=${size}`, 'get', {});
 		axios(cfg)
 			.then((res) => {
-				itemsRaw.push(...res.data.items);
 				console.log(res.data);
+				res.data.items.forEach((post: newInterface) => {
+					if (!itemsRaw.some((existing) => existing.id === post.id)) {
+						itemsRaw.push(post);
+					}
+				});
+
 				if ((page + 1) * size < res.data.total) {
 					page++;
 				}
@@ -136,6 +141,10 @@
 					console.log(result.data);
 					const e = result.data?.['errorMessage'];
 					console.log(e);
+				} else {
+					popupModal = false;
+					bodyText = '';
+					captionText = '';
 				}
 			};
 		}}

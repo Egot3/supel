@@ -2,20 +2,22 @@ import { redirect } from '@sveltejs/kit';
 import type { Handle } from '@sveltejs/kit';
 import axios from 'axios';
 
-const PUBLIC_ROUTES = ['/login', '/register', '/'];
+const PUBLIC_ROUTES = ['/login', '/register'];
 
 export const handle: Handle = async ({ event, resolve }) => {
 	const token = event.cookies.get('auth_token');
 	console.log('token:', token);
 
 	const isPublicRoute = PUBLIC_ROUTES.some((route) => event.url.pathname.startsWith(route));
+	console.log('ispub:', isPublicRoute);
+
 	if (isPublicRoute) {
 		return resolve(event);
 	}
 
 	if (token) {
 		console.log('found token ', `/api/user/${token}`);
-		const resp = await axios.get(`/api/user/${token}`);
+		const resp = await axios.get(`http://localhost:5003/api/user/${token}`);
 		if (resp.status == 401) {
 			console.log('bad token');
 			event.cookies.delete('auth_token', { path: '/' });
@@ -23,6 +25,7 @@ export const handle: Handle = async ({ event, resolve }) => {
 		}
 	}
 
+	console.log('!isPublicRoute && !token', !isPublicRoute && !token);
 	if (!isPublicRoute && !token) {
 		console.log('not pub and no token');
 		throw redirect(302, `/login?redirectTo=${event.url.pathname}`);

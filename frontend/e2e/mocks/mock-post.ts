@@ -50,6 +50,7 @@ mock.get('/api/post', (req, res) => {
 });
 
 mock.post('/api/post', async (req, res) => {
+	console.log('posting from backend');
 	if (!req.headers.authorization) {
 		console.log('no auth header');
 		return res.status(401).send('no auth header');
@@ -66,6 +67,7 @@ mock.post('/api/post', async (req, res) => {
 
 	posts.push({ id: crypto.randomUUID(), caption: caption, text: text, attached: attachment });
 
+	console.log('sending 204');
 	return res.status(204).send();
 });
 

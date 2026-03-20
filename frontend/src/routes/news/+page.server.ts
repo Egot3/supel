@@ -9,7 +9,7 @@ export const actions = {
 		const caption = data.get('caption');
 		const text = data.get('textArea');
 
-		const token = cookies.get('token');
+		const token = cookies.get('auth_token');
 
 		if (!token) {
 			return fail(401, {
