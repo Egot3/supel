@@ -24,3 +24,7 @@ vite.config.ts.timestamp-*
 # Playwright
 test-results
 playwright-report
+
+# VHS
+*.tape
+*.gif
