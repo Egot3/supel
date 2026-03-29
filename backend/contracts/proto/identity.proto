@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package identity;
+
+option go_package = "./";
+
+enum Role {
+    USER = 0;
+    ADMIN = 1;
+}
+
+message TokenPayload {
+    string uuid = 1;
+    Role role = 2;
+}
+
+message Token {
+    string body = 1;
+}
+
+service IdentityService {
+    rpc GenerateToken(TokenPayload) returns (Token);
+    rpc ValidateToken(Token) returns (TokenPayload);
+}
