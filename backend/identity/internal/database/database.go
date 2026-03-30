@@ -12,10 +12,15 @@ import (
 	"github.com/uptrace/bun/driver/pgdriver"
 )
 
-var DB *bun.DB //https://vk.com/video-191782227_456239104
+var DB *bun.DB //https://vk.com/video-191782227_456239104 //это с прода
 
 func InitDB() {
-	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"), os.Getenv("DB_NAME")) //лишь бы не запутаться
+	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
+	 	os.Getenv("DB_USER"),
+	 	os.Getenv("DB_PASSWORD"),
+		os.Getenv("DB_HOST"),
+		os.Getenv("DB_PORT"),
+	 	os.Getenv("DB_NAME")) //лишь бы не запутаться
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	DB = bun.NewDB(sqldb, pgdialect.New())
 

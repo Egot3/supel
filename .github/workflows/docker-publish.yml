@@ -1,0 +1,56 @@
+name: Build&Push to GHCR
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    outputs:
+      apps: ${{ steps.set-apps.outputs.apps }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Find dockerfiles
+        id: set-apps
+        run: |
+          # Find directories (max depth 2) containing a Dockerfile
+          # Convert the list to a JSON array
+          apps=$(find . -maxdepth 2 -name dockerfile -printf '%h\n' \
+            | sed 's|^./||' \
+            | sort \
+            | jq -R -s -c 'split("\n") | map(select(. != ""))')
+          echo "apps=$apps" >> $GITHUB_OUTPUT
+
+  build:
+    needs: discover
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        app: ${{ fromJSON(needs.discover.outputs.apps) }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Repository naming conventions
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          REPO_LOWERCASE="${REPO_NAME,,}"
+          GITHUB_OWNER="${GITHUB_REPOSITORY_OWNER,,}"
+          echo "GHCR_REPO=$REPO_LOWERCASE" >> $GITHUB_ENV
+          echo "GHCR_OWNER=$GITHUB_OWNER" >> $GITHUB_ENV
+
+      - name: Log in to GHCR
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ env.GHCR_OWNER }} --password-stdin
+
+      - name: Build and push
+        run: |
+          IMAGE_NAME=ghcr.io/${{ env.GHCR_OWNER }}/${{ env.GHCR_REPO }}/${{ matrix.app }}
+          docker build -t $IMAGE_NAME:latest ./${{ matrix.app }}
+          docker push $IMAGE_NAME:latest

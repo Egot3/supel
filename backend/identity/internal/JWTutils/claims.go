@@ -3,7 +3,7 @@ package jwtutils
 import (
 	"os"
 
-	"github.com/Egot3/supel/backend/identity/types"
+	"github.com/Egot3/supel/backend/identity/internal/types"
 	"github.com/golang-jwt/jwt/v5"
 )
 

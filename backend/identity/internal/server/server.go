@@ -2,11 +2,12 @@ package server
 
 import (
 	"context"
+	"log"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
-	"github.com/Egot3/supel/backend/identity/internal/repositories"
-	"github.com/Egot3/supel/backend/identity/types"
+	"github.com/Egot3/supel/backend/identity/internal/database/repositories"
+	"github.com/Egot3/supel/backend/identity/internal/types"
 )
 
 type IdentityServer struct {
@@ -18,7 +19,8 @@ func NewIdentityServer() *IdentityServer {
 	} //duh
 }
 
-func (s *IdentityServer) GetToken(ctx context.Context, req *pb.TokenPayload) (*pb.Token, error) {
+func (s *IdentityServer) GenerateToken(ctx context.Context, req *pb.TokenPayload) (*pb.Token, error) {
+	log.Println("getting token", req)
 	resp, err := jwtutils.GenerateToken(req.GetUuid(),types.UserRole(req.GetRole().String()))
 	
 	return &pb.Token{Body: resp}, err

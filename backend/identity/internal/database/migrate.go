@@ -1,0 +1,32 @@
+package database
+
+import (
+	"context"
+	"fmt"
+	"log"
+
+	"github.com/Egot3/supel/backend/identity/internal/database/migrations"
+	"github.com/uptrace/bun"
+	"github.com/uptrace/bun/migrate"
+)
+
+func RunMigrations(ctx context.Context, db *bun.DB) error {
+	migrator := migrate.NewMigrator(db, migrations.Migrations)
+
+	if err := migrator.Init(ctx); err != nil {
+		return fmt.Errorf("Migration init failed")
+	}
+
+	group, err := migrator.Migrate(ctx)
+	if err != nil {
+		return fmt.Errorf("migration failed")
+	}
+
+	if group.IsZero() {
+		log.Println("thank god, no migrations")
+	}else {
+		log.Printf("Migrated to %s", group)
+	}
+
+	return nil
+}
