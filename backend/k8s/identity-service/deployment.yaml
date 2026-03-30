@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: identity-service
+  namespace: identity-domain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-service
+  template:
+    metadata:
+      labels:
+        app: identity-service
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - "until nc -z identity-db 30211; do echo nothing ever happens(db); sleep 2; done"
+      containers:
+        - name: identity-service
+          image: ghcr.io/egot3/supel/backend/identity:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "256Mi"
+              cpu: "1000m"
+          env:
+            - name: DB_HOST
+              value: "identity-db.identity-domain.svc.cluster.local"
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: identity-db-secret
+                  key: DB_PASSWORD
+            - name: DB_PORT
+              value: "30211"
+          readinessProbe:
+            grpc:
+              port: 50051
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-service
+spec:
+  selector:
+    app: identity-service
+  ports:
+    - port: 50051
+      targetPort: 50051

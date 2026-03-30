@@ -9,6 +9,8 @@ import (
 	"github.com/Egot3/supel/backend/identity/internal/database"
 	"github.com/Egot3/supel/backend/identity/internal/server"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
 )
 
 func main(){
@@ -18,6 +20,9 @@ func main(){
 	}
 
 	grpcServer := grpc.NewServer()
+	healthServer := health.NewServer()
+	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
+	healthServer.SetServingStatus("identity", grpc_health_v1.HealthCheckResponse_SERVING)
 
 	productServer := server.NewIdentityServer()
 	pb.RegisterIdentityServiceServer(grpcServer, productServer)
