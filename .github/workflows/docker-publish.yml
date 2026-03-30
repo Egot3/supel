@@ -20,9 +20,7 @@ jobs:
       - name: Find dockerfiles
         id: set-apps
         run: |
-          # Find directories (max depth 2) containing a Dockerfile
-          # Convert the list to a JSON array
-          apps=$(find . -maxdepth 2 -name dockerfile -printf '%h\n' \
+          apps=$(find . -maxdepth 4 -name dockerfile -printf '%h\n' \
             | sed 's|^./||' \
             | sort \
             | jq -R -s -c 'split("\n") | map(select(. != ""))')
