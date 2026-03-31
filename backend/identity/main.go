@@ -14,6 +14,7 @@ import (
 )
 
 func main() {
+	database.InitDB()
 	ctx := context.Background()
 	if err := database.RunMigrations(ctx, database.DB); err != nil {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
