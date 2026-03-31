@@ -22,7 +22,7 @@ func InitDB() {
 		os.Getenv("DB_PORT"),
 		os.Getenv("DB_IDENTITY_NAME")) //лишь бы не запутаться
 
-	log.Printf("dsn: %v\n", dsn)
+	// log.Printf("dsn: %v\n", dsn)
 
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	DB = bun.NewDB(sqldb, pgdialect.New())

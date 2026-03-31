@@ -6,11 +6,20 @@ metadata:
 type: Opaque
 stringData:
   JWT_SECRET: a-string-secret-at-least-256-bits-long
-  DB_USER: ETS
+  DB_USER: ets
   POSTGRES_PASSWORD: super_SECURE-pAsSwOrD2805!!!
   DB_HOST: identity-db-0.identity-db
   DB_PORT: "5432"
   DB_IDENTITY_NAME: identity_db
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: identity-db-init
+  namespace: identity-domain
+data:
+  init.sql: |
+    CREATE ROLE ETS WITH LOGIN SUPERUSER PASSWORD 'super_SECURE-pAsSwOrD2805!!!';
 
 ---
 apiVersion: apps/v1
@@ -40,6 +49,12 @@ spec:
           volumeMounts:
             - name: identity-db-data
               mountPath: /var/lib/postgresql/data
+            - name: init-scripts-volume
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-scripts-volume
+          configMap:
+            name: identity-db-init
   volumeClaimTemplates:
     - metadata:
         name: identity-db-data

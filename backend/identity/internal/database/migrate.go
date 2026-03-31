@@ -19,7 +19,7 @@ func RunMigrations(ctx context.Context, db *bun.DB) error {
 
 	group, err := migrator.Migrate(ctx)
 	if err != nil {
-		return fmt.Errorf("migration failed")
+		return fmt.Errorf("migration failed: %v", err)
 	}
 
 	if group.IsZero() {

@@ -32,7 +32,10 @@ spec:
               cpu: "1000m"
           env:
             - name: DB_HOST
-              value: "identity-domain.svc.cluster.local"
+              valueFrom:
+                secretKeyRef:
+                  name: identity-db-secret
+                  key: DB_HOST
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
@@ -43,6 +46,16 @@ spec:
                 secretKeyRef:
                   name: identity-db-secret
                   key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: identity-db-secret
+                  key: DB_USER
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: identity-db-secret
+                  key: JWT_SECRET
           readinessProbe:
             grpc:
               port: 50051
