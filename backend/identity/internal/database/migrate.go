@@ -24,7 +24,7 @@ func RunMigrations(ctx context.Context, db *bun.DB) error {
 
 	if group.IsZero() {
 		log.Println("thank god, no migrations")
-	}else {
+	} else {
 		log.Printf("Migrated to %s", group)
 	}
 

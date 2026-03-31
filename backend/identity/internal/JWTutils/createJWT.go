@@ -24,4 +24,3 @@ func GenerateToken(userID string, role types.UserRole) (string, error) {
 
 	return token.SignedString(secretKey)
 }
-

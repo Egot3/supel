@@ -15,14 +15,13 @@ type IdentityServer struct {
 }
 
 func NewIdentityServer() *IdentityServer {
-	return &IdentityServer{
-	} //duh
+	return &IdentityServer{} //duh
 }
 
 func (s *IdentityServer) GenerateToken(ctx context.Context, req *pb.TokenPayload) (*pb.Token, error) {
 	log.Println("getting token", req)
-	resp, err := jwtutils.GenerateToken(req.GetUuid(),types.UserRole(req.GetRole().String()))
-	
+	resp, err := jwtutils.GenerateToken(req.GetUuid(), types.UserRole(req.GetRole().String()))
+
 	return &pb.Token{Body: resp}, err
 }
 
@@ -32,8 +31,6 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 		return nil, err
 	}
 	user, err := repositories.User(ctx, body.ID)
-
-	
 
 	return &pb.TokenPayload{
 		Uuid: user.UUID,

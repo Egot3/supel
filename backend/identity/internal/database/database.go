@@ -16,11 +16,11 @@ var DB *bun.DB //https://vk.com/video-191782227_456239104 //это с прода
 
 func InitDB() {
 	dsn := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable",
-	 	os.Getenv("DB_USER"),
-	 	os.Getenv("POSTGRES_PASSWORD"),
+		os.Getenv("DB_USER"),
+		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
-	 	os.Getenv("DB_IDENTITY_NAME")) //лишь бы не запутаться
+		os.Getenv("DB_IDENTITY_NAME")) //лишь бы не запутаться
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	DB = bun.NewDB(sqldb, pgdialect.New())
 

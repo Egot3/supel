@@ -9,13 +9,13 @@ import (
 	"github.com/Egot3/supel/backend/identity/internal/models"
 )
 
-func User(ctx context.Context, uuid string) (*models.User, error){
+func User(ctx context.Context, uuid string) (*models.User, error) {
 	var user models.User
 
 	err := database.DB.NewSelect().
-	Model(user).
-	Where("uuid = ?", uuid).
-	Scan(ctx, user)
+		Model(user).
+		Where("uuid = ?", uuid).
+		Scan(ctx, user)
 
 	if errors.Is(err, sql.ErrNoRows) {
 		return nil, nil

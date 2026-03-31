@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/health/grpc_health_v1"
 )
 
-func main(){
+func main() {
 	ctx := context.Background()
 	if err := database.RunMigrations(ctx, database.DB); err != nil {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
