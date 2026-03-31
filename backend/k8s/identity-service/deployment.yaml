@@ -19,7 +19,7 @@ spec:
           command:
             - sh
             - -c
-            - "until nc -z identity-db 30211; do echo nothing ever happens(db); sleep 2; done"
+            - "until nc -z identity-db-0.identity-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
         - name: identity-service
           image: ghcr.io/egot3/supel/backend/identity:latest
@@ -32,14 +32,17 @@ spec:
               cpu: "1000m"
           env:
             - name: DB_HOST
-              value: "identity-db.identity-domain.svc.cluster.local"
-            - name: DB_PASSWORD
+              value: "identity-domain.svc.cluster.local"
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: identity-db-secret
-                  key: DB_PASSWORD
+                  key: POSTGRES_PASSWORD
             - name: DB_PORT
-              value: "30211"
+              valueFrom:
+                secretKeyRef:
+                  name: identity-db-secret
+                  key: DB_PORT
           readinessProbe:
             grpc:
               port: 50051
