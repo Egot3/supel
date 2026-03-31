@@ -24,6 +24,8 @@ func InitDB() {
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	DB = bun.NewDB(sqldb, pgdialect.New())
 
+	log.Printf("dsn: %v\n", dsn)
+
 	time.Sleep(2 * time.Second)
 	for i := range 5 {
 		if err := DB.Ping(); err != nil {
