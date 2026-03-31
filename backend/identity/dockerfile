@@ -8,5 +8,4 @@ RUN CGO_ENABLED=0 go build -ldflags="-w -s" -o /app .
 
 FROM scratch
 COPY --from=builder /app /app
-ENV JWT_SECRET=a-string-secret-at-least-256-bits-long DB_USER=ETS DB_PASSWORD=super_SECURE-pAsSwOrD2805!!! DB_HOST=postgres DB_PORT=30211 DB_NAME=identity_db
 ENTRYPOINT ["/app"]
