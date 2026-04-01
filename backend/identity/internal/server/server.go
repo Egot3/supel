@@ -7,7 +7,8 @@ import (
 	pb "github.com/Egot3/supel/backend/contracts"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
 	"github.com/Egot3/supel/backend/identity/internal/database/repositories"
-	"github.com/Egot3/supel/backend/identity/internal/types"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type IdentityServer struct {
@@ -18,15 +19,24 @@ func NewIdentityServer() *IdentityServer {
 	return &IdentityServer{} //duh
 }
 
-func (s *IdentityServer) GenerateToken(ctx context.Context, req *pb.TokenPayload) (*pb.Token, error) {
+func (s *IdentityServer) GenerateToken(ctx context.Context, req *pb.TokenRequest) (*pb.Token, error) {
 	log.Println("getting token", req)
-	resp, err := jwtutils.GenerateToken(req.GetUuid(), types.UserRole(req.GetRole().String()))
 
-	return &pb.Token{Body: resp}, err
+	user, err := repositories.User(ctx, req.Uuid)
+	if err != nil {
+		return nil, status.Error(codes.NotFound, "User not found in db")
+	}
+
+	resp, err := jwtutils.GenerateToken(user.UUID, user.Role)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Failed to generate token")
+	}
+
+	return &pb.Token{Token: resp}, nil
 }
 
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
-	body, err := jwtutils.ValidateToken(req.GetBody())
+	body, err := jwtutils.ValidateToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
@@ -34,6 +44,6 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 
 	return &pb.TokenPayload{
 		Uuid: user.UUID,
-		Role: pb.Role(pb.Role_value[string(body.Role)]),
+		Role: string(user.Role),
 	}, err
 }
