@@ -13,7 +13,7 @@ import (
 	"github.com/rabbitmq/amqp091-go"
 )
 
-func HandleSyncMessage(ch <-chan amqp091.Delivery){
+func HandleSyncMessage(ch <-chan amqp091.Delivery) {
 	for {
 		msg, ok := <-ch
 		if !ok {
@@ -35,11 +35,11 @@ func HandleSyncMessage(ch <-chan amqp091.Delivery){
 		}
 
 		syncModel := models.Sync{
-			Source: msg.Exchange,
-			LastSync: time.Now(),
+			Source:        msg.Exchange,
+			LastSync:      time.Now(),
 			LastMessageId: strconv.FormatUint(msg.DeliveryTag, 10),
 		}
-		if err := repositories.UpdateSyncing(context.Background(), syncModel); err != nil{
+		if err := repositories.UpdateSyncing(context.Background(), syncModel); err != nil {
 			log.Printf("Couldn't update/create update entry: %v", err)
 			msg.Nack(false, false)
 			continue

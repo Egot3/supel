@@ -8,7 +8,7 @@ import (
 	"github.com/Egot3/supel/backend/identity/internal/models"
 )
 
-func UpdateSyncing(ctx context.Context, newSync models.Sync) (error) {
+func UpdateSyncing(ctx context.Context, newSync models.Sync) error {
 	exists, err := database.DB.NewSelect().Model(newSync).WherePK().Exists(ctx)
 	if err != nil {
 		return err
