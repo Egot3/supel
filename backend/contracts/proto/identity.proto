@@ -9,16 +9,20 @@ enum Role {
     ADMIN = 1;
 }
 
-message TokenPayload {
+message TokenRequest {
     string uuid = 1;
-    Role role = 2;
 }
 
 message Token {
-    string body = 1;
+    string token = 1;
+}
+
+message TokenPayload {
+    string uuid = 1;
+    string role = 2;
 }
 
 service IdentityService {
-    rpc GenerateToken(TokenPayload) returns (Token);
+    rpc GenerateToken(TokenRequest) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload);
 }
