@@ -2,11 +2,13 @@ module github.com/Egot3/supel/backend/identity
 
 go 1.26.1
 
-require github.com/uptrace/bun/driver/pgdriver v1.2.18
+require (
+	github.com/Egot3/Zhao v0.0.4
+	github.com/rabbitmq/amqp091-go v1.10.0
+	github.com/uptrace/bun/driver/pgdriver v1.2.18
+)
 
 require (
-	github.com/Egot3/Zhao v0.0.2 // indirect
-	github.com/rabbitmq/amqp091-go v1.10.0 // indirect
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20251202230838-ff82c1b0f217 // indirect

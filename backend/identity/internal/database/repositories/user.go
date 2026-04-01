@@ -26,3 +26,12 @@ func User(ctx context.Context, uuid string) (*models.User, error) {
 
 	return &user, nil
 }
+
+func UpsertUser(ctx context.Context, user models.User) (error) {
+	_, err := database.DB.NewInsert().
+		Model(user).
+		On("CONFLICT (uuid) DO UPDATE").
+		Set("role = ?", user.Role).
+		Exec(ctx)
+	return err
+}

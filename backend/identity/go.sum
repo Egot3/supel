@@ -1,11 +1,5 @@
-github.com/Egot3/Zhao v0.0.2 h1:QUh7V3gSjX7DX26eKjW79TBzDX3u1dAB4OuUboO8050=
-github.com/Egot3/Zhao v0.0.2/go.mod h1:sENIrevc8Vix0mP2+zwkk/rUiYKOtX6PImFEj4fptpw=
-github.com/Egot3/supel/backend/contracts v0.0.0-20260329181642-d6be7bc80a98 h1:ZEr2oVBEYXzCElODQ8eVnXrB3Ceu9kguE9KMJOP70zY=
-github.com/Egot3/supel/backend/contracts v0.0.0-20260329181642-d6be7bc80a98/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
-github.com/Egot3/supel/backend/contracts v0.0.0-20260401171446-76b6355c61d7 h1:fVJkPDyeky26IeMU3Sh4cwZ04VXT4VOFX/QfmP3p6gE=
-github.com/Egot3/supel/backend/contracts v0.0.0-20260401171446-76b6355c61d7/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
-github.com/Egot3/supel/backend/contracts v0.0.1 h1:YPJ6m9412ijiMHnwkCt/fVJX7/QLuZP9itCZtYMUgrM=
-github.com/Egot3/supel/backend/contracts v0.0.1/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/Zhao v0.0.4 h1:z/lSfQ7EtBE90JPM+3gZGnBRNkU80cvsNPeV9q2afLg=
+github.com/Egot3/Zhao v0.0.4/go.mod h1:sENIrevc8Vix0mP2+zwkk/rUiYKOtX6PImFEj4fptpw=
 github.com/Egot3/supel/backend/contracts v0.0.2 h1:YYarmbLXTw3Rgu93Xt32HqGaJr5jBExvm1pmAr0jzbI=
 github.com/Egot3/supel/backend/contracts v0.0.2/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
@@ -58,6 +52,8 @@ go.opentelemetry.io/otel/sdk/metric v1.39.0 h1:cXMVVFVgsIf2YL6QkRF4Urbr/aMInf+2W
 go.opentelemetry.io/otel/sdk/metric v1.39.0/go.mod h1:xq9HEVH7qeX69/JnwEfp6fVq5wosJsY1mt4lLfYdVew=
 go.opentelemetry.io/otel/trace v1.40.0 h1:WA4etStDttCSYuhwvEa8OP8I5EWu24lkOzp+ZYblVjw=
 go.opentelemetry.io/otel/trace v1.40.0/go.mod h1:zeAhriXecNGP/s2SEG3+Y8X9ujcJOTqQ5RgdEJcawiA=
+go.uber.org/goleak v1.3.0 h1:2K3zAYmnTNqV73imy9J1T3WC+gmCePx2hEGkimedGto=
+go.uber.org/goleak v1.3.0/go.mod h1:CoHD4mav9JJNrW/WLlf7HGZPjdw8EucARQHekz1X6bE=
 golang.org/x/crypto v0.48.0 h1:/VRzVqiRSggnhY7gNRxPauEQ5Drw9haKdM0jqfcCFts=
 golang.org/x/crypto v0.48.0/go.mod h1:r0kV5h3qnFPlQnBSrULhlsRfryS2pmewsg+XfMgkVos=
 golang.org/x/net v0.49.0 h1:eeHFmOGUTtaaPSGNmjBKpbng9MulQsJURQUAfUwY++o=
