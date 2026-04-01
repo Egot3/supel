@@ -67,28 +67,27 @@ func (Role) EnumDescriptor() ([]byte, []int) {
 	return file_identity_proto_rawDescGZIP(), []int{0}
 }
 
-type TokenPayload struct {
+type TokenRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	Role          Role                   `protobuf:"varint,2,opt,name=role,proto3,enum=identity.Role" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *TokenPayload) Reset() {
-	*x = TokenPayload{}
+func (x *TokenRequest) Reset() {
+	*x = TokenRequest{}
 	mi := &file_identity_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *TokenPayload) String() string {
+func (x *TokenRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*TokenPayload) ProtoMessage() {}
+func (*TokenRequest) ProtoMessage() {}
 
-func (x *TokenPayload) ProtoReflect() protoreflect.Message {
+func (x *TokenRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_identity_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -100,28 +99,21 @@ func (x *TokenPayload) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use TokenPayload.ProtoReflect.Descriptor instead.
-func (*TokenPayload) Descriptor() ([]byte, []int) {
+// Deprecated: Use TokenRequest.ProtoReflect.Descriptor instead.
+func (*TokenRequest) Descriptor() ([]byte, []int) {
 	return file_identity_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *TokenPayload) GetUuid() string {
+func (x *TokenRequest) GetUuid() string {
 	if x != nil {
 		return x.Uuid
 	}
 	return ""
 }
 
-func (x *TokenPayload) GetRole() Role {
-	if x != nil {
-		return x.Role
-	}
-	return Role_USER
-}
-
 type Token struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Body          string                 `protobuf:"bytes,1,opt,name=body,proto3" json:"body,omitempty"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -156,9 +148,61 @@ func (*Token) Descriptor() ([]byte, []int) {
 	return file_identity_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Token) GetBody() string {
+func (x *Token) GetToken() string {
 	if x != nil {
-		return x.Body
+		return x.Token
+	}
+	return ""
+}
+
+type TokenPayload struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TokenPayload) Reset() {
+	*x = TokenPayload{}
+	mi := &file_identity_proto_msgTypes[2]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TokenPayload) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TokenPayload) ProtoMessage() {}
+
+func (x *TokenPayload) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_proto_msgTypes[2]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TokenPayload.ProtoReflect.Descriptor instead.
+func (*TokenPayload) Descriptor() ([]byte, []int) {
+	return file_identity_proto_rawDescGZIP(), []int{2}
+}
+
+func (x *TokenPayload) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+func (x *TokenPayload) GetRole() string {
+	if x != nil {
+		return x.Role
 	}
 	return ""
 }
@@ -167,17 +211,19 @@ var File_identity_proto protoreflect.FileDescriptor
 
 const file_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x0eidentity.proto\x12\bidentity\"F\n" +
+	"\x0eidentity.proto\x12\bidentity\"\"\n" +
+	"\fTokenRequest\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"\x1d\n" +
+	"\x05Token\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"6\n" +
 	"\fTokenPayload\x12\x12\n" +
-	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\"\n" +
-	"\x04role\x18\x02 \x01(\x0e2\x0e.identity.RoleR\x04role\"\x1b\n" +
-	"\x05Token\x12\x12\n" +
-	"\x04body\x18\x01 \x01(\tR\x04body*\x1b\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
 	"\x05ADMIN\x10\x012\x85\x01\n" +
 	"\x0fIdentityService\x128\n" +
-	"\rGenerateToken\x12\x16.identity.TokenPayload\x1a\x0f.identity.Token\x128\n" +
+	"\rGenerateToken\x12\x16.identity.TokenRequest\x1a\x0f.identity.Token\x128\n" +
 	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayloadB\x04Z\x02./b\x06proto3"
 
 var (
@@ -193,23 +239,23 @@ func file_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
+var file_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
 var file_identity_proto_goTypes = []any{
 	(Role)(0),            // 0: identity.Role
-	(*TokenPayload)(nil), // 1: identity.TokenPayload
+	(*TokenRequest)(nil), // 1: identity.TokenRequest
 	(*Token)(nil),        // 2: identity.Token
+	(*TokenPayload)(nil), // 3: identity.TokenPayload
 }
 var file_identity_proto_depIdxs = []int32{
-	0, // 0: identity.TokenPayload.role:type_name -> identity.Role
-	1, // 1: identity.IdentityService.GenerateToken:input_type -> identity.TokenPayload
-	2, // 2: identity.IdentityService.ValidateToken:input_type -> identity.Token
-	2, // 3: identity.IdentityService.GenerateToken:output_type -> identity.Token
-	1, // 4: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
-	3, // [3:5] is the sub-list for method output_type
-	1, // [1:3] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	1, // 0: identity.IdentityService.GenerateToken:input_type -> identity.TokenRequest
+	2, // 1: identity.IdentityService.ValidateToken:input_type -> identity.Token
+	2, // 2: identity.IdentityService.GenerateToken:output_type -> identity.Token
+	3, // 3: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
+	2, // [2:4] is the sub-list for method output_type
+	0, // [0:2] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_identity_proto_init() }
@@ -223,7 +269,7 @@ func file_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_proto_rawDesc), len(file_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   2,
+			NumMessages:   3,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

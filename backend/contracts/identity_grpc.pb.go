@@ -27,7 +27,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityServiceClient interface {
-	GenerateToken(ctx context.Context, in *TokenPayload, opts ...grpc.CallOption) (*Token, error)
+	GenerateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*Token, error)
 	ValidateToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*TokenPayload, error)
 }
 
@@ -39,7 +39,7 @@ func NewIdentityServiceClient(cc grpc.ClientConnInterface) IdentityServiceClient
 	return &identityServiceClient{cc}
 }
 
-func (c *identityServiceClient) GenerateToken(ctx context.Context, in *TokenPayload, opts ...grpc.CallOption) (*Token, error) {
+func (c *identityServiceClient) GenerateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*Token, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Token)
 	err := c.cc.Invoke(ctx, IdentityService_GenerateToken_FullMethodName, in, out, cOpts...)
@@ -63,7 +63,7 @@ func (c *identityServiceClient) ValidateToken(ctx context.Context, in *Token, op
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility.
 type IdentityServiceServer interface {
-	GenerateToken(context.Context, *TokenPayload) (*Token, error)
+	GenerateToken(context.Context, *TokenRequest) (*Token, error)
 	ValidateToken(context.Context, *Token) (*TokenPayload, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
@@ -75,7 +75,7 @@ type IdentityServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedIdentityServiceServer struct{}
 
-func (UnimplementedIdentityServiceServer) GenerateToken(context.Context, *TokenPayload) (*Token, error) {
+func (UnimplementedIdentityServiceServer) GenerateToken(context.Context, *TokenRequest) (*Token, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateToken not implemented")
 }
 func (UnimplementedIdentityServiceServer) ValidateToken(context.Context, *Token) (*TokenPayload, error) {
@@ -103,7 +103,7 @@ func RegisterIdentityServiceServer(s grpc.ServiceRegistrar, srv IdentityServiceS
 }
 
 func _IdentityService_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TokenPayload)
+	in := new(TokenRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -115,7 +115,7 @@ func _IdentityService_GenerateToken_Handler(srv interface{}, ctx context.Context
 		FullMethod: IdentityService_GenerateToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdentityServiceServer).GenerateToken(ctx, req.(*TokenPayload))
+		return srv.(IdentityServiceServer).GenerateToken(ctx, req.(*TokenRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
