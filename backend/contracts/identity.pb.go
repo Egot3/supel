@@ -207,6 +207,118 @@ func (x *TokenPayload) GetRole() string {
 	return ""
 }
 
+type LoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRequest) Reset() {
+	*x = LoginRequest{}
+	mi := &file_identity_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRequest) ProtoMessage() {}
+
+func (x *LoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return file_identity_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *LoginRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type RegisterRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	Nickname      string                 `protobuf:"bytes,3,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterRequest) Reset() {
+	*x = RegisterRequest{}
+	mi := &file_identity_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterRequest) ProtoMessage() {}
+
+func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_identity_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
+func (*RegisterRequest) Descriptor() ([]byte, []int) {
+	return file_identity_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *RegisterRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetNickname() string {
+	if x != nil {
+		return x.Nickname
+	}
+	return ""
+}
+
 var File_identity_proto protoreflect.FileDescriptor
 
 const file_identity_proto_rawDesc = "" +
@@ -218,13 +330,22 @@ const file_identity_proto_rawDesc = "" +
 	"\x05token\x18\x01 \x01(\tR\x05token\"6\n" +
 	"\fTokenPayload\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role*\x1b\n" +
+	"\x04role\x18\x02 \x01(\tR\x04role\"@\n" +
+	"\fLoginRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"_\n" +
+	"\x0fRegisterRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1a\n" +
+	"\bnickname\x18\x03 \x01(\tR\bnickname*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
-	"\x05ADMIN\x10\x012\x85\x01\n" +
-	"\x0fIdentityService\x128\n" +
-	"\rGenerateToken\x12\x16.identity.TokenRequest\x1a\x0f.identity.Token\x128\n" +
-	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayloadB\x04Z\x02./b\x06proto3"
+	"\x05ADMIN\x10\x012\xe6\x01\n" +
+	"\x0fIdentityService\x12/\n" +
+	"\vRemintToken\x12\x0f.identity.Token\x1a\x0f.identity.Token\x128\n" +
+	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\x120\n" +
+	"\x05Login\x12\x16.identity.LoginRequest\x1a\x0f.identity.Token\x126\n" +
+	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x0f.identity.TokenB\x04Z\x02./b\x06proto3"
 
 var (
 	file_identity_proto_rawDescOnce sync.Once
@@ -239,20 +360,26 @@ func file_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 3)
+var file_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
 var file_identity_proto_goTypes = []any{
-	(Role)(0),            // 0: identity.Role
-	(*TokenRequest)(nil), // 1: identity.TokenRequest
-	(*Token)(nil),        // 2: identity.Token
-	(*TokenPayload)(nil), // 3: identity.TokenPayload
+	(Role)(0),               // 0: identity.Role
+	(*TokenRequest)(nil),    // 1: identity.TokenRequest
+	(*Token)(nil),           // 2: identity.Token
+	(*TokenPayload)(nil),    // 3: identity.TokenPayload
+	(*LoginRequest)(nil),    // 4: identity.LoginRequest
+	(*RegisterRequest)(nil), // 5: identity.RegisterRequest
 }
 var file_identity_proto_depIdxs = []int32{
-	1, // 0: identity.IdentityService.GenerateToken:input_type -> identity.TokenRequest
+	2, // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
 	2, // 1: identity.IdentityService.ValidateToken:input_type -> identity.Token
-	2, // 2: identity.IdentityService.GenerateToken:output_type -> identity.Token
-	3, // 3: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
-	2, // [2:4] is the sub-list for method output_type
-	0, // [0:2] is the sub-list for method input_type
+	4, // 2: identity.IdentityService.Login:input_type -> identity.LoginRequest
+	5, // 3: identity.IdentityService.Register:input_type -> identity.RegisterRequest
+	2, // 4: identity.IdentityService.RemintToken:output_type -> identity.Token
+	3, // 5: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
+	2, // 6: identity.IdentityService.Login:output_type -> identity.Token
+	2, // 7: identity.IdentityService.Register:output_type -> identity.Token
+	4, // [4:8] is the sub-list for method output_type
+	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -269,7 +396,7 @@ func file_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_proto_rawDesc), len(file_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   3,
+			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

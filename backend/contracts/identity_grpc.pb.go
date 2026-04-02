@@ -19,16 +19,20 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	IdentityService_GenerateToken_FullMethodName = "/identity.IdentityService/GenerateToken"
+	IdentityService_RemintToken_FullMethodName   = "/identity.IdentityService/RemintToken"
 	IdentityService_ValidateToken_FullMethodName = "/identity.IdentityService/ValidateToken"
+	IdentityService_Login_FullMethodName         = "/identity.IdentityService/Login"
+	IdentityService_Register_FullMethodName      = "/identity.IdentityService/Register"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type IdentityServiceClient interface {
-	GenerateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*Token, error)
+	RemintToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Token, error)
 	ValidateToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*TokenPayload, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*Token, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Token, error)
 }
 
 type identityServiceClient struct {
@@ -39,10 +43,10 @@ func NewIdentityServiceClient(cc grpc.ClientConnInterface) IdentityServiceClient
 	return &identityServiceClient{cc}
 }
 
-func (c *identityServiceClient) GenerateToken(ctx context.Context, in *TokenRequest, opts ...grpc.CallOption) (*Token, error) {
+func (c *identityServiceClient) RemintToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Token, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(Token)
-	err := c.cc.Invoke(ctx, IdentityService_GenerateToken_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, IdentityService_RemintToken_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -59,12 +63,34 @@ func (c *identityServiceClient) ValidateToken(ctx context.Context, in *Token, op
 	return out, nil
 }
 
+func (c *identityServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*Token, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Token)
+	err := c.cc.Invoke(ctx, IdentityService_Login_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *identityServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Token, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(Token)
+	err := c.cc.Invoke(ctx, IdentityService_Register_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility.
 type IdentityServiceServer interface {
-	GenerateToken(context.Context, *TokenRequest) (*Token, error)
+	RemintToken(context.Context, *Token) (*Token, error)
 	ValidateToken(context.Context, *Token) (*TokenPayload, error)
+	Login(context.Context, *LoginRequest) (*Token, error)
+	Register(context.Context, *RegisterRequest) (*Token, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -75,11 +101,17 @@ type IdentityServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedIdentityServiceServer struct{}
 
-func (UnimplementedIdentityServiceServer) GenerateToken(context.Context, *TokenRequest) (*Token, error) {
-	return nil, status.Error(codes.Unimplemented, "method GenerateToken not implemented")
+func (UnimplementedIdentityServiceServer) RemintToken(context.Context, *Token) (*Token, error) {
+	return nil, status.Error(codes.Unimplemented, "method RemintToken not implemented")
 }
 func (UnimplementedIdentityServiceServer) ValidateToken(context.Context, *Token) (*TokenPayload, error) {
 	return nil, status.Error(codes.Unimplemented, "method ValidateToken not implemented")
+}
+func (UnimplementedIdentityServiceServer) Login(context.Context, *LoginRequest) (*Token, error) {
+	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
+}
+func (UnimplementedIdentityServiceServer) Register(context.Context, *RegisterRequest) (*Token, error) {
+	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 func (UnimplementedIdentityServiceServer) testEmbeddedByValue()                         {}
@@ -102,20 +134,20 @@ func RegisterIdentityServiceServer(s grpc.ServiceRegistrar, srv IdentityServiceS
 	s.RegisterService(&IdentityService_ServiceDesc, srv)
 }
 
-func _IdentityService_GenerateToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(TokenRequest)
+func _IdentityService_RemintToken_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(Token)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(IdentityServiceServer).GenerateToken(ctx, in)
+		return srv.(IdentityServiceServer).RemintToken(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: IdentityService_GenerateToken_FullMethodName,
+		FullMethod: IdentityService_RemintToken_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(IdentityServiceServer).GenerateToken(ctx, req.(*TokenRequest))
+		return srv.(IdentityServiceServer).RemintToken(ctx, req.(*Token))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -138,6 +170,42 @@ func _IdentityService_ValidateToken_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_Login_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LoginRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).Login(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_Login_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).Login(ctx, req.(*LoginRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _IdentityService_Register_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RegisterRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).Register(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_Register_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).Register(ctx, req.(*RegisterRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -146,12 +214,20 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*IdentityServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "GenerateToken",
-			Handler:    _IdentityService_GenerateToken_Handler,
+			MethodName: "RemintToken",
+			Handler:    _IdentityService_RemintToken_Handler,
 		},
 		{
 			MethodName: "ValidateToken",
 			Handler:    _IdentityService_ValidateToken_Handler,
+		},
+		{
+			MethodName: "Login",
+			Handler:    _IdentityService_Login_Handler,
+		},
+		{
+			MethodName: "Register",
+			Handler:    _IdentityService_Register_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -23,6 +23,19 @@ message TokenPayload {
 }
 
 service IdentityService {
-    rpc GenerateToken(TokenRequest) returns (Token);
+    rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload);
+    rpc Login(LoginRequest) returns (Token);
+    rpc Register(RegisterRequest) returns (Token);
+}
+
+message LoginRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message RegisterRequest {
+    string email = 1;
+    string password = 2;
+    string nickname = 3;
 }
