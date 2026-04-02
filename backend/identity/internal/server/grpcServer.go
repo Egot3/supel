@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"log"
+	"errors"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
@@ -19,31 +19,76 @@ func NewIdentityServer() *IdentityServer {
 	return &IdentityServer{} //duh
 }
 
-func (s *IdentityServer) GenerateToken(ctx context.Context, req *pb.TokenRequest) (*pb.Token, error) {
-	log.Println("getting token", req)
-
-	user, err := repositories.User(ctx, req.Uuid)
-	if err != nil {
-		return nil, status.Error(codes.NotFound, "User not found in db")
-	}
-
-	resp, err := jwtutils.GenerateToken(user.UUID, user.Role)
-	if err != nil {
-		return nil, status.Error(codes.Internal, "Failed to generate token")
-	}
-
-	return &pb.Token{Token: resp}, nil
-}
 
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
 	body, err := jwtutils.ValidateToken(req.Token)
 	if err != nil {
 		return nil, err
 	}
-	user, err := repositories.User(ctx, body.ID)
+	user, err := repositories.UserById(ctx, body.ID)
 
 	return &pb.TokenPayload{
 		Uuid: user.UUID,
 		Role: string(user.Role),
 	}, err
+}
+
+func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.Token, error) {
+	token, err := jwtutils.RemintToken(req.GetToken())
+	
+	return &pb.Token{
+		Token: token,
+	}, err //мы тут не колеса изобретаем
+}
+
+func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Token, error) {
+	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
+	if err != nil {
+		if errors.Is(err, errors.New("Invalid credetantials")) {
+			return nil, status.Error(codes.InvalidArgument, err.Error())
+		}else {
+			return nil, status.Error(codes.Internal, "Internal server erroro")
+		}
+	}
+
+	token, err := jwtutils.GenerateToken(uuid, role)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Internal server error")
+	}
+
+	return &pb.Token{
+		Token: token,
+	}, nil
+}
+
+func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb.Token, error) {
+	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
+	if err != nil {
+		if errors.Is(err, errors.New("User with this email alreay exists")) {
+			return nil, status.Error(codes.AlreadyExists, err.Error())
+		}else{
+			return nil, status.Error(codes.Internal, "Internal server error")
+		}
+	}
+
+	// conn, err := grpc.NewClient(fmt.Sprintf("%v:%v", 
+	// 	os.Getenv("USER_HOST"), 
+	// 	os.Getenv("USER_PORT")),
+	// 	grpc.WithTransportCredentials(insecure.NewCredentials()))
+
+	// if err != nil {
+	// 	return nil, status.Error(codes.Internal, "Couldn't register with name, try again later")
+	// }
+	// defer conn.Close()
+
+	// client := pb.NewUserClient(conn)
+	
+	token, err := jwtutils.GenerateToken(uuid, role)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "Internal server error")
+	}
+
+	return &pb.Token{
+		Token: token,
+	}, nil
 }

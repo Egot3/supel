@@ -3,7 +3,6 @@ module github.com/Egot3/supel/backend/identity
 go 1.26.1
 
 require (
-	github.com/Egot3/Zhao v0.0.4
 	github.com/rabbitmq/amqp091-go v1.10.0
 	github.com/uptrace/bun/driver/pgdriver v1.2.18
 )
@@ -16,7 +15,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.0.2
+	github.com/Egot3/supel/backend/contracts v0.0.3
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -28,7 +27,7 @@ require (
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	go.opentelemetry.io/otel v1.40.0 // indirect
 	go.opentelemetry.io/otel/trace v1.40.0 // indirect
-	golang.org/x/crypto v0.48.0 // indirect
+	golang.org/x/crypto v0.48.0
 	golang.org/x/sys v0.41.0 // indirect
 	google.golang.org/grpc v1.79.3
 	mellium.im/sasl v0.3.2 // indirect

@@ -1,6 +1,8 @@
 package jwtutils
 
-import "github.com/golang-jwt/jwt/v5"
+import (
+	"github.com/golang-jwt/jwt/v5"
+)
 
 func ValidateToken(tokenString string) (*Claims, error) {
 	token, err := jwt.ParseWithClaims(
@@ -25,3 +27,4 @@ func ValidateToken(tokenString string) (*Claims, error) {
 
 	return nil, jwt.ErrTokenInvalidClaims
 }
+

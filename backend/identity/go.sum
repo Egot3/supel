@@ -1,7 +1,5 @@
-github.com/Egot3/Zhao v0.0.4 h1:z/lSfQ7EtBE90JPM+3gZGnBRNkU80cvsNPeV9q2afLg=
-github.com/Egot3/Zhao v0.0.4/go.mod h1:sENIrevc8Vix0mP2+zwkk/rUiYKOtX6PImFEj4fptpw=
-github.com/Egot3/supel/backend/contracts v0.0.2 h1:YYarmbLXTw3Rgu93Xt32HqGaJr5jBExvm1pmAr0jzbI=
-github.com/Egot3/supel/backend/contracts v0.0.2/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.0.3 h1:RV9wxQNeh/z3sfCWBfkQ9WzV48i10T1TZIBAhdH40AQ=
+github.com/Egot3/supel/backend/contracts v0.0.3/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
