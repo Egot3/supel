@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package news;
+
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./";
+
+message GenerateUploadURLSsRequest {
+    string user_id = 1;
+    repeated ImageMeta images = 2;
+}
+
+message ImageMeta {
+    string file_name = 1;
+    string mime = 2;
+}
+message UploadTarget {
+    string upload_url = 1;
+    string file_key = 2;
+}
+
+message GenerateNewUploadURLsResponse {
+    repeated UploadTarget targets = 1;
+}
+
+message CreateNewRequest {
+    string user_id = 1;
+    string content = 2;
+    repeated string file_keys = 3;
+}
+
+message New {
+    string new_id = 1;
+    string user_id = 2;
+    string content = 3;
+    repeated string image_urls = 4;
+    google.protobuf.Timestamp created_at = 5;
+}
+
+message CreateNewResponse {
+    New new = 1;
+}
+
+message GetNewRequest {
+    string new_id = 1;
+}
+
+message GetNewResponse {
+    New new = 1;
+}
+
+service NewsService {
+    rpc GenerateNewUploadURL(GenerateUploadURLSsRequest) returns (GenerateNewUploadURLsResponse);
+    rpc CreateNew(CreateNewRequest) returns (CreateNewResponse);
+    rpc GetNew(GetNewRequest) returns (GetNewResponse);
+}
