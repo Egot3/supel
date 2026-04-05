@@ -225,8 +225,9 @@ func (x *GenerateNewUploadURLsResponse) GetTargets() []*UploadTarget {
 type CreateNewRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Content       string                 `protobuf:"bytes,2,opt,name=content,proto3" json:"content,omitempty"`
-	FileKeys      []string               `protobuf:"bytes,3,rep,name=file_keys,json=fileKeys,proto3" json:"file_keys,omitempty"`
+	Caption       string                 `protobuf:"bytes,2,opt,name=caption,proto3" json:"caption,omitempty"`
+	Body          string                 `protobuf:"bytes,3,opt,name=body,proto3" json:"body,omitempty"`
+	FileKeys      []string               `protobuf:"bytes,4,rep,name=file_keys,json=fileKeys,proto3" json:"file_keys,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -268,9 +269,16 @@ func (x *CreateNewRequest) GetUserId() string {
 	return ""
 }
 
-func (x *CreateNewRequest) GetContent() string {
+func (x *CreateNewRequest) GetCaption() string {
 	if x != nil {
-		return x.Content
+		return x.Caption
+	}
+	return ""
+}
+
+func (x *CreateNewRequest) GetBody() string {
+	if x != nil {
+		return x.Body
 	}
 	return ""
 }
@@ -286,9 +294,10 @@ type New struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NewId         string                 `protobuf:"bytes,1,opt,name=new_id,json=newId,proto3" json:"new_id,omitempty"`
 	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
-	Content       string                 `protobuf:"bytes,3,opt,name=content,proto3" json:"content,omitempty"`
-	ImageUrls     []string               `protobuf:"bytes,4,rep,name=image_urls,json=imageUrls,proto3" json:"image_urls,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	Caption       string                 `protobuf:"bytes,3,opt,name=caption,proto3" json:"caption,omitempty"`
+	Body          string                 `protobuf:"bytes,4,opt,name=body,proto3" json:"body,omitempty"`
+	ImageUrls     []string               `protobuf:"bytes,5,rep,name=image_urls,json=imageUrls,proto3" json:"image_urls,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -337,9 +346,16 @@ func (x *New) GetUserId() string {
 	return ""
 }
 
-func (x *New) GetContent() string {
+func (x *New) GetCaption() string {
 	if x != nil {
-		return x.Content
+		return x.Caption
+	}
+	return ""
+}
+
+func (x *New) GetBody() string {
+	if x != nil {
+		return x.Body
 	}
 	return ""
 }
@@ -507,19 +523,21 @@ const file_news_proto_rawDesc = "" +
 	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x19\n" +
 	"\bfile_key\x18\x02 \x01(\tR\afileKey\"M\n" +
 	"\x1dGenerateNewUploadURLsResponse\x12,\n" +
-	"\atargets\x18\x01 \x03(\v2\x12.news.UploadTargetR\atargets\"b\n" +
+	"\atargets\x18\x01 \x03(\v2\x12.news.UploadTargetR\atargets\"v\n" +
 	"\x10CreateNewRequest\x12\x17\n" +
 	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x18\n" +
-	"\acontent\x18\x02 \x01(\tR\acontent\x12\x1b\n" +
-	"\tfile_keys\x18\x03 \x03(\tR\bfileKeys\"\xa9\x01\n" +
+	"\acaption\x18\x02 \x01(\tR\acaption\x12\x12\n" +
+	"\x04body\x18\x03 \x01(\tR\x04body\x12\x1b\n" +
+	"\tfile_keys\x18\x04 \x03(\tR\bfileKeys\"\xbd\x01\n" +
 	"\x03New\x12\x15\n" +
 	"\x06new_id\x18\x01 \x01(\tR\x05newId\x12\x17\n" +
 	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x18\n" +
-	"\acontent\x18\x03 \x01(\tR\acontent\x12\x1d\n" +
+	"\acaption\x18\x03 \x01(\tR\acaption\x12\x12\n" +
+	"\x04body\x18\x04 \x01(\tR\x04body\x12\x1d\n" +
 	"\n" +
-	"image_urls\x18\x04 \x03(\tR\timageUrls\x129\n" +
+	"image_urls\x18\x05 \x03(\tR\timageUrls\x129\n" +
 	"\n" +
-	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"0\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"0\n" +
 	"\x11CreateNewResponse\x12\x1b\n" +
 	"\x03new\x18\x01 \x01(\v2\t.news.NewR\x03new\"&\n" +
 	"\rGetNewRequest\x12\x15\n" +

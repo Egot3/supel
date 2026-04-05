@@ -26,16 +26,18 @@ message GenerateNewUploadURLsResponse {
 
 message CreateNewRequest {
     string user_id = 1;
-    string content = 2;
-    repeated string file_keys = 3;
+    string caption = 2;
+    string body = 3; 
+    repeated string file_keys = 4;
 }
 
 message New {
     string new_id = 1;
     string user_id = 2;
-    string content = 3;
-    repeated string image_urls = 4;
-    google.protobuf.Timestamp created_at = 5;
+    string caption = 3;
+    string body = 4;
+    repeated string image_urls = 5;
+    google.protobuf.Timestamp created_at = 6;
 }
 
 message CreateNewResponse {
