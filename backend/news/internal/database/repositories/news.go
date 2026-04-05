@@ -38,3 +38,30 @@ func CreateNew(ctx context.Context, new models.New, images []string) (*models.Ne
 
 	return &new, err
 }
+
+func NewImagesByUUId(ctx context.Context, uuid string) ([]string, error) {
+	var imageKeys []string
+	err := database.DB.NewSelect().
+		Model((*models.NewsImages)(nil)).
+		Column("file_key").
+		Where("new_uuid = ?", uuid).
+		OrderBy("position", bun.OrderAsc).
+		Scan(ctx, &imageKeys)
+	if err != nil {
+		return nil, err
+	}
+
+	return imageKeys, nil
+}
+
+func NewByUUID(ctx context.Context, uuid string) (*models.New, error) {
+	var New *models.New
+	_, err := database.DB.NewSelect().
+		Model(&New).
+		Exec(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return New, nil
+}

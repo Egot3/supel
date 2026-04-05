@@ -35,14 +35,9 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	var imageGets []string
-	for _, key := range fileKeys {
-		imgGet, err := s.storageService.GETurl(ctx, key)
-		if err != nil {
-			return nil, status.Error(codes.Internal, err.Error())
-		}
-
-		imageGets = append(imageGets, imgGet)
+	imageLinks, err := s.storageService.GETurls(ctx, fileKeys)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
 	}
 	return &pb.CreateNewResponse{
 		New: &pb.New{
@@ -50,7 +45,35 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 			UserId:    createdNew.UserUUID,
 			Caption:   createdNew.Caption,
 			Body:      createdNew.Body,
-			ImageUrls: imageGets,
+			ImageUrls: imageLinks,
+			CreatedAt: timestamppb.New(createdNew.CreatedAt),
+		},
+	}, nil
+}
+
+func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetNewResponse, error) {
+	createdNew, err := repositories.NewByUUID(ctx, req.GetNewId())
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	imageKeys, err := repositories.NewImagesByUUId(ctx, req.GetNewId())
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	imageLinks, err := s.storageService.GETurls(ctx, imageKeys)
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &pb.GetNewResponse{
+		New: &pb.New{
+			NewId:     createdNew.NewUUID,
+			UserId:    createdNew.UserUUID,
+			Caption:   createdNew.Caption,
+			Body:      createdNew.Body,
+			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
 	}, nil
