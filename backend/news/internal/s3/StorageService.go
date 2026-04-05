@@ -37,39 +37,18 @@ func (s *StorageService) GETurl(ctx context.Context, key string) (string, error)
 	return presignedUrl.URL, nil
 }
 
-func (s *StorageService) PUTurl(ctx context.Context, key string) (string, error) {
+func (s *StorageService) PUTurl(ctx context.Context, key, mime string) (string, error) {
 	presignClient := s3.NewPresignClient(s.client)
 
 	presignedUrl, err := presignClient.PresignPutObject(ctx,
 		&s3.PutObjectInput{
-			Bucket: aws.String(s.bucket),
-			Key:    aws.String(key),
+			Bucket:      aws.String(s.bucket),
+			Key:         aws.String(key),
+			ContentType: aws.String(mime),
 		}, s3.WithPresignExpires(time.Minute*30))
 	if err != nil {
 		return "", err
 	}
 
 	return presignedUrl.URL, nil
-}
-
-func (s *StorageService) GETurls(ctx context.Context, keys []string) ([]string, error) {
-	presignClient := s3.NewPresignClient(s.client)
-
-	var presignedUrls []string
-	for _, key := range keys {
-		presignedUrl, err := presignClient.PresignGetObject(ctx,
-			&s3.GetObjectInput{
-				Bucket: aws.String(s.bucket),
-				Key:    aws.String(key),
-			},
-			s3.WithPresignExpires(time.Minute*20),
-		)
-		if err != nil {
-			return nil, err
-		}
-
-		presignedUrls = append(presignedUrls, presignedUrl.URL)
-	}
-
-	return presignedUrls, nil
 }

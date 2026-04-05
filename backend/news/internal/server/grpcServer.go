@@ -2,11 +2,15 @@ package server
 
 import (
 	"context"
+	"fmt"
+	"time"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/news/internal/database/repositories"
 	"github.com/Egot3/supel/backend/news/internal/models"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
+	sanitizationutils "github.com/Egot3/supel/backend/news/internal/sanitizationUtils"
+	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
@@ -35,10 +39,16 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	imageLinks, err := s.storageService.GETurls(ctx, fileKeys)
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+	var imageLinks []string
+	for _, key := range fileKeys {
+		imageLink, err := s.storageService.GETurl(ctx, key)
+		if err != nil {
+			return nil, status.Error(codes.Internal, err.Error())
+		}
+
+		imageLinks = append(imageLinks, imageLink)
 	}
+
 	return &pb.CreateNewResponse{
 		New: &pb.New{
 			NewId:     createdNew.NewUUID,
@@ -62,9 +72,14 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	imageLinks, err := s.storageService.GETurls(ctx, imageKeys)
-	if err != nil {
-		return nil, status.Error(codes.Internal, err.Error())
+	var imageLinks []string
+	for _, key := range imageKeys {
+		imageLink, err := s.storageService.GETurl(ctx, key)
+		if err != nil {
+			return nil, status.Error(codes.Internal, err.Error())
+		}
+
+		imageLinks = append(imageLinks, imageLink)
 	}
 
 	return &pb.GetNewResponse{
@@ -76,5 +91,28 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
+	}, nil
+}
+
+func (s *NewsSever) GenerateNewUploadURL(ctx context.Context, req *pb.GenerateUploadURLSsRequest) (*pb.GenerateNewUploadURLsResponse, error) {
+	putUrls := make([]*pb.UploadTarget, len(req.Images))
+	for _, meta := range req.Images {
+		key := sanitizationutils.Slugify(
+			fmt.Sprintf("orgs/ETSEvilCorp/news/attachments/%v/%v/%v",
+				uuid.NewString(), time.Now().Format(time.RFC3339), meta.FileName))
+
+		putUrl, err := s.storageService.PUTurl(ctx, key, meta.Mime)
+		if err != nil {
+			return nil, status.Error(codes.Internal, err.Error())
+		}
+
+		putUrls = append(putUrls, &pb.UploadTarget{
+			UploadUrl: putUrl,
+			FileKey:   key,
+		})
+	}
+
+	return &pb.GenerateNewUploadURLsResponse{
+		Targets: putUrls,
 	}, nil
 }
