@@ -44,6 +44,10 @@ func main() {
 
 	s3Service := storage.NewStorageService(client, s3Config.Bucket)
 
+	if err := s3Service.EnsureBuckets(ctx, []string{os.Getenv("STORAGE_NEWS_BUCKET")}); err != nil {
+		log.Fatal(err)
+	}
+
 	NewsServer := server.NewNewsService(*s3Service)
 	pb.RegisterNewsServiceServer(grpcServer, NewsServer)
 
