@@ -1,0 +1,84 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: news-service
+  namespace: news-domain
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: news-service
+  template:
+    metadata:
+      labels:
+        app: news-service
+    spec:
+      initContainers:
+        - name: wait-for-db
+          image: busybox
+          command:
+            - sh
+            - -c
+            - "until nc -z news-db-0.news-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
+      containers:
+        - name: news-service
+          image: ghcr.io/egot3/supel/backend/news:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "500m"
+            limits:
+              memory: "256Mi"
+              cpu: "1000m"
+          env:
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: news-db-secret
+                  key: DB_HOST
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: news-db-secret
+                  key: POSTGRES_PASSWORD
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: news-db-secret
+                  key: DB_PORT
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: news-db-secret
+                  key: DB_USER
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: news-db-secret
+                  key: JWT_SECRET
+            - name: STORAGE_HOST
+              value: minio.storage.svc.cluster.local
+            - name: STORAGE_PORT
+              value: "9000"
+            - name: STORAGE_ACCESS_KEY
+              value: minioadmin
+            - name: STORAGE_SECRET_KEY
+              value: minioadmin
+            - name: STORAGE_NEWS_BUCKET
+              value: news
+          readinessProbe:
+            grpc:
+              port: 50051
+            initialDelaySeconds: 5
+            periodSeconds: 10
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: news-service
+spec:
+  selector:
+    app: news-service
+  ports:
+    - port: 50051
+      targetPort: 50051
