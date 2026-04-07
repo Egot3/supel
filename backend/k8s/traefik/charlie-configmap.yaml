@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: traefik-config
+  namespace: traefik
+data:
+  traefik.yaml: |
+    global:
+      checkNewVersion: false
+      sendAnonymousUsage: false
+
+    api:
+      dashboard: true
+      insecure: true
+
+    ping:
+      entryPoint: traefik
+
+    entryPoints:
+      web:
+        address: ":80"
+      
+      websecure:
+        address: ":443"
+
+      traefik:
+        address: ":8080"
+
+    providers:
+      kubernetesCRD:
+        allowCrossNamespace: true
+        allowExternalNameServices: true
+      kubernetesIngress:
+        allowExternalNameServices: true
+
+    log: 
+      level: DEBUG
+    accessLog: {}
