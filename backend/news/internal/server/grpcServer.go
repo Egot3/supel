@@ -7,6 +7,7 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/news/internal/database/repositories"
+	"github.com/Egot3/supel/backend/news/internal/middleware"
 	"github.com/Egot3/supel/backend/news/internal/models"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
 	sanitizationutils "github.com/Egot3/supel/backend/news/internal/sanitizationUtils"
@@ -30,10 +31,15 @@ func NewNewsService(storageService storage.StorageService) *NewsSever {
 func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*pb.CreateNewResponse, error) {
 	// there is an RBAC call, you just don't see it in MVP
 	fileKeys := req.GetFileKeys()
+	userUuid, _, ok := middleware.UserFromContext(ctx)
+	if !ok {
+		return nil, status.Error(codes.Internal, "user id is not ok")
+	}
 
 	createdNew, err := repositories.CreateNew(ctx, models.New{
-		Caption: req.Caption,
-		Body:    req.GetBody(),
+		UserUUID: userUuid,
+		Caption:  req.Caption,
+		Body:     req.GetBody(),
 	}, fileKeys)
 	if err != nil {
 		return nil, status.Error(codes.Internal, err.Error())
@@ -52,9 +58,9 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	return &pb.CreateNewResponse{
 		New: &pb.New{
 			NewId:     createdNew.NewUUID,
-			UserId:    createdNew.UserUUID,
+			UserId:    userUuid,
 			Caption:   createdNew.Caption,
-			Body:      createdNew.Body,
+			Body:      &createdNew.Body,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
@@ -87,7 +93,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			NewId:     createdNew.NewUUID,
 			UserId:    createdNew.UserUUID,
 			Caption:   createdNew.Caption,
-			Body:      createdNew.Body,
+			Body:      &createdNew.Body,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},

@@ -9,6 +9,7 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/news/internal/database"
+	"github.com/Egot3/supel/backend/news/internal/middleware"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
 	"github.com/Egot3/supel/backend/news/internal/server"
 
@@ -24,7 +25,9 @@ func main() {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
 	}
 
-	grpcServer := grpc.NewServer()
+	grpcServer := grpc.NewServer(
+		grpc.ChainUnaryInterceptor(middleware.AuthInterceptor),
+	)
 	healthServer := health.NewServer()
 	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
 	healthServer.SetServingStatus("news", grpc_health_v1.HealthCheckResponse_SERVING)
