@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"fmt"
+	"log"
 	"time"
 
 	pb "github.com/Egot3/supel/backend/contracts"
@@ -31,9 +32,12 @@ func NewNewsService(storageService storage.StorageService) *NewsSever {
 func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*pb.CreateNewResponse, error) {
 	// there is an RBAC call, you just don't see it in MVP
 	fileKeys := req.GetFileKeys()
+	log.Printf("fKeys: %v", fileKeys)
+
 	userUuid, _, ok := middleware.UserFromContext(ctx)
 	if !ok {
-		return nil, status.Error(codes.Internal, "user id is not ok")
+		log.Println("bad creditantials: ", userUuid)
+		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
 	}
 
 	createdNew, err := repositories.CreateNew(ctx, models.New{
@@ -42,6 +46,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		Body:     req.GetBody(),
 	}, fileKeys)
 	if err != nil {
+		log.Printf("Couldn't create a new %v", err)
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
@@ -49,6 +54,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	for _, key := range fileKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
+			log.Printf("couldn't create key for image: %v", err)
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
@@ -70,11 +76,13 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetNewResponse, error) {
 	createdNew, err := repositories.NewByUUID(ctx, req.GetNewId())
 	if err != nil {
+		log.Printf("Problem with finding a new: %v", err)
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
 	imageKeys, err := repositories.NewImagesByUUId(ctx, req.GetNewId())
 	if err != nil {
+		log.Printf("couldn't retriew image keys: %v", err)
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
@@ -82,6 +90,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 	for _, key := range imageKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
+			log.Printf("couldn't create key for image: %v", err)
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
