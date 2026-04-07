@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"errors"
+	"log"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
@@ -19,10 +20,10 @@ func NewIdentityServer() *IdentityServer {
 	return &IdentityServer{} //duh
 }
 
-
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
 	body, err := jwtutils.ValidateToken(req.Token)
 	if err != nil {
+		log.Printf("Bad token %v", err)
 		return nil, err
 	}
 	user, err := repositories.UserById(ctx, body.ID)
@@ -35,7 +36,7 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 
 func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.Token, error) {
 	token, err := jwtutils.RemintToken(req.GetToken())
-	
+
 	return &pb.Token{
 		Token: token,
 	}, err //мы тут не колеса изобретаем
@@ -45,14 +46,19 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.T
 	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
 		if errors.Is(err, errors.New("Invalid credetantials")) {
+			log.Printf("Bad creds %v", err)
+
 			return nil, status.Error(codes.InvalidArgument, err.Error())
-		}else {
+		} else {
+			log.Printf("something is Bad %v", err)
+
 			return nil, status.Error(codes.Internal, "Internal server erroro")
 		}
 	}
 
 	token, err := jwtutils.GenerateToken(uuid, role)
 	if err != nil {
+		log.Printf("Error generating token %v", err)
 		return nil, status.Error(codes.Internal, "Internal server error")
 	}
 
@@ -66,13 +72,13 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 	if err != nil {
 		if errors.Is(err, errors.New("User with this email alreay exists")) {
 			return nil, status.Error(codes.AlreadyExists, err.Error())
-		}else{
+		} else {
 			return nil, status.Error(codes.Internal, "Internal server error")
 		}
 	}
 
-	// conn, err := grpc.NewClient(fmt.Sprintf("%v:%v", 
-	// 	os.Getenv("USER_HOST"), 
+	// conn, err := grpc.NewClient(fmt.Sprintf("%v:%v",
+	// 	os.Getenv("USER_HOST"),
 	// 	os.Getenv("USER_PORT")),
 	// 	grpc.WithTransportCredentials(insecure.NewCredentials()))
 
@@ -82,7 +88,7 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 	// defer conn.Close()
 
 	// client := pb.NewUserClient(conn)
-	
+
 	token, err := jwtutils.GenerateToken(uuid, role)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "Internal server error")
