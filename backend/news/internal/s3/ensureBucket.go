@@ -17,8 +17,8 @@ func (s *StorageService) EnsureBuckets(ctx context.Context, buckets []string) er
 			Bucket: aws.String(bucket),
 		})
 
-		if err != nil {
-			log.Println("Bucket already created: ", err)
+		if err == nil {
+			log.Println("Bucket successfuly created")
 			continue
 		}
 
