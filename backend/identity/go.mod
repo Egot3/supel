@@ -8,7 +8,7 @@ require (
 )
 
 require (
-	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
 	google.golang.org/genproto/googleapis/api v0.0.0-20260209200024-4cfbd4190f57 // indirect
@@ -17,7 +17,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.0.3
+	github.com/Egot3/supel/backend/contracts v0.0.8
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/jinzhu/inflection v1.0.0 // indirect
