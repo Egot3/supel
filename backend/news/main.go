@@ -28,8 +28,9 @@ func main() {
 	grpcServer := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(middleware.AuthInterceptor),
 	)
+	healthWrapper := grpc.NewServer()
 	healthServer := health.NewServer()
-	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
+	grpc_health_v1.RegisterHealthServer(healthWrapper, healthServer)
 	healthServer.SetServingStatus("news", grpc_health_v1.HealthCheckResponse_SERVING)
 
 	s3Config := storage.Config{
