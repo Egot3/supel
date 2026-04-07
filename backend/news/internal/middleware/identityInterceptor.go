@@ -19,6 +19,10 @@ const (
 func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 	handler grpc.UnaryHandler,
 ) (any, error) {
+	if info.FullMethod == "/grpc.health.v1.Health/Check" ||
+		info.FullMethod == "/grpc.health.v1.Health/Watch" {
+		return handler(ctx, req)
+	}
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Unauthenticated, "missing metadata")

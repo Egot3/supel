@@ -28,12 +28,9 @@ func main() {
 	grpcServer := grpc.NewServer(
 		grpc.ChainUnaryInterceptor(middleware.AuthInterceptor),
 	)
-
-	healthServer := grpc.NewServer()
-	healthService := health.NewServer()
-	grpc_health_v1.RegisterHealthServer(healthServer, healthService)
-	healthService.SetServingStatus("news", grpc_health_v1.HealthCheckResponse_SERVING)
-	healthService.SetServingStatus("", grpc_health_v1.HealthCheckResponse_SERVING)
+	healthServer := health.NewServer()
+	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
+	healthServer.SetServingStatus("news", grpc_health_v1.HealthCheckResponse_SERVING)
 
 	s3Config := storage.Config{
 		Endpoint: fmt.Sprintf("http://%v:%v", os.Getenv("STORAGE_HOST"),
