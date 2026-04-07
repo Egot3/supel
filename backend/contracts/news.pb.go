@@ -278,6 +278,7 @@ func (x *CreateNewRequest) GetFileKeys() []string {
 type New struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	NewId         string                 `protobuf:"bytes,1,opt,name=new_id,json=newId,proto3" json:"new_id,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
 	Caption       string                 `protobuf:"bytes,3,opt,name=caption,proto3" json:"caption,omitempty"`
 	Body          *string                `protobuf:"bytes,4,opt,name=body,proto3,oneof" json:"body,omitempty"`
 	ImageUrls     []string               `protobuf:"bytes,5,rep,name=image_urls,json=imageUrls,proto3" json:"image_urls,omitempty"`
@@ -319,6 +320,13 @@ func (*New) Descriptor() ([]byte, []int) {
 func (x *New) GetNewId() string {
 	if x != nil {
 		return x.NewId
+	}
+	return ""
+}
+
+func (x *New) GetUserId() string {
+	if x != nil {
+		return x.UserId
 	}
 	return ""
 }
@@ -622,16 +630,17 @@ const file_proto_news_proto_rawDesc = "" +
 	"\x10CreateNewRequest\x12\x18\n" +
 	"\acaption\x18\x02 \x01(\tR\acaption\x12\x12\n" +
 	"\x04body\x18\x03 \x01(\tR\x04body\x12\x1b\n" +
-	"\tfile_keys\x18\x04 \x03(\tR\bfileKeysJ\x04\b\x01\x10\x02\"\xb8\x01\n" +
+	"\tfile_keys\x18\x04 \x03(\tR\bfileKeysJ\x04\b\x01\x10\x02\"\xcb\x01\n" +
 	"\x03New\x12\x15\n" +
-	"\x06new_id\x18\x01 \x01(\tR\x05newId\x12\x18\n" +
+	"\x06new_id\x18\x01 \x01(\tR\x05newId\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\x12\x18\n" +
 	"\acaption\x18\x03 \x01(\tR\acaption\x12\x17\n" +
 	"\x04body\x18\x04 \x01(\tH\x00R\x04body\x88\x01\x01\x12\x1d\n" +
 	"\n" +
 	"image_urls\x18\x05 \x03(\tR\timageUrls\x129\n" +
 	"\n" +
 	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\a\n" +
-	"\x05_bodyJ\x04\b\x02\x10\x03\"0\n" +
+	"\x05_body\"0\n" +
 	"\x11CreateNewResponse\x12\x1b\n" +
 	"\x03new\x18\x01 \x01(\v2\t.news.NewR\x03new\"&\n" +
 	"\rGetNewRequest\x12\x15\n" +

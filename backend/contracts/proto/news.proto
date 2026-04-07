@@ -34,7 +34,7 @@ message CreateNewRequest {
 
 message New {
     string new_id = 1;
-    reserved 2;
+    string user_id = 2;
     string caption = 3;
     optional string body = 4;
     repeated string image_urls = 5;
