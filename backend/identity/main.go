@@ -2,13 +2,17 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net"
+	"net/http"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/identity/internal/database"
 	"github.com/Egot3/supel/backend/identity/internal/server"
+	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
 	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
 	"google.golang.org/grpc/health"
 	"google.golang.org/grpc/health/grpc_health_v1"
 )
@@ -63,4 +67,14 @@ func main() {
 	if err := grpcServer.Serve(listener); err != nil {
 		log.Fatalf("Failed to serve: %v", err)
 	}
+
+	gwMux := runtime.NewServeMux()
+
+	selfConn, err := grpc.NewClient(fmt.Sprintf("localhost:%v", port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	authClient := pb.NewIdentityServiceClient(selfConn)
+
+	httpMux := http.NewServeMux()
+	httpMux.Handle("/v1/", gwMux)
+
+	httpMux.Handle("/internal/identity/validate", server.NewForwardIdentityHandler(authClient))
 }
