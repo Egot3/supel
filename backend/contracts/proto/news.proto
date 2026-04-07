@@ -3,11 +3,12 @@ syntax = "proto3";
 package news;
 
 import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
 
 option go_package = "./";
 
 message GenerateUploadURLSsRequest {
-    string user_id = 1;
+    reserved 1;
     repeated ImageMeta images = 2;
 }
 
@@ -25,7 +26,7 @@ message GenerateNewUploadURLsResponse {
 }
 
 message CreateNewRequest {
-    string user_id = 1;
+    reserved 1;
     string caption = 2;
     string body = 3; 
     repeated string file_keys = 4;
@@ -33,7 +34,7 @@ message CreateNewRequest {
 
 message New {
     string new_id = 1;
-    string user_id = 2;
+    reserved 2;
     string caption = 3;
     optional string body = 4;
     repeated string image_urls = 5;
@@ -52,8 +53,37 @@ message GetNewResponse {
     New new = 1;
 }
 
+message ListNewsRequest {
+    uint32 page = 1;
+    uint32 size = 2;
+}
+
+message ListNewsResponse {
+    repeated New news = 1;
+    uint32 page = 2;
+    uint32 size = 3;
+    uint64 total = 4;
+}
+
 service NewsService {
-    rpc GenerateNewUploadURL(GenerateUploadURLSsRequest) returns (GenerateNewUploadURLsResponse);
-    rpc CreateNew(CreateNewRequest) returns (CreateNewResponse);
-    rpc GetNew(GetNewRequest) returns (GetNewResponse);
+    rpc GenerateNewUploadURLs(GenerateUploadURLSsRequest) returns (GenerateNewUploadURLsResponse){
+        option (google.api.http) = {
+            post: "/v1/news/images"
+        };
+    };
+    rpc CreateNew(CreateNewRequest) returns (CreateNewResponse){
+        option (google.api.http) = {
+            post: "/v1/news"
+        };
+    };
+    rpc GetNew(GetNewRequest) returns (GetNewResponse){
+        option (google.api.http) = {
+            get: "/v1/news/{new_id}"
+        };
+    };
+    rpc ListNews(ListNewsRequest) returns (ListNewsResponse){
+        option (google.api.http) = {
+            get: "/v1/news"
+        };
+    };
 }

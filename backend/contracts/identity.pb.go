@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v6.33.1
-// source: identity.proto
+// source: proto/identity.proto
 
 package __
 
@@ -51,11 +51,11 @@ func (x Role) String() string {
 }
 
 func (Role) Descriptor() protoreflect.EnumDescriptor {
-	return file_identity_proto_enumTypes[0].Descriptor()
+	return file_proto_identity_proto_enumTypes[0].Descriptor()
 }
 
 func (Role) Type() protoreflect.EnumType {
-	return &file_identity_proto_enumTypes[0]
+	return &file_proto_identity_proto_enumTypes[0]
 }
 
 func (x Role) Number() protoreflect.EnumNumber {
@@ -64,7 +64,7 @@ func (x Role) Number() protoreflect.EnumNumber {
 
 // Deprecated: Use Role.Descriptor instead.
 func (Role) EnumDescriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{0}
+	return file_proto_identity_proto_rawDescGZIP(), []int{0}
 }
 
 type TokenRequest struct {
@@ -76,7 +76,7 @@ type TokenRequest struct {
 
 func (x *TokenRequest) Reset() {
 	*x = TokenRequest{}
-	mi := &file_identity_proto_msgTypes[0]
+	mi := &file_proto_identity_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -88,7 +88,7 @@ func (x *TokenRequest) String() string {
 func (*TokenRequest) ProtoMessage() {}
 
 func (x *TokenRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_proto_msgTypes[0]
+	mi := &file_proto_identity_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -101,7 +101,7 @@ func (x *TokenRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TokenRequest.ProtoReflect.Descriptor instead.
 func (*TokenRequest) Descriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{0}
+	return file_proto_identity_proto_rawDescGZIP(), []int{0}
 }
 
 func (x *TokenRequest) GetUuid() string {
@@ -120,7 +120,7 @@ type Token struct {
 
 func (x *Token) Reset() {
 	*x = Token{}
-	mi := &file_identity_proto_msgTypes[1]
+	mi := &file_proto_identity_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -132,7 +132,7 @@ func (x *Token) String() string {
 func (*Token) ProtoMessage() {}
 
 func (x *Token) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_proto_msgTypes[1]
+	mi := &file_proto_identity_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -145,7 +145,7 @@ func (x *Token) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Token.ProtoReflect.Descriptor instead.
 func (*Token) Descriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{1}
+	return file_proto_identity_proto_rawDescGZIP(), []int{1}
 }
 
 func (x *Token) GetToken() string {
@@ -165,7 +165,7 @@ type TokenPayload struct {
 
 func (x *TokenPayload) Reset() {
 	*x = TokenPayload{}
-	mi := &file_identity_proto_msgTypes[2]
+	mi := &file_proto_identity_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -177,7 +177,7 @@ func (x *TokenPayload) String() string {
 func (*TokenPayload) ProtoMessage() {}
 
 func (x *TokenPayload) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_proto_msgTypes[2]
+	mi := &file_proto_identity_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -190,7 +190,7 @@ func (x *TokenPayload) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TokenPayload.ProtoReflect.Descriptor instead.
 func (*TokenPayload) Descriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{2}
+	return file_proto_identity_proto_rawDescGZIP(), []int{2}
 }
 
 func (x *TokenPayload) GetUuid() string {
@@ -217,7 +217,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_identity_proto_msgTypes[3]
+	mi := &file_proto_identity_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -229,7 +229,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_proto_msgTypes[3]
+	mi := &file_proto_identity_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -242,7 +242,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{3}
+	return file_proto_identity_proto_rawDescGZIP(), []int{3}
 }
 
 func (x *LoginRequest) GetEmail() string {
@@ -270,7 +270,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_identity_proto_msgTypes[4]
+	mi := &file_proto_identity_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -282,7 +282,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_identity_proto_msgTypes[4]
+	mi := &file_proto_identity_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -295,7 +295,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_identity_proto_rawDescGZIP(), []int{4}
+	return file_proto_identity_proto_rawDescGZIP(), []int{4}
 }
 
 func (x *RegisterRequest) GetEmail() string {
@@ -319,11 +319,11 @@ func (x *RegisterRequest) GetNickname() string {
 	return ""
 }
 
-var File_identity_proto protoreflect.FileDescriptor
+var File_proto_identity_proto protoreflect.FileDescriptor
 
-const file_identity_proto_rawDesc = "" +
+const file_proto_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x0eidentity.proto\x12\bidentity\"\"\n" +
+	"\x14proto/identity.proto\x12\bidentity\"\"\n" +
 	"\fTokenRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"\x1d\n" +
 	"\x05Token\x12\x14\n" +
@@ -348,20 +348,20 @@ const file_identity_proto_rawDesc = "" +
 	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x0f.identity.TokenB\x04Z\x02./b\x06proto3"
 
 var (
-	file_identity_proto_rawDescOnce sync.Once
-	file_identity_proto_rawDescData []byte
+	file_proto_identity_proto_rawDescOnce sync.Once
+	file_proto_identity_proto_rawDescData []byte
 )
 
-func file_identity_proto_rawDescGZIP() []byte {
-	file_identity_proto_rawDescOnce.Do(func() {
-		file_identity_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_identity_proto_rawDesc), len(file_identity_proto_rawDesc)))
+func file_proto_identity_proto_rawDescGZIP() []byte {
+	file_proto_identity_proto_rawDescOnce.Do(func() {
+		file_proto_identity_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_proto_identity_proto_rawDesc), len(file_proto_identity_proto_rawDesc)))
 	})
-	return file_identity_proto_rawDescData
+	return file_proto_identity_proto_rawDescData
 }
 
-var file_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
-var file_identity_proto_goTypes = []any{
+var file_proto_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
+var file_proto_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 5)
+var file_proto_identity_proto_goTypes = []any{
 	(Role)(0),               // 0: identity.Role
 	(*TokenRequest)(nil),    // 1: identity.TokenRequest
 	(*Token)(nil),           // 2: identity.Token
@@ -369,7 +369,7 @@ var file_identity_proto_goTypes = []any{
 	(*LoginRequest)(nil),    // 4: identity.LoginRequest
 	(*RegisterRequest)(nil), // 5: identity.RegisterRequest
 }
-var file_identity_proto_depIdxs = []int32{
+var file_proto_identity_proto_depIdxs = []int32{
 	2, // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
 	2, // 1: identity.IdentityService.ValidateToken:input_type -> identity.Token
 	4, // 2: identity.IdentityService.Login:input_type -> identity.LoginRequest
@@ -385,27 +385,27 @@ var file_identity_proto_depIdxs = []int32{
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_identity_proto_init() }
-func file_identity_proto_init() {
-	if File_identity_proto != nil {
+func init() { file_proto_identity_proto_init() }
+func file_proto_identity_proto_init() {
+	if File_proto_identity_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_identity_proto_rawDesc), len(file_identity_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_identity_proto_rawDesc), len(file_proto_identity_proto_rawDesc)),
 			NumEnums:      1,
 			NumMessages:   5,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_identity_proto_goTypes,
-		DependencyIndexes: file_identity_proto_depIdxs,
-		EnumInfos:         file_identity_proto_enumTypes,
-		MessageInfos:      file_identity_proto_msgTypes,
+		GoTypes:           file_proto_identity_proto_goTypes,
+		DependencyIndexes: file_proto_identity_proto_depIdxs,
+		EnumInfos:         file_proto_identity_proto_enumTypes,
+		MessageInfos:      file_proto_identity_proto_msgTypes,
 	}.Build()
-	File_identity_proto = out.File
-	file_identity_proto_goTypes = nil
-	file_identity_proto_depIdxs = nil
+	File_proto_identity_proto = out.File
+	file_proto_identity_proto_goTypes = nil
+	file_proto_identity_proto_depIdxs = nil
 }
