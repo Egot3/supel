@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package identity;
 
+import "google/api/annotations.proto";
+
 option go_package = "./";
 
 enum Role {
@@ -25,8 +27,16 @@ message TokenPayload {
 service IdentityService {
     rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload);
-    rpc Login(LoginRequest) returns (Token);
-    rpc Register(RegisterRequest) returns (Token);
+    rpc Login(LoginRequest) returns (Token){
+        option (google.api.http) = {
+            post: "/v1/identity/login"
+        };
+    };
+    rpc Register(RegisterRequest) returns (Token){
+        option (google.api.http) = {
+            post: "/v1/identity/register"
+        };
+    };
 }
 
 message LoginRequest {
