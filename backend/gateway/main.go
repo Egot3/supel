@@ -15,11 +15,11 @@ func main() {
 	mux := runtime.NewServeMux()
 	ctx := context.Background()
 
-	identityConn, err := grpc.NewClient("identity-service.identity.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	identityConn, err := grpc.NewClient("identity-service.identity-domain.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Identity conn fell: %v", err.Error())
 	}
-	newsConn, err := grpc.NewClient("news-service.news.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	newsConn, err := grpc.NewClient("news-service.news-domain.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("News conn fell: %v", err.Error())
 	}
