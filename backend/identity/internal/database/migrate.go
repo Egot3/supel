@@ -17,16 +17,19 @@ func RunMigrations(ctx context.Context, db *bun.DB) error {
 		return fmt.Errorf("Migration init failed")
 	}
 
-	group, err := migrator.Migrate(ctx)
-	if err != nil {
-		return fmt.Errorf("migration failed: %v", err)
-	}
+	for {
+		group, err := migrator.Migrate(ctx)
+		if err != nil {
+			return fmt.Errorf("migration failed: %v", err)
+		}
 
-	if group.IsZero() {
-		log.Println("thank god, no migrations")
-	} else {
+		if group.IsZero() {
+			log.Println("all migrations applied")
+			break
+		}
 		log.Printf("Migrated to %s", group)
-	}
 
+	}
 	return nil
+
 }
