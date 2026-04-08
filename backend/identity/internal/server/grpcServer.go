@@ -43,6 +43,8 @@ func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.To
 }
 
 func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Token, error) {
+
+	log.Printf("email: %v, password: %v", req.Email, req.Password)
 	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
 		if errors.Is(err, errors.New("Invalid credetantials")) {
