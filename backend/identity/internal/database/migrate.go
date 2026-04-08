@@ -18,6 +18,8 @@ func RunMigrations(ctx context.Context, db *bun.DB) error {
 	}
 
 	for {
+		log.Printf("All migrations: %d", len(migrations.Migrations.Sorted()))
+		log.Printf("Unaplied migrations: %d", len(migrations.Migrations.Sorted().Unapplied()))
 		group, err := migrator.Migrate(ctx)
 		if err != nil {
 			return fmt.Errorf("migration failed: %v", err)
