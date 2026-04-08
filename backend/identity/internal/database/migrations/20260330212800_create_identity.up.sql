@@ -1,3 +1,4 @@
+-- +migrate Up
 CREATE TYPE user_role AS ENUM("USER","ADMIN");
 
 CREATE TABLE IF NOT EXISTS users (
