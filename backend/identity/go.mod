@@ -8,6 +8,13 @@ require (
 )
 
 require (
+	github.com/fatih/color v1.18.0 // indirect
+	github.com/mattn/go-colorable v0.1.14 // indirect
+	github.com/mattn/go-isatty v0.0.20 // indirect
+	github.com/uptrace/bun/extra/bundebug v1.2.18 // indirect
+)
+
+require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
