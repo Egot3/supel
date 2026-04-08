@@ -23,7 +23,14 @@ func main() {
 	if err := database.RunMigrations(ctx, database.DB); err != nil {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
 	}
+	var tableNames []string
+	database.DB.NewSelect().
+		TableExpr("information_schema.tables").
+		Column("table_name").
+		Where("table_schema = ?", "public").
+		Scan(ctx, &tableNames)
 
+	log.Println(tableNames)
 	// if len(os.Getenv("RABBIT_HOST")) != 0 {
 	// 	conn := amqp091.Connection{}
 	// 	subscriber, err := sub.NewSubscriber(&conn)
