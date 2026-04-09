@@ -69,11 +69,13 @@ service NewsService {
     rpc GenerateNewUploadURLs(GenerateUploadURLSsRequest) returns (GenerateNewUploadURLsResponse){
         option (google.api.http) = {
             post: "/v1/news/images"
+            body: "*"
         };
     };
     rpc CreateNew(CreateNewRequest) returns (CreateNewResponse){
         option (google.api.http) = {
             post: "/v1/news"
+            body: "*"
         };
     };
     rpc GetNew(GetNewRequest) returns (GetNewResponse){

@@ -30,11 +30,13 @@ service IdentityService {
     rpc Login(LoginRequest) returns (Token){
         option (google.api.http) = {
             post: "/v1/identity/login"
+            body: "*"
         };
     };
     rpc Register(RegisterRequest) returns (Token){
         option (google.api.http) = {
             post: "/v1/identity/register"
+            body: "*"
         };
     };
 }

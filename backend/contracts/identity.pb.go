@@ -341,12 +341,12 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\bnickname\x18\x03 \x01(\tR\bnickname*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
-	"\x05ADMIN\x10\x012\xa1\x02\n" +
+	"\x05ADMIN\x10\x012\xa7\x02\n" +
 	"\x0fIdentityService\x12/\n" +
 	"\vRemintToken\x12\x0f.identity.Token\x1a\x0f.identity.Token\x128\n" +
-	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\x12L\n" +
-	"\x05Login\x12\x16.identity.LoginRequest\x1a\x0f.identity.Token\"\x1a\x82\xd3\xe4\x93\x02\x14\"\x12/v1/identity/login\x12U\n" +
-	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x0f.identity.Token\"\x1d\x82\xd3\xe4\x93\x02\x17\"\x15/v1/identity/registerB\x04Z\x02./b\x06proto3"
+	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\x12O\n" +
+	"\x05Login\x12\x16.identity.LoginRequest\x1a\x0f.identity.Token\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/identity/login\x12X\n" +
+	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x0f.identity.Token\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/identity/registerB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_identity_proto_rawDescOnce sync.Once

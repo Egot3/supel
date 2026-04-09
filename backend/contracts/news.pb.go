@@ -654,11 +654,10 @@ const file_proto_news_proto_rawDesc = "" +
 	"\x04news\x18\x01 \x03(\v2\t.news.NewR\x04news\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\rR\x04page\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\rR\x04size\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x04R\x05total2\xf3\x02\n" +
-	"\vNewsService\x12w\n" +
-	"\x15GenerateNewUploadURLs\x12 .news.GenerateUploadURLSsRequest\x1a#.news.GenerateNewUploadURLsResponse\"\x17\x82\xd3\xe4\x93\x02\x11\"\x0f/v1/news/images\x12N\n" +
-	"\tCreateNew\x12\x16.news.CreateNewRequest\x1a\x17.news.CreateNewResponse\"\x10\x82\xd3\xe4\x93\x02\n" +
-	"\"\b/v1/news\x12N\n" +
+	"\x05total\x18\x04 \x01(\x04R\x05total2\xf9\x02\n" +
+	"\vNewsService\x12z\n" +
+	"\x15GenerateNewUploadURLs\x12 .news.GenerateUploadURLSsRequest\x1a#.news.GenerateNewUploadURLsResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/news/images\x12Q\n" +
+	"\tCreateNew\x12\x16.news.CreateNewRequest\x1a\x17.news.CreateNewResponse\"\x13\x82\xd3\xe4\x93\x02\r:\x01*\"\b/v1/news\x12N\n" +
 	"\x06GetNew\x12\x13.news.GetNewRequest\x1a\x14.news.GetNewResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/news/{new_id}\x12K\n" +
 	"\bListNews\x12\x15.news.ListNewsRequest\x1a\x16.news.ListNewsResponse\"\x10\x82\xd3\xe4\x93\x02\n" +
 	"\x12\b/v1/newsB\x04Z\x02./b\x06proto3"
