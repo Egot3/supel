@@ -3,13 +3,17 @@ package server
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
 	"github.com/Egot3/supel/backend/identity/internal/database/repositories"
+	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 )
 
 type IdentityServer struct {
@@ -42,7 +46,7 @@ func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.To
 	}, err //мы тут не колеса изобретаем
 }
 
-func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.Token, error) {
+func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*emptypb.Empty, error) {
 
 	log.Printf("email: %v, password: %v", req.Email, req.Password)
 	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
@@ -64,12 +68,16 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*pb.T
 		return nil, status.Error(codes.Internal, "Internal server error")
 	}
 
-	return &pb.Token{
-		Token: token,
-	}, nil
+	if err := grpc.SetHeader(ctx, metadata.Pairs(
+		"set-cookie", fmt.Sprintf("auth_token=%v; HttpOnly; Secure; SameSite=Lax; Path=/v1/", token),
+	)); err != nil {
+		return nil, status.Error(codes.Internal, "grpc Cookie setting error")
+	}
+
+	return nil, nil
 }
 
-func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) (*pb.Token, error) {
+func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) (*emptypb.Empty, error) {
 	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
 	if err != nil {
 		if errors.Is(err, errors.New("User with this email alreay exists")) {
@@ -93,10 +101,15 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 
 	token, err := jwtutils.GenerateToken(uuid, role)
 	if err != nil {
-		return nil, status.Error(codes.Internal, "Internal server error")
+		log.Printf("err: %v", err)
+		return nil, status.Error(codes.Internal, "Token gen error")
 	}
 
-	return &pb.Token{
-		Token: token,
-	}, nil
+	if err := grpc.SetHeader(ctx, metadata.Pairs(
+		"set-cookie", fmt.Sprintf("auth_token=%v; HttpOnly; Secure; SameSite=Lax; Path=/", token),
+	)); err != nil {
+		return nil, status.Error(codes.Internal, "grpc Cookie setting error")
+	}
+
+	return nil, nil
 }

@@ -2,6 +2,10 @@ github.com/Egot3/supel/backend/contracts v0.0.3 h1:RV9wxQNeh/z3sfCWBfkQ9WzV48i10
 github.com/Egot3/supel/backend/contracts v0.0.3/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/Egot3/supel/backend/contracts v0.0.8 h1:MzgYnot+uzkqnuhjgHhs3Gyg1Rm1hPTNdkgN9ZYsjBY=
 github.com/Egot3/supel/backend/contracts v0.0.8/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.0.10 h1:pPkLYkpOxeKMjh+ZYj+5AuYDADNnGTF9JtGmLcV2mAo=
+github.com/Egot3/supel/backend/contracts v0.0.10/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.0.11 h1:F7H2e4FVFDU5InWiIUOPpaOSgFzKQdI9ZbHyGZVpxgM=
+github.com/Egot3/supel/backend/contracts v0.0.11/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
