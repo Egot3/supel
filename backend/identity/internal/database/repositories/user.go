@@ -50,15 +50,15 @@ func UserById(ctx context.Context, id string) (*models.User, error) {
 func Login(ctx context.Context, email, password string) (string, types.UserRole, error) {
 	user, err := UserByEmail(ctx, email)
 	if err != nil {
-		return "","", err
+		return "", "", err
 	}
 	if user == nil {
-		return "","", errors.New("Invalid credetantials")
+		return "", "", errors.New("Invalid credetantials")
 	}
 
 	match := passwordutils.CheckPasswordHash(password, user.PasswordHash)
 	if !match {
-		return "","", errors.New("Invalid credetantials")
+		return "", "", errors.New("Invalid credetantials")
 	}
 
 	return user.UUID, user.Role, nil
@@ -66,20 +66,17 @@ func Login(ctx context.Context, email, password string) (string, types.UserRole,
 
 func Register(ctx context.Context, email, password string) (string, types.UserRole, error) {
 	user, err := UserByEmail(ctx, email)
-	if err != nil {
-		return "","", err
-	}
 	if user != nil {
-		return "","", errors.New("User with this email alreay exists")
+		return "", "", errors.New("User with this email alreay exists")
 	}
 
 	passwordHash, err := passwordutils.HashPassword(password)
-	if err!=nil{
-		return "","", err
+	if err != nil {
+		return "", "", err
 	}
 
 	user = &models.User{
-		Email: email,
+		Email:        email,
 		PasswordHash: passwordHash,
 	}
 
@@ -87,7 +84,6 @@ func Register(ctx context.Context, email, password string) (string, types.UserRo
 
 	return user.UUID, user.Role, nil
 }
-
 
 func UpsertUser(ctx context.Context, user models.User) error {
 	_, err := database.DB.NewInsert().
