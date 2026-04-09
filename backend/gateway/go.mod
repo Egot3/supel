@@ -43,7 +43,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.0.9
+	github.com/Egot3/supel/backend/contracts v0.0.10
 	github.com/Egot3/supel/backend/identity v0.0.0-20260407195030-c79aa2352350
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect

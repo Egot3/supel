@@ -2,6 +2,8 @@ github.com/Egot3/supel/backend/contracts v0.0.8 h1:MzgYnot+uzkqnuhjgHhs3Gyg1Rm1h
 github.com/Egot3/supel/backend/contracts v0.0.8/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/Egot3/supel/backend/contracts v0.0.9 h1:Vt4i8bJV0rcLTPL/3KTh7ZfeB8fHshHRFRpPz3lh+Vs=
 github.com/Egot3/supel/backend/contracts v0.0.9/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.0.10 h1:pPkLYkpOxeKMjh+ZYj+5AuYDADNnGTF9JtGmLcV2mAo=
+github.com/Egot3/supel/backend/contracts v0.0.10/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/Egot3/supel/backend/identity v0.0.0-20260407195030-c79aa2352350 h1:DJNwLPLhGGA3bxcrD9WdPvIFSfzTZ/D3EcdEMq8m6L0=
 github.com/Egot3/supel/backend/identity v0.0.0-20260407195030-c79aa2352350/go.mod h1:felKTYzF/HKv6d1ECHpSAO5RcFSsYliF6i3hiqpFjQI=
 github.com/Egot3/supel/backend/news v0.0.0-20260407195030-c79aa2352350 h1:ghGKT6DV9ilfgykiyvt880Vy/asg9qurxKWCmsqvRkk=
