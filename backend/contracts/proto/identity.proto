@@ -27,7 +27,11 @@ message TokenPayload {
 
 service IdentityService {
     rpc RemintToken(Token) returns (Token);
-    rpc ValidateToken(Token) returns (TokenPayload);
+    rpc ValidateToken(Token) returns (TokenPayload){
+        option (google.api.http) = {
+            get: "/v1/identity/validate/{token}"
+        };
+    };
     rpc Login(LoginRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/identity/login"
