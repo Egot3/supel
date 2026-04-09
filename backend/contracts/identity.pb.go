@@ -10,6 +10,7 @@ import (
 	_ "google.golang.org/genproto/googleapis/api/annotations"
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
 	protoimpl "google.golang.org/protobuf/runtime/protoimpl"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 	reflect "reflect"
 	sync "sync"
 	unsafe "unsafe"
@@ -324,7 +325,7 @@ var File_proto_identity_proto protoreflect.FileDescriptor
 
 const file_proto_identity_proto_rawDesc = "" +
 	"\n" +
-	"\x14proto/identity.proto\x12\bidentity\x1a\x1cgoogle/api/annotations.proto\"\"\n" +
+	"\x14proto/identity.proto\x12\bidentity\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"\"\n" +
 	"\fTokenRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"\x1d\n" +
 	"\x05Token\x12\x14\n" +
@@ -341,12 +342,12 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\bnickname\x18\x03 \x01(\tR\bnickname*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
-	"\x05ADMIN\x10\x012\xa7\x02\n" +
+	"\x05ADMIN\x10\x012\xb5\x02\n" +
 	"\x0fIdentityService\x12/\n" +
 	"\vRemintToken\x12\x0f.identity.Token\x1a\x0f.identity.Token\x128\n" +
-	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\x12O\n" +
-	"\x05Login\x12\x16.identity.LoginRequest\x1a\x0f.identity.Token\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/identity/login\x12X\n" +
-	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x0f.identity.Token\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/identity/registerB\x04Z\x02./b\x06proto3"
+	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\x12V\n" +
+	"\x05Login\x12\x16.identity.LoginRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17:\x01*\"\x12/v1/identity/login\x12_\n" +
+	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/identity/registerB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_identity_proto_rawDescOnce sync.Once
@@ -369,6 +370,7 @@ var file_proto_identity_proto_goTypes = []any{
 	(*TokenPayload)(nil),    // 3: identity.TokenPayload
 	(*LoginRequest)(nil),    // 4: identity.LoginRequest
 	(*RegisterRequest)(nil), // 5: identity.RegisterRequest
+	(*emptypb.Empty)(nil),   // 6: google.protobuf.Empty
 }
 var file_proto_identity_proto_depIdxs = []int32{
 	2, // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
@@ -377,8 +379,8 @@ var file_proto_identity_proto_depIdxs = []int32{
 	5, // 3: identity.IdentityService.Register:input_type -> identity.RegisterRequest
 	2, // 4: identity.IdentityService.RemintToken:output_type -> identity.Token
 	3, // 5: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
-	2, // 6: identity.IdentityService.Login:output_type -> identity.Token
-	2, // 7: identity.IdentityService.Register:output_type -> identity.Token
+	6, // 6: identity.IdentityService.Login:output_type -> google.protobuf.Empty
+	6, // 7: identity.IdentityService.Register:output_type -> google.protobuf.Empty
 	4, // [4:8] is the sub-list for method output_type
 	0, // [0:4] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name

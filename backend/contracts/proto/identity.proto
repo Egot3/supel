@@ -3,6 +3,7 @@ syntax = "proto3";
 package identity;
 
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "./";
 
@@ -27,13 +28,13 @@ message TokenPayload {
 service IdentityService {
     rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload);
-    rpc Login(LoginRequest) returns (Token){
+    rpc Login(LoginRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/identity/login"
             body: "*"
         };
     };
-    rpc Register(RegisterRequest) returns (Token){
+    rpc Register(RegisterRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/identity/register"
             body: "*"

@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -31,8 +32,8 @@ const (
 type IdentityServiceClient interface {
 	RemintToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*Token, error)
 	ValidateToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*TokenPayload, error)
-	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*Token, error)
-	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Token, error)
+	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type identityServiceClient struct {
@@ -63,9 +64,9 @@ func (c *identityServiceClient) ValidateToken(ctx context.Context, in *Token, op
 	return out, nil
 }
 
-func (c *identityServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*Token, error) {
+func (c *identityServiceClient) Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Token)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IdentityService_Login_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -73,9 +74,9 @@ func (c *identityServiceClient) Login(ctx context.Context, in *LoginRequest, opt
 	return out, nil
 }
 
-func (c *identityServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*Token, error) {
+func (c *identityServiceClient) Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(Token)
+	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, IdentityService_Register_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -89,8 +90,8 @@ func (c *identityServiceClient) Register(ctx context.Context, in *RegisterReques
 type IdentityServiceServer interface {
 	RemintToken(context.Context, *Token) (*Token, error)
 	ValidateToken(context.Context, *Token) (*TokenPayload, error)
-	Login(context.Context, *LoginRequest) (*Token, error)
-	Register(context.Context, *RegisterRequest) (*Token, error)
+	Login(context.Context, *LoginRequest) (*emptypb.Empty, error)
+	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -107,10 +108,10 @@ func (UnimplementedIdentityServiceServer) RemintToken(context.Context, *Token) (
 func (UnimplementedIdentityServiceServer) ValidateToken(context.Context, *Token) (*TokenPayload, error) {
 	return nil, status.Error(codes.Unimplemented, "method ValidateToken not implemented")
 }
-func (UnimplementedIdentityServiceServer) Login(context.Context, *LoginRequest) (*Token, error) {
+func (UnimplementedIdentityServiceServer) Login(context.Context, *LoginRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method Login not implemented")
 }
-func (UnimplementedIdentityServiceServer) Register(context.Context, *RegisterRequest) (*Token, error) {
+func (UnimplementedIdentityServiceServer) Register(context.Context, *RegisterRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
