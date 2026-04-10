@@ -31,7 +31,7 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 		log.Printf("Bad token %v", err)
 		return nil, err
 	}
-	user, err := repositories.UserById(ctx, body.ID)
+	user, err := repositories.UserById(ctx, body.UserID)
 	if err != nil {
 		log.Println("user not found with this token", err)
 		return nil, status.Error(codes.Unauthenticated, "User not found")
