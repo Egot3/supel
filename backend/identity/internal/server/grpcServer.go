@@ -56,7 +56,7 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*empt
 	log.Printf("email: %v, password: %v", req.Email, req.Password)
 	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
-		if errors.Is(err, errors.New("Invalid credetantials")) {
+		if errors.Is(err, carefulness.InvalidCreditantials) {
 			log.Printf("Bad creds %v", err)
 
 			return nil, status.Error(codes.InvalidArgument, err.Error())

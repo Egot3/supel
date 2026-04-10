@@ -56,12 +56,12 @@ func Login(ctx context.Context, email, password string) (string, types.UserRole,
 		return "", "", err
 	}
 	if user == nil {
-		return "", "", errors.New("Invalid credetantials")
+		return "", "", carefulness.InvalidCreditantials
 	}
 
 	match := passwordutils.CheckPasswordHash(password, user.PasswordHash)
 	if !match {
-		return "", "", errors.New("Invalid credetantials")
+		return "", "", carefulness.InvalidCreditantials
 	}
 
 	return user.UUID, user.Role, nil
