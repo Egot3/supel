@@ -5,13 +5,6 @@ go 1.26.1
 require github.com/uptrace/bun/driver/pgdriver v1.2.15
 
 require (
-	github.com/fatih/color v1.18.0 // indirect
-	github.com/mattn/go-colorable v0.1.14 // indirect
-	github.com/mattn/go-isatty v0.0.20 // indirect
-	github.com/uptrace/bun/extra/bundebug v1.2.15
-)
-
-require (
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
 	golang.org/x/net v0.53.0 // indirect
 	golang.org/x/text v0.36.0 // indirect

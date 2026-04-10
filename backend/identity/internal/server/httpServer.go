@@ -56,6 +56,7 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 			log.Printf("error while reminting: %v", err)
 		}
 
+		log.Println("Sending 200 and headers")
 		w.Header().Set("user-uuid", resp.Uuid)
 		w.Header().Set("user-role", resp.Role)
 		w.WriteHeader(200)

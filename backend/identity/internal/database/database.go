@@ -10,7 +10,6 @@ import (
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
 	"github.com/uptrace/bun/driver/pgdriver"
-	"github.com/uptrace/bun/extra/bundebug"
 )
 
 var DB *bun.DB //https://vk.com/video-191782227_456239104 //это с прода
@@ -28,9 +27,9 @@ func InitDB() {
 	sqldb := sql.OpenDB(pgdriver.NewConnector(pgdriver.WithDSN(dsn)))
 	DB = bun.NewDB(sqldb, pgdialect.New())
 
-	DB.AddQueryHook(bundebug.NewQueryHook(
-		bundebug.WithVerbose(true),
-	))
+	// DB.AddQueryHook(bundebug.NewQueryHook(
+	// 	bundebug.WithVerbose(true),
+	// ))
 
 	time.Sleep(2 * time.Second)
 	for i := range 5 {
