@@ -37,7 +37,7 @@ func UserById(ctx context.Context, id string) (*models.User, error) {
 
 	err := database.DB.NewSelect().
 		Model(&user).
-		Where("id = ?", id).
+		Where("uuid = ?", id).
 		Scan(ctx)
 
 	if errors.Is(err, sql.ErrNoRows) {
