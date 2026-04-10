@@ -89,7 +89,7 @@ func Register(ctx context.Context, email, password string) (string, types.UserRo
 		PasswordHash: passwordHash,
 	}
 
-	_, err = database.DB.NewInsert().Model(&user).Returning("*").Exec(ctx)
+	_, err = database.DB.NewInsert().Model(user).Returning("*").Exec(ctx)
 	if err != nil {
 		log.Println("error while inserting user: ", err.Error())
 		return "", "", err
