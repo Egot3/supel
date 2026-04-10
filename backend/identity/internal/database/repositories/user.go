@@ -7,6 +7,7 @@ import (
 	"fmt"
 	"log"
 
+	carefulness "github.com/Egot3/supel/backend/identity/internal"
 	"github.com/Egot3/supel/backend/identity/internal/database"
 	"github.com/Egot3/supel/backend/identity/internal/models"
 	passwordutils "github.com/Egot3/supel/backend/identity/internal/passwordUtils"
@@ -74,8 +75,8 @@ func Register(ctx context.Context, email, password string) (string, types.UserRo
 		return "", "", fmt.Errorf("error while fetching user")
 	}
 	if user != nil {
-		log.Printf("user not found")
-		return "", "", fmt.Errorf("User with this email alreay exists")
+		log.Printf("user was found")
+		return "", "", carefulness.ErrEmailAlreadyExists
 	}
 
 	passwordHash, err := passwordutils.HashPassword(password)

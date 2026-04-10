@@ -7,6 +7,7 @@ import (
 	"log"
 
 	pb "github.com/Egot3/supel/backend/contracts"
+	carefulness "github.com/Egot3/supel/backend/identity/internal"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
 	"github.com/Egot3/supel/backend/identity/internal/database/repositories"
 	"google.golang.org/grpc"
@@ -86,7 +87,7 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
 
 	if err != nil {
-		if errors.Is(err, errors.New("User with this email alreay exists")) {
+		if errors.Is(err, carefulness.ErrEmailAlreadyExists) {
 			return nil, status.Error(codes.AlreadyExists, err.Error())
 		} else {
 			return nil, status.Error(codes.Internal, "Internal server error")
