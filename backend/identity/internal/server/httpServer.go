@@ -13,6 +13,7 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
+		log.Println(authHeader)
 		if authHeader == "" {
 			log.Printf("auth header was not found")
 			http.Error(w, "Missing auth header", 401)
@@ -20,6 +21,7 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 		}
 
 		token := strings.TrimPrefix(authHeader, "Bearer ")
+		log.Println(token)
 		if token == authHeader {
 			log.Printf("undefined type of auth")
 			http.Error(w, "Strange auth token", 401)
@@ -34,6 +36,7 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 			http.Error(w, "invalid token", 401)
 			return
 		}
+		log.Println(resp)
 
 		remintedToken, err := authClient.RemintToken(r.Context(), &pb.Token{
 			Token: token,
