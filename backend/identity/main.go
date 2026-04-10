@@ -77,7 +77,7 @@ func main() {
 
 	gwMux := runtime.NewServeMux()
 
-	selfConn, err := grpc.NewClient(fmt.Sprintf("localhost:%v", port), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	selfConn, err := grpc.NewClient(fmt.Sprintf("localhost:%v", 9030), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	authClient := pb.NewIdentityServiceClient(selfConn)
 
 	httpMux := http.NewServeMux()
