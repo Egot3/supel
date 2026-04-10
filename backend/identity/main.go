@@ -69,19 +69,25 @@ func main() {
 		log.Fatalf("Failed to listen on port %s: %v", port, err)
 	}
 
-	log.Printf("identity Service gRPC server on %s", port)
+	go func() {
+		log.Printf("identity Service gRPC server on %s", port)
 
-	if err := grpcServer.Serve(listener); err != nil {
-		log.Fatalf("Failed to serve: %v", err)
-	}
+		if err := grpcServer.Serve(listener); err != nil {
+			log.Fatalf("Failed to serve: %v", err)
+		}
+	}()
 
 	gwMux := runtime.NewServeMux()
 
-	selfConn, err := grpc.NewClient(fmt.Sprintf("localhost:%v", 9030), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	selfConn, err := grpc.NewClient(fmt.Sprintf("localhost:%v", port), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	authClient := pb.NewIdentityServiceClient(selfConn)
 
 	httpMux := http.NewServeMux()
 	httpMux.Handle("/v1/", gwMux)
 
 	httpMux.Handle("/internal/identity/validate", server.NewForwardIdentityHandler(authClient))
+	log.Println("HTTP server listening on :9030")
+	if err := http.ListenAndServe(":9030", httpMux); err != nil {
+		log.Fatalf("HTTP server failed: %v", err)
+	}
 }
