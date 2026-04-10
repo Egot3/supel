@@ -86,7 +86,7 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
 
 	if err != nil {
-		if errors.Is(err, fmt.Errorf("User with this email alreay exists")) {
+		if errors.Is(err, errors.New("User with this email alreay exists")) {
 			return nil, status.Error(codes.AlreadyExists, err.Error())
 		} else {
 			return nil, status.Error(codes.Internal, "Internal server error")

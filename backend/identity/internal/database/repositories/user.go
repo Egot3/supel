@@ -87,6 +87,7 @@ func Register(ctx context.Context, email, password string) (string, types.UserRo
 	user = &models.User{
 		Email:        email,
 		PasswordHash: passwordHash,
+		Role:         types.RoleUser,
 	}
 
 	_, err = database.DB.NewInsert().Model(user).Returning("*").Exec(ctx)
