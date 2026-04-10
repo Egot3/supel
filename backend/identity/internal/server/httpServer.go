@@ -2,6 +2,7 @@ package server
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"strings"
 
@@ -13,12 +14,14 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 	return func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
 		if authHeader == "" {
+			log.Printf("auth header was not found")
 			http.Error(w, "Missing auth header", 401)
 			return
 		}
 
 		token := strings.TrimPrefix(authHeader, "Bearer ")
 		if token == authHeader {
+			log.Printf("undefined type of auth")
 			http.Error(w, "Strange auth token", 401)
 			return
 		}
@@ -27,6 +30,7 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 			Token: token,
 		})
 		if err != nil {
+			log.Printf("bad token: %v", err)
 			http.Error(w, "invalid token", 401)
 			return
 		}
@@ -34,16 +38,20 @@ func NewForwardIdentityHandler(authClient pb.IdentityServiceClient) http.Handler
 		remintedToken, err := authClient.RemintToken(r.Context(), &pb.Token{
 			Token: token,
 		})
-		cookie := &http.Cookie{
-			Name:     "Authorization",
-			Value:    fmt.Sprintf("Bearer %v", remintedToken),
-			Path:     "/",
-			HttpOnly: true,
-			Secure:   true,
-			SameSite: http.SameSiteLaxMode,
-		}
+		if err != nil {
+			cookie := &http.Cookie{
+				Name:     "Authorization",
+				Value:    fmt.Sprintf("Bearer %v", remintedToken),
+				Path:     "/",
+				HttpOnly: true,
+				Secure:   true,
+				SameSite: http.SameSiteLaxMode,
+			}
 
-		http.SetCookie(w, cookie)
+			http.SetCookie(w, cookie)
+		} else {
+			log.Printf("error while reminting: %v", err)
+		}
 
 		w.Header().Set("user-uuid", resp.Uuid)
 		w.Header().Set("user-role", resp.Role)
