@@ -5,19 +5,6 @@ go 1.26.1
 require github.com/uptrace/bun/driver/pgdriver v1.2.15
 
 require (
-	ariga.io/atlas v0.36.2-0.20250801020723-2aaaf0682dd9 // indirect
-	ariga.io/atlas-provider-bun v0.0.3 // indirect
-	github.com/alecthomas/kong v1.12.1 // indirect
-	github.com/uptrace/bun/dialect/mssqldialect v1.2.15 // indirect
-	github.com/uptrace/bun/dialect/mysqldialect v1.2.15 // indirect
-	github.com/uptrace/bun/dialect/oracledialect v1.2.15 // indirect
-	github.com/uptrace/bun/dialect/sqlitedialect v1.2.15 // indirect
-	golang.org/x/mod v0.34.0 // indirect
-	golang.org/x/sync v0.20.0 // indirect
-	golang.org/x/tools v0.43.0 // indirect
-)
-
-require (
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect

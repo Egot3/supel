@@ -74,7 +74,7 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*empt
 	}
 
 	if err := grpc.SetHeader(ctx, metadata.Pairs(
-		"set-cookie", fmt.Sprintf("auth_token=%v; HttpOnly; Secure; SameSite=Lax; Path=/v1/", token),
+		"set-cookie", fmt.Sprintf("auth_token=%v; HttpOnly; Secure; SameSite=Lax; Path=/", token),
 	)); err != nil {
 		return nil, status.Error(codes.Internal, "grpc Cookie setting error")
 	}
