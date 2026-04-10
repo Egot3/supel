@@ -31,11 +31,15 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 		return nil, err
 	}
 	user, err := repositories.UserById(ctx, body.ID)
+	if err != nil {
+		log.Println("user not found with this token", err)
+		return nil, status.Error(codes.Unauthenticated, "User not found")
+	}
 
 	return &pb.TokenPayload{
 		Uuid: user.UUID,
 		Role: string(user.Role),
-	}, err
+	}, nil
 }
 
 func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.Token, error) {
@@ -78,9 +82,11 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*empt
 }
 
 func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) (*emptypb.Empty, error) {
+	//log.Printf("email: %v, password: %v", req.Email, req.Password)
 	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
+
 	if err != nil {
-		if errors.Is(err, errors.New("User with this email alreay exists")) {
+		if errors.Is(err, fmt.Errorf("User with this email alreay exists")) {
 			return nil, status.Error(codes.AlreadyExists, err.Error())
 		} else {
 			return nil, status.Error(codes.Internal, "Internal server error")

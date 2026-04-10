@@ -4,6 +4,8 @@ import (
 	"context"
 	"database/sql"
 	"errors"
+	"fmt"
+	"log"
 
 	"github.com/Egot3/supel/backend/identity/internal/database"
 	"github.com/Egot3/supel/backend/identity/internal/models"
@@ -65,13 +67,20 @@ func Login(ctx context.Context, email, password string) (string, types.UserRole,
 }
 
 func Register(ctx context.Context, email, password string) (string, types.UserRole, error) {
+	log.Printf("registering user with email: %v", email)
 	user, err := UserByEmail(ctx, email)
+	if err != nil {
+		log.Printf("error while fetching user: %v", err)
+		return "", "", fmt.Errorf("error while fetching user")
+	}
 	if user != nil {
-		return "", "", errors.New("User with this email alreay exists")
+		log.Printf("user not found")
+		return "", "", fmt.Errorf("User with this email alreay exists")
 	}
 
 	passwordHash, err := passwordutils.HashPassword(password)
 	if err != nil {
+		log.Printf("hashing password failed: %v", err)
 		return "", "", err
 	}
 
@@ -81,6 +90,10 @@ func Register(ctx context.Context, email, password string) (string, types.UserRo
 	}
 
 	_, err = database.DB.NewInsert().Model(&user).Returning("*").Exec(ctx)
+	if err != nil {
+		log.Println("error while inserting user: ", err.Error())
+		return "", "", err
+	}
 
 	return user.UUID, user.Role, nil
 }
