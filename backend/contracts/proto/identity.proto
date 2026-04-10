@@ -29,18 +29,18 @@ service IdentityService {
     rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload){
         option (google.api.http) = {
-            get: "/v1/identity/validate/{token}"
+            get: "/v1/public/validate/{token}"
         };
     };
     rpc Login(LoginRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/v1/identity/login"
+            post: "/v1/public/login"
             body: "*"
         };
     };
     rpc Register(RegisterRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/v1/identity/register"
+            post: "/v1/public/register"
             body: "*"
         };
     };

@@ -140,7 +140,7 @@ func RegisterIdentityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/ValidateToken", runtime.WithHTTPPathPattern("/v1/identity/validate/{token}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/ValidateToken", runtime.WithHTTPPathPattern("/v1/public/validate/{token}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -160,7 +160,7 @@ func RegisterIdentityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/Login", runtime.WithHTTPPathPattern("/v1/identity/login"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/Login", runtime.WithHTTPPathPattern("/v1/public/login"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -180,7 +180,7 @@ func RegisterIdentityServiceHandlerServer(ctx context.Context, mux *runtime.Serv
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/Register", runtime.WithHTTPPathPattern("/v1/identity/register"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/identity.IdentityService/Register", runtime.WithHTTPPathPattern("/v1/public/register"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -238,7 +238,7 @@ func RegisterIdentityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/ValidateToken", runtime.WithHTTPPathPattern("/v1/identity/validate/{token}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/ValidateToken", runtime.WithHTTPPathPattern("/v1/public/validate/{token}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -255,7 +255,7 @@ func RegisterIdentityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/Login", runtime.WithHTTPPathPattern("/v1/identity/login"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/Login", runtime.WithHTTPPathPattern("/v1/public/login"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -272,7 +272,7 @@ func RegisterIdentityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/Register", runtime.WithHTTPPathPattern("/v1/identity/register"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/identity.IdentityService/Register", runtime.WithHTTPPathPattern("/v1/public/register"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -289,9 +289,9 @@ func RegisterIdentityServiceHandlerClient(ctx context.Context, mux *runtime.Serv
 }
 
 var (
-	pattern_IdentityService_ValidateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "identity", "validate", "token"}, ""))
-	pattern_IdentityService_Login_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "identity", "login"}, ""))
-	pattern_IdentityService_Register_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "identity", "register"}, ""))
+	pattern_IdentityService_ValidateToken_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "public", "validate", "token"}, ""))
+	pattern_IdentityService_Login_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "public", "login"}, ""))
+	pattern_IdentityService_Register_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "public", "register"}, ""))
 )
 
 var (
