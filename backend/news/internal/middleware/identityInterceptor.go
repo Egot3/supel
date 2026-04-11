@@ -28,12 +28,12 @@ func AuthInterceptor(ctx context.Context, req any, info *grpc.UnaryServerInfo,
 		return nil, status.Error(codes.Unauthenticated, "missing metadata")
 	}
 
-	userIDs := md.Get("x-user-id")
+	userIDs := md.Get("user-id")
 	if len(userIDs) == 0 {
 		return nil, status.Error(codes.Unauthenticated, "missing user identity")
 	}
 
-	roles := md.Get("x-user-role")
+	roles := md.Get("user-role")
 	role := ""
 	if len(roles) > 0 {
 		role = roles[0]
