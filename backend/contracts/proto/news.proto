@@ -28,15 +28,15 @@ message GenerateNewUploadURLsResponse {
 message CreateNewRequest {
     reserved 1;
     string caption = 2;
-    string body = 3; 
-    repeated string file_keys = 4;
+    optional string body_key = 3;
+    repeated string image_keys = 4;
 }
 
 message New {
     string new_id = 1;
     string user_id = 2;
     string caption = 3;
-    optional string body = 4;
+    optional string body_url = 4;
     repeated string image_urls = 5;
     google.protobuf.Timestamp created_at = 6;
 }
