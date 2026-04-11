@@ -14,5 +14,5 @@ type New struct {
 	Body          string    `bun:"body"`
 	CreatedAt     time.Time `bun:"created_at,notnull,default:now()"`
 
-	_ struct{} `bun:"unique:new_uuid_idx,type:unique"`
+	_ struct{} `bun:"unique:new_uuid_idx"`
 }
