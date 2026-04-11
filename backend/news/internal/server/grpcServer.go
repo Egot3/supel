@@ -13,6 +13,7 @@ import (
 	sanitizationutils "github.com/Egot3/supel/backend/news/internal/sanitizationUtils"
 	"github.com/google/uuid"
 	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
@@ -23,9 +24,13 @@ type NewsSever struct {
 }
 
 func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
-	userID, ok1 := ctx.Value("user-uuid").(string)
-	role, ok2 := ctx.Value("user-role").(string)
-	return userID, role, ok1 && ok2
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return "", "", false
+	}
+	userID = md.Get("user-uuid")[0]
+	role = md.Get("user-role")[0]
+	return userID, role, len(userID) == 0 && len(role) == 0
 }
 
 func NewNewsService(storageService storage.StorageService) *NewsSever {
