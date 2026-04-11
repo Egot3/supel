@@ -19,6 +19,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	NewsService_GenerateBodyUploadURL_FullMethodName = "/news.NewsService/GenerateBodyUploadURL"
 	NewsService_GenerateNewUploadURLs_FullMethodName = "/news.NewsService/GenerateNewUploadURLs"
 	NewsService_CreateNew_FullMethodName             = "/news.NewsService/CreateNew"
 	NewsService_GetNew_FullMethodName                = "/news.NewsService/GetNew"
@@ -29,6 +30,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type NewsServiceClient interface {
+	GenerateBodyUploadURL(ctx context.Context, in *GenerateBodyUploadURLRequest, opts ...grpc.CallOption) (*GenerateBodyUploadURLResponse, error)
 	GenerateNewUploadURLs(ctx context.Context, in *GenerateUploadURLSsRequest, opts ...grpc.CallOption) (*GenerateNewUploadURLsResponse, error)
 	CreateNew(ctx context.Context, in *CreateNewRequest, opts ...grpc.CallOption) (*CreateNewResponse, error)
 	GetNew(ctx context.Context, in *GetNewRequest, opts ...grpc.CallOption) (*GetNewResponse, error)
@@ -41,6 +43,16 @@ type newsServiceClient struct {
 
 func NewNewsServiceClient(cc grpc.ClientConnInterface) NewsServiceClient {
 	return &newsServiceClient{cc}
+}
+
+func (c *newsServiceClient) GenerateBodyUploadURL(ctx context.Context, in *GenerateBodyUploadURLRequest, opts ...grpc.CallOption) (*GenerateBodyUploadURLResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GenerateBodyUploadURLResponse)
+	err := c.cc.Invoke(ctx, NewsService_GenerateBodyUploadURL_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *newsServiceClient) GenerateNewUploadURLs(ctx context.Context, in *GenerateUploadURLSsRequest, opts ...grpc.CallOption) (*GenerateNewUploadURLsResponse, error) {
@@ -87,6 +99,7 @@ func (c *newsServiceClient) ListNews(ctx context.Context, in *ListNewsRequest, o
 // All implementations must embed UnimplementedNewsServiceServer
 // for forward compatibility.
 type NewsServiceServer interface {
+	GenerateBodyUploadURL(context.Context, *GenerateBodyUploadURLRequest) (*GenerateBodyUploadURLResponse, error)
 	GenerateNewUploadURLs(context.Context, *GenerateUploadURLSsRequest) (*GenerateNewUploadURLsResponse, error)
 	CreateNew(context.Context, *CreateNewRequest) (*CreateNewResponse, error)
 	GetNew(context.Context, *GetNewRequest) (*GetNewResponse, error)
@@ -101,6 +114,9 @@ type NewsServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedNewsServiceServer struct{}
 
+func (UnimplementedNewsServiceServer) GenerateBodyUploadURL(context.Context, *GenerateBodyUploadURLRequest) (*GenerateBodyUploadURLResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GenerateBodyUploadURL not implemented")
+}
 func (UnimplementedNewsServiceServer) GenerateNewUploadURLs(context.Context, *GenerateUploadURLSsRequest) (*GenerateNewUploadURLsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GenerateNewUploadURLs not implemented")
 }
@@ -132,6 +148,24 @@ func RegisterNewsServiceServer(s grpc.ServiceRegistrar, srv NewsServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&NewsService_ServiceDesc, srv)
+}
+
+func _NewsService_GenerateBodyUploadURL_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GenerateBodyUploadURLRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServiceServer).GenerateBodyUploadURL(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsService_GenerateBodyUploadURL_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServiceServer).GenerateBodyUploadURL(ctx, req.(*GenerateBodyUploadURLRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _NewsService_GenerateNewUploadURLs_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -213,6 +247,10 @@ var NewsService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "news.NewsService",
 	HandlerType: (*NewsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "GenerateBodyUploadURL",
+			Handler:    _NewsService_GenerateBodyUploadURL_Handler,
+		},
 		{
 			MethodName: "GenerateNewUploadURLs",
 			Handler:    _NewsService_GenerateNewUploadURLs_Handler,

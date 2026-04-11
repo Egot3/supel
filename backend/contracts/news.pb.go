@@ -611,6 +611,94 @@ func (x *ListNewsResponse) GetTotal() uint64 {
 	return 0
 }
 
+type GenerateBodyUploadURLRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	BodyName      string                 `protobuf:"bytes,1,opt,name=body_name,json=bodyName,proto3" json:"body_name,omitempty"` //first 16 chars
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateBodyUploadURLRequest) Reset() {
+	*x = GenerateBodyUploadURLRequest{}
+	mi := &file_proto_news_proto_msgTypes[11]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateBodyUploadURLRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateBodyUploadURLRequest) ProtoMessage() {}
+
+func (x *GenerateBodyUploadURLRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_news_proto_msgTypes[11]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateBodyUploadURLRequest.ProtoReflect.Descriptor instead.
+func (*GenerateBodyUploadURLRequest) Descriptor() ([]byte, []int) {
+	return file_proto_news_proto_rawDescGZIP(), []int{11}
+}
+
+func (x *GenerateBodyUploadURLRequest) GetBodyName() string {
+	if x != nil {
+		return x.BodyName
+	}
+	return ""
+}
+
+type GenerateBodyUploadURLResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Target        *UploadTarget          `protobuf:"bytes,1,opt,name=target,proto3" json:"target,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *GenerateBodyUploadURLResponse) Reset() {
+	*x = GenerateBodyUploadURLResponse{}
+	mi := &file_proto_news_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GenerateBodyUploadURLResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GenerateBodyUploadURLResponse) ProtoMessage() {}
+
+func (x *GenerateBodyUploadURLResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_news_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GenerateBodyUploadURLResponse.ProtoReflect.Descriptor instead.
+func (*GenerateBodyUploadURLResponse) Descriptor() ([]byte, []int) {
+	return file_proto_news_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *GenerateBodyUploadURLResponse) GetTarget() *UploadTarget {
+	if x != nil {
+		return x.Target
+	}
+	return nil
+}
+
 var File_proto_news_proto protoreflect.FileDescriptor
 
 const file_proto_news_proto_rawDesc = "" +
@@ -654,8 +742,13 @@ const file_proto_news_proto_rawDesc = "" +
 	"\x04news\x18\x01 \x03(\v2\t.news.NewR\x04news\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\rR\x04page\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\rR\x04size\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x04R\x05total2\xf9\x02\n" +
+	"\x05total\x18\x04 \x01(\x04R\x05total\";\n" +
+	"\x1cGenerateBodyUploadURLRequest\x12\x1b\n" +
+	"\tbody_name\x18\x01 \x01(\tR\bbodyName\"K\n" +
+	"\x1dGenerateBodyUploadURLResponse\x12*\n" +
+	"\x06target\x18\x01 \x01(\v2\x12.news.UploadTargetR\x06target2\xf5\x03\n" +
 	"\vNewsService\x12z\n" +
+	"\x15GenerateBodyUploadURL\x12\".news.GenerateBodyUploadURLRequest\x1a#.news.GenerateBodyUploadURLResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/news/body\x12z\n" +
 	"\x15GenerateNewUploadURLs\x12 .news.GenerateUploadURLSsRequest\x1a#.news.GenerateNewUploadURLsResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/news/images\x12Q\n" +
 	"\tCreateNew\x12\x16.news.CreateNewRequest\x1a\x17.news.CreateNewResponse\"\x13\x82\xd3\xe4\x93\x02\r:\x01*\"\b/v1/news\x12N\n" +
 	"\x06GetNew\x12\x13.news.GetNewRequest\x1a\x14.news.GetNewResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/news/{new_id}\x12K\n" +
@@ -674,7 +767,7 @@ func file_proto_news_proto_rawDescGZIP() []byte {
 	return file_proto_news_proto_rawDescData
 }
 
-var file_proto_news_proto_msgTypes = make([]protoimpl.MessageInfo, 11)
+var file_proto_news_proto_msgTypes = make([]protoimpl.MessageInfo, 13)
 var file_proto_news_proto_goTypes = []any{
 	(*GenerateUploadURLSsRequest)(nil),    // 0: news.GenerateUploadURLSsRequest
 	(*ImageMeta)(nil),                     // 1: news.ImageMeta
@@ -687,28 +780,33 @@ var file_proto_news_proto_goTypes = []any{
 	(*GetNewResponse)(nil),                // 8: news.GetNewResponse
 	(*ListNewsRequest)(nil),               // 9: news.ListNewsRequest
 	(*ListNewsResponse)(nil),              // 10: news.ListNewsResponse
-	(*timestamppb.Timestamp)(nil),         // 11: google.protobuf.Timestamp
+	(*GenerateBodyUploadURLRequest)(nil),  // 11: news.GenerateBodyUploadURLRequest
+	(*GenerateBodyUploadURLResponse)(nil), // 12: news.GenerateBodyUploadURLResponse
+	(*timestamppb.Timestamp)(nil),         // 13: google.protobuf.Timestamp
 }
 var file_proto_news_proto_depIdxs = []int32{
 	1,  // 0: news.GenerateUploadURLSsRequest.images:type_name -> news.ImageMeta
 	2,  // 1: news.GenerateNewUploadURLsResponse.targets:type_name -> news.UploadTarget
-	11, // 2: news.New.created_at:type_name -> google.protobuf.Timestamp
+	13, // 2: news.New.created_at:type_name -> google.protobuf.Timestamp
 	5,  // 3: news.CreateNewResponse.new:type_name -> news.New
 	5,  // 4: news.GetNewResponse.new:type_name -> news.New
 	5,  // 5: news.ListNewsResponse.news:type_name -> news.New
-	0,  // 6: news.NewsService.GenerateNewUploadURLs:input_type -> news.GenerateUploadURLSsRequest
-	4,  // 7: news.NewsService.CreateNew:input_type -> news.CreateNewRequest
-	7,  // 8: news.NewsService.GetNew:input_type -> news.GetNewRequest
-	9,  // 9: news.NewsService.ListNews:input_type -> news.ListNewsRequest
-	3,  // 10: news.NewsService.GenerateNewUploadURLs:output_type -> news.GenerateNewUploadURLsResponse
-	6,  // 11: news.NewsService.CreateNew:output_type -> news.CreateNewResponse
-	8,  // 12: news.NewsService.GetNew:output_type -> news.GetNewResponse
-	10, // 13: news.NewsService.ListNews:output_type -> news.ListNewsResponse
-	10, // [10:14] is the sub-list for method output_type
-	6,  // [6:10] is the sub-list for method input_type
-	6,  // [6:6] is the sub-list for extension type_name
-	6,  // [6:6] is the sub-list for extension extendee
-	0,  // [0:6] is the sub-list for field type_name
+	2,  // 6: news.GenerateBodyUploadURLResponse.target:type_name -> news.UploadTarget
+	11, // 7: news.NewsService.GenerateBodyUploadURL:input_type -> news.GenerateBodyUploadURLRequest
+	0,  // 8: news.NewsService.GenerateNewUploadURLs:input_type -> news.GenerateUploadURLSsRequest
+	4,  // 9: news.NewsService.CreateNew:input_type -> news.CreateNewRequest
+	7,  // 10: news.NewsService.GetNew:input_type -> news.GetNewRequest
+	9,  // 11: news.NewsService.ListNews:input_type -> news.ListNewsRequest
+	12, // 12: news.NewsService.GenerateBodyUploadURL:output_type -> news.GenerateBodyUploadURLResponse
+	3,  // 13: news.NewsService.GenerateNewUploadURLs:output_type -> news.GenerateNewUploadURLsResponse
+	6,  // 14: news.NewsService.CreateNew:output_type -> news.CreateNewResponse
+	8,  // 15: news.NewsService.GetNew:output_type -> news.GetNewResponse
+	10, // 16: news.NewsService.ListNews:output_type -> news.ListNewsResponse
+	12, // [12:17] is the sub-list for method output_type
+	7,  // [7:12] is the sub-list for method input_type
+	7,  // [7:7] is the sub-list for extension type_name
+	7,  // [7:7] is the sub-list for extension extendee
+	0,  // [0:7] is the sub-list for field type_name
 }
 
 func init() { file_proto_news_proto_init() }
@@ -723,7 +821,7 @@ func file_proto_news_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_news_proto_rawDesc), len(file_proto_news_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   11,
+			NumMessages:   13,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

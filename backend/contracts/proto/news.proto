@@ -65,7 +65,21 @@ message ListNewsResponse {
     uint64 total = 4;
 }
 
+message GenerateBodyUploadURLRequest {
+    string body_name = 1; //first 16 chars
+}
+
+message GenerateBodyUploadURLResponse {
+    UploadTarget target = 1;
+}
+
 service NewsService {
+    rpc GenerateBodyUploadURL(GenerateBodyUploadURLRequest) returns (GenerateBodyUploadURLResponse){
+        option (google.api.http) = {
+            post: "/v1/news/body"
+            body: "*"
+        };
+    };
     rpc GenerateNewUploadURLs(GenerateUploadURLSsRequest) returns (GenerateNewUploadURLsResponse){
         option (google.api.http) = {
             post: "/v1/news/images"
