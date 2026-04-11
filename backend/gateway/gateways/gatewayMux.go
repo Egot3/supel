@@ -8,6 +8,7 @@ import (
 func NewGatewayMux() *runtime.ServeMux {
 	return runtime.NewServeMux(
 		interceptor.CookieSetter(),
+		interceptor.HeaderIjector(),
 
 		runtime.WithIncomingHeaderMatcher(func(s string) (string, bool) {
 			switch s {
