@@ -8,7 +8,6 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/news/internal/database/repositories"
-	"github.com/Egot3/supel/backend/news/internal/middleware"
 	"github.com/Egot3/supel/backend/news/internal/models"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
 	sanitizationutils "github.com/Egot3/supel/backend/news/internal/sanitizationUtils"
@@ -23,6 +22,12 @@ type NewsSever struct {
 	storageService storage.StorageService
 }
 
+func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
+	userID, ok1 := ctx.Value("user-uuid").(string)
+	role, ok2 := ctx.Value("user-role").(string)
+	return userID, role, ok1 && ok2
+}
+
 func NewNewsService(storageService storage.StorageService) *NewsSever {
 	return &NewsSever{
 		storageService: storageService,
@@ -34,7 +39,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	fileKeys := req.GetFileKeys()
 	log.Printf("fKeys: %v", fileKeys)
 
-	userUuid, _, ok := middleware.UserFromContext(ctx)
+	userUuid, _, ok := UserFromContext(ctx)
 	if !ok {
 		log.Println("bad creditantials: ", userUuid)
 		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
