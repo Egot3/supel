@@ -27,15 +27,16 @@ require (
 	github.com/aws/aws-sdk-go-v2/service/sts v1.41.10 // indirect
 	github.com/aws/smithy-go v1.24.2 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0 // indirect
 	go.opentelemetry.io/otel v1.40.0 // indirect
 	go.opentelemetry.io/otel/trace v1.40.0 // indirect
 	golang.org/x/crypto v0.48.0 // indirect
-	google.golang.org/genproto/googleapis/api v0.0.0-20260120221211-b8f7ae30c516 // indirect
+	google.golang.org/genproto/googleapis/api v0.0.0-20260209200024-4cfbd4190f57 // indirect
 	mellium.im/sasl v0.3.2 // indirect
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.0.7
+	github.com/Egot3/supel/backend/contracts v0.1.0
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.98.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
@@ -47,7 +48,7 @@ require (
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
-	google.golang.org/genproto/googleapis/rpc v0.0.0-20260120221211-b8f7ae30c516 // indirect
+	google.golang.org/genproto/googleapis/rpc v0.0.0-20260209200024-4cfbd4190f57 // indirect
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11
 )

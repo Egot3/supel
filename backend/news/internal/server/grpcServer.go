@@ -41,7 +41,7 @@ func NewNewsService(storageService storage.StorageService) *NewsSever {
 
 func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*pb.CreateNewResponse, error) {
 	// there is an RBAC call, you just don't see it in MVP
-	fileKeys := req.GetFileKeys()
+	fileKeys := req.GetImageKeys()
 	log.Printf("fKeys: %v", fileKeys)
 
 	userUuid, role, ok := UserFromContext(ctx)
@@ -53,7 +53,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	createdNew, err := repositories.CreateNew(ctx, models.New{
 		UserUUID: userUuid,
 		Caption:  req.Caption,
-		Body:     req.GetBody(),
+		Body:     req.GetBodyKey(),
 	}, fileKeys)
 	if err != nil {
 		log.Printf("Couldn't create a new %v", err)
@@ -76,7 +76,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 			NewId:     createdNew.NewUUID,
 			UserId:    userUuid,
 			Caption:   createdNew.Caption,
-			Body:      &createdNew.Body,
+			BodyUrl:   &createdNew.Body,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
@@ -112,7 +112,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			NewId:     createdNew.NewUUID,
 			UserId:    createdNew.UserUUID,
 			Caption:   createdNew.Caption,
-			Body:      &createdNew.Body,
+			BodyUrl:   &createdNew.Body,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
@@ -139,5 +139,24 @@ func (s *NewsSever) GenerateNewUploadURL(ctx context.Context, req *pb.GenerateUp
 
 	return &pb.GenerateNewUploadURLsResponse{
 		Targets: putUrls,
+	}, nil
+}
+
+func (s *NewsSever) GenerateBodyUploadURL(ctx context.Context, req *pb.GenerateBodyUploadURLRequest) (*pb.GenerateBodyUploadURLResponse, error) {
+
+	key := sanitizationutils.Slugify(
+		fmt.Sprintf("orgs/ETSEvilCorp/news/body/%v/%v/%v",
+			uuid.NewString(), time.Now().Format(time.RFC3339), req.BodyName))
+
+	putUrl, err := s.storageService.PUTurl(ctx, key, "text/markdown")
+	if err != nil {
+		return nil, status.Error(codes.Internal, err.Error())
+	}
+
+	return &pb.GenerateBodyUploadURLResponse{
+		Target: &pb.UploadTarget{
+			UploadUrl: putUrl,
+			FileKey:   key,
+		},
 	}, nil
 }
