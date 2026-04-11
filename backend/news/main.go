@@ -11,6 +11,7 @@ import (
 	"github.com/Egot3/supel/backend/news/internal/database"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
 	"github.com/Egot3/supel/backend/news/internal/server"
+	"github.com/aws/aws-sdk-go-v2/service/s3"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -42,7 +43,21 @@ func main() {
 		log.Fatalf("Failed to create storage client: %v", err)
 	}
 
-	s3Service := storage.NewStorageService(client, s3Config.Bucket)
+	s3ConfigPresigned := storage.Config{
+		Endpoint: fmt.Sprintf("http://%v:%v", os.Getenv("STORAGE_PUBLIC_HOST"),
+			os.Getenv("STORAGE_PUBLIC_PORT")),
+		AccessKey: os.Getenv("STORAGE_ACCESS_KEY"),
+		SecretKey: os.Getenv("STORAGE_SECRET_KEY"),
+		Bucket:    os.Getenv("STORAGE_NEWS_BUCKET"),
+	}
+
+	presignedClientClient, err := storage.NewClient(ctx, s3ConfigPresigned)
+	if err != nil {
+		log.Fatalf("Failed to create signed storage client: %v", err)
+	}
+	presignedClient := s3.NewPresignClient(presignedClientClient)
+
+	s3Service := storage.NewStorageService(client, presignedClient, s3Config.Bucket)
 
 	if err := s3Service.EnsureBuckets(ctx, []string{os.Getenv("STORAGE_NEWS_BUCKET")}); err != nil {
 		log.Fatal(err)

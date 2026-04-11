@@ -9,21 +9,38 @@ import (
 )
 
 type StorageService struct {
-	client *s3.Client
-	bucket string
+	client          *s3.Client
+	presignedClient *s3.PresignClient
+	bucket          string
 }
 
-func NewStorageService(client *s3.Client, bucket string) *StorageService {
+// func NewS3Client(endpoint, accessKey, secretKey string) (*s3.Client, error) {
+// 	cfg, err := config.LoadDefaultConfig(context.Background(),
+// 		config.WithRegion("ru-middle-1"),
+// 		config.WithCredentialsProvider(
+// 			credentials.NewStaticCredentialsProvider(accessKey, secretKey, ""),
+// 		),
+// 	)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+
+// 	return s3.NewFromConfig(cfg, func(o *s3.Options) {
+// 		o.BaseEndpoint = aws.String(endpoint)
+// 		o.UsePathStyle = true
+// 	}), nil
+// }
+
+func NewStorageService(client *s3.Client, presignedClient *s3.PresignClient, bucket string) *StorageService {
 	return &StorageService{
-		client: client,
-		bucket: bucket,
+		client:          client,
+		presignedClient: presignedClient,
+		bucket:          bucket,
 	}
 }
 
 func (s *StorageService) GETurl(ctx context.Context, key string) (string, error) {
-	presignClient := s3.NewPresignClient(s.client)
-
-	presignedUrl, err := presignClient.PresignGetObject(ctx,
+	presignedUrl, err := s.presignedClient.PresignGetObject(ctx,
 		&s3.GetObjectInput{
 			Bucket: aws.String(s.bucket),
 			Key:    aws.String(key),
@@ -38,9 +55,7 @@ func (s *StorageService) GETurl(ctx context.Context, key string) (string, error)
 }
 
 func (s *StorageService) PUTurl(ctx context.Context, key, mime string) (string, error) {
-	presignClient := s3.NewPresignClient(s.client)
-
-	presignedUrl, err := presignClient.PresignPutObject(ctx,
+	presignedUrl, err := s.presignedClient.PresignPutObject(ctx,
 		&s3.PutObjectInput{
 			Bucket:      aws.String(s.bucket),
 			Key:         aws.String(key),
