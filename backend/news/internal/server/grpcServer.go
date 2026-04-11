@@ -30,7 +30,7 @@ func UserFromContext(ctx context.Context) (userID string, role string, ok bool) 
 	}
 	userID = md.Get("user-uuid")[0]
 	role = md.Get("user-role")[0]
-	return userID, role, len(userID) == 0 && len(role) == 0
+	return userID, role, !(len(userID) == 0 && len(role) == 0)
 }
 
 func NewNewsService(storageService storage.StorageService) *NewsSever {
@@ -44,9 +44,9 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	fileKeys := req.GetFileKeys()
 	log.Printf("fKeys: %v", fileKeys)
 
-	userUuid, _, ok := UserFromContext(ctx)
+	userUuid, role, ok := UserFromContext(ctx)
 	if !ok {
-		log.Println("bad creditantials: ", userUuid)
+		log.Println("bad creditantials: ", userUuid, role)
 		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
 	}
 
