@@ -66,7 +66,7 @@ func NewByUUID(ctx context.Context, uuid string) (*models.New, error) {
 }
 
 func NewBulk(ctx context.Context, page, size int) ([]models.New, int, error) {
-	found := make([]models.New, 0, size)
+	var found []models.New
 	total, err := database.DB.NewSelect().
 		Model(&found).
 		Limit(size).
