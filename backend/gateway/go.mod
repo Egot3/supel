@@ -2,7 +2,10 @@ module github.com/Egot3/supel/backend/gateway
 
 go 1.26.1
 
-require github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
+require (
+	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
+	github.com/rs/cors v1.11.1
+)
 
 require go.opentelemetry.io/otel v1.40.0 // indirect
 
