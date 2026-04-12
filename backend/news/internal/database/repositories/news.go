@@ -39,9 +39,8 @@ func CreateNew(ctx context.Context, new models.New, images []string) (*models.Ne
 	return &new, err
 }
 
-func NewImagesByUUId(ctx context.Context, uuid string) ([]string, error) {
-	var imageKeys []string
-	err := database.DB.NewSelect().
+func NewImagesByUUId(ctx context.Context, uuid string) (imageKeys []string, err error) {
+	err = database.DB.NewSelect().
 		Model((*models.NewsImages)(nil)).
 		Column("file_key").
 		Where("new_uuid = ?", uuid).
@@ -64,4 +63,17 @@ func NewByUUID(ctx context.Context, uuid string) (*models.New, error) {
 	}
 
 	return New, nil
+}
+
+func NewBulk(ctx context.Context, page, size int) (found *[]models.New, total int, err error) {
+	total, err = database.DB.NewSelect().
+		Model(&found).
+		Limit(size).
+		Offset(page * size).
+		ScanAndCount(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return found, total, err
 }

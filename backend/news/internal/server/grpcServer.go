@@ -9,6 +9,7 @@ import (
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/news/internal/database/repositories"
 	"github.com/Egot3/supel/backend/news/internal/models"
+	"github.com/Egot3/supel/backend/news/internal/moprconv"
 	storage "github.com/Egot3/supel/backend/news/internal/s3"
 	sanitizationutils "github.com/Egot3/supel/backend/news/internal/sanitizationUtils"
 	"github.com/google/uuid"
@@ -60,7 +61,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	var imageLinks []string
+	imageLinks := make([]string, len(fileKeys))
 	for _, key := range fileKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
@@ -106,7 +107,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	var imageLinks []string
+	imageLinks := make([]string, len(imageKeys))
 	for _, key := range imageKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
@@ -178,5 +179,51 @@ func (s *NewsSever) GenerateBodyUploadURL(ctx context.Context, req *pb.GenerateB
 			UploadUrl: putUrl,
 			FileKey:   key,
 		},
+	}, nil
+}
+
+func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.ListNewsResponse, error) {
+	news, total, err := repositories.NewBulk(ctx, int(req.GetPage()), int(req.GetSize()))
+	if err != nil {
+		log.Printf("Error while listing news: %v", err)
+		return nil, status.Error(codes.Internal, "Error while listing news")
+	}
+
+	targetNews := make([]*pb.New, len(*news))
+	for i, new := range *news {
+		var bodyUrl string
+		if new.Body != "" {
+			bodyUrl, err = s.storageService.GETurl(ctx, new.Body)
+			if err != nil {
+				log.Printf("Err while retrieving body: %v", err)
+				return nil, status.Error(codes.Internal, "failed to create a GET url of body")
+			}
+		}
+
+		imageKeys, err := repositories.NewImagesByUUId(ctx, new.NewUUID)
+		if err != nil {
+			log.Printf("couldn't retriew image keys: %v", err)
+			return nil, status.Error(codes.Internal, err.Error())
+		}
+
+		imageLinks := make([]string, len(imageKeys))
+		for _, key := range imageKeys {
+			imageLink, err := s.storageService.GETurl(ctx, key)
+			if err != nil {
+				log.Printf("couldn't create key for image: %v", err)
+				return nil, status.Error(codes.Internal, err.Error())
+			}
+
+			imageLinks = append(imageLinks, imageLink)
+		}
+
+		targetNews[i] = moprconv.NewConverter(&new, &bodyUrl, imageKeys)
+	}
+
+	return &pb.ListNewsResponse{
+		News:  targetNews,
+		Page:  req.GetPage(),
+		Size:  req.GetSize(),
+		Total: uint64(total),
 	}, nil
 }
