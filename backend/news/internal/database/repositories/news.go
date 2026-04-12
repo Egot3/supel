@@ -67,7 +67,7 @@ func NewByUUID(ctx context.Context, uuid string) (*models.New, error) {
 
 func NewBulk(ctx context.Context, page, size int) (found *[]models.New, total int, err error) {
 	total, err = database.DB.NewSelect().
-		Model(&found).
+		Model(found).
 		Limit(size).
 		Offset(page * size).
 		ScanAndCount(ctx)
