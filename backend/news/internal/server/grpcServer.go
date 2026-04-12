@@ -183,11 +183,13 @@ func (s *NewsSever) GenerateBodyUploadURL(ctx context.Context, req *pb.GenerateB
 }
 
 func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.ListNewsResponse, error) {
+	log.Println("Got request to list news")
 	news, total, err := repositories.NewBulk(ctx, int(req.GetPage()), int(req.GetSize()))
 	if err != nil {
 		log.Printf("Error while listing news: %v", err)
 		return nil, status.Error(codes.Internal, "Error while listing news")
 	}
+	log.Printf("news as models after fetching: %v", news)
 
 	targetNews := make([]*pb.New, len(news))
 	for i, new := range news {
@@ -218,7 +220,9 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 		}
 
 		targetNews[i] = moprconv.NewConverter(&new, &bodyUrl, imageKeys)
+		log.Printf("TargetNew and new: %v \n %v", targetNews[i], new)
 	}
+	log.Printf("TargetNews after hydration: %v", targetNews)
 
 	return &pb.ListNewsResponse{
 		News:  targetNews,
