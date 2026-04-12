@@ -189,8 +189,8 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 		return nil, status.Error(codes.Internal, "Error while listing news")
 	}
 
-	targetNews := make([]*pb.New, len(*news))
-	for i, new := range *news {
+	targetNews := make([]*pb.New, len(news))
+	for i, new := range news {
 		var bodyUrl string
 		if new.Body != "" {
 			bodyUrl, err = s.storageService.GETurl(ctx, new.Body)
