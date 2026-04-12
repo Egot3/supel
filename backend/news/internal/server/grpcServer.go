@@ -71,12 +71,22 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		imageLinks = append(imageLinks, imageLink)
 	}
 
+	var bodyUrl string
+	if createdNew.Body != "" {
+		bodyUrl, err = s.storageService.GETurl(ctx, createdNew.Body)
+		if err != nil {
+			log.Printf("Err while retrieving body: %v", err)
+			return nil, status.Error(codes.Internal, "failed to create a GET url of body")
+		}
+
+	}
+
 	return &pb.CreateNewResponse{
 		New: &pb.New{
 			NewId:     createdNew.NewUUID,
 			UserId:    userUuid,
 			Caption:   createdNew.Caption,
-			BodyUrl:   &createdNew.Body,
+			BodyUrl:   &bodyUrl,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
