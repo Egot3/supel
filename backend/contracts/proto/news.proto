@@ -29,7 +29,8 @@ message CreateNewRequest {
     reserved 1;
     string caption = 2;
     optional string body_key = 3;
-    repeated string image_keys = 4;
+    uint64 body_size = 4;
+    repeated string image_keys = 5;
 }
 
 message New {
@@ -37,8 +38,9 @@ message New {
     string user_id = 2;
     string caption = 3;
     optional string body_url = 4;
-    repeated string image_urls = 5;
-    google.protobuf.Timestamp created_at = 6;
+    uint64 body_size = 5;
+    repeated string image_urls = 6;
+    google.protobuf.Timestamp created_at = 7;
 }
 
 message CreateNewResponse {
