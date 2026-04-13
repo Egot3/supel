@@ -54,7 +54,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	createdNew, err := repositories.CreateNew(ctx, models.New{
 		UserUUID: userUuid,
 		Caption:  req.Caption,
-		Body:     req.GetBodyKey(),
+		Body:     req.BodyKey,
 	}, fileKeys)
 	if err != nil {
 		log.Printf("Couldn't create a new %v", err)
@@ -73,8 +73,8 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	}
 
 	var bodyUrl string
-	if createdNew.Body != "" {
-		bodyUrl, err = s.storageService.GETurl(ctx, createdNew.Body)
+	if createdNew.Body != nil {
+		bodyUrl, err = s.storageService.GETurl(ctx, *createdNew.Body)
 		if err != nil {
 			log.Printf("Err while retrieving body: %v", err)
 			return nil, status.Error(codes.Internal, "failed to create a GET url of body")
@@ -119,8 +119,8 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 	}
 
 	var bodyUrl string
-	if createdNew.Body != "" {
-		bodyUrl, err = s.storageService.GETurl(ctx, createdNew.Body)
+	if createdNew.Body != nil {
+		bodyUrl, err = s.storageService.GETurl(ctx, *createdNew.Body)
 		if err != nil {
 			log.Printf("Err while retrieving body: %v", err)
 			return nil, status.Error(codes.Internal, "failed to create a GET url of body")
@@ -194,8 +194,8 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 	targetNews := make([]*pb.New, len(news))
 	for i, new := range news {
 		var bodyUrl string
-		if new.Body != "" {
-			bodyUrl, err = s.storageService.GETurl(ctx, new.Body)
+		if new.Body != nil {
+			bodyUrl, err = s.storageService.GETurl(ctx, *new.Body)
 			if err != nil {
 				log.Printf("Err while retrieving body: %v", err)
 				return nil, status.Error(codes.Internal, "failed to create a GET url of body")

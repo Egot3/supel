@@ -11,7 +11,7 @@ type New struct {
 	NewUUID       string    `bun:"new_uuid,pk,type:uuid,default:gen_random_uuid()"`
 	UserUUID      string    `bun:"user_uuid,notnull"`
 	Caption       string    `bun:"caption,notnull"`
-	Body          string    `bun:"body"`
+	Body          *string   `bun:"body"`
 	CreatedAt     time.Time `bun:"created_at,notnull,default:now()"`
 
 	_ struct{} `bun:"unique:new_uuid_idx"`
