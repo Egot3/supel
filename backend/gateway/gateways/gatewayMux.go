@@ -3,6 +3,7 @@ package gateways
 import (
 	"github.com/Egot3/supel/backend/gateway/interceptor"
 	"github.com/grpc-ecosystem/grpc-gateway/v2/runtime"
+	"google.golang.org/protobuf/encoding/protojson"
 )
 
 func NewGatewayMux() *runtime.ServeMux {
@@ -17,6 +18,12 @@ func NewGatewayMux() *runtime.ServeMux {
 			default:
 				return runtime.DefaultHeaderMatcher(s)
 			}
+		}),
+
+		runtime.WithMarshalerOption(runtime.MIMEWildcard, &runtime.JSONPb{
+			MarshalOptions: protojson.MarshalOptions{
+				EmitUnpopulated: true,
+			},
 		}),
 	)
 }
