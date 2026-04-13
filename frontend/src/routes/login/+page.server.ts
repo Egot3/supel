@@ -1,5 +1,7 @@
 import { fail, redirect, type Actions } from '@sveltejs/kit';
-import axios from 'axios';
+import axios, { isAxiosError } from 'axios';
+import { type FormError } from '$lib/types/error';
+import { checkPassword } from '$lib/passwordUtils/checkPassword';
 
 /**
  @satisfies {import{'./$types'}.actions;}
@@ -23,74 +25,36 @@ export const actions: Actions = {
 		const passwordString = password?.toString();
 		console.log(passwordString);
 
-		const passwordLength = passwordString.length;
-		if (passwordLength <= 8) {
-			return fail(422, {
-				password,
-				error: 'SHORT_PASSWORD',
-				errorMessage: 'password must be longer than 7 characters'
-			});
-		}
-		if (passwordLength >= 255) {
-			return fail(422, {
-				password,
-				error: 'LONG_PASSWORD',
-				errorMessage: 'password must be shorter than 256 characters'
+		const err: FormError = checkPassword(passwordString);
+		if (err.status != 200) {
+			return fail(err.status, {
+				error: err.error,
+				cause: err.cause ?? '',
+				errorMessage: err.errorMessage
 			});
 		}
 
-		const digitCount = (passwordString.match(/\d/g) || []).length;
-		if (digitCount < 4) {
-			return fail(422, {
-				password,
-				error: 'DIGIT_IN_PASSWORD_IS_REQUIRED',
-				errorMessage: '5 digits in password are required' // in bank account too
+		try {
+			const tokenResponse = await axios.post('http://localhost/v1/public/login', {
+				email: email,
+				password: password
 			});
-		}
 
-		const whiteSpace = /\s+/.exec(passwordString);
-		if (whiteSpace !== null) {
-			return fail(422, {
-				password,
-				error: 'WHITESPACE_IN_PASSWORD',
-				errorMessage: `Password mustn't have any whitespace characters`
+			const setCookies: Array<string> = tokenResponse.headers['set-cookie'] ?? [];
+			setCookies.forEach((cookie) => {
+				const eqIdx = cookie.indexOf('=');
+				const seIdx = cookie.indexOf(';');
+
+				const cookieName = eqIdx !== -1 ? cookie.substring(0, eqIdx) : cookie;
+				const cookieValue = seIdx !== -1 ? cookie.substring(eqIdx + 1, seIdx) : '';
+				cookies.set(cookieName, cookieValue, { path: '/', httpOnly: true, sameSite: 'lax' });
 			});
+		} catch (err) {
+			if (isAxiosError(err)) {
+				console.log('Err while logging in: ', err.message, err.status);
+			}
+			return fail(500, 'Try logging in later');
 		}
-
-		const uppercaseCount = (passwordString.match(/[A-Z]/g) || []).length;
-		if (uppercaseCount < 1) {
-			return fail(422, {
-				password,
-				error: 'UPPERCASE_IN_PASSWORD_IS_REQUIRED',
-				errorMessage: 'Password must have at least 2 UPPERCASE letters'
-			});
-		}
-
-		const lowercaseCount = (passwordString.match(/([a-z])/g) || []).length;
-		if (lowercaseCount < 1) {
-			return fail(422, {
-				password,
-				error: 'LOWERCASE_IN_PASSWORD_IS_REQUIRED',
-				errorMessage: 'Password must have at least 2 lowercase letters'
-			});
-		}
-
-		const tokenResponse = await axios.post('http://localhost:5003/api/user/login', {
-			email: email,
-			password: password
-		});
-		if (tokenResponse.data == null) {
-			return fail(500);
-		}
-		if (tokenResponse.status == 401) {
-			return fail(401, {
-				error: tokenResponse.data.error,
-				errorMessage: tokenResponse.data.errorMessage
-			});
-		}
-		const token = tokenResponse.data.token;
-
-		cookies.set('auth_token', token, { path: '/' });
 
 		if (url.searchParams.has('redirectTo')) {
 			throw redirect(303, url.searchParams.get('redirectTo')!);

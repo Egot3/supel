@@ -1,6 +1,6 @@
 import { redirect } from '@sveltejs/kit';
-import type { Handle } from '@sveltejs/kit';
-import axios from 'axios';
+import type { Handle, HandleFetch } from '@sveltejs/kit';
+import axios, { isAxiosError } from 'axios';
 
 const PUBLIC_ROUTES = ['/login', '/register'];
 
@@ -16,12 +16,15 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	if (token) {
-		console.log('found token ', `/api/user/${token}`);
-		const resp = await axios.get(`http://localhost:5003/api/user/${token}`);
-		if (resp.status == 401) {
-			console.log('bad token');
-			event.cookies.delete('auth_token', { path: '/' });
-			if (!isPublicRoute) throw redirect(302, '/login');
+		console.log('found token ', token);
+		try {
+			await axios.get(`http://localhost/v1/public/validate/${token}`);
+		} catch (err) {
+			if (isAxiosError(err) && err.status === 401) {
+				console.log('bad token');
+				event.cookies.delete('auth_token', { path: '/' });
+				throw redirect(302, '/login');
+			}
 		}
 	}
 
@@ -33,4 +36,13 @@ export const handle: Handle = async ({ event, resolve }) => {
 
 	console.log('resolved with no issue');
 	return resolve(event);
+};
+
+export const handleFetch: HandleFetch = async ({ request, fetch }) => {
+	const response = await fetch(request);
+	if (response.status === 401) {
+		return response;
+	}
+
+	return response;
 };

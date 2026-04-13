@@ -1,5 +1,6 @@
 import { json, type RequestHandler } from '@sveltejs/kit';
 import { error } from 'console';
+import { type newRaw } from '$lib/types/new';
 
 export const GET: RequestHandler = async ({ url, cookies, fetch }) => {
 	const token = cookies.get('auth_token');
@@ -22,7 +23,9 @@ export const GET: RequestHandler = async ({ url, cookies, fetch }) => {
 		throw error(response.status, 'Failed to fetch news');
 	}
 
-	const data = await response.json();
+	const data = (await response.json()) as { news: newRaw[] }; // readablitity++
+
+	//console.log(data);
 
 	return json(data);
 };

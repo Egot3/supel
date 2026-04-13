@@ -2,6 +2,7 @@
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
 	import { withoutAuth } from '$lib/requestUtils/axiosConfigs';
+	import { type newCooked, type newRaw } from '$lib/types/new';
 
 	import axios from 'axios';
 
@@ -19,28 +20,38 @@
 	import { slide } from 'svelte/transition';
 	import { applyAction, enhance } from '$app/forms';
 	import { innerWidth } from 'svelte/reactivity/window';
+	import NewExample from '$lib/components/NewExample.svelte';
+	import type { PageData } from '../$types';
 
-	interface newInterface {
-		id: string;
-		text: string;
-		caption: string;
-		imageLink?: string;
-	}
+	// interface newCooked {
+	// 	id: string;
+	// 	text: string;
+	// 	caption: string;
+	// 	imageLink?: string;
+	// }
+
+	let { data }: { data: PageData } = $props();
 
 	let page = 0;
 	const size = 50;
 
-	const itemsRaw: Array<newInterface> = $state([]);
+	const newsCooked: Array<newCooked> = $state([]);
+	// newsCooked.push(...data.news);
 
 	async function fetchNextPage() {
 		loading = true;
-		const cfg = withoutAuth(`http://localhost:5004/api/post?page=${page}&size=${size}`, 'get', {});
+		const cfg = withoutAuth(`http://localhost:5173/api/news?page=${page}&size=${size}`, 'get', {});
 		axios(cfg)
 			.then((res) => {
-				console.log(res.data);
-				res.data.items.forEach((post: newInterface) => {
-					if (!itemsRaw.some((existing) => existing.id === post.id)) {
-						itemsRaw.push(post);
+				console.log('listing news: ', res.data.news);
+				res.data.news.forEach((newInstance: newRaw) => {
+					if (!newsCooked.some((existing) => existing.newId === newInstance.newId)) {
+						const cookedInstance: newCooked = {
+							newId: newInstance.newId,
+							userId: newInstance.userId,
+							caption: newInstance.caption
+						};
+						newsCooked.push(newInstance);
 					}
 				});
 
@@ -52,12 +63,12 @@
 			.finally(() => (loading = false));
 	}
 
-	function dismantle(toDismantle: newInterface[], k: number): newInterface[][] {
+	function dismantle(toDismantle: newCooked[], k: number): newCooked[][] {
 		if (toDismantle.length == 0) {
 			return [];
 		}
-		const sorted = [...toDismantle].sort((a, b) => b.text.length - a.text.length);
-		const bins: newInterface[][] = Array.from({ length: k }, () => []);
+		const sorted = [...toDismantle].sort((a, b) => b.bodySize - a.bodySize);
+		const bins: newCooked[][] = Array.from({ length: k }, () => []);
 		const sums = new Array(k).fill(0);
 
 		for (const n of sorted) {
@@ -67,7 +78,7 @@
 			}
 			bins[minIndex].push(n);
 			let captionHeigth = (n.caption.length * 1.5) / 6;
-			let textHeight = n.text.length / 6; //не спрашивайте, вообще без понятия
+			let textHeight = n.bodySize / 6; //не спрашивайте, вообще без понятия
 
 			if (captionHeigth > 20) {
 				captionHeigth = 20;
@@ -95,7 +106,7 @@
 
 	function handleScroll(event: UIEvent) {
 		const element = event.currentTarget;
-		const { scrollTop, scrollHeight, clientHeight } = element; // оно есть
+		const { scrollTop, scrollHeight, clientHeight } = element as HTMLElement; // оно есть
 		const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
 
 		if (atBottom !== isAtBottom) {
@@ -108,7 +119,7 @@
 
 	fetchNextPage();
 
-	const items = $derived(dismantle(itemsRaw, Math.ceil(innerWidth.current! / 400)));
+	const items = $derived(dismantle(newsCooked, Math.ceil(innerWidth.current! / 400)));
 
 	let popupModal = $state(false);
 
@@ -116,6 +127,8 @@
 	let bodyText = $state('');
 	// let imagePath = $state(''); TBU
 </script>
+
+{console.log('news:', data.news)}
 
 <Button
 	onclick={() => (popupModal = true)}
@@ -189,7 +202,10 @@
 				</Fileupload>
 			</div>
 			<div class="ml-10 mr-10">
-				<New caption={captionText ?? 'Preview'} text={bodyText ?? 'Your text could be here'} />
+				<NewExample
+					caption={captionText ?? 'Preview'}
+					text={bodyText ?? 'Your text could be here'}
+				/>
 			</div>
 		</div>
 
@@ -227,8 +243,8 @@
 		<div class="flex flex-row gap-gutter p-gutter min-w-0">
 			{#each items as column, i (i)}
 				<div class="flex flex-col gap-4 flex-1 min-w-0">
-					{#each column as item (item.id)}
-						<New caption={item.caption} text={item.text} />
+					{#each column as item (item.newId)}
+						<New caption={item.caption} bodyPromise={item.body} />
 					{/each}
 				</div>
 			{/each}

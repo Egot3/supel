@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { Card } from 'flowbite-svelte';
-	const { imageLink = '', caption, text } = $props();
+	import { Card, Skeleton } from 'flowbite-svelte';
+	import DOMpurify from 'dompurify';
+	const { imageLink = '', caption, bodyPromise, bodyHeight = 20 } = $props();
+	/* eslint svelte/no-at-html-tags: "error" */
 </script>
 
 <!-- /*got the joke? News are not countable*/ -->
@@ -11,10 +13,17 @@
 		>
 			{caption}
 		</h5>
-		<p
-			class="break-all text mb-3 leading-tight font-normal bg-dark text-light font-hollow min-h-8 max-h-80 overflow-y-scroll no-scrollbar wrap-break-words mask-[linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]"
-		>
-			{text}
-		</p>
+		{#if bodyPromise}
+			{#await bodyPromise}
+				<Skeleton class="min-h-[{bodyHeight}px]"></Skeleton>
+			{:then body}
+				<p
+					class="break-all text mb-3 leading-tight font-normal bg-dark text-light font-hollow min-h-8 max-h-80 overflow-y-scroll no-scrollbar wrap-break-words mask-[linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]"
+				>
+					<!-- {console.log('body after resp: ', body)} -->
+					{@html DOMpurify.sanitize(body.text())}
+				</p>
+			{/await}
+		{/if}
 	</div>
 </Card>
