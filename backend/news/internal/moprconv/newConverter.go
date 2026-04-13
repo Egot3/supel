@@ -13,6 +13,7 @@ func NewConverter(newModel *models.New, bodyUrl *string, imageUrls []string) (ne
 		UserId:    newModel.UserUUID,
 		Caption:   newModel.Caption,
 		BodyUrl:   bodyUrl,
+		BodySize:  uint64(newModel.BodySize),
 		ImageUrls: imageUrls,
 		CreatedAt: timestamppb.New(newModel.CreatedAt),
 	}

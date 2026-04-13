@@ -55,6 +55,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		UserUUID: userUuid,
 		Caption:  req.Caption,
 		Body:     req.BodyKey,
+		BodySize: int64(req.BodySize),
 	}, fileKeys)
 	if err != nil {
 		log.Printf("Couldn't create a new %v", err)
@@ -136,6 +137,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			Caption:   createdNew.Caption,
 			BodyUrl:   &bodyUrl,
 			ImageUrls: imageLinks,
+			BodySize:  uint64(createdNew.BodySize),
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
 	}, nil

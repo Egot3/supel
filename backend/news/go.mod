@@ -36,7 +36,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.1.0
+	github.com/Egot3/supel/backend/contracts v0.1.1
 	github.com/aws/aws-sdk-go-v2/service/s3 v1.98.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect

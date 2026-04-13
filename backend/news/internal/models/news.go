@@ -12,6 +12,7 @@ type New struct {
 	UserUUID      string    `bun:"user_uuid,notnull"`
 	Caption       string    `bun:"caption,notnull"`
 	Body          *string   `bun:"body"`
+	BodySize      int64     `bun:"body_size,default:0"`
 	CreatedAt     time.Time `bun:"created_at,notnull,default:now()"`
 
 	_ struct{} `bun:"unique:new_uuid_idx"`
