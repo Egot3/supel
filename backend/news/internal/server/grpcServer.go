@@ -72,14 +72,15 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		imageLinks = append(imageLinks, imageLink)
 	}
 
-	var bodyUrl string
+	bodyUrl := new(string)
+	bodyUrl = nil
 	if createdNew.Body != nil {
-		bodyUrl, err = s.storageService.GETurl(ctx, *createdNew.Body)
+		bUrl, err := s.storageService.GETurl(ctx, *createdNew.Body)
 		if err != nil {
 			log.Printf("Err while retrieving body: %v", err)
 			return nil, status.Error(codes.Internal, "failed to create a GET url of body")
 		}
-
+		bodyUrl = &bUrl
 	}
 
 	return &pb.CreateNewResponse{
@@ -87,7 +88,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 			NewId:     createdNew.NewUUID,
 			UserId:    userUuid,
 			Caption:   createdNew.Caption,
-			BodyUrl:   &bodyUrl,
+			BodyUrl:   bodyUrl,
 			ImageUrls: imageLinks,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
@@ -192,17 +193,19 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 	log.Printf("news as models after fetching: %v", news)
 
 	targetNews := make([]*pb.New, len(news))
-	for i, new := range news {
-		var bodyUrl string
-		if new.Body != nil {
-			bodyUrl, err = s.storageService.GETurl(ctx, *new.Body)
+	for i, newEx := range news {
+		bodyUrl := new(string)
+		bodyUrl = nil
+		if newEx.Body != nil {
+			bUrl, err := s.storageService.GETurl(ctx, *newEx.Body)
 			if err != nil {
 				log.Printf("Err while retrieving body: %v", err)
 				return nil, status.Error(codes.Internal, "failed to create a GET url of body")
 			}
+			bodyUrl = &bUrl
 		}
 
-		imageKeys, err := repositories.NewImagesByUUId(ctx, new.NewUUID)
+		imageKeys, err := repositories.NewImagesByUUId(ctx, newEx.NewUUID)
 		if err != nil {
 			log.Printf("couldn't retriew image keys: %v", err)
 			return nil, status.Error(codes.Internal, err.Error())
@@ -219,8 +222,8 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 			imageLinks = append(imageLinks, imageLink)
 		}
 
-		targetNews[i] = moprconv.NewConverter(&new, &bodyUrl, imageKeys)
-		log.Printf("TargetNew and new: %v \n %v", targetNews[i], new)
+		targetNews[i] = moprconv.NewConverter(&newEx, bodyUrl, imageKeys)
+		log.Printf("TargetNew and new: %v \n %v", targetNews[i], newEx)
 	}
 	log.Printf("TargetNews after hydration: %v", targetNews)
 
