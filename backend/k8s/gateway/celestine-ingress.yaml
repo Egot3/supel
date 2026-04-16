@@ -1,0 +1,29 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gateway-rest
+  namespace: gateway-domain
+spec:
+  entryPoints:
+    - web
+  routes:
+    - kind: Rule
+      match: Host(`localhost`) && Method('OPTIONS')
+      services:
+        - name: gateway-service
+          port: 51000
+
+    - kind: Rule
+      match: Host(`localhost`) && PathPrefix(`/v1/public/`)
+      services:
+        - name: gateway-service
+          port: 51000
+
+    - kind: Rule
+      match: Host(`localhost`) && PathPrefix(`/v1/`)
+      middlewares:
+        - name: jwt-forward-auth
+          namespace: traefik
+      services:
+        - name: gateway-service
+          port: 51000

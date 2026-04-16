@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: identity-db-secret
+  namespace: identity-domain
+type: Opaque
+stringData:
+  JWT_SECRET: a-string-secret-at-least-256-bits-long
+  DB_USER: ets
+  POSTGRES_PASSWORD: super_SECURE-pAsSwOrD2805!!!
+  DB_HOST: identity-db-0.identity-db
+  DB_PORT: "5432"
+  DB_IDENTITY_NAME: identity_db
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: identity-db-init
+  namespace: identity-domain
+data:
+  init.sql: |
+    CREATE ROLE ets WITH LOGIN SUPERUSER PASSWORD 'super_SECURE-pAsSwOrD2805!!!';
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: identity-db
+  namespace: identity-domain
+spec:
+  serviceName: identity-db
+  replicas: 1
+  selector:
+    matchLabels:
+      app: identity-db
+  template:
+    metadata:
+      labels:
+        app: identity-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          envFrom:
+            - secretRef:
+                name: identity-db-secret
+          ports:
+            - containerPort: 5432
+          volumeMounts:
+            - name: identity-db-data
+              mountPath: /var/lib/postgresql/data
+            - name: init-scripts-volume
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-scripts-volume
+          configMap:
+            name: identity-db-init
+  volumeClaimTemplates:
+    - metadata:
+        name: identity-db-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 512Mi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: identity-db
+  namespace: identity-domain
+spec:
+  clusterIP: None
+  selector:
+    app: identity-db
+  ports:
+    - port: 5432
