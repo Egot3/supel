@@ -1,11 +1,7 @@
 <script lang="ts">
 	//import '$lib/assets/styles/news.sass';
 	import New from '$lib/components/New.svelte';
-	import { withoutAuth } from '$lib/requestUtils/axiosConfigs';
-	import { type newCooked, type newRaw } from '$lib/types/new';
-
-	import axios from 'axios';
-
+	import { type newCooked } from '$lib/types/new';
 	import {
 		Button,
 		Spinner,
@@ -22,6 +18,7 @@
 	import { innerWidth } from 'svelte/reactivity/window';
 	import NewExample from '$lib/components/NewExample.svelte';
 	import type { PageData } from '../$types';
+	// import type { ActionData } from './$types';
 
 	// interface newCooked {
 	// 	id: string;
@@ -32,36 +29,12 @@
 
 	let { data }: { data: PageData } = $props();
 
-	let page = 0;
-	const size = 50;
+	let page = $state(0);
+	const size = 1;
 
-	const newsCooked: Array<newCooked> = $state([]);
+	let newsCooked: Array<newCooked> = $state(data.news);
 	// newsCooked.push(...data.news);
-
-	async function fetchNextPage() {
-		loading = true;
-		const cfg = withoutAuth(`http://localhost:5173/api/news?page=${page}&size=${size}`, 'get', {});
-		axios(cfg)
-			.then((res) => {
-				console.log('listing news: ', res.data.news);
-				res.data.news.forEach((newInstance: newRaw) => {
-					if (!newsCooked.some((existing) => existing.newId === newInstance.newId)) {
-						const cookedInstance: newCooked = {
-							newId: newInstance.newId,
-							userId: newInstance.userId,
-							caption: newInstance.caption
-						};
-						newsCooked.push(newInstance);
-					}
-				});
-
-				if ((page + 1) * size < res.data.total) {
-					page++;
-				}
-			})
-			.catch((reason) => console.log(reason))
-			.finally(() => (loading = false));
-	}
+	// console.log('news cooked: ', newsCooked);
 
 	function dismantle(toDismantle: newCooked[], k: number): newCooked[][] {
 		if (toDismantle.length == 0) {
@@ -69,6 +42,7 @@
 		}
 		const sorted = [...toDismantle].sort((a, b) => b.bodySize - a.bodySize);
 		const bins: newCooked[][] = Array.from({ length: k }, () => []);
+		console.log('length of an arr: ', k);
 		const sums = new Array(k).fill(0);
 
 		for (const n of sorted) {
@@ -101,25 +75,29 @@
 		return bins;
 	}
 
-	let isAtBottom = false;
+	// let isAtBottom = false;
 	let loading = $state(false);
 
-	function handleScroll(event: UIEvent) {
-		const element = event.currentTarget;
-		const { scrollTop, scrollHeight, clientHeight } = element as HTMLElement; // оно есть
-		const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
+	let formElement: HTMLFormElement;
 
-		if (atBottom !== isAtBottom) {
-			isAtBottom = atBottom;
-			if (atBottom) {
-				fetchNextPage();
-			}
-		}
-	}
+	// function UpdateRequest(event: UIEvent) {
+	// 	console.log('update trigger');
+	// 	if (loading) return;
+	// 	console.log('entered update');
+	// 	const element = event.currentTarget;
+	// 	const { scrollTop, scrollHeight, clientHeight } = element as HTMLElement; // оно есть
+	// 	const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
 
-	fetchNextPage();
+	// 	if (atBottom !== isAtBottom) {
+	// 		isAtBottom = atBottom;
+	// 		if (atBottom) {
+	// 			formElement.requestSubmit();
+	// 		}
+	// 	}
+	// }
 
-	const items = $derived(dismantle(newsCooked, Math.ceil(innerWidth.current! / 400)));
+	console.log('innerwidth:', innerWidth.current);
+	const items = $derived(dismantle(newsCooked, Math.ceil((innerWidth.current ?? 2000) / 400)));
 
 	let popupModal = $state(false);
 
@@ -128,8 +106,6 @@
 	// let imagePath = $state(''); TBU
 </script>
 
-{console.log('news:', data.news)}
-
 <Button
 	onclick={() => (popupModal = true)}
 	name="postingButton"
@@ -137,7 +113,8 @@
 >
 <!-- my genius knows no border-radius -->
 
-{console.log(innerWidth.current)}
+<!-- {console.log('data: ', data)} -->
+{console.log('newsCooked: ', newsCooked)}
 
 <Modal
 	bind:open={popupModal}
@@ -237,28 +214,55 @@
 <div
 	class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll min-h-full inline-grid columns-1 grid-rows-1"
 	// та самая сетка 1 на 1
-	onscroll={handleScroll}
+	// onscroll={UpdateRequest}
 >
 	{#if items.length}
 		<div class="flex flex-row gap-gutter p-gutter min-w-0">
 			{#each items as column, i (i)}
 				<div class="flex flex-col gap-4 flex-1 min-w-0">
 					{#each column as item (item.newId)}
-						<New caption={item.caption} bodyPromise={item.body} />
+						<New caption={item.caption} body={item.body} />
 					{/each}
 				</div>
 			{/each}
 		</div>
 	{:else}
-		<div class="flex justify-center items-center self-center justify-self-center flex-col">
+		<!-- <div class="flex justify-center items-center self-center justify-self-center flex-col">
 			no news
-			<Button class="bg-accent p-2 w-l" size="xl" name="reload" onclick={fetchNextPage}>
+			<Button class="bg-accent p-2 w-l" size="xl" name="reload" 
+			//onclick={UpdateRequest}
+			>
 				{#if loading}
 					<Spinner class="me-3" size="4" color="gray" />Loading...
 				{:else}
 					Reload
 				{/if}
 			</Button>
-		</div>
+		</div> -->
 	{/if}
+	<form
+		bind:this={formElement}
+		method="POST"
+		action="?/loadMore"
+		use:enhance={() => {
+			loading = true;
+			console.log('entered loading', loading);
+
+			return async ({ update, result }) => {
+				await update();
+				console.log('res:', result);
+				if (result.type === 'success' && result.data?.news) {
+					newsCooked = [...newsCooked, ...(result.data.news as newCooked[])];
+					page++;
+				}
+				loading = false;
+			};
+		}}
+	>
+		<input type="hidden" name="page" value={page + 1} />
+		<input type="hidden" name="size" value={size} />
+		<button type="submit" class="bg-accent p-2 w-l"
+			>{loading ? 'deeper we go' : 'fetch more news'}</button
+		>
+	</form>
 </div>

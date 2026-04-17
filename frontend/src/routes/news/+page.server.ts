@@ -1,10 +1,10 @@
 import { withAuth } from '$lib/requestUtils/axiosConfigs';
-import { error, fail } from '@sveltejs/kit';
+import { fail, type Actions } from '@sveltejs/kit';
 import axios, { isAxiosError } from 'axios';
 import type { PageServerLoad } from './$types.js';
-import type { newRaw } from '$lib/types/new.js';
+import type { newCooked, newRaw } from '$lib/types/new.js';
 
-export const actions = {
+export const actions: Actions = {
 	post: async ({ request, cookies }) => {
 		const data = await request.formData();
 
@@ -28,13 +28,15 @@ export const actions = {
 			const putUrl = bodyPutResponse.data.target.uploadUrl;
 			const bodyKey = bodyPutResponse.data.target.fileKey;
 			const bodyBytes = new TextEncoder().encode(text);
+			console.log('put url: ', putUrl);
 
-			axios.put(putUrl, bodyBytes, {
+			await axios.put(putUrl, bodyBytes, {
 				headers: {
 					'Content-Type': 'text/markdown',
 					'Content-Length': String(bodyBytes.byteLength)
 				}
 			});
+			// console.log('resp: ', resp);
 
 			const cfg = withAuth('http://localhost/v1/news', 'POST', token, {
 				caption: caption,
@@ -54,6 +56,39 @@ export const actions = {
 		}
 
 		return { success: true };
+	},
+	loadMore: async ({ fetch, cookies, request }) => {
+		const token = cookies.get('auth_token');
+
+		if (!token) {
+			return fail(401, {
+				err: 'NO_AUTH',
+				errorMessage: 'You are not registered!'
+			});
+		}
+
+		const data = await request.formData();
+		const page = data.get('page');
+		const size = data.get('size');
+		console.log('size: %d, page: %d', size, page);
+
+		const res = await fetch(`http://localhost/v1/news?page=${page}&size=${size}`, {
+			headers: { Authorization: `Bearer ${token}` }
+		});
+		console.log(res.text);
+
+		if (!res.ok) {
+			return fail(res.status, { message: 'failed to serve more news' });
+		}
+
+		const { news } = (await res.json()) as { news: newRaw[] };
+		const cookedNews = news.map(async (item: newRaw) => {
+			const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
+			return { ...item, body } as newCooked;
+		});
+		console.log('cooked news type: ', typeof cookedNews);
+
+		return { news: await Promise.all(cookedNews) };
 	}
 };
 
@@ -61,29 +96,26 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const token = cookies.get('auth_token');
 
 	if (!token) {
-		return fail(401, {
-			err: 'NO_AUTH',
-			errorMessage: 'You are not registered!'
-		});
+		console.log('No token on load');
+		return { news: [] };
 	}
 
-	const response = await fetch(`http://localhost/v1/news?page=0&size=50`, {
+	const response = await fetch(`http://localhost/v1/news?page=0&size=1`, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}
 	});
-	if (!response.ok) throw error(response.status, 'failed to fetch news');
+	if (!response.ok) {
+		console.log('response is not ok: ', response.status);
+		return { news: [] };
+	}
 
 	const { news } = (await response.json()) as { news: newRaw[] };
-	const cookedNews = news.map((item: newRaw) => ({
-		...item,
-		body: item.bodyUrl
-			? fetch(item.bodyUrl).then((r) => {
-					if (!r.ok) throw new Error('Failed to fetch body');
-					return r.text();
-				})
-			: null
-	}));
+	const cookedNews = news.map(async (item: newRaw) => {
+		const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
+		return { ...item, body } as newCooked;
+	});
+	console.log('cooked news type: ', typeof cookedNews);
 
-	return { news: cookedNews };
+	return { news: await Promise.all(cookedNews) };
 };

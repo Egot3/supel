@@ -38,10 +38,12 @@ export const handle: Handle = async ({ event, resolve }) => {
 	return resolve(event);
 };
 
-export const handleFetch: HandleFetch = async ({ request, fetch }) => {
+export const handleFetch: HandleFetch = async ({ request, fetch, event }) => {
 	const response = await fetch(request);
+
 	if (response.status === 401) {
-		return response;
+		event.cookies.delete('auth_token', { path: '/' });
+		throw redirect(302, '/login');
 	}
 
 	return response;
