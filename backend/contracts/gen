@@ -1,3 +1,4 @@
 #!/bin/bash
 
 protoc -I . --proto_path=./proto --go_out=. --go-grpc_out=. --grpc-gateway_out=. ./proto/news.proto ./proto/identity.proto
+# protoc -I . --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=.. ./proto/news.proto ./proto/identity.proto

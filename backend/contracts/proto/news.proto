@@ -4,6 +4,7 @@ package news;
 
 import "google/protobuf/timestamp.proto";
 import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 option go_package = "./";
 
@@ -67,6 +68,10 @@ message ListNewsResponse {
     uint64 total = 4;
 }
 
+message DeleteNewRequest {
+    string new_id = 1;
+}
+
 message GenerateBodyUploadURLRequest {
     string body_name = 1; //first 16 chars
 }
@@ -102,6 +107,11 @@ service NewsService {
     rpc ListNews(ListNewsRequest) returns (ListNewsResponse){
         option (google.api.http) = {
             get: "/v1/news"
+        };
+    };
+    rpc DeleteNew(DeleteNewRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "v1/news/{new_id}"
         };
     };
 }
