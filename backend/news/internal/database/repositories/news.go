@@ -78,3 +78,19 @@ func NewBulk(ctx context.Context, page, size int) ([]models.New, int, error) {
 
 	return found, total, err
 }
+
+func IsCreator(ctx context.Context, userUUID, newUUID string) (is bool, err error) {
+	return database.DB.NewSelect().
+		Model((*models.New)(nil)).
+		Where("new_uuid = ?", newUUID).
+		Where("user_uuid = ?", userUUID).
+		Exists(ctx)
+}
+
+func DeleteNew(ctx context.Context, newUUID string) error {
+	_, err := database.DB.NewDelete().
+		Model((*models.New)(nil)).
+		Where("new_uuid = ?", newUUID).
+		Exec(ctx)
+	return err
+}

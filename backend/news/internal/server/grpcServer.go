@@ -16,6 +16,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -235,4 +236,34 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 		Size:  req.GetSize(),
 		Total: uint64(total),
 	}, nil
+}
+
+func (s *NewsSever) DeleteNew(ctx context.Context, req *pb.DeleteNewRequest) (*emptypb.Empty, error) {
+	userUuid, role, ok := UserFromContext(ctx)
+	if !ok {
+		log.Println("bad creditantials: ", userUuid, role)
+		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
+	}
+	newUUID := req.NewId
+
+	if role != "ADMIN" {
+		is, err := repositories.IsCreator(ctx, userUuid, newUUID)
+		if err != nil {
+			log.Printf("couldn't check if user has access to deleting new: %v", err.Error())
+			return nil, status.Error(codes.Internal, "failed to check ownership")
+		}
+
+		if !is {
+			log.Printf("user %v doesn't own post %v and not an admin(%v)", userUuid, newUUID, role)
+			return nil, status.Error(codes.PermissionDenied, "not enough POWER")
+		}
+	}
+
+	err := repositories.DeleteNew(ctx, newUUID)
+	if err != nil {
+		log.Printf("couldn't delete new %v: %v", newUUID, err.Error())
+		return nil, status.Error(codes.Internal, "Failed to delete the new")
+	}
+
+	return nil, nil
 }
