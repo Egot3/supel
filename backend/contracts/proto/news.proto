@@ -111,7 +111,7 @@ service NewsService {
     };
     rpc DeleteNew(DeleteNewRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            delete: "v1/news/{new_id}"
+            delete: "/v1/news/{new_id}"
         };
     };
 }

@@ -11,6 +11,7 @@ import (
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
+	emptypb "google.golang.org/protobuf/types/known/emptypb"
 )
 
 // This is a compile-time assertion to ensure that this generated file
@@ -24,6 +25,7 @@ const (
 	NewsService_CreateNew_FullMethodName             = "/news.NewsService/CreateNew"
 	NewsService_GetNew_FullMethodName                = "/news.NewsService/GetNew"
 	NewsService_ListNews_FullMethodName              = "/news.NewsService/ListNews"
+	NewsService_DeleteNew_FullMethodName             = "/news.NewsService/DeleteNew"
 )
 
 // NewsServiceClient is the client API for NewsService service.
@@ -35,6 +37,7 @@ type NewsServiceClient interface {
 	CreateNew(ctx context.Context, in *CreateNewRequest, opts ...grpc.CallOption) (*CreateNewResponse, error)
 	GetNew(ctx context.Context, in *GetNewRequest, opts ...grpc.CallOption) (*GetNewResponse, error)
 	ListNews(ctx context.Context, in *ListNewsRequest, opts ...grpc.CallOption) (*ListNewsResponse, error)
+	DeleteNew(ctx context.Context, in *DeleteNewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type newsServiceClient struct {
@@ -95,6 +98,16 @@ func (c *newsServiceClient) ListNews(ctx context.Context, in *ListNewsRequest, o
 	return out, nil
 }
 
+func (c *newsServiceClient) DeleteNew(ctx context.Context, in *DeleteNewRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, NewsService_DeleteNew_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // NewsServiceServer is the server API for NewsService service.
 // All implementations must embed UnimplementedNewsServiceServer
 // for forward compatibility.
@@ -104,6 +117,7 @@ type NewsServiceServer interface {
 	CreateNew(context.Context, *CreateNewRequest) (*CreateNewResponse, error)
 	GetNew(context.Context, *GetNewRequest) (*GetNewResponse, error)
 	ListNews(context.Context, *ListNewsRequest) (*ListNewsResponse, error)
+	DeleteNew(context.Context, *DeleteNewRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedNewsServiceServer()
 }
 
@@ -128,6 +142,9 @@ func (UnimplementedNewsServiceServer) GetNew(context.Context, *GetNewRequest) (*
 }
 func (UnimplementedNewsServiceServer) ListNews(context.Context, *ListNewsRequest) (*ListNewsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method ListNews not implemented")
+}
+func (UnimplementedNewsServiceServer) DeleteNew(context.Context, *DeleteNewRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteNew not implemented")
 }
 func (UnimplementedNewsServiceServer) mustEmbedUnimplementedNewsServiceServer() {}
 func (UnimplementedNewsServiceServer) testEmbeddedByValue()                     {}
@@ -240,6 +257,24 @@ func _NewsService_ListNews_Handler(srv interface{}, ctx context.Context, dec fun
 	return interceptor(ctx, in, info, handler)
 }
 
+func _NewsService_DeleteNew_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteNewRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(NewsServiceServer).DeleteNew(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: NewsService_DeleteNew_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(NewsServiceServer).DeleteNew(ctx, req.(*DeleteNewRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // NewsService_ServiceDesc is the grpc.ServiceDesc for NewsService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -266,6 +301,10 @@ var NewsService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "ListNews",
 			Handler:    _NewsService_ListNews_Handler,
+		},
+		{
+			MethodName: "DeleteNew",
+			Handler:    _NewsService_DeleteNew_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
