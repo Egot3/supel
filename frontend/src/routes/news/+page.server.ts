@@ -100,7 +100,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		return { news: [] };
 	}
 
-	const response = await fetch(`http://localhost/v1/news?page=0&size=1`, {
+	const response = await fetch(`http://localhost/v1/news?page=0&size=50`, {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}
@@ -111,6 +111,8 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	}
 
 	const { news } = (await response.json()) as { news: newRaw[] };
+	console.log('news: ', news);
+
 	const cookedNews = news.map(async (item: newRaw) => {
 		const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
 		return { ...item, body } as newCooked;

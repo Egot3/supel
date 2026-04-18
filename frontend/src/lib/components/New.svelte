@@ -3,7 +3,6 @@
 	import DOMPurify from 'isomorphic-dompurify';
 	const { imageLink = '', caption, body } = $props();
 	// const sanitizedBody =
-	/* eslint svelte/no-at-html-tags: "error" */
 </script>
 
 <!-- /*got the joke? News are not countable*/ -->

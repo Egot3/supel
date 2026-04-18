@@ -4,7 +4,7 @@
 	import { type newCooked } from '$lib/types/new';
 	import {
 		Button,
-		Spinner,
+		// Spinner,
 		Modal,
 		Label,
 		Input,
@@ -30,9 +30,11 @@
 	let { data }: { data: PageData } = $props();
 
 	let page = $state(0);
-	const size = 1;
+	const size = 50;
+	// svelte-ignore state_referenced_locally
+	const startingNews = (data as { news: newCooked[] }).news;
 
-	let newsCooked: Array<newCooked> = $state(data.news);
+	let newsCooked: Array<newCooked> = $state(startingNews);
 	// newsCooked.push(...data.news);
 	// console.log('news cooked: ', newsCooked);
 
@@ -75,26 +77,26 @@
 		return bins;
 	}
 
-	// let isAtBottom = false;
+	let isAtBottom = false;
 	let loading = $state(false);
 
 	let formElement: HTMLFormElement;
 
-	// function UpdateRequest(event: UIEvent) {
-	// 	console.log('update trigger');
-	// 	if (loading) return;
-	// 	console.log('entered update');
-	// 	const element = event.currentTarget;
-	// 	const { scrollTop, scrollHeight, clientHeight } = element as HTMLElement; // оно есть
-	// 	const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
+	function UpdateRequest(event: UIEvent) {
+		console.log('update trigger');
+		if (loading) return;
+		console.log('entered update');
+		const element = event.currentTarget;
+		const { scrollTop, scrollHeight, clientHeight } = element as HTMLElement; // оно есть
+		const atBottom = scrollTop + clientHeight >= scrollHeight - 10;
 
-	// 	if (atBottom !== isAtBottom) {
-	// 		isAtBottom = atBottom;
-	// 		if (atBottom) {
-	// 			formElement.requestSubmit();
-	// 		}
-	// 	}
-	// }
+		if (atBottom !== isAtBottom) {
+			isAtBottom = atBottom;
+			if (atBottom) {
+				formElement.requestSubmit();
+			}
+		}
+	}
 
 	console.log('innerwidth:', innerWidth.current);
 	const items = $derived(dismantle(newsCooked, Math.ceil((innerWidth.current ?? 2000) / 400)));
@@ -214,7 +216,7 @@
 <div
 	class="bg-dark col-start-2 col-end-12 row-start-4 row-end-12 overflow-scroll min-h-full inline-grid columns-1 grid-rows-1"
 	// та самая сетка 1 на 1
-	// onscroll={UpdateRequest}
+	onscroll={UpdateRequest}
 >
 	{#if items.length}
 		<div class="flex flex-row gap-gutter p-gutter min-w-0">
@@ -261,8 +263,6 @@
 	>
 		<input type="hidden" name="page" value={page + 1} />
 		<input type="hidden" name="size" value={size} />
-		<button type="submit" class="bg-accent p-2 w-l"
-			>{loading ? 'deeper we go' : 'fetch more news'}</button
-		>
+		<Button type="submit" class="invisible">{loading ? 'deeper we go' : 'fetch more news'}</Button>
 	</form>
 </div>

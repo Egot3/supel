@@ -16,7 +16,6 @@
 		<p
 			class="break-all text mb-3 leading-tight font-normal bg-dark text-light font-hollow min-h-8 max-h-80 overflow-y-scroll no-scrollbar wrap-break-words mask-[linear-gradient(to_bottom,black_0%,black_80%,transparent_100%)]"
 		>
-			// eslint-disable-next-line svelte/no-at-html-tags
 			{@html DOMpurify.sanitize(text)}
 		</p>
 	</div>
