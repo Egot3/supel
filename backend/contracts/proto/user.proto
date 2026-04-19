@@ -9,7 +9,8 @@ import "google/protobuf/timestamp.proto";
 option go_package = "./";
 
 message CreateUserRequest {
-    string nickname = 1;
+    string uuid = 1;
+    string nickname = 2;
 }
 
 message User {
@@ -43,17 +44,8 @@ message GetUserResponse {
 }
 
 service UserService {
-    rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            post: "/v1/user"
-            body: "*"
-        };
-    };
-    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
-        option (google.api.http) = {
-            delete: "/v1/user/{uuid}"
-        };
-    };
+    rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty);
+    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
     rpc PatchUser(PatchUserRequest) returns (google.protobuf.Empty) {
         option (google.api.http) = {
             patch: "/v1/user"

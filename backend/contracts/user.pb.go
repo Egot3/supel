@@ -26,7 +26,8 @@ const (
 
 type CreateUserRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Nickname      string                 `protobuf:"bytes,1,opt,name=nickname,proto3" json:"nickname,omitempty"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Nickname      string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -59,6 +60,13 @@ func (x *CreateUserRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CreateUserRequest.ProtoReflect.Descriptor instead.
 func (*CreateUserRequest) Descriptor() ([]byte, []int) {
 	return file_proto_user_proto_rawDescGZIP(), []int{0}
+}
+
+func (x *CreateUserRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
 }
 
 func (x *CreateUserRequest) GetNickname() string {
@@ -372,9 +380,10 @@ var File_proto_user_proto protoreflect.FileDescriptor
 
 const file_proto_user_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/user.proto\x12\x04news\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"/\n" +
-	"\x11CreateUserRequest\x12\x1a\n" +
-	"\bnickname\x18\x01 \x01(\tR\bnickname\"\xd0\x02\n" +
+	"\x10proto/user.proto\x12\x04news\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"C\n" +
+	"\x11CreateUserRequest\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1a\n" +
+	"\bnickname\x18\x02 \x01(\tR\bnickname\"\xd0\x02\n" +
 	"\x04User\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\"\n" +
@@ -405,12 +414,12 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"1\n" +
 	"\x0fGetUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".news.UserR\x04user2\xdc\x02\n" +
-	"\vUserService\x12R\n" +
+	".news.UserR\x04user2\xae\x02\n" +
+	"\vUserService\x12=\n" +
 	"\n" +
-	"CreateUser\x12\x17.news.CreateUserRequest\x1a\x16.google.protobuf.Empty\"\x13\x82\xd3\xe4\x93\x02\r:\x01*\"\b/v1/user\x12V\n" +
+	"CreateUser\x12\x17.news.CreateUserRequest\x1a\x16.google.protobuf.Empty\x12=\n" +
 	"\n" +
-	"DeleteUser\x12\x17.news.DeleteUserRequest\x1a\x16.google.protobuf.Empty\"\x17\x82\xd3\xe4\x93\x02\x11*\x0f/v1/user/{uuid}\x12P\n" +
+	"DeleteUser\x12\x17.news.DeleteUserRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
 	"\tPatchUser\x12\x16.news.PatchUserRequest\x1a\x16.google.protobuf.Empty\"\x13\x82\xd3\xe4\x93\x02\r:\x01*2\b/v1/user\x12O\n" +
 	"\aGetUser\x12\x14.news.GetUserRequest\x1a\x15.news.GetUserResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/user/{uuid}B\x04Z\x02./b\x06proto3"
 
