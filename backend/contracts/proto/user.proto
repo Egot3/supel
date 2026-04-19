@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package news;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+import "google/protobuf/timestamp.proto";
+
+option go_package = "./";
+
+message CreateUserRequest {
+    string nickname = 1;
+}
+
+message User {
+    string uuid = 1;
+    string nickname = 2;
+    optional string avatar_key = 3;
+    optional string description = 4;
+    optional string status = 5;
+    optional string status_reaction_key = 6;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message PatchUserRequest {
+    string uuid = 1;
+    optional string nickname = 2;
+    optional string description = 3;
+    optional string status = 4;
+    optional string status_reaction_key = 5;
+}
+
+message DeleteUserRequest {
+    string uuid = 1;
+}
+
+message GetUserRequest {
+    string uuid = 1;
+}
+
+message GetUserResponse {
+    User user = 1;
+}
+
+service UserService {
+    rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            post: "/v1/user"
+            body: "*"
+        };
+    };
+    rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            delete: "/v1/user/{uuid}"
+        };
+    };
+    rpc PatchUser(PatchUserRequest) returns (google.protobuf.Empty) {
+        option (google.api.http) = {
+            patch: "/v1/user"
+            body: "*"
+        };
+    };
+    rpc GetUser(GetUserRequest) returns (GetUserResponse) {
+        option (google.api.http) = {
+            get: "/v1/user/{uuid}"
+        };
+    };
+}
