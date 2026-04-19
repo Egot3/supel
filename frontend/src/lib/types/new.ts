@@ -12,8 +12,13 @@ export type newCooked = {
 	newId: string;
 	userId: string;
 	caption: string;
-	body: Promise<string> | null;
+	body: string | null;
 	bodySize: number;
 	imageUrls: string[];
 	createdAt: string;
 };
+
+export interface newProps {
+	newData: newCooked;
+	onclick: () => unknown;
+}

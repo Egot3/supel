@@ -10,22 +10,19 @@
 		Input,
 		Helper,
 		Textarea,
-		Fileupload
+		Fileupload,
+		Carousel,
+		Controls,
+		P
 	} from 'flowbite-svelte';
+	import DOMPurify from 'isomorphic-dompurify';
+
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
-	import { slide } from 'svelte/transition';
+	import { fly, slide } from 'svelte/transition';
 	import { applyAction, enhance } from '$app/forms';
 	import { innerWidth } from 'svelte/reactivity/window';
 	import NewExample from '$lib/components/NewExample.svelte';
 	import type { PageData } from '../$types';
-	// import type { ActionData } from './$types';
-
-	// interface newCooked {
-	// 	id: string;
-	// 	text: string;
-	// 	caption: string;
-	// 	imageLink?: string;
-	// }
 
 	let { data }: { data: PageData } = $props();
 
@@ -101,25 +98,71 @@
 	console.log('innerwidth:', innerWidth.current);
 	const items = $derived(dismantle(newsCooked, Math.ceil((innerWidth.current ?? 2000) / 400)));
 
-	let popupModal = $state(false);
+	let createNewModal = $state(false);
 
 	let captionText = $state('');
 	let bodyText = $state('');
 	// let imagePath = $state(''); TBU
+
+	let scopedNew = $state({} as newCooked);
+	let scoped = $derived(Boolean(Object.keys(scopedNew).length > 0));
+	$effect(() => {
+		if (!scoped && Object.keys(scopedNew).length > 0) {
+			scopedNew = {} as newCooked;
+		}
+	});
 </script>
 
 <Button
-	onclick={() => (popupModal = true)}
+	onclick={() => (createNewModal = true)}
 	name="postingButton"
 	class="bg-coral-500 col-start-1 text-[clamp(1rem,3vh,3rem)] italic">New new</Button
 >
 <!-- my genius knows no border-radius -->
 
 <!-- {console.log('data: ', data)} -->
-{console.log('newsCooked: ', newsCooked)}
+<!-- {console.log('newsCooked: ', newsCooked)} -->
 
 <Modal
-	bind:open={popupModal}
+	bind:open={scoped}
+	size="xs"
+	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200
+	p-gutter -mt-20 justify-self-center self-center
+	overflow-scroll leading-[-1rem]
+	h-[50dvh] min-h-100 
+	"
+	transition={fly}
+	dismissable={false}
+>
+	<div class="grid grid-cols-12">
+		<div class="col-start-1 col-end-9">
+			{#if scopedNew.imageUrls.length > 0}
+				<Carousel
+					images={scopedNew.imageUrls.map((url) => {
+						return { src: url };
+					})}
+				>
+					<Controls />
+				</Carousel>
+			{/if}
+
+			<h5
+				class="wrap-break-word caption mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
+			>
+				{scopedNew.caption}
+			</h5>
+
+			<P class="bg-forest-900 dark:bg-forest-900 text-linen-200">
+				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+				{@html DOMPurify.sanitize(scopedNew.body ?? '')}</P
+			>
+		</div>
+		<div class="col-start-9 col-end-13">2</div>
+	</div>
+</Modal>
+
+<Modal
+	bind:open={createNewModal}
 	size="xs"
 	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200 p-gutter mt-12 justify-self-center overflow-scroll leading-[-1rem]"
 	transition={slide}
@@ -137,7 +180,7 @@
 					const e = result.data?.['errorMessage'];
 					console.log(e);
 				} else {
-					popupModal = false;
+					createNewModal = false;
 					bodyText = '';
 					captionText = '';
 				}
@@ -199,7 +242,7 @@
 			<Button
 				// type="cancel"
 				value="cancel"
-				onclick={() => (popupModal = false)}
+				onclick={() => (createNewModal = false)}
 				class="text-center font-medium inline-flex items-center justify-center text-linen-900 bg-transparent border border-linen-200 dark:border-linen-600 hover:bg-linen-100 dark:bg-linen-800 dark:text-linen-400 hover:text-primary-700 focus-within:text-primary-700 dark:focus-within:text-linen-50 dark:hover:text-linen-50 dark:hover:bg-linen-700 focus-within:ring-linen-200 dark:focus-within:ring-linen-700 px-5 py-2.5 text-sm focus-within:ring-4 focus-within:outline-hidden rounded-lg"
 				color="dark">cancel</Button
 			>
@@ -223,7 +266,13 @@
 			{#each items as column, i (i)}
 				<div class="flex flex-col gap-4 flex-1 min-w-0">
 					{#each column as item (item.newId)}
-						<New caption={item.caption} body={item.body} />
+						<New
+							onclick={() => {
+								//malpractice
+								scopedNew = item;
+							}}
+							newData={item}
+						/>
 					{/each}
 				</div>
 			{/each}
