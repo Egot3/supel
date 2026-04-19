@@ -10,55 +10,6 @@ spec:
   ports:
     - port: 9000
       targetPort: 9000
----
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: minio-pvc
-spec:
-  resources:
-    requests:
-      storage: 1Gi
-  accessModes:
-    - ReadWriteOnce
-
----
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: minio
-  namespace: storage-domain
-spec:
-  selector:
-    matchLabels:
-      app: minio
-  template:
-    metadata:
-      labels:
-        app: minio
-    spec:
-      containers:
-        - name: minio
-          image: minio/minio:latest
-          args:
-            - server
-            - /data
-          volumeMounts:
-            - name: storage
-              mountPath: "/data"
-          resources:
-            limits:
-              memory: "256Mi"
-              cpu: "500m"
-            requests:
-              memory: "256Mi"
-              cpu: "500m"
-          ports:
-            - containerPort: 9000
-      volumes:
-        - name: storage
-          persistentVolumeClaim:
-            claimName: minio-pvc
 
 ---
 apiVersion: v1
@@ -74,3 +25,47 @@ spec:
     - port: 9000
       targetPort: 9000
       nodePort: 30900
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: minio
+  namespace: storage-domain
+spec:
+  serviceName: minio
+  replicas: 1
+  selector:
+    matchLabels:
+      app: minio
+  template:
+    metadata:
+      labels:
+        app: minio
+    spec:
+      containers:
+        - name: minio
+          image: minio/minio:latest
+          args:
+            - server
+            - /data
+          volumeMounts:
+            - name: minio-data
+              mountPath: "/data"
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "500m"
+            requests:
+              memory: "256Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9000
+  volumeClaimTemplates:
+    - metadata:
+        name: minio-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 1Gi
