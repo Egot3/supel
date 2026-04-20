@@ -29,6 +29,7 @@ message PatchUserRequest {
     optional string description = 3;
     optional string status = 4;
     optional string status_reaction_key = 5;
+    optional google.protobuf.Timestamp status_expiration_date = 6;
 }
 
 message DeleteUserRequest {

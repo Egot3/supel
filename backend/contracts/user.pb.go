@@ -169,14 +169,15 @@ func (x *User) GetCreatedAt() *timestamppb.Timestamp {
 }
 
 type PatchUserRequest struct {
-	state             protoimpl.MessageState `protogen:"open.v1"`
-	Uuid              string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	Nickname          *string                `protobuf:"bytes,2,opt,name=nickname,proto3,oneof" json:"nickname,omitempty"`
-	Description       *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Status            *string                `protobuf:"bytes,4,opt,name=status,proto3,oneof" json:"status,omitempty"`
-	StatusReactionKey *string                `protobuf:"bytes,5,opt,name=status_reaction_key,json=statusReactionKey,proto3,oneof" json:"status_reaction_key,omitempty"`
-	unknownFields     protoimpl.UnknownFields
-	sizeCache         protoimpl.SizeCache
+	state                protoimpl.MessageState `protogen:"open.v1"`
+	Uuid                 string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Nickname             *string                `protobuf:"bytes,2,opt,name=nickname,proto3,oneof" json:"nickname,omitempty"`
+	Description          *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	Status               *string                `protobuf:"bytes,4,opt,name=status,proto3,oneof" json:"status,omitempty"`
+	StatusReactionKey    *string                `protobuf:"bytes,5,opt,name=status_reaction_key,json=statusReactionKey,proto3,oneof" json:"status_reaction_key,omitempty"`
+	StatusExpirationDate *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=status_expiration_date,json=statusExpirationDate,proto3,oneof" json:"status_expiration_date,omitempty"`
+	unknownFields        protoimpl.UnknownFields
+	sizeCache            protoimpl.SizeCache
 }
 
 func (x *PatchUserRequest) Reset() {
@@ -242,6 +243,13 @@ func (x *PatchUserRequest) GetStatusReactionKey() string {
 		return *x.StatusReactionKey
 	}
 	return ""
+}
+
+func (x *PatchUserRequest) GetStatusExpirationDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StatusExpirationDate
+	}
+	return nil
 }
 
 type DeleteUserRequest struct {
@@ -397,17 +405,19 @@ const file_proto_user_proto_rawDesc = "" +
 	"\v_avatar_keyB\x0e\n" +
 	"\f_descriptionB\t\n" +
 	"\a_statusB\x16\n" +
-	"\x14_status_reaction_key\"\x80\x02\n" +
+	"\x14_status_reaction_key\"\xf2\x02\n" +
 	"\x10PatchUserRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1f\n" +
 	"\bnickname\x18\x02 \x01(\tH\x00R\bnickname\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x03 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1b\n" +
 	"\x06status\x18\x04 \x01(\tH\x02R\x06status\x88\x01\x01\x123\n" +
-	"\x13status_reaction_key\x18\x05 \x01(\tH\x03R\x11statusReactionKey\x88\x01\x01B\v\n" +
+	"\x13status_reaction_key\x18\x05 \x01(\tH\x03R\x11statusReactionKey\x88\x01\x01\x12U\n" +
+	"\x16status_expiration_date\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampH\x04R\x14statusExpirationDate\x88\x01\x01B\v\n" +
 	"\t_nicknameB\x0e\n" +
 	"\f_descriptionB\t\n" +
 	"\a_statusB\x16\n" +
-	"\x14_status_reaction_key\"'\n" +
+	"\x14_status_reaction_keyB\x19\n" +
+	"\x17_status_expiration_date\"'\n" +
 	"\x11DeleteUserRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"$\n" +
 	"\x0eGetUserRequest\x12\x12\n" +
@@ -448,20 +458,21 @@ var file_proto_user_proto_goTypes = []any{
 }
 var file_proto_user_proto_depIdxs = []int32{
 	6, // 0: news.User.created_at:type_name -> google.protobuf.Timestamp
-	1, // 1: news.GetUserResponse.user:type_name -> news.User
-	0, // 2: news.UserService.CreateUser:input_type -> news.CreateUserRequest
-	3, // 3: news.UserService.DeleteUser:input_type -> news.DeleteUserRequest
-	2, // 4: news.UserService.PatchUser:input_type -> news.PatchUserRequest
-	4, // 5: news.UserService.GetUser:input_type -> news.GetUserRequest
-	7, // 6: news.UserService.CreateUser:output_type -> google.protobuf.Empty
-	7, // 7: news.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	7, // 8: news.UserService.PatchUser:output_type -> google.protobuf.Empty
-	5, // 9: news.UserService.GetUser:output_type -> news.GetUserResponse
-	6, // [6:10] is the sub-list for method output_type
-	2, // [2:6] is the sub-list for method input_type
-	2, // [2:2] is the sub-list for extension type_name
-	2, // [2:2] is the sub-list for extension extendee
-	0, // [0:2] is the sub-list for field type_name
+	6, // 1: news.PatchUserRequest.status_expiration_date:type_name -> google.protobuf.Timestamp
+	1, // 2: news.GetUserResponse.user:type_name -> news.User
+	0, // 3: news.UserService.CreateUser:input_type -> news.CreateUserRequest
+	3, // 4: news.UserService.DeleteUser:input_type -> news.DeleteUserRequest
+	2, // 5: news.UserService.PatchUser:input_type -> news.PatchUserRequest
+	4, // 6: news.UserService.GetUser:input_type -> news.GetUserRequest
+	7, // 7: news.UserService.CreateUser:output_type -> google.protobuf.Empty
+	7, // 8: news.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	7, // 9: news.UserService.PatchUser:output_type -> google.protobuf.Empty
+	5, // 10: news.UserService.GetUser:output_type -> news.GetUserResponse
+	7, // [7:11] is the sub-list for method output_type
+	3, // [3:7] is the sub-list for method input_type
+	3, // [3:3] is the sub-list for extension type_name
+	3, // [3:3] is the sub-list for extension extendee
+	0, // [0:3] is the sub-list for field type_name
 }
 
 func init() { file_proto_user_proto_init() }
