@@ -20,7 +20,7 @@ func InitDB() {
 		os.Getenv("POSTGRES_PASSWORD"),
 		os.Getenv("DB_HOST"),
 		os.Getenv("DB_PORT"),
-		os.Getenv("DB_USER_NAME")) //лишь бы не запутаться
+		os.Getenv("DB_NEWS_NAME")) //лишь бы не запутаться
 
 	// log.Printf("dsn: %v\n", dsn)
 
