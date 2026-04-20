@@ -26,6 +26,18 @@ spec:
           env:
             - name: ENV
               value: development
+            - name: IDENTITY_SERVICE_HOST
+              value: identity-service.identity-domain.svc.cluster.local
+            - name: IDENTITY_SERVICE_PORT
+              value: "50051"
+            - name: NEWS_SERVICE_HOST
+              value: news-service.news-domain.svc.cluster.local
+            - name: NEWS_SERVICE_PORT
+              value: "50051"
+            - name: USER_SERVICE_HOST
+              value: user-service.user-domain.svc.cluster.local
+            - name: USER_SERVICE_PORT
+              value: "50051"
 ---
 apiVersion: v1
 kind: Service

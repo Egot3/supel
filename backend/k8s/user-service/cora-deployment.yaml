@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity-service
-  namespace: identity-domain
+  name: user-service
+  namespace: user-domain
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: identity-service
+      app: user-service
   template:
     metadata:
       labels:
-        app: identity-service
+        app: user-service
     spec:
       initContainers:
         - name: wait-for-db
@@ -19,10 +19,10 @@ spec:
           command:
             - sh
             - -c
-            - "until nc -z identity-db-0.identity-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
+            - "until nc -z user-db-0.user-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
-        - name: identity-service
-          image: ghcr.io/egot3/supel/backend/identity:latest
+        - name: user-service
+          image: ghcr.io/egot3/supel/backend/user:latest
           resources:
             requests:
               memory: "128Mi"
@@ -34,28 +34,38 @@ spec:
             - name: DB_HOST
               valueFrom:
                 secretKeyRef:
-                  name: identity-db-secret
+                  name: user-db-secret
                   key: DB_HOST
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: identity-db-secret
+                  name: user-db-secret
                   key: POSTGRES_PASSWORD
             - name: DB_PORT
               valueFrom:
                 secretKeyRef:
-                  name: identity-db-secret
+                  name: user-db-secret
                   key: DB_PORT
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: identity-db-secret
+                  name: user-db-secret
                   key: DB_USER
             - name: JWT_SECRET
               valueFrom:
                 secretKeyRef:
-                  name: identity-db-secret
+                  name: user-db-secret
                   key: JWT_SECRET
+            - name: STORAGE_HOST
+              value: minio.storage-domain.svc.cluster.local
+            - name: STORAGE_PORT
+              value: "9000"
+            - name: STORAGE_ACCESS_KEY
+              value: minioadmin
+            - name: STORAGE_SECRET_KEY
+              value: minioadmin
+            - name: STORAGE_USER_BUCKET
+              value: user
           readinessProbe:
             grpc:
               port: 50051
@@ -65,11 +75,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: identity-service
-  namespace: identity-domain
+  name: user-service
+  namespace: user-domain
 spec:
   selector:
-    app: identity-service
+    app: user-service
   ports:
     - port: 50051
       targetPort: 50051

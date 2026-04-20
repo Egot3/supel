@@ -1,22 +1,22 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: identity-db-secret
-  namespace: identity-domain
+  name: user-db-secret
+  namespace: user-domain
 type: Opaque
 stringData:
   JWT_SECRET: a-string-secret-at-least-256-bits-long
   DB_USER: ets
   POSTGRES_PASSWORD: super_SECURE-pAsSwOrD2805!!!
-  DB_HOST: identity-db-0.identity-db
+  DB_HOST: user-db-0.user-db
   DB_PORT: "5432"
-  DB_IDENTITY_NAME: identity_db
+  DB_IDENTITY_NAME: user_db
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: identity-db-init
-  namespace: identity-domain
+  name: user-db-init
+  namespace: user-domain
 data:
   init.sql: |
     CREATE ROLE ets WITH LOGIN SUPERUSER PASSWORD 'super_SECURE-pAsSwOrD2805!!!';
@@ -25,39 +25,39 @@ data:
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: identity-db
-  namespace: identity-domain
+  name: user-db
+  namespace: user-domain
 spec:
-  serviceName: identity-db
+  serviceName: user-db
   replicas: 1
   selector:
     matchLabels:
-      app: identity-db
+      app: user-db
   template:
     metadata:
       labels:
-        app: identity-db
+        app: user-db
     spec:
       containers:
         - name: postgres
           image: postgres:16-alpine
           envFrom:
             - secretRef:
-                name: identity-db-secret
+                name: user-db-secret
           ports:
             - containerPort: 5432
           volumeMounts:
-            - name: identity-db-data
+            - name: user-db-data
               mountPath: /var/lib/postgresql/data
             - name: init-scripts-volume
               mountPath: /docker-entrypoint-initdb.d
       volumes:
         - name: init-scripts-volume
           configMap:
-            name: identity-db-init
+            name: user-db-init
   volumeClaimTemplates:
     - metadata:
-        name: identity-db-data
+        name: user-db-data
       spec:
         accessModes: ["ReadWriteOnce"]
         resources:
@@ -68,11 +68,11 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: identity-db
-  namespace: identity-domain
+  name: user-db
+  namespace: user-domain
 spec:
   clusterIP: None
   selector:
-    app: identity-db
+    app: user-db
   ports:
     - port: 5432

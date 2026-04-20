@@ -6,7 +6,7 @@ metadata:
 spec:
   entryPoints: [web]
   routes:
-    - match: PathPrefix(`/v1/identity`)
+    - match: PathPrefix(`/v1/public`)
       kind: Rule
       services:
         - name: identity-service

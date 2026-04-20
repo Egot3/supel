@@ -56,6 +56,10 @@ spec:
                 secretKeyRef:
                   name: identity-db-secret
                   key: JWT_SECRET
+            - name: USER_SERVICE_HOST
+              value: user-service.user-domain.svc.cluster.local
+            - name: USER_SERVICE_PORT
+              value: "50051"
           readinessProbe:
             grpc:
               port: 50051

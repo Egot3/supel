@@ -1,4 +1,0 @@
-CREATE DATABASE identity_db;
-CREATE DATABASE news_db;
-CREATE DATABASE rbac_db;
-CREATE DATABASE users_db;
