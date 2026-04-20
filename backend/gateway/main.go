@@ -27,8 +27,14 @@ func main() {
 		log.Fatalf("News conn fell: %v", err.Error())
 	}
 
+	userConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("USER_SERVICE_HOST"), os.Getenv("USER_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("User conn fell: %v", err.Error())
+	}
+
 	pb.RegisterIdentityServiceHandler(ctx, mux, identityConn)
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
+	pb.RegisterUserServiceHandler(ctx, mux, userConn)
 
 	corsMiddleware := middleware.NewCORSMiddleware()
 	handler := corsMiddleware(mux)
