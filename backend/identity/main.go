@@ -6,6 +6,7 @@ import (
 	"log"
 	"net"
 	"net/http"
+	"os"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/identity/internal/database"
@@ -60,8 +61,19 @@ func main() {
 	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
 	healthServer.SetServingStatus("identity", grpc_health_v1.HealthCheckResponse_SERVING)
 
-	productServer := server.NewIdentityServer()
-	pb.RegisterIdentityServiceServer(grpcServer, productServer)
+	conn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("USER_SERVICE_HOST"),
+		os.Getenv("USER_SERVICE_PORT")), grpc.WithTransportCredentials(
+		insecure.NewCredentials(),
+	))
+	if err != nil {
+		log.Fatalf("failed to connect to userService: %v", err.Error())
+	}
+	defer conn.Close()
+
+	userClient := pb.NewUserServiceClient(conn)
+
+	identityServer := server.NewIdentityServer(userClient)
+	pb.RegisterIdentityServiceServer(grpcServer, identityServer)
 
 	port := ":50051"
 	listener, err := net.Listen("tcp", port)

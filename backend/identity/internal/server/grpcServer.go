@@ -19,10 +19,11 @@ import (
 
 type IdentityServer struct {
 	pb.UnimplementedIdentityServiceServer
+	userClient pb.UserServiceClient
 }
 
-func NewIdentityServer() *IdentityServer {
-	return &IdentityServer{} //duh
+func NewIdentityServer(userClient pb.UserServiceClient) *IdentityServer {
+	return &IdentityServer{userClient: userClient} //not so duh
 }
 
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
@@ -94,17 +95,13 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 		}
 	}
 
-	// conn, err := grpc.NewClient(fmt.Sprintf("%v:%v",
-	// 	os.Getenv("USER_HOST"),
-	// 	os.Getenv("USER_PORT")),
-	// 	grpc.WithTransportCredentials(insecure.NewCredentials()))
-
-	// if err != nil {
-	// 	return nil, status.Error(codes.Internal, "Couldn't register with name, try again later")
-	// }
-	// defer conn.Close()
-
-	// client := pb.NewUserClient(conn)
+	_, err = s.userClient.CreateUser(ctx, &pb.CreateUserRequest{
+		Uuid: uuid,
+	})
+	if err != nil {
+		log.Printf("Failed to create New user: %v", err.Error())
+		return nil, status.Error(codes.Internal, "failed to create pub user")
+	}
 
 	token, err := jwtutils.GenerateToken(uuid, role)
 	if err != nil {
