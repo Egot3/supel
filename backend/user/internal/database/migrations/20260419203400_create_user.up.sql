@@ -1,5 +1,5 @@
--- Create "news" table
-CREATE TABLE "news" (
+-- Create "users" table
+CREATE TABLE "users" (
   "uuid" uuid NOT NULL,
   "nickname" character varying NOT NULL,
   "avatar_key" uuid NULL,
