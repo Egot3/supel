@@ -38,6 +38,11 @@ func NewUserService(storageService storage.StorageService) *UserSever {
 
 func (s *UserSever) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*emptypb.Empty, error) {
 	err := repositories.CreateUser(ctx, req.GetNickname(), req.GetUuid())
+
+	if err != nil {
+		log.Printf("Failed to create user %v: %v", req.GetUuid(), err.Error())
+		return nil, status.Error(codes.Internal, "Failed to create pub user")
+	}
 	return nil, err
 }
 

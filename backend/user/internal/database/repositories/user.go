@@ -8,12 +8,12 @@ import (
 )
 
 func CreateUser(ctx context.Context, nickname, uuid string) error {
-	_, err := database.DB.NewInsert().Model(models.User{Nickname: nickname, UUID: uuid}).Exec(ctx)
+	_, err := database.DB.NewInsert().Model(&models.User{Nickname: nickname, UUID: uuid}).Exec(ctx)
 	return err
 }
 
 func DeleteUser(ctx context.Context, uuid string) error {
-	_, err := database.DB.NewDelete().Model(models.User{UUID: uuid}).WherePK().Exec(ctx)
+	_, err := database.DB.NewDelete().Model(&models.User{UUID: uuid}).WherePK().Exec(ctx)
 	return err
 }
 
