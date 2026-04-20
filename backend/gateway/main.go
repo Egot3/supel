@@ -2,8 +2,10 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/gateway/gateways"
@@ -16,11 +18,11 @@ func main() {
 	mux := gateways.NewGatewayMux()
 	ctx := context.Background()
 
-	identityConn, err := grpc.NewClient("identity-service.identity-domain.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	identityConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("IDENTITY_SERVICE_HOST"), os.Getenv("IDENTITY_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("Identity conn fell: %v", err.Error())
 	}
-	newsConn, err := grpc.NewClient("news-service.news-domain.svc.cluster.local:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
+	newsConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("NEWS_SERVICE_HOST"), os.Getenv("NEWS_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
 	if err != nil {
 		log.Fatalf("News conn fell: %v", err.Error())
 	}
