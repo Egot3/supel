@@ -11,14 +11,8 @@ export default defineConfig({
 	},
 	webServer: [
 		{
-			command: 'ts-node e2e/mocks/mock-user.ts',
-			url: 'http://localhost:5003/',
-			timeout: 10000,
-			stdout: 'pipe'
-		},
-		{
 			command: 'ts-node e2e/mocks/mock-post.ts',
-			url: 'http://localhost:5004/',
+			url: 'http://localhost/',
 			timeout: 10000,
 			stdout: 'pipe' //не по дефолту кстати
 		},

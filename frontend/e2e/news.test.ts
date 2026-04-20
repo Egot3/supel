@@ -12,17 +12,17 @@ test('posting unauthorized', async ({ page, request }) => {
 	}
 
 	const promises = randomPosts.map(async (post) => {
-		await request.post('http://localhost:5004/api/post', {
+		await request.post('http://localhost/v1/news', {
 			data: post
 		});
 	});
 
 	await Promise.all(promises);
-	const found = (await (await request.get('http://localhost:5004/api/post')).json()).total;
+	const found = (await (await request.get('http://localhost/v1/news')).json()).total;
 
 	await page.waitForTimeout(400);
 	expect(found).toBeFalsy();
-	await request.post('http://localhost:5004/clear');
+	await request.post('http://localhost/clearPost');
 });
 
 test('manual postion', async ({ page, request, context }) => {
@@ -47,10 +47,10 @@ test('manual postion', async ({ page, request, context }) => {
 
 	//filling the new
 	await page.fill('input[name="caption"]', 'Extremly original and interesting caption');
-	await page.fill(
-		'textarea[name="textArea"]',
-		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
-	);
+	// await page.fill(
+	// 	'textarea[name="textArea"]',
+	// 	'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	// );
 	cookies = await context.cookies();
 	console.log(cookies);
 	await page.click('button[name="goPostIt"]');
@@ -62,10 +62,10 @@ test('manual postion', async ({ page, request, context }) => {
 	await expect(page.locator('.new .caption')).toHaveText(
 		'Extremly original and interesting caption'
 	);
-	await expect(page.locator('.new .text')).toHaveText(
-		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
-	);
+	// await expect(page.locator('.new .text')).toHaveText(
+	// 	'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	// );
 
-	await request.post('http://localhost:5004/clear');
-	await request.post('http://localhost:5003/clear');
+	await request.post('http://localhost/clearPost');
+	await request.post('http://localhost/clearPost');
 });

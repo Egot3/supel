@@ -1,22 +1,12 @@
 import axios from 'axios';
 import express from 'express';
-import cors from 'cors';
 
 const mock = express();
 mock.use(express.json());
-mock.use(
-	cors({
-		origin: 'http://localhost:5173',
-		credentials: true
-	})
-);
+
 const posts: { id: string; caption: string; text: string; attached?: string[] }[] = [];
 
-mock.get('/', (_, res) => {
-	return res.send("Not just alive, but alive and kickin'");
-});
-
-mock.get('/api/post', (req, res) => {
+mock.get('/v1/news', (req, res) => {
 	let page;
 	let size;
 
@@ -49,7 +39,7 @@ mock.get('/api/post', (req, res) => {
 	});
 });
 
-mock.post('/api/post', async (req, res) => {
+mock.post('/v1/news', async (req, res) => {
 	console.log('posting from backend');
 	if (!req.headers.authorization) {
 		console.log('no auth header');
@@ -57,7 +47,7 @@ mock.post('/api/post', async (req, res) => {
 	}
 
 	const token = req.get('Authorization')?.split(' ')[1];
-	const response = await axios.get(`http://localhost:5003/api/user/${token}`);
+	const response = await axios.get(`http://localhost/v1/public/validate/${token}`);
 	if (response.status === 401) {
 		console.log('Bad token');
 		return res.status(401).send('Bad token');
@@ -71,12 +61,93 @@ mock.post('/api/post', async (req, res) => {
 	return res.status(204).send();
 });
 
-mock.post('/clear', (_, res) => {
+mock.post('/clearPost', (_, res) => {
 	posts.length = 0;
 	return res.status(204).send();
 });
 
-const PORT = 5004;
+let users: { [key: string]: { password: string; nickname: string; token: string } } = {};
+
+const t =
+	'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWV9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c';
+
+mock.get('/', (req, res) => {
+	res.send('alive');
+});
+
+console.log('set up health');
+mock.post('/v1/public/register', (req, res) => {
+	const { email, password, nickname } = req.body;
+
+	console.log(email, password, nickname, 'registering');
+
+	if (users[email]) {
+		res.status(409).json({
+			error: 'EMAIL_ALREADY_IN_USE',
+			errorMessage: 'Email already in use'
+		});
+		return;
+	}
+
+	console.log('are right');
+	users[email] = {
+		password: password,
+		nickname: nickname,
+		token: t
+	};
+
+	console.log('returning with 200');
+	res.cookie('auth_token', t, {
+		httpOnly: true,
+		maxAge: 36000, //10h
+		sameSite: 'strict'
+	});
+	res.status(200).json({
+		token: t
+	});
+});
+
+mock.post('/v1/public/login', (req, res) => {
+	const { email, password } = req.body;
+
+	const passwordMatch = users[email] && users[email].password === password;
+
+	if (passwordMatch) {
+		res.cookie('auth_token', t, {
+			httpOnly: true,
+			maxAge: 36000, //10h
+			sameSite: 'strict'
+		});
+		res.status(200).json({
+			token: t
+		});
+		return;
+	} else {
+		res.status(401).json({
+			error: 'BAD_CREDITENTIALS',
+			errorMessage: 'Session terminated, bad password or email'
+		});
+	}
+});
+
+mock.get('/v1/public/validate/:token', (req, res) => {
+	const reqUserToken = req.params.token;
+
+	const found = Object.values(users).some((userData) => {
+		return userData.token === reqUserToken;
+	});
+
+	console.log('user found: ', found);
+
+	res.status(found ? 204 : 401).send('No such user');
+});
+
+mock.post('/clearUser', (_, res) => {
+	users = {} as { [key: string]: { password: string; nickname: string; token: string } };
+	res.status(204).send();
+});
+
+const PORT = 80;
 mock.listen(PORT, () => {
 	console.log('mocking posts');
 });
