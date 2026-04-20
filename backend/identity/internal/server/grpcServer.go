@@ -96,7 +96,8 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 	}
 
 	_, err = s.userClient.CreateUser(ctx, &pb.CreateUserRequest{
-		Uuid: uuid,
+		Nickname: req.Nickname,
+		Uuid:     uuid,
 	})
 	if err != nil {
 		log.Printf("Failed to create New user: %v", err.Error())
