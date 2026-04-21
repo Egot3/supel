@@ -9,7 +9,6 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/gateway/gateways"
-	"github.com/Egot3/supel/backend/gateway/middleware"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
@@ -36,8 +35,8 @@ func main() {
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
 	pb.RegisterUserServiceHandler(ctx, mux, userConn)
 
-	corsMiddleware := middleware.NewCORSMiddleware()
-	handler := corsMiddleware(mux)
+	// corsMiddleware := middleware.NewCORSMiddleware()
+	// handler := corsMiddleware(mux)
 
-	log.Fatal(http.ListenAndServe(":51000", handler))
+	log.Fatal(http.ListenAndServe(":51000", mux))
 }
