@@ -63,7 +63,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	imageLinks := make([]string, len(fileKeys))
+	imageUrls := make([]string, len(fileKeys))
 	for _, key := range fileKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
@@ -71,7 +71,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
-		imageLinks = append(imageLinks, imageLink)
+		imageUrls = append(imageUrls, imageLink)
 	}
 
 	bodyUrl := new(string)
@@ -91,7 +91,7 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 			UserId:    userUuid,
 			Caption:   createdNew.Caption,
 			BodyUrl:   bodyUrl,
-			ImageUrls: imageLinks,
+			ImageUrls: imageUrls,
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
 	}, nil
@@ -110,7 +110,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 		return nil, status.Error(codes.Internal, err.Error())
 	}
 
-	imageLinks := make([]string, len(imageKeys))
+	imageUrls := make([]string, len(imageKeys))
 	for _, key := range imageKeys {
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
@@ -118,7 +118,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
-		imageLinks = append(imageLinks, imageLink)
+		imageUrls = append(imageUrls, imageLink)
 	}
 
 	var bodyUrl string
@@ -137,7 +137,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 			UserId:    createdNew.UserUUID,
 			Caption:   createdNew.Caption,
 			BodyUrl:   &bodyUrl,
-			ImageUrls: imageLinks,
+			ImageUrls: imageUrls,
 			BodySize:  uint64(createdNew.BodySize),
 			CreatedAt: timestamppb.New(createdNew.CreatedAt),
 		},
@@ -214,7 +214,7 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
-		imageLinks := make([]string, len(imageKeys))
+		imageUrls := make([]string, len(imageKeys))
 		for _, key := range imageKeys {
 			imageLink, err := s.storageService.GETurl(ctx, key)
 			if err != nil {
@@ -222,10 +222,10 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 				return nil, status.Error(codes.Internal, err.Error())
 			}
 
-			imageLinks = append(imageLinks, imageLink)
+			imageUrls = append(imageUrls, imageLink)
 		}
 
-		targetNews[i] = moprconv.NewConverter(&newEx, bodyUrl, imageKeys)
+		targetNews[i] = moprconv.NewConverter(&newEx, bodyUrl, imageUrls)
 		log.Printf("TargetNew and new: %v \n %v", targetNews[i], newEx)
 	}
 	log.Printf("TargetNews after hydration: %v", targetNews)
