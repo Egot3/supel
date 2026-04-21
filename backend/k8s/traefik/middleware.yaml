@@ -5,7 +5,7 @@ metadata:
   namespace: traefik
 spec:
   forwardAuth:
-    address: http://identity-service.identity.svc.cluster.local:50051/internal/identity/validate
+    address: http://identity-service.identity-domain.svc.cluster.local:9030/internal/identity/validate
 
     authResponseHeaders:
       - user-uuid

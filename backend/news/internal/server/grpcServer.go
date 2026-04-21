@@ -144,7 +144,7 @@ func (s *NewsSever) GetNew(ctx context.Context, req *pb.GetNewRequest) (*pb.GetN
 	}, nil
 }
 
-func (s *NewsSever) GenerateNewUploadURL(ctx context.Context, req *pb.GenerateUploadURLSsRequest) (*pb.GenerateNewUploadURLsResponse, error) {
+func (s *NewsSever) GenerateNewUploadURLs(ctx context.Context, req *pb.GenerateUploadURLSsRequest) (*pb.GenerateNewUploadURLsResponse, error) {
 	putUrls := make([]*pb.UploadTarget, len(req.Images))
 	for _, meta := range req.Images {
 		key := sanitizationutils.Slugify(
