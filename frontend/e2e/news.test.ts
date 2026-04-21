@@ -22,10 +22,9 @@ test('posting unauthorized', async ({ page, request }) => {
 
 	await page.waitForTimeout(400);
 	expect(found).toBeFalsy();
-	await request.post('http://localhost/clearPost');
 });
 
-test('manual postion', async ({ page, request, context }) => {
+test('manual postion', async ({ page, context }) => {
 	await page.goto('/register');
 	await page.fill('input[name="email"]', `test-${randomBytes(4).toString('hex')}@example.com`);
 	await page.fill('input[name="password"]', 'PASSword12345!!!');
@@ -65,7 +64,4 @@ test('manual postion', async ({ page, request, context }) => {
 	// await expect(page.locator('.new .text')).toHaveText(
 	// 	'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
 	// );
-
-	await request.post('http://localhost/clearPost');
-	await request.post('http://localhost/clearPost');
 });

@@ -20,6 +20,8 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Port forwarding
+        run: sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8100
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4

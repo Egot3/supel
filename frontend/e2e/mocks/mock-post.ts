@@ -147,7 +147,7 @@ mock.post('/clearUser', (_, res) => {
 	res.status(204).send();
 });
 
-const PORT = 80;
+const PORT = 8100;
 mock.listen(PORT, () => {
 	console.log('mocking posts');
 });

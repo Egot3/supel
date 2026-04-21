@@ -12,7 +12,7 @@ export default defineConfig({
 	webServer: [
 		{
 			command: 'ts-node e2e/mocks/mock-post.ts',
-			url: 'http://localhost/',
+			url: 'http://localhost:8100/',
 			timeout: 10000,
 			stdout: 'pipe' //не по дефолту кстати
 		},
