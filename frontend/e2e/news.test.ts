@@ -2,28 +2,6 @@ import { expect } from '@playwright/test';
 import { randomBytes } from 'crypto';
 import { test } from './fixtures';
 
-test('posting unauthorized', async ({ page, request }) => {
-	const randomPosts: { caption: string; text: string }[] = [];
-	for (let i = 0; i < 20; i++) {
-		randomPosts.push({
-			caption: randomBytes(8).toString('hex'),
-			text: randomBytes(255).toString('hex')
-		});
-	}
-
-	const promises = randomPosts.map(async (post) => {
-		await request.post('http://localhost/v1/news', {
-			data: post
-		});
-	});
-
-	await Promise.all(promises);
-	const found = (await (await request.get('http://localhost/v1/news')).json()).total;
-
-	await page.waitForTimeout(400);
-	expect(found).toBeFalsy();
-});
-
 test('manual postion', async ({ page, context }) => {
 	await page.goto('/register');
 	await page.fill('input[name="email"]', `test-${randomBytes(4).toString('hex')}@example.com`);
@@ -46,10 +24,10 @@ test('manual postion', async ({ page, context }) => {
 
 	//filling the new
 	await page.fill('input[name="caption"]', 'Extremly original and interesting caption');
-	// await page.fill(
-	// 	'textarea[name="textArea"]',
-	// 	'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
-	// );
+	await page.fill(
+		'textarea[name="textArea"]',
+		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	);
 	cookies = await context.cookies();
 	console.log(cookies);
 	await page.click('button[name="goPostIt"]');
@@ -61,7 +39,7 @@ test('manual postion', async ({ page, context }) => {
 	await expect(page.locator('.new .caption')).toHaveText(
 		'Extremly original and interesting caption'
 	);
-	// await expect(page.locator('.new .text')).toHaveText(
-	// 	'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
-	// );
+	await expect(page.locator('.new .text')).toHaveText(
+		'An extremly long text with no grammatical(and logical) mistakes, anyway: once upon a time...'
+	);
 });

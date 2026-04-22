@@ -22,3 +22,8 @@ export interface newProps {
 	newData: newCooked;
 	onclick: () => unknown;
 }
+
+export type ImageMeta = {
+	fileName: string;
+	mime: string;
+};

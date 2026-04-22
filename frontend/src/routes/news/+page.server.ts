@@ -2,7 +2,8 @@ import { withAuth } from '$lib/requestUtils/axiosConfigs';
 import { fail, type Actions } from '@sveltejs/kit';
 import axios, { isAxiosError } from 'axios';
 import type { PageServerLoad } from './$types.js';
-import type { newCooked, newRaw } from '$lib/types/new.js';
+import type { newCooked, newRaw, ImageMeta } from '$lib/types/new.js';
+import sharp from 'sharp';
 
 export const actions: Actions = {
 	post: async ({ request, cookies }) => {
@@ -10,6 +11,7 @@ export const actions: Actions = {
 
 		const caption = data.get('caption');
 		const text = data.get('textArea') as string;
+		const image = data.get('image') as File;
 
 		const token = cookies.get('auth_token');
 
@@ -20,10 +22,11 @@ export const actions: Actions = {
 			});
 		}
 
-		const bodyPutRequestCfg = withAuth('http://localhost/v1/news/body', 'post', token, {
-			bodyName: caption?.slice(0, 16)
-		});
 		try {
+			const bodyPutRequestCfg = withAuth('http://localhost/v1/news/body', 'post', token, {
+				bodyName: caption?.slice(0, 16)
+			});
+
 			const bodyPutResponse = await axios(bodyPutRequestCfg);
 			const putUrl = bodyPutResponse.data.target.uploadUrl;
 			const bodyKey = bodyPutResponse.data.target.fileKey;
@@ -38,10 +41,39 @@ export const actions: Actions = {
 			});
 			// console.log('resp: ', resp);
 
+			let imageKey: string = '';
+			if (image) {
+				console.log('image name:', image.name);
+				const imagePutRequestCfg = withAuth('http://localhost/v1/news/images', 'post', token, {
+					images: [
+						{
+							fileName: image.name,
+							mime: 'image/webp'
+						} as ImageMeta
+					]
+				});
+
+				const imagePutResponse = await axios(imagePutRequestCfg);
+				console.log('img resp: ', imagePutResponse.data);
+				const putUrl = imagePutResponse.data.targets[0].uploadUrl;
+				imageKey = imagePutResponse.data.targets[0].fileKey;
+
+				const buffer = Buffer.from(await image.arrayBuffer());
+				const webpBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer();
+
+				await axios.put(putUrl, webpBuffer, {
+					headers: {
+						'Content-Type': `image/webp`,
+						'Content-Length': webpBuffer.length
+					}
+				});
+			}
+
 			const cfg = withAuth('http://localhost/v1/news', 'POST', token, {
 				caption: caption,
 				bodyKey: bodyKey,
-				bodySize: bodyBytes.byteLength
+				bodySize: bodyBytes.byteLength,
+				imageKeys: [imageKey]
 			});
 
 			axios(cfg);
@@ -106,6 +138,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		}
 	});
 	if (!response.ok) {
+		console.log(response);
 		console.log('response is not ok: ', response.status);
 		return { news: [] };
 	}

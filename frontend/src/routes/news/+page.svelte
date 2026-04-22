@@ -171,6 +171,7 @@
 	<form
 		action="?/post"
 		method="POST"
+		enctype="multipart/form-data"
 		use:enhance={() => {
 			//ah, yes (({})=>{({})=>{{}}})
 			return async ({ result }) => {
@@ -214,14 +215,23 @@
 				/>
 				<Helper></Helper>
 
-				<Label for="image">Uploaded image</Label>
+				<!-- {/* <Label for="image">Uploaded image</Label>
 				<Fileupload
 					type="image"
 					name="image"
-					class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
 				>
-					<!-- <img /> -->
 				</Fileupload>
+				<Helper>SVG, PNG, JPG or GIF (MAX. 800x400px).</Helper> * /} -->
+
+				<Label for="with_helper" class="pb-2">Upload file</Label>
+				<Fileupload
+					name="image"
+					id="with_helper"
+					class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
+				/>
+				<Helper class="bg-forest-900 text-linen-200 text-[0.75rem]"
+					>SVG, PNG, JPG or GIF (MAX. 800x400px).</Helper
+				>
 			</div>
 			<div class="ml-10 mr-10">
 				<NewExample
