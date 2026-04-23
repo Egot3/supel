@@ -22,7 +22,7 @@ func GetUser(ctx context.Context, uuid string) (*models.User, error) {
 		UUID: uuid,
 	}
 
-	err := database.DB.NewSelect().Model(&user).WherePK().Scan(ctx)
+	err := database.DB.NewSelect().Model(user).WherePK().Scan(ctx)
 	if err != nil {
 		return nil, err
 	}
