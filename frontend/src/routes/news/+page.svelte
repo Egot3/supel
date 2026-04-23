@@ -10,19 +10,16 @@
 		Input,
 		Helper,
 		Textarea,
-		Fileupload,
-		Carousel,
-		Controls,
-		P
+		Fileupload
 	} from 'flowbite-svelte';
-	import DOMPurify from 'isomorphic-dompurify';
 
 	import { MailBoxOutline } from 'flowbite-svelte-icons';
-	import { fly, slide } from 'svelte/transition';
+	import { slide } from 'svelte/transition';
 	import { applyAction, enhance } from '$app/forms';
 	import { innerWidth } from 'svelte/reactivity/window';
 	import NewExample from '$lib/components/NewExample.svelte';
 	import type { PageData } from '../$types';
+	import NewModal from '$lib/components/NewModal.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -134,47 +131,7 @@
 <!-- {console.log('data: ', data)} -->
 <!-- {console.log('newsCooked: ', newsCooked)} -->
 
-<Modal
-	bind:open={scoped}
-	size="xs"
-	class="bg-forest-900 dark:bg-forest-900 backdrop:bg-linen-900/50 text-linen-200
-	p-gutter -mt-20 justify-self-center self-center
-	overflow-scroll leading-[-1rem]
-	h-[50dvh] min-h-100 
-	"
-	transition={fly}
-	dismissable={false}
->
-	<div class="grid grid-cols-12">
-		<div class="col-start-1 col-end-9 grid grid-cols-3 gap-gutter">
-			<span class="col-start-1 col-end-2">
-				{#if scopedNew.imageUrls.length > 0}
-					<Carousel
-						images={scopedNew.imageUrls.map((url) => {
-							return { src: url };
-						})}
-					>
-						<Controls />
-					</Carousel>
-				{/if}
-			</span>
-
-			<span>
-				<h5
-					class="wrap-break-word caption mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
-				>
-					{scopedNew.caption}
-				</h5>
-
-				<P class="bg-forest-900 dark:bg-forest-900 text-linen-200 w-[50%]">
-					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-					{@html DOMPurify.sanitize(scopedNew.body ?? '')}</P
-				>
-			</span>
-		</div>
-		<div class="col-start-9 col-end-13">2</div>
-	</div>
-</Modal>
+<NewModal bind:scoped bind:scopedNew />
 
 <Modal
 	bind:open={createNewModal}
@@ -244,9 +201,7 @@
 					id="with_helper"
 					class="rounded-lg bg-dark-compliment font-hollow text-[0.8rem] text-light pl-2"
 				/>
-				<Helper class="bg-forest-900 text-linen-200 text-[0.75rem]"
-					>SVG, PNG, JPG or GIF (MAX. 800x400px).</Helper
-				>
+				<Helper class="bg-forest-900 text-linen-200 text-[0.75rem]">WEBP, PNG, JPG.</Helper>
 			</div>
 			<div class="ml-10 mr-10">
 				<NewExample
