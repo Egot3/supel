@@ -195,7 +195,7 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 	}
 	log.Printf("news as models after fetching: %v", news)
 
-	targetNews := make([]*pb.New, len(news))
+	targetNews := make([]*pb.New, 0, len(news))
 	for i, newEx := range news {
 		bodyUrl := new(string)
 		bodyUrl = nil
