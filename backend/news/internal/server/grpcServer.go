@@ -195,7 +195,7 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 	}
 	log.Printf("news as models after fetching: %v", news)
 
-	targetNews := make([]*pb.New, 0, len(news))
+	targetNews := make([]*pb.New, len(news))
 	for i, newEx := range news {
 		bodyUrl := new(string)
 		bodyUrl = nil
@@ -214,7 +214,7 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 			return nil, status.Error(codes.Internal, err.Error())
 		}
 
-		imageUrls := make([]string, len(imageKeys))
+		imageUrls := make([]string, 0, len(imageKeys))
 		for _, key := range imageKeys {
 			imageLink, err := s.storageService.GETurl(ctx, key)
 			if err != nil {
