@@ -71,7 +71,7 @@ func (s *UserSever) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (
 func (s *UserSever) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	user, err := repositories.GetUser(ctx, req.GetUuid())
 	if err != nil {
-		log.Printf("Failed to get user %v", req.Uuid)
+		log.Printf("Failed to get user %v: %v", req.Uuid, err.Error())
 		return nil, status.Error(codes.Internal, "failed to get user")
 	}
 
