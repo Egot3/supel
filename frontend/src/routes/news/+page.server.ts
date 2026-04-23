@@ -4,6 +4,7 @@ import axios, { isAxiosError } from 'axios';
 import type { PageServerLoad } from './$types.js';
 import type { newCooked, newRaw, ImageMeta } from '$lib/types/new.js';
 import sharp from 'sharp';
+import { ImageSizeError } from '$lib/types/error.js';
 
 export const actions: Actions = {
 	post: async ({ request, cookies }) => {
@@ -59,7 +60,12 @@ export const actions: Actions = {
 				imageKey = imagePutResponse.data.targets[0].fileKey;
 
 				const buffer = Buffer.from(await image.arrayBuffer());
-				const webpBuffer = await sharp(buffer).webp({ quality: 80 }).toBuffer();
+				const { width, height } = await sharp(buffer).metadata();
+				if (height / width > 20 || width / height > 20) {
+					throw new ImageSizeError("Image's aspect ratio is too big");
+				}
+
+				const webpBuffer = await sharp(buffer).webp({ quality: 75 }).toBuffer();
 
 				await axios.put(putUrl, webpBuffer, {
 					headers: {
@@ -81,6 +87,9 @@ export const actions: Actions = {
 			console.log('failed to make a req: ', err);
 
 			if (isAxiosError(err) && err.status) return fail(err.status, 'axios error');
+			if (err instanceof ImageSizeError) {
+				return fail(err.status, err.message);
+			}
 			return fail(500, {
 				err: 'INTERNAL_SERVER',
 				errorMessage: 'Please, try posting later'
@@ -150,7 +159,9 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
 		return { ...item, body } as newCooked;
 	});
-	console.log('cooked news type: ', typeof cookedNews);
 
-	return { news: await Promise.all(cookedNews) };
+	const promisedNews = await Promise.all(cookedNews);
+	console.log('cooked: ', promisedNews);
+
+	return { news: promisedNews };
 };

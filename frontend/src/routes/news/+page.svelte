@@ -35,7 +35,7 @@
 	// newsCooked.push(...data.news);
 	// console.log('news cooked: ', newsCooked);
 
-	function dismantle(toDismantle: newCooked[], k: number): newCooked[][] {
+	/* function dismantle(toDismantle: newCooked[], k: number): newCooked[][] {
 		if (toDismantle.length == 0) {
 			return [];
 		}
@@ -72,6 +72,17 @@
 			sums[minIndex] += captionHeigth + textHeight + 1.5;
 		}
 		return bins;
+	} */ //слетели все бинды(
+
+	function dismantle(toDismantle: newCooked[], k: number): newCooked[][] {
+		const resp: newCooked[][] = Array.from({ length: k }, () => []);
+
+		toDismantle.forEach((item, idx) => {
+			const target = idx % k;
+			resp[target].push(item);
+		});
+
+		return resp;
 	}
 
 	let isAtBottom = false;
@@ -135,27 +146,31 @@
 	dismissable={false}
 >
 	<div class="grid grid-cols-12">
-		<div class="col-start-1 col-end-9">
-			{#if scopedNew.imageUrls.length > 0}
-				<Carousel
-					images={scopedNew.imageUrls.map((url) => {
-						return { src: url };
-					})}
+		<div class="col-start-1 col-end-9 grid grid-cols-3 gap-gutter">
+			<span class="col-start-1 col-end-2">
+				{#if scopedNew.imageUrls.length > 0}
+					<Carousel
+						images={scopedNew.imageUrls.map((url) => {
+							return { src: url };
+						})}
+					>
+						<Controls />
+					</Carousel>
+				{/if}
+			</span>
+
+			<span>
+				<h5
+					class="wrap-break-word caption mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
 				>
-					<Controls />
-				</Carousel>
-			{/if}
+					{scopedNew.caption}
+				</h5>
 
-			<h5
-				class="wrap-break-word caption mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
-			>
-				{scopedNew.caption}
-			</h5>
-
-			<P class="bg-forest-900 dark:bg-forest-900 text-linen-200">
-				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-				{@html DOMPurify.sanitize(scopedNew.body ?? '')}</P
-			>
+				<P class="bg-forest-900 dark:bg-forest-900 text-linen-200 w-[50%]">
+					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+					{@html DOMPurify.sanitize(scopedNew.body ?? '')}</P
+				>
+			</span>
 		</div>
 		<div class="col-start-9 col-end-13">2</div>
 	</div>
