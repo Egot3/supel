@@ -45,7 +45,7 @@ message GetUserResponse {
 }
 
 message UploadAvatarRequest {
-    string avatar_key = 1;
+    string uuid = 1;
 }
 
 message UploadAvatarResponse {
