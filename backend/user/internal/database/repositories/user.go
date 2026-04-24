@@ -7,8 +7,8 @@ import (
 	"github.com/Egot3/supel/backend/user/internal/models"
 )
 
-func CreateUser(ctx context.Context, nickname, uuid string) error {
-	_, err := database.DB.NewInsert().Model(&models.User{Nickname: nickname, UUID: uuid}).Exec(ctx)
+func CreateUser(ctx context.Context, nickname, uuid string, avatarKey *string) error {
+	_, err := database.DB.NewInsert().Model(&models.User{Nickname: nickname, UUID: uuid, AvatarKey: avatarKey}).Exec(ctx)
 	return err
 }
 

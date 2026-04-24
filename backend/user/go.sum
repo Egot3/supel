@@ -1,5 +1,7 @@
-github.com/Egot3/supel/backend/contracts v0.1.7 h1:v1z7ddIjWQbUP81xeN1nr3I70L7vtVVWyO7i1DWjTp0=
-github.com/Egot3/supel/backend/contracts v0.1.7/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.1.8 h1:1iwh6uDOVEKbVFRp/gNH3vVBH8CAZxc4NV/v1lrkQw4=
+github.com/Egot3/supel/backend/contracts v0.1.8/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.1.9 h1:QF/mY5Yi4Kzl76Xk6ElETUX3x3z5+HmqOj9GQsf31/k=
+github.com/Egot3/supel/backend/contracts v0.1.9/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/aws/aws-sdk-go-v2 v1.41.6 h1:1AX0AthnBQzMx1vbmir3Y4WsnJgiydmnJjiLu+LvXOg=
 github.com/aws/aws-sdk-go-v2 v1.41.6/go.mod h1:dy0UzBIfwSeot4grGvY1AqFWN5zgziMmWGzysDnHFcQ=
 github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.9 h1:adBsCIIpLbLmYnkQU+nAChU5yhVTvu5PerROm+/Kq2A=

@@ -7,12 +7,12 @@ import (
 	"github.com/Egot3/supel/backend/user/internal/models"
 )
 
-func UserMoToPr(model *models.User) *pb.User {
+func UserMoToPr(model *models.User, avatarUrl *string) *pb.User {
 	return &pb.User{
 		Uuid:              model.UUID,
 		Nickname:          model.Nickname,
 		Description:       model.Description,
-		AvatarKey:         model.AvatarKey,
+		AvatarUrl:         avatarUrl,
 		Status:            model.Status,
 		StatusReactionKey: model.StatusReactionKey,
 		CreatedAt:         timestamppb.New(model.CreatedAt),
@@ -24,7 +24,6 @@ func UserPrToMo(proto *pb.User) *models.User {
 		UUID:              proto.Uuid,
 		Nickname:          proto.Nickname,
 		Description:       proto.Description,
-		AvatarKey:         proto.AvatarKey,
 		Status:            proto.Status,
 		StatusReactionKey: proto.StatusReactionKey,
 		CreatedAt:         proto.CreatedAt.AsTime(),

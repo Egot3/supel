@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"fmt"
 	"log"
 
 	pb "github.com/Egot3/supel/backend/contracts"
@@ -37,10 +38,13 @@ func NewUserService(storageService storage.StorageService) *UserSever {
 }
 
 func (s *UserSever) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*emptypb.Empty, error) {
-	err := repositories.CreateUser(ctx, req.GetNickname(), req.GetUuid())
+	UUID := req.GetUuid()
+	key := fmt.Sprintf("orgs/ETSEvilCorp/user/avatar/%v", UUID)
+
+	err := repositories.CreateUser(ctx, req.GetNickname(), UUID, &key)
 
 	if err != nil {
-		log.Printf("Failed to create user %v: %v", req.GetUuid(), err.Error())
+		log.Printf("Failed to create user %v: %v", UUID, err.Error())
 		return nil, status.Error(codes.Internal, "Failed to create pub user")
 	}
 	return nil, err
@@ -75,8 +79,13 @@ func (s *UserSever) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.Ge
 		return nil, status.Error(codes.Internal, "failed to get user")
 	}
 
+	avatarUrl := new(string)
+	if user.AvatarKey != nil {
+		s.storageService.GETurl(ctx, *user.AvatarKey)
+	}
+
 	return &pb.GetUserResponse{
-		User: moprconv.UserMoToPr(user),
+		User: moprconv.UserMoToPr(user, avatarUrl),
 	}, nil
 }
 

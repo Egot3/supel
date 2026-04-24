@@ -3,13 +3,13 @@ module github.com/Egot3/supel/backend/user
 go 1.26.1
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.1.7
 	github.com/uptrace/bun v1.2.18
 	google.golang.org/grpc v1.80.0
 	google.golang.org/protobuf v1.36.11
 )
 
 require (
+	github.com/Egot3/supel/backend/contracts v0.1.9 // indirect
 	github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.9 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.22 // indirect
 	github.com/aws/aws-sdk-go-v2/internal/configsources v1.4.22 // indirect
