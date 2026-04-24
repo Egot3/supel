@@ -3,8 +3,27 @@
 	import { Carousel, CarouselIndicators, P, Modal } from 'flowbite-svelte';
 	import { fly } from 'svelte/transition';
 	import DOMPurify from 'isomorphic-dompurify';
+	import type { User } from '$lib/types/user';
 
 	let { scoped = $bindable(false), scopedNew = $bindable({} as newCooked) } = $props();
+
+	let userInfo: User = $state({} as User);
+	async function GetUser() {
+		const res = await fetch(`/api/user/${scopedNew.userId}`, {
+			method: 'GET'
+		});
+		const data = await res.json();
+		userInfo = data.user;
+	}
+
+	$effect(() => {
+		if (scoped) {
+			GetUser();
+			/* 			console.log('user name:', userInfo.nickname);
+			 */
+		}
+	});
+	/* $inspect(userInfo.nickname); */
 </script>
 
 <Modal
@@ -40,6 +59,11 @@
 				>
 					{scopedNew.caption}
 				</h5>
+				<h6
+					class="wrap-break-word caption mb-2 text-1xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
+				>
+					{userInfo.nickname}
+				</h6>
 
 				<P class="bg-forest-900 dark:bg-forest-900 text-linen-200 w-[50%]">
 					<!-- eslint-disable-next-line svelte/no-at-html-tags -->
