@@ -16,7 +16,7 @@ message CreateUserRequest {
 message User {
     string uuid = 1;
     string nickname = 2;
-    optional string avatar_url = 3;
+    string avatar_url = 3;
     optional string description = 4;
     optional string status = 5;
     optional string status_reaction_key = 6;
@@ -52,6 +52,10 @@ message UploadAvatarResponse {
     string avatar_url = 1;
 }
 
+message GetSelfResponse {
+    User user = 1;
+}
+
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty);
     rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
@@ -70,6 +74,11 @@ service UserService {
         option (google.api.http) = {
             post: "/v1/user/avatar"
             body: "*"
+        };
+    };
+    rpc GetSelf(google.protobuf.Empty) returns (GetSelfResponse){
+        option (google.api.http) = {
+            get: "/v1/user/self"
         };
     };
 }

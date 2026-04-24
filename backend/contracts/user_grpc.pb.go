@@ -25,6 +25,7 @@ const (
 	UserService_PatchUser_FullMethodName    = "/news.UserService/PatchUser"
 	UserService_GetUser_FullMethodName      = "/news.UserService/GetUser"
 	UserService_UploadAvatar_FullMethodName = "/news.UserService/UploadAvatar"
+	UserService_GetSelf_FullMethodName      = "/news.UserService/GetSelf"
 )
 
 // UserServiceClient is the client API for UserService service.
@@ -36,6 +37,7 @@ type UserServiceClient interface {
 	PatchUser(ctx context.Context, in *PatchUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetUser(ctx context.Context, in *GetUserRequest, opts ...grpc.CallOption) (*GetUserResponse, error)
 	UploadAvatar(ctx context.Context, in *UploadAvatarRequest, opts ...grpc.CallOption) (*UploadAvatarResponse, error)
+	GetSelf(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetSelfResponse, error)
 }
 
 type userServiceClient struct {
@@ -96,6 +98,16 @@ func (c *userServiceClient) UploadAvatar(ctx context.Context, in *UploadAvatarRe
 	return out, nil
 }
 
+func (c *userServiceClient) GetSelf(ctx context.Context, in *emptypb.Empty, opts ...grpc.CallOption) (*GetSelfResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetSelfResponse)
+	err := c.cc.Invoke(ctx, UserService_GetSelf_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // UserServiceServer is the server API for UserService service.
 // All implementations must embed UnimplementedUserServiceServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type UserServiceServer interface {
 	PatchUser(context.Context, *PatchUserRequest) (*emptypb.Empty, error)
 	GetUser(context.Context, *GetUserRequest) (*GetUserResponse, error)
 	UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error)
+	GetSelf(context.Context, *emptypb.Empty) (*GetSelfResponse, error)
 	mustEmbedUnimplementedUserServiceServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedUserServiceServer) GetUser(context.Context, *GetUserRequest) 
 }
 func (UnimplementedUserServiceServer) UploadAvatar(context.Context, *UploadAvatarRequest) (*UploadAvatarResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method UploadAvatar not implemented")
+}
+func (UnimplementedUserServiceServer) GetSelf(context.Context, *emptypb.Empty) (*GetSelfResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetSelf not implemented")
 }
 func (UnimplementedUserServiceServer) mustEmbedUnimplementedUserServiceServer() {}
 func (UnimplementedUserServiceServer) testEmbeddedByValue()                     {}
@@ -241,6 +257,24 @@ func _UserService_UploadAvatar_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _UserService_GetSelf_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(emptypb.Empty)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(UserServiceServer).GetSelf(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: UserService_GetSelf_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(UserServiceServer).GetSelf(ctx, req.(*emptypb.Empty))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // UserService_ServiceDesc is the grpc.ServiceDesc for UserService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var UserService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "UploadAvatar",
 			Handler:    _UserService_UploadAvatar_Handler,
+		},
+		{
+			MethodName: "GetSelf",
+			Handler:    _UserService_GetSelf_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
