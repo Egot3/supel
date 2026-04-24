@@ -80,7 +80,7 @@ type User struct {
 	state             protoimpl.MessageState `protogen:"open.v1"`
 	Uuid              string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
 	Nickname          string                 `protobuf:"bytes,2,opt,name=nickname,proto3" json:"nickname,omitempty"`
-	AvatarKey         *string                `protobuf:"bytes,3,opt,name=avatar_key,json=avatarKey,proto3,oneof" json:"avatar_key,omitempty"`
+	AvatarUrl         *string                `protobuf:"bytes,3,opt,name=avatar_url,json=avatarUrl,proto3,oneof" json:"avatar_url,omitempty"`
 	Description       *string                `protobuf:"bytes,4,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	Status            *string                `protobuf:"bytes,5,opt,name=status,proto3,oneof" json:"status,omitempty"`
 	StatusReactionKey *string                `protobuf:"bytes,6,opt,name=status_reaction_key,json=statusReactionKey,proto3,oneof" json:"status_reaction_key,omitempty"`
@@ -133,9 +133,9 @@ func (x *User) GetNickname() string {
 	return ""
 }
 
-func (x *User) GetAvatarKey() string {
-	if x != nil && x.AvatarKey != nil {
-		return *x.AvatarKey
+func (x *User) GetAvatarUrl() string {
+	if x != nil && x.AvatarUrl != nil {
+		return *x.AvatarUrl
 	}
 	return ""
 }
@@ -396,13 +396,13 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\x12\"\n" +
 	"\n" +
-	"avatar_key\x18\x03 \x01(\tH\x00R\tavatarKey\x88\x01\x01\x12%\n" +
+	"avatar_url\x18\x03 \x01(\tH\x00R\tavatarUrl\x88\x01\x01\x12%\n" +
 	"\vdescription\x18\x04 \x01(\tH\x01R\vdescription\x88\x01\x01\x12\x1b\n" +
 	"\x06status\x18\x05 \x01(\tH\x02R\x06status\x88\x01\x01\x123\n" +
 	"\x13status_reaction_key\x18\x06 \x01(\tH\x03R\x11statusReactionKey\x88\x01\x01\x129\n" +
 	"\n" +
 	"created_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\r\n" +
-	"\v_avatar_keyB\x0e\n" +
+	"\v_avatar_urlB\x0e\n" +
 	"\f_descriptionB\t\n" +
 	"\a_statusB\x16\n" +
 	"\x14_status_reaction_key\"\xf2\x02\n" +
