@@ -11,7 +11,7 @@ type User struct {
 	UUID          string  `bun:"uuid,pk,type:uuid"`
 	Nickname      string  `bun:"nickname,notnull"`
 	Description   *string `bun:"description"`
-	AvatarKey     *string `bun:"avatar_key"`
+	AvatarKey     string  `bun:"avatar_key"`
 
 	Status            *string    `bun:"status,null"`
 	StatusExpiration  *time.Time `bun:"status_expiration,null"`

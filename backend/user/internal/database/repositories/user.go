@@ -7,7 +7,7 @@ import (
 	"github.com/Egot3/supel/backend/user/internal/models"
 )
 
-func CreateUser(ctx context.Context, nickname, uuid string, avatarKey *string) error {
+func CreateUser(ctx context.Context, nickname, uuid string, avatarKey string) error {
 	_, err := database.DB.NewInsert().Model(&models.User{Nickname: nickname, UUID: uuid, AvatarKey: avatarKey}).Exec(ctx)
 	return err
 }
@@ -33,4 +33,15 @@ func GetUser(ctx context.Context, uuid string) (*models.User, error) {
 func PatchUser(ctx context.Context, patched *models.User) error {
 	_, err := database.DB.NewUpdate().Model(patched).WherePK().Exec(ctx)
 	return err
+}
+
+func GetAvatarKey(ctx context.Context, uuid string) (string, error) {
+	var key string
+	err := database.DB.NewSelect().
+		Model(models.User{UUID: uuid}).
+		WherePK().
+		Column("avatar_key").
+		Scan(ctx, key)
+
+	return key, err
 }

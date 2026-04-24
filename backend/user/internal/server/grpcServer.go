@@ -41,7 +41,7 @@ func (s *UserSever) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (
 	UUID := req.GetUuid()
 	key := fmt.Sprintf("orgs/ETSEvilCorp/user/avatar/%v", UUID)
 
-	err := repositories.CreateUser(ctx, req.GetNickname(), UUID, &key)
+	err := repositories.CreateUser(ctx, req.GetNickname(), UUID, key)
 
 	if err != nil {
 		log.Printf("Failed to create user %v: %v", UUID, err.Error())
@@ -79,9 +79,9 @@ func (s *UserSever) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.Ge
 		return nil, status.Error(codes.Internal, "failed to get user")
 	}
 
-	avatarUrl := new(string)
-	if user.AvatarKey != nil {
-		s.storageService.GETurl(ctx, *user.AvatarKey)
+	avatarUrl := ""
+	if aUrl, err := s.storageService.GETurl(ctx, user.AvatarKey); err == nil {
+		avatarUrl = aUrl
 	}
 
 	return &pb.GetUserResponse{
@@ -129,4 +129,33 @@ func (s *UserSever) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*e
 	}
 
 	return nil, nil
+}
+
+func (s *UserSever) UploadAvatar(ctx context.Context, req *pb.UploadAvatarRequest) (*pb.UploadAvatarResponse, error) {
+	userUuid, role, ok := UserFromContext(ctx)
+	if !ok {
+		log.Printf("identity failure in avatar changing")
+		return nil, status.Error(codes.DataLoss, "Identity failure")
+	}
+	targetUuid := req.GetUuid()
+
+	if role != "ADMIN" && userUuid != req.GetUuid() {
+		log.Printf("user %v doesn't own %v and not an admin(%v)", userUuid, targetUuid, role)
+		return nil, status.Error(codes.PermissionDenied, "NOT. ENOUGH. POWER")
+	}
+
+	key, err := repositories.GetAvatarKey(ctx, req.Uuid)
+	if err != nil {
+		log.Printf("couldn't retrieve a key for %v: %v", req.Uuid, err.Error())
+		return nil, status.Error(codes.Internal, "Key loss")
+	}
+
+	avatarPUTUrl, err := s.storageService.PUTurl(ctx, key, "image/webp")
+	if err != nil {
+		log.Printf("Couldn't get a PUT url for %v: %v", req.Uuid, err.Error())
+		return nil, status.Error(codes.Internal, "Couldn't generate a PUT url")
+	}
+	return &pb.UploadAvatarResponse{
+		AvatarUrl: avatarPUTUrl,
+	}, nil
 }
