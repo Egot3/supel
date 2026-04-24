@@ -16,7 +16,7 @@ message CreateUserRequest {
 message User {
     string uuid = 1;
     string nickname = 2;
-    optional string avatar_key = 3;
+    optional string avatar_url = 3;
     optional string description = 4;
     optional string status = 5;
     optional string status_reaction_key = 6;
