@@ -384,6 +384,94 @@ func (x *GetUserResponse) GetUser() *User {
 	return nil
 }
 
+type UploadAvatarRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AvatarKey     string                 `protobuf:"bytes,1,opt,name=avatar_key,json=avatarKey,proto3" json:"avatar_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadAvatarRequest) Reset() {
+	*x = UploadAvatarRequest{}
+	mi := &file_proto_user_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadAvatarRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadAvatarRequest) ProtoMessage() {}
+
+func (x *UploadAvatarRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadAvatarRequest.ProtoReflect.Descriptor instead.
+func (*UploadAvatarRequest) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *UploadAvatarRequest) GetAvatarKey() string {
+	if x != nil {
+		return x.AvatarKey
+	}
+	return ""
+}
+
+type UploadAvatarResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AvatarUrl     string                 `protobuf:"bytes,1,opt,name=avatar_url,json=avatarUrl,proto3" json:"avatar_url,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UploadAvatarResponse) Reset() {
+	*x = UploadAvatarResponse{}
+	mi := &file_proto_user_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UploadAvatarResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UploadAvatarResponse) ProtoMessage() {}
+
+func (x *UploadAvatarResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UploadAvatarResponse.ProtoReflect.Descriptor instead.
+func (*UploadAvatarResponse) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UploadAvatarResponse) GetAvatarUrl() string {
+	if x != nil {
+		return x.AvatarUrl
+	}
+	return ""
+}
+
 var File_proto_user_proto protoreflect.FileDescriptor
 
 const file_proto_user_proto_rawDesc = "" +
@@ -424,14 +512,21 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"1\n" +
 	"\x0fGetUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".news.UserR\x04user2\xae\x02\n" +
+	".news.UserR\x04user\"4\n" +
+	"\x13UploadAvatarRequest\x12\x1d\n" +
+	"\n" +
+	"avatar_key\x18\x01 \x01(\tR\tavatarKey\"5\n" +
+	"\x14UploadAvatarResponse\x12\x1d\n" +
+	"\n" +
+	"avatar_url\x18\x01 \x01(\tR\tavatarUrl2\x91\x03\n" +
 	"\vUserService\x12=\n" +
 	"\n" +
 	"CreateUser\x12\x17.news.CreateUserRequest\x1a\x16.google.protobuf.Empty\x12=\n" +
 	"\n" +
 	"DeleteUser\x12\x17.news.DeleteUserRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
 	"\tPatchUser\x12\x16.news.PatchUserRequest\x1a\x16.google.protobuf.Empty\"\x13\x82\xd3\xe4\x93\x02\r:\x01*2\b/v1/user\x12O\n" +
-	"\aGetUser\x12\x14.news.GetUserRequest\x1a\x15.news.GetUserResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/user/{uuid}B\x04Z\x02./b\x06proto3"
+	"\aGetUser\x12\x14.news.GetUserRequest\x1a\x15.news.GetUserResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/user/{uuid}\x12a\n" +
+	"\fUploadAvatar\x12\x19.news.UploadAvatarRequest\x1a\x1a.news.UploadAvatarResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/user/avatarB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_user_proto_rawDescOnce sync.Once
@@ -445,7 +540,7 @@ func file_proto_user_proto_rawDescGZIP() []byte {
 	return file_proto_user_proto_rawDescData
 }
 
-var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_proto_user_proto_goTypes = []any{
 	(*CreateUserRequest)(nil),     // 0: news.CreateUserRequest
 	(*User)(nil),                  // 1: news.User
@@ -453,23 +548,27 @@ var file_proto_user_proto_goTypes = []any{
 	(*DeleteUserRequest)(nil),     // 3: news.DeleteUserRequest
 	(*GetUserRequest)(nil),        // 4: news.GetUserRequest
 	(*GetUserResponse)(nil),       // 5: news.GetUserResponse
-	(*timestamppb.Timestamp)(nil), // 6: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),         // 7: google.protobuf.Empty
+	(*UploadAvatarRequest)(nil),   // 6: news.UploadAvatarRequest
+	(*UploadAvatarResponse)(nil),  // 7: news.UploadAvatarResponse
+	(*timestamppb.Timestamp)(nil), // 8: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),         // 9: google.protobuf.Empty
 }
 var file_proto_user_proto_depIdxs = []int32{
-	6, // 0: news.User.created_at:type_name -> google.protobuf.Timestamp
-	6, // 1: news.PatchUserRequest.status_expiration_date:type_name -> google.protobuf.Timestamp
+	8, // 0: news.User.created_at:type_name -> google.protobuf.Timestamp
+	8, // 1: news.PatchUserRequest.status_expiration_date:type_name -> google.protobuf.Timestamp
 	1, // 2: news.GetUserResponse.user:type_name -> news.User
 	0, // 3: news.UserService.CreateUser:input_type -> news.CreateUserRequest
 	3, // 4: news.UserService.DeleteUser:input_type -> news.DeleteUserRequest
 	2, // 5: news.UserService.PatchUser:input_type -> news.PatchUserRequest
 	4, // 6: news.UserService.GetUser:input_type -> news.GetUserRequest
-	7, // 7: news.UserService.CreateUser:output_type -> google.protobuf.Empty
-	7, // 8: news.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	7, // 9: news.UserService.PatchUser:output_type -> google.protobuf.Empty
-	5, // 10: news.UserService.GetUser:output_type -> news.GetUserResponse
-	7, // [7:11] is the sub-list for method output_type
-	3, // [3:7] is the sub-list for method input_type
+	6, // 7: news.UserService.UploadAvatar:input_type -> news.UploadAvatarRequest
+	9, // 8: news.UserService.CreateUser:output_type -> google.protobuf.Empty
+	9, // 9: news.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	9, // 10: news.UserService.PatchUser:output_type -> google.protobuf.Empty
+	5, // 11: news.UserService.GetUser:output_type -> news.GetUserResponse
+	7, // 12: news.UserService.UploadAvatar:output_type -> news.UploadAvatarResponse
+	8, // [8:13] is the sub-list for method output_type
+	3, // [3:8] is the sub-list for method input_type
 	3, // [3:3] is the sub-list for extension type_name
 	3, // [3:3] is the sub-list for extension extendee
 	0, // [0:3] is the sub-list for field type_name
@@ -488,7 +587,7 @@ func file_proto_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_user_proto_rawDesc), len(file_proto_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

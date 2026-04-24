@@ -44,6 +44,14 @@ message GetUserResponse {
     User user = 1;
 }
 
+message UploadAvatarRequest {
+    string avatar_key = 1;
+}
+
+message UploadAvatarResponse {
+    string avatar_url = 1;
+}
+
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty);
     rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
@@ -56,6 +64,12 @@ service UserService {
     rpc GetUser(GetUserRequest) returns (GetUserResponse) {
         option (google.api.http) = {
             get: "/v1/user/{uuid}"
+        };
+    };
+    rpc UploadAvatar(UploadAvatarRequest) returns (UploadAvatarResponse) {
+        option (google.api.http) = {
+            post: "/v1/user/avatar"
+            body: "*"
         };
     };
 }
