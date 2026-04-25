@@ -6,6 +6,8 @@ github.com/Egot3/supel/backend/contracts v0.1.10 h1:QVW2SSRf4ZziKp3LdsV2MBcocm4A
 github.com/Egot3/supel/backend/contracts v0.1.10/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/Egot3/supel/backend/contracts v0.1.11 h1:gIHSj0gC05Z9UAKtEY0TVyEM3taAyEEv2wosVPOg6ZM=
 github.com/Egot3/supel/backend/contracts v0.1.11/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.1.12 h1:U4Ac2aFPd4xWCEDMYWAZxnwfCxxd7BOdaWAouwUxeRI=
+github.com/Egot3/supel/backend/contracts v0.1.12/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/aws/aws-sdk-go-v2 v1.41.6 h1:1AX0AthnBQzMx1vbmir3Y4WsnJgiydmnJjiLu+LvXOg=
 github.com/aws/aws-sdk-go-v2 v1.41.6/go.mod h1:dy0UzBIfwSeot4grGvY1AqFWN5zgziMmWGzysDnHFcQ=
 github.com/aws/aws-sdk-go-v2/aws/protocol/eventstream v1.7.9 h1:adBsCIIpLbLmYnkQU+nAChU5yhVTvu5PerROm+/Kq2A=

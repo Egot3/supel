@@ -12,7 +12,7 @@ func UserMoToPr(model *models.User, avatarUrl string) *pb.User {
 		Uuid:              model.UUID,
 		Nickname:          model.Nickname,
 		Description:       model.Description,
-		AvatarUrl:         &avatarUrl,
+		AvatarUrl:         avatarUrl,
 		Status:            model.Status,
 		StatusReactionKey: model.StatusReactionKey,
 		CreatedAt:         timestamppb.New(model.CreatedAt),

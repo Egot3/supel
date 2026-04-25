@@ -16,7 +16,7 @@ import (
 	"google.golang.org/protobuf/types/known/emptypb"
 )
 
-type UserSever struct {
+type UserServer struct {
 	pb.UnimplementedUserServiceServer
 	storageService storage.StorageService
 }
@@ -31,13 +31,13 @@ func UserFromContext(ctx context.Context) (userID string, role string, ok bool) 
 	return userID, role, !(len(userID) == 0 && len(role) == 0)
 }
 
-func NewUserService(storageService storage.StorageService) *UserSever {
-	return &UserSever{
+func NewUserService(storageService storage.StorageService) *UserServer {
+	return &UserServer{
 		storageService: storageService,
 	}
 }
 
-func (s *UserSever) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*emptypb.Empty, error) {
+func (s *UserServer) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (*emptypb.Empty, error) {
 	UUID := req.GetUuid()
 	key := fmt.Sprintf("orgs/ETSEvilCorp/user/avatar/%v", UUID)
 
@@ -50,7 +50,7 @@ func (s *UserSever) CreateUser(ctx context.Context, req *pb.CreateUserRequest) (
 	return nil, err
 }
 
-func (s *UserSever) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*emptypb.Empty, error) {
+func (s *UserServer) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*emptypb.Empty, error) {
 	userUuid, role, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in deletion")
@@ -72,7 +72,7 @@ func (s *UserSever) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (
 	return nil, nil
 }
 
-func (s *UserSever) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
+func (s *UserServer) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.GetUserResponse, error) {
 	user, err := repositories.GetUser(ctx, req.GetUuid())
 	if err != nil {
 		log.Printf("Failed to get user %v: %v", req.Uuid, err.Error())
@@ -89,7 +89,7 @@ func (s *UserSever) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.Ge
 	}, nil
 }
 
-func (s *UserSever) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*emptypb.Empty, error) {
+func (s *UserServer) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*emptypb.Empty, error) {
 	userUuid, role, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in deletion")
@@ -131,7 +131,7 @@ func (s *UserSever) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*e
 	return nil, nil
 }
 
-func (s *UserSever) UploadAvatar(ctx context.Context, req *pb.UploadAvatarRequest) (*pb.UploadAvatarResponse, error) {
+func (s *UserServer) UploadAvatar(ctx context.Context, req *pb.UploadAvatarRequest) (*pb.UploadAvatarResponse, error) {
 	userUuid, role, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in avatar changing")
@@ -157,5 +157,28 @@ func (s *UserSever) UploadAvatar(ctx context.Context, req *pb.UploadAvatarReques
 	}
 	return &pb.UploadAvatarResponse{
 		AvatarUrl: avatarPUTUrl,
+	}, nil
+}
+
+func (s *UserServer) GetSelf(ctx context.Context, _ *emptypb.Empty) (*pb.GetSelfResponse, error) {
+	userUuid, _, ok := UserFromContext(ctx)
+	if !ok {
+		log.Printf("identity failure in avatar changing")
+		return nil, status.Error(codes.DataLoss, "Identity failure")
+	}
+
+	userModel, err := repositories.GetUser(ctx, userUuid)
+	if err != nil {
+		log.Printf("Couldn't fetch self-user %v: %v", userUuid, err.Error())
+		return nil, status.Error(codes.Internal, "Couldn't fetch self")
+	}
+
+	avatarUrl := ""
+	if aUrl, err := s.storageService.GETurl(ctx, userModel.AvatarKey); err == nil {
+		avatarUrl = aUrl
+	}
+
+	return &pb.GetSelfResponse{
+		User: moprconv.UserMoToPr(userModel, avatarUrl),
 	}, nil
 }
