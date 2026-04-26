@@ -386,7 +386,7 @@ func (x *GetUserResponse) GetUser() *User {
 
 type UploadAvatarRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	AvatarName    string                 `protobuf:"bytes,1,opt,name=avatar_name,json=avatarName,proto3" json:"avatar_name,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -421,9 +421,9 @@ func (*UploadAvatarRequest) Descriptor() ([]byte, []int) {
 	return file_proto_user_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *UploadAvatarRequest) GetUuid() string {
+func (x *UploadAvatarRequest) GetAvatarName() string {
 	if x != nil {
-		return x.Uuid
+		return x.AvatarName
 	}
 	return ""
 }
@@ -555,9 +555,10 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"1\n" +
 	"\x0fGetUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".news.UserR\x04user\")\n" +
-	"\x13UploadAvatarRequest\x12\x12\n" +
-	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"5\n" +
+	".news.UserR\x04user\"6\n" +
+	"\x13UploadAvatarRequest\x12\x1f\n" +
+	"\vavatar_name\x18\x01 \x01(\tR\n" +
+	"avatarName\"5\n" +
 	"\x14UploadAvatarResponse\x12\x1d\n" +
 	"\n" +
 	"avatar_url\x18\x01 \x01(\tR\tavatarUrl\"1\n" +
