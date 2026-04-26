@@ -7,7 +7,7 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/Egot3/supel/backend/user/internal/database/repositories"
-	"github.com/Egot3/supel/backend/user/internal/models"
+
 	"github.com/Egot3/supel/backend/user/internal/moprconv"
 	storage "github.com/Egot3/supel/backend/user/internal/s3"
 	"google.golang.org/grpc/codes"
@@ -102,27 +102,7 @@ func (s *UserServer) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*
 		return nil, status.Error(codes.PermissionDenied, "NOT. ENOUGH. POWER")
 	}
 
-	patched := &models.User{
-		UUID: targetUuid,
-	}
-	if req.Nickname != nil {
-		patched.Nickname = *req.Nickname
-	}
-	if req.Description != nil {
-		patched.Description = req.Description
-	}
-	if req.Status != nil {
-		patched.Status = req.Status
-	}
-	if req.StatusReactionKey != nil {
-		patched.StatusReactionKey = req.StatusReactionKey
-	}
-	if req.StatusExpirationDate != nil {
-		t := req.StatusExpirationDate.AsTime()
-		patched.StatusExpiration = &t
-	}
-
-	err := repositories.PatchUser(ctx, patched)
+	err := repositories.PatchUser(ctx, moprconv.PatchPrToUpdateMo(req))
 	if err != nil {
 		log.Printf("Couldn't patch user %v: %v", targetUuid, err.Error())
 		return nil, status.Error(codes.Internal, "couldn't patch users")

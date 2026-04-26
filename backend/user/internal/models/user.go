@@ -22,3 +22,12 @@ type User struct {
 
 	_ struct{} `bun:"unique:new_uuid_idx"`
 }
+
+type UpdateUser struct {
+	UUID              string
+	Nickname          *string
+	Description       *string
+	Status            *string
+	StatusExpiration  *time.Time
+	StatusReactionKey *string
+}

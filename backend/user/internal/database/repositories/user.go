@@ -30,15 +30,33 @@ func GetUser(ctx context.Context, uuid string) (*models.User, error) {
 	return user, nil
 }
 
-func PatchUser(ctx context.Context, patched *models.User) error {
-	_, err := database.DB.NewUpdate().Model(patched).WherePK().Exec(ctx)
+func PatchUser(ctx context.Context, patched *models.UpdateUser) error {
+	updateQuery := database.DB.NewUpdate().Table("users")
+	if patched.Nickname != nil {
+		updateQuery = updateQuery.Set("nickname = ?", patched.Nickname)
+	}
+	if patched.Description != nil {
+		updateQuery = updateQuery.Set("description = ?", patched.Description)
+	}
+	if patched.Status != nil {
+		updateQuery = updateQuery.Set("status = ?", patched.Status)
+	}
+	if patched.StatusExpiration != nil {
+		updateQuery = updateQuery.Set("status_expiration = ?", patched.StatusExpiration)
+	}
+	if patched.StatusReactionKey != nil {
+		updateQuery = updateQuery.Set("status_reaction_key = ?", patched.StatusReactionKey)
+	}
+
+	_, err := updateQuery.Where("uuid = ?", patched.UUID).
+		Exec(ctx)
 	return err
 }
 
 func GetAvatarKey(ctx context.Context, uuid string) (string, error) {
 	var key string
 	err := database.DB.NewSelect().
-		Model(models.User{UUID: uuid}).
+		Model(&models.User{UUID: uuid}).
 		WherePK().
 		Column("avatar_key").
 		Scan(ctx, key)
