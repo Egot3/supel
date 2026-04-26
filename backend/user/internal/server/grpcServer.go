@@ -125,7 +125,7 @@ func (s *UserServer) UploadAvatar(ctx context.Context, req *pb.UploadAvatarReque
 	}
 
 	key, err := repositories.GetAvatarKey(ctx, req.Uuid)
-	if err != nil {
+	if err != nil || key == "" {
 		log.Printf("couldn't retrieve a key for %v: %v", req.Uuid, err.Error())
 		return nil, status.Error(codes.Internal, "Key loss")
 	}
