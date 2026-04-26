@@ -59,7 +59,7 @@ func GetAvatarKey(ctx context.Context, uuid string) (string, error) {
 		Model(&models.User{UUID: uuid}).
 		WherePK().
 		Column("avatar_key").
-		Scan(ctx, key)
+		Scan(ctx, &key)
 
 	return key, err
 }
