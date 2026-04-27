@@ -1,0 +1,40 @@
+<script lang="ts">
+	import { getUserContext } from '$lib/context/userContext';
+	import ProfileUpdateModal from '$lib/modals/ProfileUpdateModal.svelte';
+	import { Avatar, Button, P } from 'flowbite-svelte';
+
+	let user = getUserContext();
+	let updateProfileModalOpen = $state(false);
+</script>
+
+<ProfileUpdateModal bind:open={updateProfileModalOpen} userInfo={user} />
+
+<div
+	class="bg-forest-900
+    col-start-1 col-end-13 row-start-1 row-end-5
+    flex
+    "
+>
+	<div class="h-full w-auto">
+		<Avatar class="h-full w-auto" src={user.avatarUrl}></Avatar>
+	</div>
+
+	<div class="flex flex-col">
+		<div class="h-full">
+			<h1
+				class="wrap-break-word caption mb-2 text-4xl font-bold bg-dark text-light font-hollow min-h-6 max-h-10 overflow-hidden"
+			>
+				{user.nickname}
+			</h1>
+			<P>{user.description}</P>
+		</div>
+		<div class="">
+			<Button
+				onclick={() => {
+					updateProfileModalOpen = true;
+				}}
+				class="text-1x1 h-fit mb-gutter self-end bg-accent">Change</Button
+			>
+		</div>
+	</div>
+</div>

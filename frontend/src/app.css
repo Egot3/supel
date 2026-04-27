@@ -67,18 +67,6 @@
 		overflow: hidden;
 	}
 
-	p,
-	h1,
-	h2,
-	h3,
-	h4,
-	h5,
-	h6 {
-		background-clip: content-box;
-		background-color: var(--color-light);
-		color: var(--color-dark);
-	}
-
 	.no-scrollbar::-webkit-scrollbar {
 		display: none;
 	}

@@ -1,35 +1,17 @@
 <script lang="ts">
-	//import '$lib/assets/global.scss';
-	import '$lib/assets/styles/toaster.sass';
+	import { setUserContext } from '$lib/context/userContext';
+	import type { User } from '$lib/types/user';
 	import '../app.css';
+	import type { LayoutData } from './$types';
+	import type { Snippet } from 'svelte';
 
-	import { setContext } from 'svelte';
-	import { SvelteMap } from 'svelte/reactivity';
+	let { data, children }: { data: LayoutData; children: Snippet } = $props();
 
-	import Toaster from '$lib/components/Toaster.svelte';
-
-	let { children } = $props();
-	// svelte-ignore non_reactive_update
-	//SvelteMap is reactive by default
-	let messages = new SvelteMap<string, unknown>(); //uhm, ActUallY
-
-	const sendBread = (message: unknown) => {
-		console.log('adding element to map');
-		messages.set(crypto.randomUUID(), message);
-		console.log(messages);
-	};
-
-	setContext('sendBread', sendBread);
+	let user = $state((data.user as User) ?? ({} as User));
+	setUserContext(user);
+	$inspect(user);
 </script>
 
-<div class="toaster">
-	<Toaster bind:messages />
-</div>
 <div class="grid grid-cols-12 grid-rows-12 h-screen w-screen">
-	<div class="avatar-wrapper"></div>
 	{@render children()}
 </div>
-
-<style lang="sass">
-
-</style>
