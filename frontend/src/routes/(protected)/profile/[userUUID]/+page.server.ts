@@ -3,6 +3,8 @@ import { withAuth } from '$lib/requestUtils/axiosConfigs';
 import type { TokenPayload } from '$lib/types/token';
 import axios, { isAxiosError } from 'axios';
 import sharp from 'sharp';
+import type { PageServerLoad } from './$types.js';
+import { type newCooked, type newRaw } from '$lib/types/new';
 
 export const actions: Actions = {
 	updateProfile: async ({ request, cookies, fetch }) => {
@@ -28,10 +30,10 @@ export const actions: Actions = {
 
 		if (pfp) {
 			try {
-				const ownInfoResponse = (await (
+				const ownInforesponseNews = (await (
 					await fetch(`http://localhost/v1/public/validate/${token}`)
 				).json()) as TokenPayload;
-				ownUUID = ownInfoResponse.uuid;
+				ownUUID = ownInforesponseNews.uuid;
 			} catch (err) {
 				fail(500, err); //так и живем
 			}
@@ -42,8 +44,8 @@ export const actions: Actions = {
 
 			let pfpPUTUrl = '';
 			try {
-				const pfpGetPutUrlResponse = await axios(pfpGetPUTUrlCfg);
-				pfpPUTUrl = pfpGetPutUrlResponse.data.avatarUrl;
+				const pfpGetPutUrlresponseNews = await axios(pfpGetPUTUrlCfg);
+				pfpPUTUrl = pfpGetPutUrlresponseNews.data.avatarUrl;
 				console.log('put Url: ', pfpPUTUrl);
 			} catch (err) {
 				console.log('error while fetching avatar put url:', err);
@@ -102,4 +104,39 @@ export const actions: Actions = {
 
 		return { success: true };
 	}
+};
+
+export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
+	const token = cookies.get('auth_token');
+	if (!token) {
+		console.log('No token on load');
+		return { news: [] };
+	}
+
+	const { userUUID } = params;
+	console.log('user uuid to fetch news:', userUUID);
+
+	const responseNews = await fetch(`http://localhost/v1/news/${userUUID}?page=0&size=5`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+	if (!responseNews.ok) {
+		console.log(responseNews);
+		console.log('responseNews is not ok: ', responseNews.status);
+		return { news: [] };
+	}
+
+	const { news } = (await responseNews.json()) as { news: newRaw[] };
+	console.log('news: ', news);
+
+	const cookedNews = news.map(async (item: newRaw) => {
+		const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
+		return { ...item, body } as newCooked;
+	});
+
+	const promisedNews = await Promise.all(cookedNews);
+	console.log('cooked: ', promisedNews);
+
+	return { news: promisedNews };
 };

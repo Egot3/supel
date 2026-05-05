@@ -149,7 +149,6 @@
 					{#each column as item (item.newId)}
 						<New
 							onclick={() => {
-								//malpractice
 								scopedNew = item;
 							}}
 							newData={item}

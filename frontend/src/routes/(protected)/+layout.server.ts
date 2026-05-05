@@ -1,4 +1,4 @@
-import type { LayoutServerLoad } from './(pfp)/$types';
+import type { LayoutServerLoad } from './$types';
 
 export const load: LayoutServerLoad = async ({ fetch, cookies }) => {
 	const token = cookies.get('auth_token');

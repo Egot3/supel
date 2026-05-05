@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { applyAction, enhance } from '$app/forms';
+	import { setUserContext } from '$lib/context/userContext';
 	import { Tooltip } from 'flowbite-svelte';
 
 	let errorMessage = $state('');
