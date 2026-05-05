@@ -79,6 +79,21 @@ func NewBulk(ctx context.Context, page, size int) ([]models.New, int, error) {
 	return found, total, err
 }
 
+func NewBulkByUser(ctx context.Context, page, size int, userUUID string) ([]models.New, int, error) {
+	var found []models.New
+	total, err := database.DB.NewSelect().
+		Model(&found).
+		Limit(size).
+		Where("user_uuid = ?", userUUID).
+		Offset(page * size).
+		ScanAndCount(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return found, total, err
+}
+
 func IsCreator(ctx context.Context, userUUID, newUUID string) (is bool, err error) {
 	return database.DB.NewSelect().
 		Model((*models.New)(nil)).

@@ -267,3 +267,55 @@ func (s *NewsSever) DeleteNew(ctx context.Context, req *pb.DeleteNewRequest) (*e
 
 	return nil, nil
 }
+
+func (s *NewsSever) ListNewsByUser(ctx context.Context, req *pb.ListNewsByUserRequest) (*pb.ListNewsResponse, error) {
+	log.Println("Got request to list news")
+	news, total, err := repositories.NewBulkByUser(ctx, int(req.GetPage()), int(req.GetSize()), req.GetUserId())
+	if err != nil {
+		log.Printf("Error while listing news: %v", err)
+		return nil, status.Error(codes.Internal, "Error while listing news")
+	}
+	log.Printf("news as models after fetching: %v", news)
+
+	targetNews := make([]*pb.New, len(news))
+	for i, newEx := range news {
+		bodyUrl := new(string)
+		bodyUrl = nil
+		if newEx.Body != nil {
+			bUrl, err := s.storageService.GETurl(ctx, *newEx.Body)
+			if err != nil {
+				log.Printf("Err while retrieving body: %v", err)
+				return nil, status.Error(codes.Internal, "failed to create a GET url of body")
+			}
+			bodyUrl = &bUrl
+		}
+
+		imageKeys, err := repositories.NewImagesByUUId(ctx, newEx.NewUUID)
+		if err != nil {
+			log.Printf("couldn't retriew image keys: %v", err)
+			return nil, status.Error(codes.Internal, err.Error())
+		}
+
+		imageUrls := make([]string, 0, len(imageKeys))
+		for _, key := range imageKeys {
+			imageLink, err := s.storageService.GETurl(ctx, key)
+			if err != nil {
+				log.Printf("couldn't create key for image: %v", err)
+				return nil, status.Error(codes.Internal, err.Error())
+			}
+
+			imageUrls = append(imageUrls, imageLink)
+		}
+
+		targetNews[i] = moprconv.NewConverter(&newEx, bodyUrl, imageUrls)
+		log.Printf("TargetNew and new: %v \n %v", targetNews[i], newEx)
+	}
+	log.Printf("TargetNews after hydration: %v", targetNews)
+
+	return &pb.ListNewsResponse{
+		News:  targetNews,
+		Page:  req.GetPage(),
+		Size:  req.GetSize(),
+		Total: uint64(total),
+	}, nil
+}
