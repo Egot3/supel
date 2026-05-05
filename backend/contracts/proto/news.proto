@@ -80,6 +80,12 @@ message GenerateBodyUploadURLResponse {
     UploadTarget target = 1;
 }
 
+message ListNewsByUserRequest {
+    string user_id = 1;
+    uint32 page = 2;
+    uint32 size = 3;
+}
+
 service NewsService {
     rpc GenerateBodyUploadURL(GenerateBodyUploadURLRequest) returns (GenerateBodyUploadURLResponse){
         option (google.api.http) = {
@@ -112,6 +118,11 @@ service NewsService {
     rpc DeleteNew(DeleteNewRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             delete: "/v1/news/{new_id}"
+        };
+    };
+    rpc ListNewsByUser(ListNewsByUserRequest) returns (ListNewsResponse){
+        option (google.api.http) = {
+            get: "/v1/news/{user_id}"
         };
     };
 }

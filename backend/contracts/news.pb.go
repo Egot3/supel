@@ -760,6 +760,66 @@ func (x *GenerateBodyUploadURLResponse) GetTarget() *UploadTarget {
 	return nil
 }
 
+type ListNewsByUserRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	Page          uint32                 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListNewsByUserRequest) Reset() {
+	*x = ListNewsByUserRequest{}
+	mi := &file_proto_news_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListNewsByUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListNewsByUserRequest) ProtoMessage() {}
+
+func (x *ListNewsByUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_news_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListNewsByUserRequest.ProtoReflect.Descriptor instead.
+func (*ListNewsByUserRequest) Descriptor() ([]byte, []int) {
+	return file_proto_news_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListNewsByUserRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+func (x *ListNewsByUserRequest) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListNewsByUserRequest) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
 var File_proto_news_proto protoreflect.FileDescriptor
 
 const file_proto_news_proto_rawDesc = "" +
@@ -813,7 +873,11 @@ const file_proto_news_proto_rawDesc = "" +
 	"\x1cGenerateBodyUploadURLRequest\x12\x1b\n" +
 	"\tbody_name\x18\x01 \x01(\tR\bbodyName\"K\n" +
 	"\x1dGenerateBodyUploadURLResponse\x12*\n" +
-	"\x06target\x18\x01 \x01(\v2\x12.news.UploadTargetR\x06target2\xcd\x04\n" +
+	"\x06target\x18\x01 \x01(\v2\x12.news.UploadTargetR\x06target\"X\n" +
+	"\x15ListNewsByUserRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\x12\x12\n" +
+	"\x04page\x18\x02 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x03 \x01(\rR\x04size2\xb0\x05\n" +
 	"\vNewsService\x12z\n" +
 	"\x15GenerateBodyUploadURL\x12\".news.GenerateBodyUploadURLRequest\x1a#.news.GenerateBodyUploadURLResponse\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/news/body\x12z\n" +
 	"\x15GenerateNewUploadURLs\x12 .news.GenerateUploadURLSsRequest\x1a#.news.GenerateNewUploadURLsResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/news/images\x12Q\n" +
@@ -821,7 +885,8 @@ const file_proto_news_proto_rawDesc = "" +
 	"\x06GetNew\x12\x13.news.GetNewRequest\x1a\x14.news.GetNewResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/news/{new_id}\x12K\n" +
 	"\bListNews\x12\x15.news.ListNewsRequest\x1a\x16.news.ListNewsResponse\"\x10\x82\xd3\xe4\x93\x02\n" +
 	"\x12\b/v1/news\x12V\n" +
-	"\tDeleteNew\x12\x16.news.DeleteNewRequest\x1a\x16.google.protobuf.Empty\"\x19\x82\xd3\xe4\x93\x02\x13*\x11/v1/news/{new_id}B\x04Z\x02./b\x06proto3"
+	"\tDeleteNew\x12\x16.news.DeleteNewRequest\x1a\x16.google.protobuf.Empty\"\x19\x82\xd3\xe4\x93\x02\x13*\x11/v1/news/{new_id}\x12a\n" +
+	"\x0eListNewsByUser\x12\x1b.news.ListNewsByUserRequest\x1a\x16.news.ListNewsResponse\"\x1a\x82\xd3\xe4\x93\x02\x14\x12\x12/v1/news/{user_id}B\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_news_proto_rawDescOnce sync.Once
@@ -835,7 +900,7 @@ func file_proto_news_proto_rawDescGZIP() []byte {
 	return file_proto_news_proto_rawDescData
 }
 
-var file_proto_news_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_proto_news_proto_msgTypes = make([]protoimpl.MessageInfo, 15)
 var file_proto_news_proto_goTypes = []any{
 	(*GenerateUploadURLSsRequest)(nil),    // 0: news.GenerateUploadURLSsRequest
 	(*ImageMeta)(nil),                     // 1: news.ImageMeta
@@ -851,13 +916,14 @@ var file_proto_news_proto_goTypes = []any{
 	(*DeleteNewRequest)(nil),              // 11: news.DeleteNewRequest
 	(*GenerateBodyUploadURLRequest)(nil),  // 12: news.GenerateBodyUploadURLRequest
 	(*GenerateBodyUploadURLResponse)(nil), // 13: news.GenerateBodyUploadURLResponse
-	(*timestamppb.Timestamp)(nil),         // 14: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                 // 15: google.protobuf.Empty
+	(*ListNewsByUserRequest)(nil),         // 14: news.ListNewsByUserRequest
+	(*timestamppb.Timestamp)(nil),         // 15: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                 // 16: google.protobuf.Empty
 }
 var file_proto_news_proto_depIdxs = []int32{
 	1,  // 0: news.GenerateUploadURLSsRequest.images:type_name -> news.ImageMeta
 	2,  // 1: news.GenerateNewUploadURLsResponse.targets:type_name -> news.UploadTarget
-	14, // 2: news.New.created_at:type_name -> google.protobuf.Timestamp
+	15, // 2: news.New.created_at:type_name -> google.protobuf.Timestamp
 	5,  // 3: news.CreateNewResponse.new:type_name -> news.New
 	5,  // 4: news.GetNewResponse.new:type_name -> news.New
 	5,  // 5: news.ListNewsResponse.news:type_name -> news.New
@@ -868,14 +934,16 @@ var file_proto_news_proto_depIdxs = []int32{
 	7,  // 10: news.NewsService.GetNew:input_type -> news.GetNewRequest
 	9,  // 11: news.NewsService.ListNews:input_type -> news.ListNewsRequest
 	11, // 12: news.NewsService.DeleteNew:input_type -> news.DeleteNewRequest
-	13, // 13: news.NewsService.GenerateBodyUploadURL:output_type -> news.GenerateBodyUploadURLResponse
-	3,  // 14: news.NewsService.GenerateNewUploadURLs:output_type -> news.GenerateNewUploadURLsResponse
-	6,  // 15: news.NewsService.CreateNew:output_type -> news.CreateNewResponse
-	8,  // 16: news.NewsService.GetNew:output_type -> news.GetNewResponse
-	10, // 17: news.NewsService.ListNews:output_type -> news.ListNewsResponse
-	15, // 18: news.NewsService.DeleteNew:output_type -> google.protobuf.Empty
-	13, // [13:19] is the sub-list for method output_type
-	7,  // [7:13] is the sub-list for method input_type
+	14, // 13: news.NewsService.ListNewsByUser:input_type -> news.ListNewsByUserRequest
+	13, // 14: news.NewsService.GenerateBodyUploadURL:output_type -> news.GenerateBodyUploadURLResponse
+	3,  // 15: news.NewsService.GenerateNewUploadURLs:output_type -> news.GenerateNewUploadURLsResponse
+	6,  // 16: news.NewsService.CreateNew:output_type -> news.CreateNewResponse
+	8,  // 17: news.NewsService.GetNew:output_type -> news.GetNewResponse
+	10, // 18: news.NewsService.ListNews:output_type -> news.ListNewsResponse
+	16, // 19: news.NewsService.DeleteNew:output_type -> google.protobuf.Empty
+	10, // 20: news.NewsService.ListNewsByUser:output_type -> news.ListNewsResponse
+	14, // [14:21] is the sub-list for method output_type
+	7,  // [7:14] is the sub-list for method input_type
 	7,  // [7:7] is the sub-list for extension type_name
 	7,  // [7:7] is the sub-list for extension extendee
 	0,  // [0:7] is the sub-list for field type_name
@@ -894,7 +962,7 @@ func file_proto_news_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_news_proto_rawDesc), len(file_proto_news_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   15,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
