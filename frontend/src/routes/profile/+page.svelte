@@ -11,12 +11,14 @@
 
 <div
 	class="bg-forest-900
-    col-start-1 col-end-13 row-start-1 row-end-5
+    col-start-1 col-end-13 row-start-2 row-end-6
     flex
+	p-gutter
+	rounded-4xl
     "
 >
-	<div class="h-full w-auto">
-		<Avatar class="h-full w-auto" src={user.avatarUrl}></Avatar>
+	<div class="h-full w-auto mr-gutter">
+		<Avatar class="h-full w-auto rounded-2xl" src={user.avatarUrl}></Avatar>
 	</div>
 
 	<div class="flex flex-col">
@@ -33,7 +35,7 @@
 				onclick={() => {
 					updateProfileModalOpen = true;
 				}}
-				class="text-1x1 h-fit mb-gutter self-end bg-accent">Change</Button
+				class="text-1x1 h-fit  self-end bg-accent">Change</Button
 			>
 		</div>
 	</div>

@@ -3,9 +3,9 @@
 	import New from '$lib/components/New.svelte';
 	import { type newCooked } from '$lib/types/new';
 	import {
-		Button,
+		Button
 		// Spinner,
-		Avatar
+		/* Avatar */
 	} from 'flowbite-svelte';
 
 	import { enhance } from '$app/forms';
@@ -13,8 +13,8 @@
 
 	import type { PageData } from '../$types';
 	import NewModal from '$lib/modals/NewModal.svelte';
-	import { getUserContext } from '$lib/context/userContext';
-	import CreateNewModal from '$lib/modals/CreateNewModal.svelte';
+	/* 	import { getUserContext } from '$lib/context/userContext';
+	 */ import CreateNewModal from '$lib/modals/CreateNewModal.svelte';
 
 	let { data }: { data: PageData } = $props();
 
@@ -115,11 +115,8 @@
 		}
 	});
 
-	let user = getUserContext();
+	/* let user = getUserContext(); */
 </script>
-
-<Avatar src={user.avatarUrl} class="flex items-center justify-center col-start-12 col-end-13"
-></Avatar>
 
 <Button
 	onclick={() => (createNewModalOpen = true)}

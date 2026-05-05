@@ -4,10 +4,12 @@
 
 	let {
 		width = $bindable(0),
+		size = $bindable(0),
 		height = $bindable(0),
 		imageFiles = $bindable()
 	}: {
 		width: number;
+		size: number;
 		height: number;
 		imageFiles: FileList | null;
 	} = $props();
@@ -45,6 +47,11 @@
 		defaultClipPath="circle"
 		on:clip={({ detail: e }) => {
 			e.target.style.clipPath = e.clipStyle;
+			size = Number(e.clipStyles[0].slice(0, -2)); //Source?
+			width = Number(e.clipStyles[2].slice(0, -2)); // trust me bro
+			height = Number(e.clipStyles[3].slice(0, -2));
+
+			console.log('width: %d, height: %d, size: %d, all:', width, height, size, e.clipStyle);
 		}}
 		on:drag={({ detail: e }) => {
 			e.target.style.transform = e.transform;

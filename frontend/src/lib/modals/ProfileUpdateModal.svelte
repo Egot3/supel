@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Modal, Button, Label, Input, Helper, Textarea, Fileupload } from 'flowbite-svelte';
+	import { Modal, Button, Label, Input, Helper, Textarea, Fileupload, Img } from 'flowbite-svelte';
 	import { slide } from 'svelte/transition';
 	import { UserEditOutline } from 'flowbite-svelte-icons';
 	import type { User } from '$lib/types/user';
@@ -9,8 +9,9 @@
 
 	let files = $state<FileList | null>(null);
 
-	let height = $state(0);
+	let size = $state(0);
 	let width = $state(0);
+	let height = $state(0);
 </script>
 
 <Modal
@@ -69,8 +70,15 @@
 				<Helper class="bg-forest-900 text-linen-200 text-[0.75rem]">WEBP, PNG, JPG.</Helper>
 			</div>
 			<div class="ml-10 mr-10">
-				<ImageFixer bind:height bind:width bind:imageFiles={files} />
+				{#if files}
+					<ImageFixer bind:size bind:width bind:height bind:imageFiles={files} />
+				{:else}
+					<Img src={userInfo.avatarUrl} />
+				{/if}
 			</div>
+			<Input type="hidden" name="clipSize" value={size} />
+			<Input type="hidden" name="clipX" value={width} />
+			<Input type="hidden" name="clipY" value={height} />
 		</div>
 
 		<div class="space-x-2 bg-dark text-light mt-6">

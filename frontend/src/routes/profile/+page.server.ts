@@ -2,6 +2,7 @@ import { fail, type Actions } from '@sveltejs/kit';
 import { withAuth } from '$lib/requestUtils/axiosConfigs';
 import type { TokenPayload } from '$lib/types/token';
 import axios, { isAxiosError } from 'axios';
+import sharp from 'sharp';
 
 export const actions: Actions = {
 	updateProfile: async ({ request, cookies, fetch }) => {
@@ -19,6 +20,9 @@ export const actions: Actions = {
 		const nickname = data.get('nickname');
 		const description = data.get('description');
 		const pfp = data.get('pfp') as File;
+		const size = Number(data.get('clipSize') ?? 0);
+		const posX = Number(data.get('clipX') ?? 0);
+		const posY = Number(data.get('clipY') ?? 0);
 
 		let ownUUID = '';
 
@@ -46,14 +50,31 @@ export const actions: Actions = {
 				fail(500, 'axios error');
 			}
 
-			const buffer = Buffer.from(await pfp.arrayBuffer());
+			const image = sharp(await pfp.arrayBuffer());
+			const { width, height } = await image.metadata();
+			if (!(posX + size <= width && posX >= 0 && posY + size <= height && height >= 0)) {
+				console.log('err: bad clip sizing');
+			}
+			const imageRefined = await image
+				.extract({
+					left: posX - size,
+					top: posY - size,
+					width: size * 2 || height || width,
+					height: size * 2 || height || width
+				})
+				.resize(256, 256)
+				.webp({
+					quality: 100
+				})
+				.toBuffer();
+
 			try {
 				const resp = await fetch(pfpPUTUrl, {
 					method: 'put',
-					body: buffer,
+					body: new Uint8Array(imageRefined),
 					headers: {
 						'content-type': 'image/webp',
-						'content-length': String(buffer.byteLength)
+						'content-length': String(imageRefined.byteLength)
 					}
 				});
 				console.log('put url resp:', resp);
