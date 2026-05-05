@@ -116,6 +116,17 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	const { userUUID } = params;
 	console.log('user uuid to fetch news:', userUUID);
 
+	const responseUser = await fetch(`http://localhost/v1/user/${userUUID}`, {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+	if (!responseUser.ok) {
+		console.log(responseUser);
+		console.log('response of users is not ok: ', responseUser.status);
+		return { news: [], user: {} };
+	}
+
 	const responseNews = await fetch(`http://localhost/v1/news/${userUUID}?page=0&size=5`, {
 		headers: {
 			Authorization: `Bearer ${token}`
@@ -124,7 +135,7 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	if (!responseNews.ok) {
 		console.log(responseNews);
 		console.log('responseNews is not ok: ', responseNews.status);
-		return { news: [] };
+		return { news: [], user: {} };
 	}
 
 	const { news } = (await responseNews.json()) as { news: newRaw[] };
@@ -138,5 +149,5 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	const promisedNews = await Promise.all(cookedNews);
 	console.log('cooked: ', promisedNews);
 
-	return { news: promisedNews };
+	return { news: promisedNews, user: await responseUser.json() };
 };

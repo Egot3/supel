@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { newCooked } from '$lib/types/new';
-	import { P, Carousel, Controls, Button, ControlButton } from 'flowbite-svelte';
+	import { P, Carousel, Controls, ControlButton } from 'flowbite-svelte';
 	import DOMPurify from 'isomorphic-dompurify';
 
 	let { newData }: { newData: newCooked } = $props();
@@ -40,7 +40,7 @@
 			{/if}
 		</div>
 
-		<span>
+		<div class="p-gutter">
 			<h5
 				class="wrap-break-word caption mb-2 text-2xl font-bold bg-dark text-light font-hollow min-h-6 max-h-20 overflow-hidden"
 			>
@@ -51,6 +51,6 @@
 				<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 				{@html DOMPurify.sanitize(newData.body ?? '')}</P
 			>
-		</span>
+		</div>
 	</div>
 </div>
