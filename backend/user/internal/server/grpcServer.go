@@ -55,17 +55,12 @@ func (s *UserServer) CreateUser(ctx context.Context, req *pb.CreateUserRequest) 
 }
 
 func (s *UserServer) DeleteUser(ctx context.Context, req *pb.DeleteUserRequest) (*emptypb.Empty, error) {
-	userUuid, role, ok := UserFromContext(ctx)
-	if !ok {
-		log.Printf("identity failure in deletion")
-		return nil, status.Error(codes.DataLoss, "Identity failure")
-	}
 	targetUuid := req.GetUuid()
 
-	if role != "ADMIN" && userUuid != req.GetUuid() {
+	/* 	if role != "ADMIN" && userUuid != req.GetUuid() {
 		log.Printf("user %v doesn't own %v and not an admin(%v)", userUuid, targetUuid, role)
 		return nil, status.Error(codes.PermissionDenied, "NOT ENOUGH *POWER*")
-	}
+	} */
 
 	err := repositories.DeleteUser(ctx, targetUuid)
 	if err != nil {
@@ -147,7 +142,7 @@ func (s *UserServer) UploadAvatar(ctx context.Context, req *pb.UploadAvatarReque
 func (s *UserServer) GetSelf(ctx context.Context, _ *emptypb.Empty) (*pb.GetSelfResponse, error) {
 	userUuid, _, ok := UserFromContext(ctx)
 	if !ok {
-		log.Printf("identity failure in avatar changing")
+		log.Printf("identity failure in getting self")
 		return nil, status.Error(codes.DataLoss, "Identity failure")
 	}
 

@@ -66,6 +66,10 @@ spec:
               value: minioadmin
             - name: STORAGE_USER_BUCKET
               value: user
+            - name: STORAGE_PUBLIC_HOST
+              value: localhost
+            - name: STORAGE_PUBLIC_PORT
+              value: "9000"
           readinessProbe:
             grpc:
               port: 50051

@@ -28,6 +28,20 @@ func NewIdentityServer(userClient pb.UserServiceClient) *IdentityServer {
 	return &IdentityServer{userClient: userClient} //not so duh
 }
 
+func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
+	md, ok := metadata.FromIncomingContext(ctx)
+	if !ok {
+		return "", "", false
+	}
+	if len(userID) <= 0 || len(role) <= 0 {
+		log.Printf("got empty user and role")
+		return "", "", false
+	}
+	userID = md.Get("user-uuid")[0]
+	role = md.Get("user-role")[0]
+	return userID, role, !(len(userID) == 0 && len(role) == 0)
+}
+
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
 	body, err := jwtutils.ValidateToken(req.Token)
 	if err != nil {
@@ -122,16 +136,28 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 }
 
 func (s *IdentityServer) DisableUser(ctx context.Context, req *pb.DisableUserRequest) (*emptypb.Empty, error) {
+	userUUID, role, ok := UserFromContext(ctx)
+	if !ok {
+		log.Printf("user not found in context(deletion)")
+		return nil, status.Error(codes.DataLoss, "Data loss")
+	}
+	targetUUID := req.GetUuid()
+
+	if !(role == "ADMIN" || userUUID == targetUUID) {
+		log.Printf("Got not enough power now for %v by %v", targetUUID, userUUID)
+		return nil, status.Error(codes.PermissionDenied, "NOT ENOUGH POWER")
+	}
+
 	err := database.DB.RunInTx(ctx, nil, func(ctx context.Context, tx bun.Tx) error {
 		_, err := s.userClient.DeleteUser(ctx, &pb.DeleteUserRequest{
-			Uuid: req.GetUuid(),
+			Uuid: userUUID,
 		})
 		if err != nil {
 			log.Printf("Failed to delete user at user %v", err.Error())
 			return err
 		}
 
-		err = repositories.DisableUserTx(ctx, tx, req.GetUuid())
+		err = repositories.DisableUserTx(ctx, tx, targetUUID)
 		if err != nil {
 			log.Printf("Failed to disable user in identity %v", err.Error())
 			return err
