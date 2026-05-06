@@ -24,6 +24,7 @@ const (
 	IdentityService_ValidateToken_FullMethodName = "/identity.IdentityService/ValidateToken"
 	IdentityService_Login_FullMethodName         = "/identity.IdentityService/Login"
 	IdentityService_Register_FullMethodName      = "/identity.IdentityService/Register"
+	IdentityService_DisableUser_FullMethodName   = "/identity.IdentityService/DisableUser"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -34,6 +35,7 @@ type IdentityServiceClient interface {
 	ValidateToken(ctx context.Context, in *Token, opts ...grpc.CallOption) (*TokenPayload, error)
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DisableUser(ctx context.Context, in *DisableUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type identityServiceClient struct {
@@ -84,6 +86,16 @@ func (c *identityServiceClient) Register(ctx context.Context, in *RegisterReques
 	return out, nil
 }
 
+func (c *identityServiceClient) DisableUser(ctx context.Context, in *DisableUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, IdentityService_DisableUser_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility.
@@ -92,6 +104,7 @@ type IdentityServiceServer interface {
 	ValidateToken(context.Context, *Token) (*TokenPayload, error)
 	Login(context.Context, *LoginRequest) (*emptypb.Empty, error)
 	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
+	DisableUser(context.Context, *DisableUserRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -113,6 +126,9 @@ func (UnimplementedIdentityServiceServer) Login(context.Context, *LoginRequest) 
 }
 func (UnimplementedIdentityServiceServer) Register(context.Context, *RegisterRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method Register not implemented")
+}
+func (UnimplementedIdentityServiceServer) DisableUser(context.Context, *DisableUserRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DisableUser not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 func (UnimplementedIdentityServiceServer) testEmbeddedByValue()                         {}
@@ -207,6 +223,24 @@ func _IdentityService_Register_Handler(srv interface{}, ctx context.Context, dec
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_DisableUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisableUserRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).DisableUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_DisableUser_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).DisableUser(ctx, req.(*DisableUserRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -229,6 +263,10 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "Register",
 			Handler:    _IdentityService_Register_Handler,
+		},
+		{
+			MethodName: "DisableUser",
+			Handler:    _IdentityService_DisableUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

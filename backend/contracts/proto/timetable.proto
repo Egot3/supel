@@ -1,0 +1,176 @@
+syntax = "proto3";
+
+package timetable;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "./";
+
+enum Day {
+    UNSPECIFIED = 0;
+    MONDAY = 1;
+    TUESDAY = 2;
+    WEDNESDAY = 3;
+    THURSDAY = 4;
+    FRIDAY = 5;
+    SATURDAY = 6;
+    SUNDAY = 7;
+}
+
+message ListTimetablesRequest {
+    uint32 week_number = 1;
+    string group_uuid = 2;
+}
+
+message AbstractLesson {
+    string uuid = 1;
+    string name = 2;
+}
+
+message ConcreteLesson {
+    google.protobuf.Timestamp start = 1;
+    google.protobuf.Timestamp end = 2;
+    AbstractLesson lesson_info = 3;
+    string teacher_uuid = 4;
+    optional string homework_text_get_url= 5;
+    repeated string homework_attachments_get_urls = 6;
+    string lesson_uuid = 7;
+    repeated string marks = 8; //5- итд
+}
+
+message ConcreteLessonEntry {
+    Day day = 1;
+    repeated ConcreteLesson lessons = 2;
+}
+
+
+message ListTimetableResponse {
+    repeated ConcreteLessonEntry Timetable = 1;
+}
+
+message CreateAbstractLessonRequest {
+    string name = 1;
+}
+
+message Timing {
+    uint32 number = 1;
+    google.protobuf.Timestamp start = 2;
+    google.protobuf.Timestamp end = 3;
+}
+
+message GetTimingRequest {
+    uint32 week_number = 1;
+}
+
+message GetTimingsResponse {
+    repeated Timing timings = 1;
+}
+
+message PatchTimingsRequest {
+    repeated Timing timings = 1;
+}
+
+message DeleteAbstractLessonRequest {
+    string lesson_uuid = 1;
+}
+
+message GetAbstractLessonRequest {
+    string lesson_uuid = 1;
+}
+
+message GetAbstractLessonResponse {
+    AbstractLesson lesson = 1;
+}
+
+message PatchAbstractLessonRequest {
+    string uuid = 1;
+    optional string name = 2; //и такое бывает
+}
+
+message ListAbstractLessonsRequest {
+    uint64 size = 1;
+    uint64 page = 2;
+}
+
+message ListAbstractLessonsResponse {
+    uint64 size = 1;
+    uint64 page = 2;
+    uint64 total = 3;
+    repeated AbstractLesson abstract_lessons = 4;
+}
+
+message CreateConcreteLessonRequest {
+    string abstract_lesson_uuid = 1;
+    string teacher_uuid = 2;
+    google.protobuf.Timestamp start = 3;
+    google.protobuf.Timestamp end = 4;
+}
+
+message DeleteConcreteLessonRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+service TimetableService {
+    rpc ListTimetable(ListTimetablesRequest) returns (ListTimetableResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/{week_number}"
+        };
+    };
+
+
+    rpc CreateAbstractLesson(CreateAbstractLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable/lesson/abstract"
+            body: "*"
+        };
+    };
+    rpc DeleteAbstractLesson(DeleteAbstractLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+        };
+    };
+    rpc GetAbstractLesson(GetAbstractLessonRequest) returns (GetAbstractLessonResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+        };
+    };
+    rpc PatchAbstractLesson(PatchAbstractLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+            body: "*"
+        };
+    };
+    rpc ListAbstractLessons(ListAbstractLessonsRequest) returns (ListAbstractLessonsResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/abstract"
+        };
+    };
+
+
+    rpc CreateConcreteLesson(CreateConcreteLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable/lesson/concrete"
+            body: "*"
+        };
+    };
+    rpc DeleteConcreteLesson(DeleteConcreteLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
+        };
+    };
+
+
+    rpc GetTimings(GetTimingRequest) returns (GetTimingsResponse) {
+        option (google.api.http) = {
+            get: "/v1/timetable/timings"
+        };
+    };
+    rpc PatchTimings(PatchTimingsRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "v1/timetable/timings"
+            body: "*"
+        };
+    };
+}

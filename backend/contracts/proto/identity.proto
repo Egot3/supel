@@ -25,6 +25,10 @@ message TokenPayload {
     string role = 2;
 }
 
+message DisableUserRequest {
+    string uuid = 1;
+}
+
 service IdentityService {
     rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload){
@@ -42,6 +46,11 @@ service IdentityService {
         option (google.api.http) = {
             post: "/v1/public/register"
             body: "*"
+        };
+    };
+    rpc DisableUser(DisableUserRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/identity/{uuid}"
         };
     };
 }
