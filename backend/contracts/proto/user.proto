@@ -56,10 +56,6 @@ message GetSelfResponse {
     User user = 1;
 }
 
-message DisableUserRequest {
-    string uuid = 1;
-}
-
 service UserService {
     rpc CreateUser(CreateUserRequest) returns (google.protobuf.Empty);
     rpc DeleteUser(DeleteUserRequest) returns (google.protobuf.Empty);
@@ -85,5 +81,4 @@ service UserService {
             get: "/v1/user/self"
         };
     };
-    rpc DisableUser(DisableUserRequest) returns (google.protobuf.Empty);
 }
