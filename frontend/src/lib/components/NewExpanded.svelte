@@ -1,23 +1,16 @@
 <script lang="ts">
 	import type { newCooked } from '$lib/types/new';
-	import { P, Carousel, Controls, ControlButton } from 'flowbite-svelte';
+	import { P, Carousel, Controls, ControlButton, Card } from 'flowbite-svelte';
 	import DOMPurify from 'isomorphic-dompurify';
+	import { Carouselify } from '$lib/compatUtils/carouselify';
 
-	let { newData }: { newData: newCooked } = $props();
-	function Carouselify(imageSrcs: string[]) {
-		return imageSrcs.map((imgSrc) => {
-			return {
-				src: imgSrc,
-				alt: 'you could see something there',
-				title: 'yes'
-			};
-		});
-	}
+	let { newData, onclick }: { newData: newCooked; onclick: () => unknown } = $props();
+
 	const carouselItems = $derived(Carouselify(newData.imageUrls));
 	console.log('carousel items: ', carouselItems);
 </script>
 
-<div class="grid grid-cols-12 h-75 bg-forest-950">
+<Card horizontal class="grid grid-cols-12 h-75 bg-forest-950" {onclick}>
 	<div class="col-start-1 col-end-9 grid grid-cols-3 gap-gutter">
 		<div class="col-start-1 col-end-3 flex w-full h-full justify-center items-center">
 			{console.log('newData:', newData.imageUrls.length)}
@@ -53,4 +46,4 @@
 			>
 		</div>
 	</div>
-</div>
+</Card>

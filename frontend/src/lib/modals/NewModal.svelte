@@ -1,9 +1,10 @@
 <script lang="ts">
 	import type { newCooked } from '$lib/types/new';
-	import { Carousel, CarouselIndicators, P, Modal } from 'flowbite-svelte';
+	import { Carousel, Controls, ControlButton, P, Modal } from 'flowbite-svelte';
 	import { fly } from 'svelte/transition';
 	import DOMPurify from 'isomorphic-dompurify';
 	import type { User } from '$lib/types/user';
+	import { Carouselify } from '$lib/compatUtils/carouselify';
 
 	let { scoped = $bindable(false), scopedNew = $bindable({} as newCooked) } = $props();
 
@@ -24,6 +25,7 @@
 		}
 	});
 	/* $inspect(userInfo.nickname); */
+	const carouselItems = $derived(Carouselify(scopedNew.imageUrls ?? []));
 </script>
 
 <Modal
@@ -39,17 +41,28 @@
 >
 	<div class="grid grid-cols-12 min-h-full">
 		<div class="col-start-1 col-end-9 grid grid-cols-3 gap-gutter">
-			<div class="col-start-1 col-end-2 grid justify-center align-center">
+			<div class="col-start-1 col-end-2 flex w-full h-full justify-center items-center">
 				{#if scopedNew.imageUrls.length > 0}
-					<div class="relative self-center">
+					{#key carouselItems}
+						{$inspect('carousel items: ', carouselItems)}
+						{console.log('new has images')}
 						<Carousel
-							images={scopedNew.imageUrls.map((url) => {
-								return { src: url };
-							})}
+							images={carouselItems}
+							classes={{ slide: 'w-fit h-fit ' }}
+							class="relative w-full h-70 flex justify-center items-center"
 						>
-							<CarouselIndicators />
+							<Controls>
+								{#snippet children(changeSlide)}
+									<ControlButton
+										name="Previous"
+										forward={false}
+										onclick={() => changeSlide(false)}
+									/>
+									<ControlButton name="Next" forward={true} onclick={() => changeSlide(false)} />
+								{/snippet}
+							</Controls>
 						</Carousel>
-					</div>
+					{/key}
 				{/if}
 			</div>
 

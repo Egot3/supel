@@ -22,3 +22,9 @@ export class ImageSizeError extends ServerError {
 		super(message, 422);
 	}
 }
+
+export class InternalServerError extends ServerError {
+	constructor(message: string = 'Internal server error') {
+		super(message, 500);
+	}
+}

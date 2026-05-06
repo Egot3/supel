@@ -1,13 +1,51 @@
 import { fail, type Actions } from '@sveltejs/kit';
 import { withAuth } from '$lib/requestUtils/axiosConfigs';
-import type { TokenPayload } from '$lib/types/token';
 import axios, { isAxiosError } from 'axios';
 import sharp from 'sharp';
 import type { PageServerLoad } from './$types.js';
 import { type newCooked, type newRaw } from '$lib/types/new';
+import type { User } from '$lib/types/user.js';
 
 export const actions: Actions = {
-	updateProfile: async ({ request, cookies, fetch }) => {
+	deleteUser: async ({ cookies, fetch, params }) => {
+		const token = cookies.get('auth_token');
+		if (!token) {
+			return fail(401, {
+				err: 'NO_AUTH',
+				errorMessage: 'You are not registered!'
+			});
+		}
+		const { userUUID } = params;
+
+		try {
+			const resp = await fetch(`http://localhost/v1/user/identity/${userUUID}`, {
+				headers: {
+					Authorization: `Bearer ${token}`
+				}
+			});
+			if (!resp.ok) {
+				console.log(resp);
+				throw resp.status;
+			}
+		} catch (err) {
+			if (err === 404) {
+				return fail(404, {
+					err: 'USER_NOT_FOUND',
+					errorMessage: 'user with this uuid was not found'
+				});
+			}
+			return fail(500, {
+				err: 'INTERNAL_SERVER',
+				errorMessage: "Couldn't delete user, try again later"
+			});
+		}
+
+		cookies.delete('auth_token', {
+			path: '/'
+		});
+		return { success: true };
+	},
+	updateProfile: async ({ request, cookies, fetch, params }) => {
 		const token = cookies.get('auth_token');
 
 		if (!token) {
@@ -25,21 +63,10 @@ export const actions: Actions = {
 		const size = Number(data.get('clipSize') ?? 0);
 		const posX = Number(data.get('clipX') ?? 0);
 		const posY = Number(data.get('clipY') ?? 0);
-
-		let ownUUID = '';
-
+		const { userUUID } = params;
 		if (pfp) {
-			try {
-				const ownInforesponseNews = (await (
-					await fetch(`http://localhost/v1/public/validate/${token}`)
-				).json()) as TokenPayload;
-				ownUUID = ownInforesponseNews.uuid;
-			} catch (err) {
-				fail(500, err); //так и живем
-			}
-
 			const pfpGetPUTUrlCfg = withAuth('http://localhost/v1/user/avatar', 'post', token, {
-				uuid: ownUUID
+				uuid: userUUID
 			});
 
 			let pfpPUTUrl = '';
@@ -87,7 +114,7 @@ export const actions: Actions = {
 		}
 
 		const cfg = withAuth('http://localhost/v1/user', 'patch', token, {
-			uuid: ownUUID,
+			uuid: userUUID,
 			nickname: nickname,
 			description: description
 		});
@@ -103,6 +130,39 @@ export const actions: Actions = {
 		}
 
 		return { success: true };
+	},
+	loadMore: async ({ fetch, cookies, request }) => {
+		const token = cookies.get('auth_token');
+
+		if (!token) {
+			return fail(401, {
+				err: 'NO_AUTH',
+				errorMessage: 'You are not registered!'
+			});
+		}
+
+		const data = await request.formData();
+		const page = data.get('page');
+		const size = data.get('size');
+		console.log('size: %d, page: %d', size, page);
+
+		const res = await fetch(`http://localhost/v1/news?page=${page}&size=${size}`, {
+			headers: { Authorization: `Bearer ${token}` }
+		});
+		console.log(res.text);
+
+		if (!res.ok) {
+			return fail(res.status, { message: 'failed to serve more news' });
+		}
+
+		const { news } = (await res.json()) as { news: newRaw[] };
+		const cookedNews = news.map(async (item: newRaw) => {
+			const body = item.bodyUrl ? await (await fetch(item.bodyUrl)).text() : null;
+			return { ...item, body } as newCooked;
+		});
+		console.log('cooked news type: ', typeof cookedNews);
+
+		return { news: await Promise.all(cookedNews) };
 	}
 };
 
@@ -110,11 +170,11 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	const token = cookies.get('auth_token');
 	if (!token) {
 		console.log('No token on load');
-		return { news: [] };
+		return { news: [], user: {} as User };
 	}
 
 	const { userUUID } = params;
-	console.log('user uuid to fetch news:', userUUID);
+	console.log('user uuid to fetch news && load user:', userUUID);
 
 	const responseUser = await fetch(`http://localhost/v1/user/${userUUID}`, {
 		headers: {
@@ -124,8 +184,9 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	if (!responseUser.ok) {
 		console.log(responseUser);
 		console.log('response of users is not ok: ', responseUser.status);
-		return { news: [], user: {} };
+		return { news: [], user: {} as User };
 	}
+	console.log('Response for user(nickname): ');
 
 	const responseNews = await fetch(`http://localhost/v1/news/${userUUID}?page=0&size=5`, {
 		headers: {
@@ -135,7 +196,7 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	if (!responseNews.ok) {
 		console.log(responseNews);
 		console.log('responseNews is not ok: ', responseNews.status);
-		return { news: [], user: {} };
+		return { news: [], user: {} as User };
 	}
 
 	const { news } = (await responseNews.json()) as { news: newRaw[] };
@@ -149,5 +210,11 @@ export const load: PageServerLoad = async ({ fetch, cookies, params }) => {
 	const promisedNews = await Promise.all(cookedNews);
 	console.log('cooked: ', promisedNews);
 
-	return { news: promisedNews, user: await responseUser.json() };
+	const { user } = await responseUser.json();
+
+	if (!user || Object.keys(user).length === 0) {
+		return { news: [], user: {} as User };
+	}
+
+	return { news: promisedNews, user: user };
 };
