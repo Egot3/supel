@@ -516,11 +516,55 @@ func (x *GetSelfResponse) GetUser() *User {
 	return nil
 }
 
+type DisableUserRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DisableUserRequest) Reset() {
+	*x = DisableUserRequest{}
+	mi := &file_proto_user_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DisableUserRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisableUserRequest) ProtoMessage() {}
+
+func (x *DisableUserRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_user_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisableUserRequest.ProtoReflect.Descriptor instead.
+func (*DisableUserRequest) Descriptor() ([]byte, []int) {
+	return file_proto_user_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *DisableUserRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
 var File_proto_user_proto protoreflect.FileDescriptor
 
 const file_proto_user_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/user.proto\x12\x04news\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"C\n" +
+	"\x10proto/user.proto\x12\x04user\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\x1a\x1fgoogle/protobuf/timestamp.proto\"C\n" +
 	"\x11CreateUserRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1a\n" +
 	"\bnickname\x18\x02 \x01(\tR\bnickname\"\xbc\x02\n" +
@@ -555,7 +599,7 @@ const file_proto_user_proto_rawDesc = "" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"1\n" +
 	"\x0fGetUserResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".news.UserR\x04user\")\n" +
+	".user.UserR\x04user\")\n" +
 	"\x13UploadAvatarRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"5\n" +
 	"\x14UploadAvatarResponse\x12\x1d\n" +
@@ -563,16 +607,19 @@ const file_proto_user_proto_rawDesc = "" +
 	"avatar_url\x18\x01 \x01(\tR\tavatarUrl\"1\n" +
 	"\x0fGetSelfResponse\x12\x1e\n" +
 	"\x04user\x18\x01 \x01(\v2\n" +
-	".news.UserR\x04user2\xe2\x03\n" +
+	".user.UserR\x04user\"(\n" +
+	"\x12DisableUserRequest\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid2\xa3\x04\n" +
 	"\vUserService\x12=\n" +
 	"\n" +
-	"CreateUser\x12\x17.news.CreateUserRequest\x1a\x16.google.protobuf.Empty\x12=\n" +
+	"CreateUser\x12\x17.user.CreateUserRequest\x1a\x16.google.protobuf.Empty\x12=\n" +
 	"\n" +
-	"DeleteUser\x12\x17.news.DeleteUserRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
-	"\tPatchUser\x12\x16.news.PatchUserRequest\x1a\x16.google.protobuf.Empty\"\x13\x82\xd3\xe4\x93\x02\r:\x01*2\b/v1/user\x12O\n" +
-	"\aGetUser\x12\x14.news.GetUserRequest\x1a\x15.news.GetUserResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/user/{uuid}\x12a\n" +
-	"\fUploadAvatar\x12\x19.news.UploadAvatarRequest\x1a\x1a.news.UploadAvatarResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/user/avatar\x12O\n" +
-	"\aGetSelf\x12\x16.google.protobuf.Empty\x1a\x15.news.GetSelfResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/user/selfB\x04Z\x02./b\x06proto3"
+	"DeleteUser\x12\x17.user.DeleteUserRequest\x1a\x16.google.protobuf.Empty\x12P\n" +
+	"\tPatchUser\x12\x16.user.PatchUserRequest\x1a\x16.google.protobuf.Empty\"\x13\x82\xd3\xe4\x93\x02\r:\x01*2\b/v1/user\x12O\n" +
+	"\aGetUser\x12\x14.user.GetUserRequest\x1a\x15.user.GetUserResponse\"\x17\x82\xd3\xe4\x93\x02\x11\x12\x0f/v1/user/{uuid}\x12a\n" +
+	"\fUploadAvatar\x12\x19.user.UploadAvatarRequest\x1a\x1a.user.UploadAvatarResponse\"\x1a\x82\xd3\xe4\x93\x02\x14:\x01*\"\x0f/v1/user/avatar\x12O\n" +
+	"\aGetSelf\x12\x16.google.protobuf.Empty\x1a\x15.user.GetSelfResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/user/self\x12?\n" +
+	"\vDisableUser\x12\x18.user.DisableUserRequest\x1a\x16.google.protobuf.EmptyB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_user_proto_rawDescOnce sync.Once
@@ -586,39 +633,42 @@ func file_proto_user_proto_rawDescGZIP() []byte {
 	return file_proto_user_proto_rawDescData
 }
 
-var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 9)
+var file_proto_user_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_user_proto_goTypes = []any{
-	(*CreateUserRequest)(nil),     // 0: news.CreateUserRequest
-	(*User)(nil),                  // 1: news.User
-	(*PatchUserRequest)(nil),      // 2: news.PatchUserRequest
-	(*DeleteUserRequest)(nil),     // 3: news.DeleteUserRequest
-	(*GetUserRequest)(nil),        // 4: news.GetUserRequest
-	(*GetUserResponse)(nil),       // 5: news.GetUserResponse
-	(*UploadAvatarRequest)(nil),   // 6: news.UploadAvatarRequest
-	(*UploadAvatarResponse)(nil),  // 7: news.UploadAvatarResponse
-	(*GetSelfResponse)(nil),       // 8: news.GetSelfResponse
-	(*timestamppb.Timestamp)(nil), // 9: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),         // 10: google.protobuf.Empty
+	(*CreateUserRequest)(nil),     // 0: user.CreateUserRequest
+	(*User)(nil),                  // 1: user.User
+	(*PatchUserRequest)(nil),      // 2: user.PatchUserRequest
+	(*DeleteUserRequest)(nil),     // 3: user.DeleteUserRequest
+	(*GetUserRequest)(nil),        // 4: user.GetUserRequest
+	(*GetUserResponse)(nil),       // 5: user.GetUserResponse
+	(*UploadAvatarRequest)(nil),   // 6: user.UploadAvatarRequest
+	(*UploadAvatarResponse)(nil),  // 7: user.UploadAvatarResponse
+	(*GetSelfResponse)(nil),       // 8: user.GetSelfResponse
+	(*DisableUserRequest)(nil),    // 9: user.DisableUserRequest
+	(*timestamppb.Timestamp)(nil), // 10: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),         // 11: google.protobuf.Empty
 }
 var file_proto_user_proto_depIdxs = []int32{
-	9,  // 0: news.User.created_at:type_name -> google.protobuf.Timestamp
-	9,  // 1: news.PatchUserRequest.status_expiration_date:type_name -> google.protobuf.Timestamp
-	1,  // 2: news.GetUserResponse.user:type_name -> news.User
-	1,  // 3: news.GetSelfResponse.user:type_name -> news.User
-	0,  // 4: news.UserService.CreateUser:input_type -> news.CreateUserRequest
-	3,  // 5: news.UserService.DeleteUser:input_type -> news.DeleteUserRequest
-	2,  // 6: news.UserService.PatchUser:input_type -> news.PatchUserRequest
-	4,  // 7: news.UserService.GetUser:input_type -> news.GetUserRequest
-	6,  // 8: news.UserService.UploadAvatar:input_type -> news.UploadAvatarRequest
-	10, // 9: news.UserService.GetSelf:input_type -> google.protobuf.Empty
-	10, // 10: news.UserService.CreateUser:output_type -> google.protobuf.Empty
-	10, // 11: news.UserService.DeleteUser:output_type -> google.protobuf.Empty
-	10, // 12: news.UserService.PatchUser:output_type -> google.protobuf.Empty
-	5,  // 13: news.UserService.GetUser:output_type -> news.GetUserResponse
-	7,  // 14: news.UserService.UploadAvatar:output_type -> news.UploadAvatarResponse
-	8,  // 15: news.UserService.GetSelf:output_type -> news.GetSelfResponse
-	10, // [10:16] is the sub-list for method output_type
-	4,  // [4:10] is the sub-list for method input_type
+	10, // 0: user.User.created_at:type_name -> google.protobuf.Timestamp
+	10, // 1: user.PatchUserRequest.status_expiration_date:type_name -> google.protobuf.Timestamp
+	1,  // 2: user.GetUserResponse.user:type_name -> user.User
+	1,  // 3: user.GetSelfResponse.user:type_name -> user.User
+	0,  // 4: user.UserService.CreateUser:input_type -> user.CreateUserRequest
+	3,  // 5: user.UserService.DeleteUser:input_type -> user.DeleteUserRequest
+	2,  // 6: user.UserService.PatchUser:input_type -> user.PatchUserRequest
+	4,  // 7: user.UserService.GetUser:input_type -> user.GetUserRequest
+	6,  // 8: user.UserService.UploadAvatar:input_type -> user.UploadAvatarRequest
+	11, // 9: user.UserService.GetSelf:input_type -> google.protobuf.Empty
+	9,  // 10: user.UserService.DisableUser:input_type -> user.DisableUserRequest
+	11, // 11: user.UserService.CreateUser:output_type -> google.protobuf.Empty
+	11, // 12: user.UserService.DeleteUser:output_type -> google.protobuf.Empty
+	11, // 13: user.UserService.PatchUser:output_type -> google.protobuf.Empty
+	5,  // 14: user.UserService.GetUser:output_type -> user.GetUserResponse
+	7,  // 15: user.UserService.UploadAvatar:output_type -> user.UploadAvatarResponse
+	8,  // 16: user.UserService.GetSelf:output_type -> user.GetSelfResponse
+	11, // 17: user.UserService.DisableUser:output_type -> google.protobuf.Empty
+	11, // [11:18] is the sub-list for method output_type
+	4,  // [4:11] is the sub-list for method input_type
 	4,  // [4:4] is the sub-list for extension type_name
 	4,  // [4:4] is the sub-list for extension extendee
 	0,  // [0:4] is the sub-list for field type_name
@@ -637,7 +687,7 @@ func file_proto_user_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_user_proto_rawDesc), len(file_proto_user_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   9,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
