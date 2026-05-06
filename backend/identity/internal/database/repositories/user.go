@@ -12,6 +12,7 @@ import (
 	"github.com/Egot3/supel/backend/identity/internal/models"
 	passwordutils "github.com/Egot3/supel/backend/identity/internal/passwordUtils"
 	"github.com/Egot3/supel/backend/identity/internal/types"
+	"github.com/uptrace/bun"
 )
 
 func UserByEmail(ctx context.Context, email string) (*models.User, error) {
@@ -108,5 +109,17 @@ func UpsertUser(ctx context.Context, user models.User) error {
 		Set("password_hash = ?", user.PasswordHash).
 		Set("email = ?", user.Email).
 		Exec(ctx)
+	return err
+}
+
+func DisableUserTx(ctx context.Context, tx bun.Tx, uuid string) error {
+	resp, err := tx.NewUpdate().
+		Model((*models.User)(nil)).
+		Where("uuid = ?", uuid).
+		Set("is_active = false").Exec(ctx)
+	if val, _ := resp.RowsAffected(); val == 0 {
+		return carefulness.UserNotFound
+	}
+
 	return err
 }

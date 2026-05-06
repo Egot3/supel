@@ -9,7 +9,9 @@ import (
 	pb "github.com/Egot3/supel/backend/contracts"
 	carefulness "github.com/Egot3/supel/backend/identity/internal"
 	jwtutils "github.com/Egot3/supel/backend/identity/internal/JWTutils"
+	"github.com/Egot3/supel/backend/identity/internal/database"
 	"github.com/Egot3/supel/backend/identity/internal/database/repositories"
+	"github.com/uptrace/bun"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/metadata"
@@ -114,6 +116,33 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 		"set-cookie", fmt.Sprintf("auth_token=%v; HttpOnly; Secure; SameSite=Lax; Path=/", token),
 	)); err != nil {
 		return nil, status.Error(codes.Internal, "grpc Cookie setting error")
+	}
+
+	return nil, nil
+}
+
+func (s *IdentityServer) DisableUser(ctx context.Context, req *pb.DisableUserRequest) (*emptypb.Empty, error) {
+	err := database.DB.RunInTx(ctx, nil, func(ctx context.Context, tx bun.Tx) error {
+		_, err := s.userClient.DisableUser(ctx, &pb.DisableUserRequest{
+			Uuid: req.GetUuid(),
+		})
+		if err != nil {
+			return err
+		}
+
+		err = repositories.DisableUserTx(ctx, tx, req.GetUuid())
+		if err != nil {
+			return err
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		if errors.Is(err, carefulness.UserNotFound) {
+			return nil, status.Error(codes.NotFound, "User to delete was not found")
+		}
+		return nil, status.Error(codes.Internal, "Unable to delete user")
 	}
 
 	return nil, nil
