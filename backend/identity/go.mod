@@ -14,7 +14,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.1.16
+	github.com/Egot3/supel/backend/contracts v0.1.17
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/golang-jwt/jwt/v5 v5.3.1
 	github.com/jinzhu/inflection v1.0.0 // indirect
