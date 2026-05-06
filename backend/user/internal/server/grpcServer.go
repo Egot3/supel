@@ -26,6 +26,10 @@ func UserFromContext(ctx context.Context) (userID string, role string, ok bool) 
 	if !ok {
 		return "", "", false
 	}
+	if len(userID) <= 0 || len(role) <= 0 {
+		log.Printf("got empty user and role")
+		return "", "", false
+	}
 	userID = md.Get("user-uuid")[0]
 	role = md.Get("user-role")[0]
 	return userID, role, !(len(userID) == 0 && len(role) == 0)
