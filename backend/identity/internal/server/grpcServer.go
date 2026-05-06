@@ -123,7 +123,7 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 
 func (s *IdentityServer) DisableUser(ctx context.Context, req *pb.DisableUserRequest) (*emptypb.Empty, error) {
 	err := database.DB.RunInTx(ctx, nil, func(ctx context.Context, tx bun.Tx) error {
-		_, err := s.userClient.DisableUser(ctx, &pb.DisableUserRequest{
+		_, err := s.userClient.DeleteUser(ctx, &pb.DeleteUserRequest{
 			Uuid: req.GetUuid(),
 		})
 		if err != nil {
