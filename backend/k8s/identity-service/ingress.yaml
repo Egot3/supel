@@ -12,3 +12,12 @@ spec:
         - name: identity-service
           port: 50051
           scheme: h2c
+    - match: PathPrefix(`/v1/identity`)
+      kind: Rule
+      middlewares:
+        - name: jwt-forward-auth
+          namespace: traefik
+      services:
+        - name: identity-service
+          port: 50051
+          scheme: h2c
