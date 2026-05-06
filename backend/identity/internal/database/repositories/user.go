@@ -117,9 +117,13 @@ func DisableUserTx(ctx context.Context, tx bun.Tx, uuid string) error {
 		Model((*models.User)(nil)).
 		Where("uuid = ?", uuid).
 		Set("is_active = false").Exec(ctx)
+	if err != nil {
+		return err
+	}
+
 	if val, _ := resp.RowsAffected(); val == 0 {
 		return carefulness.UserNotFound
 	}
 
-	return err
+	return nil
 }

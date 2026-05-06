@@ -127,11 +127,13 @@ func (s *IdentityServer) DisableUser(ctx context.Context, req *pb.DisableUserReq
 			Uuid: req.GetUuid(),
 		})
 		if err != nil {
+			log.Printf("Failed to delete user at user %v", err.Error())
 			return err
 		}
 
 		err = repositories.DisableUserTx(ctx, tx, req.GetUuid())
 		if err != nil {
+			log.Printf("Failed to disable user in identity %v", err.Error())
 			return err
 		}
 
