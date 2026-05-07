@@ -15,23 +15,23 @@ export const handle: Handle = async ({ event, resolve }) => {
 		return resolve(event);
 	}
 
+	console.log('!isPublicRoute && !token', !isPublicRoute && !token);
+	if (!isPublicRoute && !token) {
+		console.log('not pub and no token');
+		throw redirect(302, `/login?redirectTo=${event.url.pathname}`);
+	}
+
 	if (token) {
 		console.log('found token ', token);
 		try {
 			await axios.get(`http://localhost/v1/public/validate/${token}`);
 		} catch (err) {
-			if (isAxiosError(err) && err.status === 401) {
+			if (isAxiosError(err)) {
 				console.log('bad token');
 				event.cookies.delete('auth_token', { path: '/' });
-				throw redirect(302, '/login');
+				throw redirect(302, `/login?${event.url}`);
 			}
 		}
-	}
-
-	console.log('!isPublicRoute && !token', !isPublicRoute && !token);
-	if (!isPublicRoute && !token) {
-		console.log('not pub and no token');
-		throw redirect(302, `/login?redirectTo=${event.url.pathname}`);
 	}
 
 	console.log('resolved with no issue');

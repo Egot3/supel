@@ -59,7 +59,7 @@
 			scopedNew = {} as newCooked;
 		}
 	});
-	$inspect('user: ', user);
+	$inspect('user: ', user, 'self: ', self);
 
 	let isDeleting = $state(false);
 </script>

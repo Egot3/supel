@@ -1,4 +1,4 @@
-import { fail, type Actions } from '@sveltejs/kit';
+import { fail, redirect, type Actions } from '@sveltejs/kit';
 import { withAuth } from '$lib/requestUtils/axiosConfigs';
 import axios, { isAxiosError } from 'axios';
 import sharp from 'sharp';
@@ -18,17 +18,20 @@ export const actions: Actions = {
 		const { userUUID } = params;
 
 		try {
-			const resp = await fetch(`http://localhost/v1/user/identity/${userUUID}`, {
+			const resp = await fetch(`http://localhost/v1/identity/${userUUID}`, {
+				method: 'delete',
 				headers: {
 					Authorization: `Bearer ${token}`
 				}
 			});
+			console.log('resp to user deletion: ', resp);
 			if (!resp.ok) {
-				console.log(resp);
 				throw resp.status;
 			}
 		} catch (err) {
+			console.log('failed to delete user');
 			if (err === 404) {
+				console.log(`user ${userUUID} not found`);
 				return fail(404, {
 					err: 'USER_NOT_FOUND',
 					errorMessage: 'user with this uuid was not found'
@@ -41,9 +44,11 @@ export const actions: Actions = {
 		}
 
 		cookies.delete('auth_token', {
-			path: '/'
+			path: '/',
+			domain: 'localhost',
+			sameSite: 'lax'
 		});
-		return { success: true };
+		throw redirect(303, '/login');
 	},
 	updateProfile: async ({ request, cookies, fetch, params }) => {
 		const token = cookies.get('auth_token');
@@ -65,6 +70,7 @@ export const actions: Actions = {
 		const posY = Number(data.get('clipY') ?? 0);
 		const { userUUID } = params;
 		if (pfp) {
+			console.log('posting avatar sequense');
 			const pfpGetPUTUrlCfg = withAuth('http://localhost/v1/user/avatar', 'post', token, {
 				uuid: userUUID
 			});

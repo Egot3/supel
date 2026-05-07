@@ -60,6 +60,7 @@
 		"sharp": "^0.34.5",
 		"svelte-masonry": "^0.1.5",
 		"svelte-moveable": "^0.45.0",
+		"tailwind": "^4.0.0",
 		"tailwindcss": "^4.2.1"
 	}
 }
