@@ -31,9 +31,18 @@ func main() {
 		log.Fatalf("User conn fell: %v", err.Error())
 	}
 
+	timetableConn, err := grpc.NewClient(
+		fmt.Sprintf("%v:%v", os.Getenv("TIMETABLE_SERVICE_HOST"), os.Getenv("TIMETABLE_SERVICE_PORT")),
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+	)
+	if err != nil {
+		log.Fatalf("Timetable conn fell: %v", err.Error())
+	}
+
 	pb.RegisterIdentityServiceHandler(ctx, mux, identityConn)
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
 	pb.RegisterUserServiceHandler(ctx, mux, userConn)
+	pb.RegisterTimetableServiceHandler(ctx, mux, timetableConn)
 
 	// corsMiddleware := middleware.NewCORSMiddleware()
 	// handler := corsMiddleware(mux)
