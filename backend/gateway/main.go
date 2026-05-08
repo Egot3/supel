@@ -8,6 +8,7 @@ import (
 	"os"
 
 	pb "github.com/Egot3/supel/backend/contracts"
+	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/gateway/gateways"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
@@ -42,7 +43,7 @@ func main() {
 	pb.RegisterIdentityServiceHandler(ctx, mux, identityConn)
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
 	pb.RegisterUserServiceHandler(ctx, mux, userConn)
-	pb.RegisterTimetableServiceHandler(ctx, mux, timetableConn)
+	ttpb.RegisterTimetableServiceHandler(ctx, mux, timetableConn)
 
 	// corsMiddleware := middleware.NewCORSMiddleware()
 	// handler := corsMiddleware(mux)
