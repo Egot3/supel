@@ -24,6 +24,16 @@ message ListTimetablesRequest {
     string group_uuid = 2;
 }
 
+message GetTimetableRequest {
+    uint32 week_number = 1;
+    string group_uuid = 2;
+    Day day = 3;
+}
+
+message GetTimetableResponse {
+    ConcreteLessonShortEntry Timetable = 1;
+}
+
 message AbstractLesson {
     string uuid = 1;
     string name = 2;
@@ -38,16 +48,25 @@ message ConcreteLesson {
     repeated string homework_attachments_get_urls = 6;
     string lesson_uuid = 7;
     repeated string marks = 8; //5- итд
+    uint32 timing = 9;
 }
 
-message ConcreteLessonEntry {
+message ShortConcreteLesson {
+    optional google.protobuf.Timestamp start = 1;
+    optional google.protobuf.Timestamp end = 2;
+    optional uint32 timing = 3;
+    AbstractLesson abstract_lesson = 4;
+    bool is_homework_due = 5;
+}
+
+message ConcreteLessonShortEntry {
     Day day = 1;
-    repeated ConcreteLesson lessons = 2;
+    repeated ShortConcreteLesson lessons = 2;
 }
 
 
 message ListTimetableResponse {
-    repeated ConcreteLessonEntry Timetable = 1;
+    repeated ConcreteLessonShortEntry Timetable = 1;
 }
 
 message CreateAbstractLessonRequest {
@@ -85,7 +104,7 @@ message GetAbstractLessonResponse {
 }
 
 message PatchAbstractLessonRequest {
-    string uuid = 1;
+    string lesson_uuid = 1;
     optional string name = 2; //и такое бывает
 }
 
@@ -112,10 +131,31 @@ message DeleteConcreteLessonRequest {
     string concrete_lesson_uuid = 1;
 }
 
+message PatchConcreteLessonRequest {
+    optional google.protobuf.Timestamp start = 1;
+    optional google.protobuf.Timestamp end = 2;
+    optional string abstract_lesson_uuid = 3;
+    optional string teacher_uuid = 4;
+    string concrete_lesson_uuid = 5;
+}
+
+message GetConcreteLessonRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+message GetConcreteLessonResponse {
+    ConcreteLesson lesson = 1;
+}
+
 service TimetableService {
     rpc ListTimetable(ListTimetablesRequest) returns (ListTimetableResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/{week_number}"
+            get: "/v1/timetable/{group_uuid}/{week_number}"
+        };
+    };
+    rpc GetTimetable(GetTimetableRequest) returns (GetTimetableResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/{group_uuid}/{week_number}/{day}"
         };
     };
 
@@ -160,6 +200,16 @@ service TimetableService {
             delete: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
         };
     };
+    rpc PatchConcreteLesson(PatchConcreteLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
+        };
+    };
+    rpc GetConcreteLesson(GetConcreteLessonRequest) returns (GetConcreteLessonResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
+        };
+    };
 
 
     rpc GetTimings(GetTimingRequest) returns (GetTimingsResponse) {
@@ -169,7 +219,7 @@ service TimetableService {
     };
     rpc PatchTimings(PatchTimingsRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "v1/timetable/timings"
+            patch: "/v1/timetable/timings"
             body: "*"
         };
     };
