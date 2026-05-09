@@ -24,6 +24,8 @@ github.com/Egot3/supel/backend/contracts v0.1.19 h1:vhToY2JZM3nOCRXShkxaXKs0JJZe
 github.com/Egot3/supel/backend/contracts v0.1.19/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/Egot3/supel/backend/contracts v0.1.20 h1:6weY8hAEh8YhQcvrpWTXDo4BXqbprXHVeQs3QIcwsuA=
 github.com/Egot3/supel/backend/contracts v0.1.20/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.1.22 h1:XM16Bdmou9ktHcu5rRDOudGrTXdc+bZWAHg1WX4U8tM=
+github.com/Egot3/supel/backend/contracts v0.1.22/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/go-logr/logr v1.4.3 h1:CjnDlHq8ikf6E492q6eKboGOC0T8CDaOvkHCIg8idEI=
