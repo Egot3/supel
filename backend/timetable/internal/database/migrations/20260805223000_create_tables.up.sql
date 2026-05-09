@@ -39,8 +39,8 @@ CREATE TABLE "concrete_lessons" (
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY ("concrete_uuid")
 );
-CREATE INDEX idx_start_group_uuid   ON concrete_lessons ("week_number","group_uuid") WHERE deleted_at IS NULL;
-CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("weel_number","teacher_uuid") WHERE deleted_at IS NULL;
+CREATE INDEX idx_start_group_uuid   ON concrete_lessons ("week_number","group_uuid","year") WHERE deleted_at IS NULL;
+CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("week_number","teacher_uuid","year") WHERE deleted_at IS NULL;
 
 -- Create "homework_attachment_keys"
 CREATE TABLE "homework_attachments" (
