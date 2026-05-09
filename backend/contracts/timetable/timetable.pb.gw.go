@@ -508,11 +508,11 @@ func local_request_TimetableService_GetConcreteLesson_0(ctx context.Context, mar
 	return msg, metadata, err
 }
 
-var filter_TimetableService_GetTimings_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
+var filter_TimetableService_GetPeriods_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
-func request_TimetableService_GetTimings_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_TimetableService_GetPeriods_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq GetTimingRequest
+		protoReq GetPeriodRequest
 		metadata runtime.ServerMetadata
 	)
 	if req.Body != nil {
@@ -521,31 +521,31 @@ func request_TimetableService_GetTimings_0(ctx context.Context, marshaler runtim
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_GetTimings_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_GetPeriods_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := client.GetTimings(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.GetPeriods(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_TimetableService_GetTimings_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_TimetableService_GetPeriods_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq GetTimingRequest
+		protoReq GetPeriodRequest
 		metadata runtime.ServerMetadata
 	)
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_GetTimings_0); err != nil {
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_GetPeriods_0); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := server.GetTimings(ctx, &protoReq)
+	msg, err := server.GetPeriods(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-func request_TimetableService_PatchTimings_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func request_TimetableService_PatchPeriods_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq PatchTimingsRequest
+		protoReq PatchPeriodsRequest
 		metadata runtime.ServerMetadata
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
@@ -554,19 +554,175 @@ func request_TimetableService_PatchTimings_0(ctx context.Context, marshaler runt
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	msg, err := client.PatchTimings(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	msg, err := client.PatchPeriods(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
 }
 
-func local_request_TimetableService_PatchTimings_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+func local_request_TimetableService_PatchPeriods_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq PatchTimingsRequest
+		protoReq PatchPeriodsRequest
 		metadata runtime.ServerMetadata
 	)
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	msg, err := server.PatchTimings(ctx, &protoReq)
+	msg, err := server.PatchPeriods(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_TimetableService_HomeworkBodyPUTUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkBodyPUTUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := client.HomeworkBodyPUTUrl(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_TimetableService_HomeworkBodyPUTUrl_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkBodyPUTUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := server.HomeworkBodyPUTUrl(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_TimetableService_HomeworkBodyGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkBodyGETUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := client.HomeworkBodyGETUrl(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_TimetableService_HomeworkBodyGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkBodyGETUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := server.HomeworkBodyGETUrl(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkAttachmentPUTUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := client.HomeworkAttachmentPUTUrl(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkAttachmentPUTUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := server.HomeworkAttachmentPUTUrl(ctx, &protoReq)
+	return msg, metadata, err
+}
+
+func request_TimetableService_HomeworkAttachmentGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkAttachmentGETUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	if req.Body != nil {
+		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := client.HomeworkAttachmentGETUrl(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
+	return msg, metadata, err
+}
+
+func local_request_TimetableService_HomeworkAttachmentGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
+	var (
+		protoReq HomeworkAttachmentGETUrlRequest
+		metadata runtime.ServerMetadata
+		err      error
+	)
+	val, ok := pathParams["concrete_lesson_uuid"]
+	if !ok {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "concrete_lesson_uuid")
+	}
+	protoReq.ConcreteLessonUuid, err = runtime.String(val)
+	if err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	msg, err := server.HomeworkAttachmentGETUrl(ctx, &protoReq)
 	return msg, metadata, err
 }
 
@@ -796,45 +952,125 @@ func RegisterTimetableServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		}
 		forward_TimetableService_GetConcreteLesson_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_TimetableService_GetTimings_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_TimetableService_GetPeriods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/GetTimings", runtime.WithHTTPPathPattern("/v1/timetable/timings"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/GetPeriods", runtime.WithHTTPPathPattern("/v1/timetable/periods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TimetableService_GetTimings_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TimetableService_GetPeriods_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_TimetableService_GetTimings_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_TimetableService_GetPeriods_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodPatch, pattern_TimetableService_PatchTimings_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPatch, pattern_TimetableService_PatchPeriods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/PatchTimings", runtime.WithHTTPPathPattern("/v1/timetable/timings"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/PatchPeriods", runtime.WithHTTPPathPattern("/v1/timetable/periods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := local_request_TimetableService_PatchTimings_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		resp, md, err := local_request_TimetableService_PatchPeriods_0(annotatedContext, inboundMarshaler, server, req, pathParams)
 		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_TimetableService_PatchTimings_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_TimetableService_PatchPeriods_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkBodyPUTUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/HomeworkBodyPUTUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_TimetableService_HomeworkBodyPUTUrl_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkBodyPUTUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkBodyGETUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/HomeworkBodyGETUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_TimetableService_HomeworkBodyGETUrl_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkBodyGETUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkAttachmentPUTUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/HomeworkAttachmentPUTUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_TimetableService_HomeworkAttachmentPUTUrl_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkAttachmentPUTUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkAttachmentGETUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		var stream runtime.ServerTransportStream
+		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/HomeworkAttachmentGETUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := local_request_TimetableService_HomeworkAttachmentGETUrl_0(annotatedContext, inboundMarshaler, server, req, pathParams)
+		md.HeaderMD, md.TrailerMD = metadata.Join(md.HeaderMD, stream.Header()), metadata.Join(md.TrailerMD, stream.Trailer())
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkAttachmentGETUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 
 	return nil
@@ -1063,71 +1299,147 @@ func RegisterTimetableServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		}
 		forward_TimetableService_GetConcreteLesson_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodGet, pattern_TimetableService_GetTimings_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodGet, pattern_TimetableService_GetPeriods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/GetTimings", runtime.WithHTTPPathPattern("/v1/timetable/timings"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/GetPeriods", runtime.WithHTTPPathPattern("/v1/timetable/periods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TimetableService_GetTimings_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TimetableService_GetPeriods_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_TimetableService_GetTimings_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_TimetableService_GetPeriods_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
-	mux.Handle(http.MethodPatch, pattern_TimetableService_PatchTimings_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+	mux.Handle(http.MethodPatch, pattern_TimetableService_PatchPeriods_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/PatchTimings", runtime.WithHTTPPathPattern("/v1/timetable/timings"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/PatchPeriods", runtime.WithHTTPPathPattern("/v1/timetable/periods"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		resp, md, err := request_TimetableService_PatchTimings_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		resp, md, err := request_TimetableService_PatchPeriods_0(annotatedContext, inboundMarshaler, client, req, pathParams)
 		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
 		if err != nil {
 			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
 			return
 		}
-		forward_TimetableService_PatchTimings_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+		forward_TimetableService_PatchPeriods_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkBodyPUTUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/HomeworkBodyPUTUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_TimetableService_HomeworkBodyPUTUrl_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkBodyPUTUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkBodyGETUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/HomeworkBodyGETUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_TimetableService_HomeworkBodyGETUrl_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkBodyGETUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkAttachmentPUTUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/HomeworkAttachmentPUTUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_TimetableService_HomeworkAttachmentPUTUrl_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkAttachmentPUTUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
+	})
+	mux.Handle(http.MethodGet, pattern_TimetableService_HomeworkAttachmentGETUrl_0, func(w http.ResponseWriter, req *http.Request, pathParams map[string]string) {
+		ctx, cancel := context.WithCancel(req.Context())
+		defer cancel()
+		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/HomeworkAttachmentGETUrl", runtime.WithHTTPPathPattern("/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments"))
+		if err != nil {
+			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		resp, md, err := request_TimetableService_HomeworkAttachmentGETUrl_0(annotatedContext, inboundMarshaler, client, req, pathParams)
+		annotatedContext = runtime.NewServerMetadataContext(annotatedContext, md)
+		if err != nil {
+			runtime.HTTPError(annotatedContext, mux, outboundMarshaler, w, req, err)
+			return
+		}
+		forward_TimetableService_HomeworkAttachmentGETUrl_0(annotatedContext, mux, outboundMarshaler, w, req, resp, mux.GetForwardResponseOptions()...)
 	})
 	return nil
 }
 
 var (
-	pattern_TimetableService_ListTimetable_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "timetable", "group_uuid", "week_number"}, ""))
-	pattern_TimetableService_GetTimetable_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "group_uuid", "week_number", "day"}, ""))
-	pattern_TimetableService_CreateAbstractLesson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "abstract"}, ""))
-	pattern_TimetableService_DeleteAbstractLesson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
-	pattern_TimetableService_GetAbstractLesson_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
-	pattern_TimetableService_PatchAbstractLesson_0  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
-	pattern_TimetableService_ListAbstractLessons_0  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "abstract"}, ""))
-	pattern_TimetableService_CreateConcreteLesson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "concrete"}, ""))
-	pattern_TimetableService_DeleteConcreteLesson_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
-	pattern_TimetableService_PatchConcreteLesson_0  = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
-	pattern_TimetableService_GetConcreteLesson_0    = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
-	pattern_TimetableService_GetTimings_0           = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "timetable", "timings"}, ""))
-	pattern_TimetableService_PatchTimings_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "timetable", "timings"}, ""))
+	pattern_TimetableService_ListTimetable_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "timetable", "group_uuid", "week_number"}, ""))
+	pattern_TimetableService_GetTimetable_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "group_uuid", "week_number", "day"}, ""))
+	pattern_TimetableService_CreateAbstractLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "abstract"}, ""))
+	pattern_TimetableService_DeleteAbstractLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
+	pattern_TimetableService_GetAbstractLesson_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
+	pattern_TimetableService_PatchAbstractLesson_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
+	pattern_TimetableService_ListAbstractLessons_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "abstract"}, ""))
+	pattern_TimetableService_CreateConcreteLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "concrete"}, ""))
+	pattern_TimetableService_DeleteConcreteLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
+	pattern_TimetableService_PatchConcreteLesson_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
+	pattern_TimetableService_GetConcreteLesson_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid"}, ""))
+	pattern_TimetableService_GetPeriods_0               = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "timetable", "periods"}, ""))
+	pattern_TimetableService_PatchPeriods_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "timetable", "periods"}, ""))
+	pattern_TimetableService_HomeworkBodyPUTUrl_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid", "homework", "upload"}, ""))
+	pattern_TimetableService_HomeworkBodyGETUrl_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid", "homework"}, ""))
+	pattern_TimetableService_HomeworkAttachmentPUTUrl_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5, 2, 6}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid", "attachments", "upload"}, ""))
+	pattern_TimetableService_HomeworkAttachmentGETUrl_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4, 2, 5}, []string{"v1", "timetable", "lesson", "concrete", "concrete_lesson_uuid", "attachments"}, ""))
 )
 
 var (
-	forward_TimetableService_ListTimetable_0        = runtime.ForwardResponseMessage
-	forward_TimetableService_GetTimetable_0         = runtime.ForwardResponseMessage
-	forward_TimetableService_CreateAbstractLesson_0 = runtime.ForwardResponseMessage
-	forward_TimetableService_DeleteAbstractLesson_0 = runtime.ForwardResponseMessage
-	forward_TimetableService_GetAbstractLesson_0    = runtime.ForwardResponseMessage
-	forward_TimetableService_PatchAbstractLesson_0  = runtime.ForwardResponseMessage
-	forward_TimetableService_ListAbstractLessons_0  = runtime.ForwardResponseMessage
-	forward_TimetableService_CreateConcreteLesson_0 = runtime.ForwardResponseMessage
-	forward_TimetableService_DeleteConcreteLesson_0 = runtime.ForwardResponseMessage
-	forward_TimetableService_PatchConcreteLesson_0  = runtime.ForwardResponseMessage
-	forward_TimetableService_GetConcreteLesson_0    = runtime.ForwardResponseMessage
-	forward_TimetableService_GetTimings_0           = runtime.ForwardResponseMessage
-	forward_TimetableService_PatchTimings_0         = runtime.ForwardResponseMessage
+	forward_TimetableService_ListTimetable_0            = runtime.ForwardResponseMessage
+	forward_TimetableService_GetTimetable_0             = runtime.ForwardResponseMessage
+	forward_TimetableService_CreateAbstractLesson_0     = runtime.ForwardResponseMessage
+	forward_TimetableService_DeleteAbstractLesson_0     = runtime.ForwardResponseMessage
+	forward_TimetableService_GetAbstractLesson_0        = runtime.ForwardResponseMessage
+	forward_TimetableService_PatchAbstractLesson_0      = runtime.ForwardResponseMessage
+	forward_TimetableService_ListAbstractLessons_0      = runtime.ForwardResponseMessage
+	forward_TimetableService_CreateConcreteLesson_0     = runtime.ForwardResponseMessage
+	forward_TimetableService_DeleteConcreteLesson_0     = runtime.ForwardResponseMessage
+	forward_TimetableService_PatchConcreteLesson_0      = runtime.ForwardResponseMessage
+	forward_TimetableService_GetConcreteLesson_0        = runtime.ForwardResponseMessage
+	forward_TimetableService_GetPeriods_0               = runtime.ForwardResponseMessage
+	forward_TimetableService_PatchPeriods_0             = runtime.ForwardResponseMessage
+	forward_TimetableService_HomeworkBodyPUTUrl_0       = runtime.ForwardResponseMessage
+	forward_TimetableService_HomeworkBodyGETUrl_0       = runtime.ForwardResponseMessage
+	forward_TimetableService_HomeworkAttachmentPUTUrl_0 = runtime.ForwardResponseMessage
+	forward_TimetableService_HomeworkAttachmentGETUrl_0 = runtime.ForwardResponseMessage
 )

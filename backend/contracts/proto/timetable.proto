@@ -48,13 +48,13 @@ message ConcreteLesson {
     repeated string homework_attachments_get_urls = 6;
     string lesson_uuid = 7;
     repeated string marks = 8; //5- итд
-    uint32 timing = 9;
+    uint32 period = 9;
 }
 
 message ShortConcreteLesson {
     optional google.protobuf.Timestamp start = 1;
     optional google.protobuf.Timestamp end = 2;
-    optional uint32 timing = 3;
+    optional uint32 period = 3;
     AbstractLesson abstract_lesson = 4;
     bool is_homework_due = 5;
 }
@@ -73,22 +73,22 @@ message CreateAbstractLessonRequest {
     string name = 1;
 }
 
-message Timing {
+message Period {
     uint32 number = 1;
     google.protobuf.Timestamp start = 2;
     google.protobuf.Timestamp end = 3;
 }
 
-message GetTimingRequest {
+message GetPeriodRequest {
     uint32 week_number = 1;
 }
 
-message GetTimingsResponse {
-    repeated Timing timings = 1;
+message GetPeriodsResponse {
+    repeated Period periods = 1;
 }
 
-message PatchTimingsRequest {
-    repeated Timing timings = 1;
+message PatchPeriodsRequest {
+    repeated Period periods = 1;
 }
 
 message DeleteAbstractLessonRequest {
@@ -125,6 +125,8 @@ message CreateConcreteLessonRequest {
     string teacher_uuid = 2;
     google.protobuf.Timestamp start = 3;
     google.protobuf.Timestamp end = 4;
+    string group_uuid = 5;
+    uint32 period = 6;
 }
 
 message DeleteConcreteLessonRequest {
@@ -145,6 +147,38 @@ message GetConcreteLessonRequest {
 
 message GetConcreteLessonResponse {
     ConcreteLesson lesson = 1;
+}
+
+message HomeworkBodyPUTUrlRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+message HomeworkBodyPUTUrlResponse {
+    string homework_body_url = 1;
+}
+
+message HomeworkAttachmentPUTUrlRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+message HomeworkAttachmentPUTUrlResponse {
+    repeated string homework_attachment_urls = 1;
+}
+
+message HomeworkAttachmentGETUrlRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+message HomeworkAttachmentGETUrlResponse {
+    repeated string homework_attachment_urls = 1;
+}
+
+message HomeworkBodyGETUrlRequest {
+    string concrete_lesson_uuid = 1;
+}
+
+message HomeworkBodyGETUrlResponse {
+    string homework_body_uuid = 1;
 }
 
 service TimetableService {
@@ -212,15 +246,39 @@ service TimetableService {
     };
 
 
-    rpc GetTimings(GetTimingRequest) returns (GetTimingsResponse) {
+    rpc GetPeriods(GetPeriodRequest) returns (GetPeriodsResponse) {
         option (google.api.http) = {
-            get: "/v1/timetable/timings"
+            get: "/v1/timetable/periods"
         };
     };
-    rpc PatchTimings(PatchTimingsRequest) returns (google.protobuf.Empty){
+    rpc PatchPeriods(PatchPeriodsRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "/v1/timetable/timings"
+            patch: "/v1/timetable/periods"
             body: "*"
+        };
+    };
+
+
+    rpc HomeworkBodyPUTUrl(HomeworkBodyPUTUrlRequest) returns (HomeworkBodyPUTUrlResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload"
+        };
+    };
+    rpc HomeworkBodyGETUrl(HomeworkBodyGETUrlRequest) returns (HomeworkBodyGETUrlResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework"
+        };
+    };
+
+
+    rpc HomeworkAttachmentPUTUrl(HomeworkAttachmentPUTUrlRequest) returns (HomeworkAttachmentPUTUrlResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload"
+        };
+    };
+    rpc HomeworkAttachmentGETUrl(HomeworkAttachmentGETUrlRequest) returns (HomeworkAttachmentGETUrlResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments"
         };
     };
 }
