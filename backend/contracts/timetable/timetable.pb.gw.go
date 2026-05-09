@@ -703,7 +703,7 @@ func local_request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Conte
 
 func request_TimetableService_HomeworkAttachmentGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq HomeworkAttachmentGETUrlRequest
+		protoReq HomeworkAttachmentGETUrlsRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)
@@ -724,7 +724,7 @@ func request_TimetableService_HomeworkAttachmentGETUrl_0(ctx context.Context, ma
 
 func local_request_TimetableService_HomeworkAttachmentGETUrl_0(ctx context.Context, marshaler runtime.Marshaler, server TimetableServiceServer, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
-		protoReq HomeworkAttachmentGETUrlRequest
+		protoReq HomeworkAttachmentGETUrlsRequest
 		metadata runtime.ServerMetadata
 		err      error
 	)

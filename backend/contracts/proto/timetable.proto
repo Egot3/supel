@@ -165,14 +165,14 @@ message HomeworkAttachmentPUTUrlRequest {
 }
 
 message HomeworkAttachmentPUTUrlResponse {
-    repeated string homework_attachment_urls = 1;
+    string homework_attachment_url = 1;
 }
 
-message HomeworkAttachmentGETUrlRequest {
+message HomeworkAttachmentGETUrlsRequest {
     string concrete_lesson_uuid = 1;
 }
 
-message HomeworkAttachmentGETUrlResponse {
+message HomeworkAttachmentGETUrlsResponse {
     repeated string homework_attachment_urls = 1;
 }
 
@@ -279,7 +279,7 @@ service TimetableService {
             get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload"
         };
     };
-    rpc HomeworkAttachmentGETUrl(HomeworkAttachmentGETUrlRequest) returns (HomeworkAttachmentGETUrlResponse){
+    rpc HomeworkAttachmentGETUrl(HomeworkAttachmentGETUrlsRequest) returns (HomeworkAttachmentGETUrlsResponse){
         option (google.api.http) = {
             get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments"
         };

@@ -59,7 +59,7 @@ type TimetableServiceClient interface {
 	HomeworkBodyPUTUrl(ctx context.Context, in *HomeworkBodyPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyPUTUrlResponse, error)
 	HomeworkBodyGETUrl(ctx context.Context, in *HomeworkBodyGETUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyGETUrlResponse, error)
 	HomeworkAttachmentPUTUrl(ctx context.Context, in *HomeworkAttachmentPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentPUTUrlResponse, error)
-	HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlResponse, error)
+	HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlsRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlsResponse, error)
 }
 
 type timetableServiceClient struct {
@@ -230,9 +230,9 @@ func (c *timetableServiceClient) HomeworkAttachmentPUTUrl(ctx context.Context, i
 	return out, nil
 }
 
-func (c *timetableServiceClient) HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlResponse, error) {
+func (c *timetableServiceClient) HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlsRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomeworkAttachmentGETUrlResponse)
+	out := new(HomeworkAttachmentGETUrlsResponse)
 	err := c.cc.Invoke(ctx, TimetableService_HomeworkAttachmentGETUrl_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
@@ -260,7 +260,7 @@ type TimetableServiceServer interface {
 	HomeworkBodyPUTUrl(context.Context, *HomeworkBodyPUTUrlRequest) (*HomeworkBodyPUTUrlResponse, error)
 	HomeworkBodyGETUrl(context.Context, *HomeworkBodyGETUrlRequest) (*HomeworkBodyGETUrlResponse, error)
 	HomeworkAttachmentPUTUrl(context.Context, *HomeworkAttachmentPUTUrlRequest) (*HomeworkAttachmentPUTUrlResponse, error)
-	HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlRequest) (*HomeworkAttachmentGETUrlResponse, error)
+	HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlsRequest) (*HomeworkAttachmentGETUrlsResponse, error)
 	mustEmbedUnimplementedTimetableServiceServer()
 }
 
@@ -319,7 +319,7 @@ func (UnimplementedTimetableServiceServer) HomeworkBodyGETUrl(context.Context, *
 func (UnimplementedTimetableServiceServer) HomeworkAttachmentPUTUrl(context.Context, *HomeworkAttachmentPUTUrlRequest) (*HomeworkAttachmentPUTUrlResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachmentPUTUrl not implemented")
 }
-func (UnimplementedTimetableServiceServer) HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlRequest) (*HomeworkAttachmentGETUrlResponse, error) {
+func (UnimplementedTimetableServiceServer) HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlsRequest) (*HomeworkAttachmentGETUrlsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachmentGETUrl not implemented")
 }
 func (UnimplementedTimetableServiceServer) mustEmbedUnimplementedTimetableServiceServer() {}
@@ -632,7 +632,7 @@ func _TimetableService_HomeworkAttachmentPUTUrl_Handler(srv interface{}, ctx con
 }
 
 func _TimetableService_HomeworkAttachmentGETUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomeworkAttachmentGETUrlRequest)
+	in := new(HomeworkAttachmentGETUrlsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -644,7 +644,7 @@ func _TimetableService_HomeworkAttachmentGETUrl_Handler(srv interface{}, ctx con
 		FullMethod: TimetableService_HomeworkAttachmentGETUrl_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).HomeworkAttachmentGETUrl(ctx, req.(*HomeworkAttachmentGETUrlRequest))
+		return srv.(TimetableServiceServer).HomeworkAttachmentGETUrl(ctx, req.(*HomeworkAttachmentGETUrlsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }

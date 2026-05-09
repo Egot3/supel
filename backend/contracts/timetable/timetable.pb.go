@@ -1565,10 +1565,10 @@ func (x *HomeworkAttachmentPUTUrlRequest) GetName() string {
 }
 
 type HomeworkAttachmentPUTUrlResponse struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	HomeworkAttachmentUrls []string               `protobuf:"bytes,1,rep,name=homework_attachment_urls,json=homeworkAttachmentUrls,proto3" json:"homework_attachment_urls,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+	state                 protoimpl.MessageState `protogen:"open.v1"`
+	HomeworkAttachmentUrl string                 `protobuf:"bytes,1,opt,name=homework_attachment_url,json=homeworkAttachmentUrl,proto3" json:"homework_attachment_url,omitempty"`
+	unknownFields         protoimpl.UnknownFields
+	sizeCache             protoimpl.SizeCache
 }
 
 func (x *HomeworkAttachmentPUTUrlResponse) Reset() {
@@ -1601,34 +1601,34 @@ func (*HomeworkAttachmentPUTUrlResponse) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{27}
 }
 
-func (x *HomeworkAttachmentPUTUrlResponse) GetHomeworkAttachmentUrls() []string {
+func (x *HomeworkAttachmentPUTUrlResponse) GetHomeworkAttachmentUrl() string {
 	if x != nil {
-		return x.HomeworkAttachmentUrls
+		return x.HomeworkAttachmentUrl
 	}
-	return nil
+	return ""
 }
 
-type HomeworkAttachmentGETUrlRequest struct {
+type HomeworkAttachmentGETUrlsRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
 
-func (x *HomeworkAttachmentGETUrlRequest) Reset() {
-	*x = HomeworkAttachmentGETUrlRequest{}
+func (x *HomeworkAttachmentGETUrlsRequest) Reset() {
+	*x = HomeworkAttachmentGETUrlsRequest{}
 	mi := &file_proto_timetable_proto_msgTypes[28]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkAttachmentGETUrlRequest) String() string {
+func (x *HomeworkAttachmentGETUrlsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkAttachmentGETUrlRequest) ProtoMessage() {}
+func (*HomeworkAttachmentGETUrlsRequest) ProtoMessage() {}
 
-func (x *HomeworkAttachmentGETUrlRequest) ProtoReflect() protoreflect.Message {
+func (x *HomeworkAttachmentGETUrlsRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_timetable_proto_msgTypes[28]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1640,39 +1640,39 @@ func (x *HomeworkAttachmentGETUrlRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkAttachmentGETUrlRequest.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentGETUrlRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use HomeworkAttachmentGETUrlsRequest.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentGETUrlsRequest) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{28}
 }
 
-func (x *HomeworkAttachmentGETUrlRequest) GetConcreteLessonUuid() string {
+func (x *HomeworkAttachmentGETUrlsRequest) GetConcreteLessonUuid() string {
 	if x != nil {
 		return x.ConcreteLessonUuid
 	}
 	return ""
 }
 
-type HomeworkAttachmentGETUrlResponse struct {
+type HomeworkAttachmentGETUrlsResponse struct {
 	state                  protoimpl.MessageState `protogen:"open.v1"`
 	HomeworkAttachmentUrls []string               `protobuf:"bytes,1,rep,name=homework_attachment_urls,json=homeworkAttachmentUrls,proto3" json:"homework_attachment_urls,omitempty"`
 	unknownFields          protoimpl.UnknownFields
 	sizeCache              protoimpl.SizeCache
 }
 
-func (x *HomeworkAttachmentGETUrlResponse) Reset() {
-	*x = HomeworkAttachmentGETUrlResponse{}
+func (x *HomeworkAttachmentGETUrlsResponse) Reset() {
+	*x = HomeworkAttachmentGETUrlsResponse{}
 	mi := &file_proto_timetable_proto_msgTypes[29]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkAttachmentGETUrlResponse) String() string {
+func (x *HomeworkAttachmentGETUrlsResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkAttachmentGETUrlResponse) ProtoMessage() {}
+func (*HomeworkAttachmentGETUrlsResponse) ProtoMessage() {}
 
-func (x *HomeworkAttachmentGETUrlResponse) ProtoReflect() protoreflect.Message {
+func (x *HomeworkAttachmentGETUrlsResponse) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_timetable_proto_msgTypes[29]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1684,12 +1684,12 @@ func (x *HomeworkAttachmentGETUrlResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkAttachmentGETUrlResponse.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentGETUrlResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use HomeworkAttachmentGETUrlsResponse.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentGETUrlsResponse) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{29}
 }
 
-func (x *HomeworkAttachmentGETUrlResponse) GetHomeworkAttachmentUrls() []string {
+func (x *HomeworkAttachmentGETUrlsResponse) GetHomeworkAttachmentUrls() []string {
 	if x != nil {
 		return x.HomeworkAttachmentUrls
 	}
@@ -1900,12 +1900,12 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x1fHomeworkAttachmentPUTUrlRequest\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\x12\x12\n" +
 	"\x04mime\x18\x02 \x01(\tR\x04mime\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"\\\n" +
-	" HomeworkAttachmentPUTUrlResponse\x128\n" +
-	"\x18homework_attachment_urls\x18\x01 \x03(\tR\x16homeworkAttachmentUrls\"S\n" +
-	"\x1fHomeworkAttachmentGETUrlRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\\\n" +
-	" HomeworkAttachmentGETUrlResponse\x128\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"Z\n" +
+	" HomeworkAttachmentPUTUrlResponse\x126\n" +
+	"\x17homework_attachment_url\x18\x01 \x01(\tR\x15homeworkAttachmentUrl\"T\n" +
+	" HomeworkAttachmentGETUrlsRequest\x120\n" +
+	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"]\n" +
+	"!HomeworkAttachmentGETUrlsResponse\x128\n" +
 	"\x18homework_attachment_urls\x18\x01 \x03(\tR\x16homeworkAttachmentUrls\"M\n" +
 	"\x19HomeworkBodyGETUrlRequest\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"J\n" +
@@ -1922,7 +1922,7 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x06FRIDAY\x10\x05\x12\f\n" +
 	"\bSATURDAY\x10\x06\x12\n" +
 	"\n" +
-	"\x06SUNDAY\x10\a2\xed\x13\n" +
+	"\x06SUNDAY\x10\a2\xef\x13\n" +
 	"\x10TimetableService\x12\x85\x01\n" +
 	"\rListTimetable\x12 .timetable.ListTimetablesRequest\x1a .timetable.ListTimetableResponse\"0\x82\xd3\xe4\x93\x02*\x12(/v1/timetable/{group_uuid}/{week_number}\x12\x87\x01\n" +
 	"\fGetTimetable\x12\x1e.timetable.GetTimetableRequest\x1a\x1f.timetable.GetTimetableResponse\"6\x82\xd3\xe4\x93\x020\x12./v1/timetable/{group_uuid}/{week_number}/{day}\x12\x80\x01\n" +
@@ -1940,8 +1940,8 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\fPatchPeriods\x12\x1e.timetable.PatchPeriodsRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a:\x01*2\x15/v1/timetable/periods\x12\xaf\x01\n" +
 	"\x12HomeworkBodyPUTUrl\x12$.timetable.HomeworkBodyPUTUrlRequest\x1a%.timetable.HomeworkBodyPUTUrlResponse\"L\x82\xd3\xe4\x93\x02F\x12D/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload\x12\xa8\x01\n" +
 	"\x12HomeworkBodyGETUrl\x12$.timetable.HomeworkBodyGETUrlRequest\x1a%.timetable.HomeworkBodyGETUrlResponse\"E\x82\xd3\xe4\x93\x02?\x12=/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework\x12\xc4\x01\n" +
-	"\x18HomeworkAttachmentPUTUrl\x12*.timetable.HomeworkAttachmentPUTUrlRequest\x1a+.timetable.HomeworkAttachmentPUTUrlResponse\"O\x82\xd3\xe4\x93\x02I\x12G/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload\x12\xbd\x01\n" +
-	"\x18HomeworkAttachmentGETUrl\x12*.timetable.HomeworkAttachmentGETUrlRequest\x1a+.timetable.HomeworkAttachmentGETUrlResponse\"H\x82\xd3\xe4\x93\x02B\x12@/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachmentsB\x04Z\x02./b\x06proto3"
+	"\x18HomeworkAttachmentPUTUrl\x12*.timetable.HomeworkAttachmentPUTUrlRequest\x1a+.timetable.HomeworkAttachmentPUTUrlResponse\"O\x82\xd3\xe4\x93\x02I\x12G/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload\x12\xbf\x01\n" +
+	"\x18HomeworkAttachmentGETUrl\x12+.timetable.HomeworkAttachmentGETUrlsRequest\x1a,.timetable.HomeworkAttachmentGETUrlsResponse\"H\x82\xd3\xe4\x93\x02B\x12@/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachmentsB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_timetable_proto_rawDescOnce sync.Once
@@ -1958,41 +1958,41 @@ func file_proto_timetable_proto_rawDescGZIP() []byte {
 var file_proto_timetable_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
 var file_proto_timetable_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
 var file_proto_timetable_proto_goTypes = []any{
-	(Day)(0),                                 // 0: timetable.Day
-	(*ListTimetablesRequest)(nil),            // 1: timetable.ListTimetablesRequest
-	(*GetTimetableRequest)(nil),              // 2: timetable.GetTimetableRequest
-	(*GetTimetableResponse)(nil),             // 3: timetable.GetTimetableResponse
-	(*AbstractLesson)(nil),                   // 4: timetable.AbstractLesson
-	(*ConcreteLesson)(nil),                   // 5: timetable.ConcreteLesson
-	(*ShortConcreteLesson)(nil),              // 6: timetable.ShortConcreteLesson
-	(*ConcreteLessonShortEntry)(nil),         // 7: timetable.ConcreteLessonShortEntry
-	(*ListTimetableResponse)(nil),            // 8: timetable.ListTimetableResponse
-	(*CreateAbstractLessonRequest)(nil),      // 9: timetable.CreateAbstractLessonRequest
-	(*Period)(nil),                           // 10: timetable.Period
-	(*GetPeriodRequest)(nil),                 // 11: timetable.GetPeriodRequest
-	(*GetPeriodsResponse)(nil),               // 12: timetable.GetPeriodsResponse
-	(*PatchPeriodsRequest)(nil),              // 13: timetable.PatchPeriodsRequest
-	(*DeleteAbstractLessonRequest)(nil),      // 14: timetable.DeleteAbstractLessonRequest
-	(*GetAbstractLessonRequest)(nil),         // 15: timetable.GetAbstractLessonRequest
-	(*GetAbstractLessonResponse)(nil),        // 16: timetable.GetAbstractLessonResponse
-	(*PatchAbstractLessonRequest)(nil),       // 17: timetable.PatchAbstractLessonRequest
-	(*ListAbstractLessonsRequest)(nil),       // 18: timetable.ListAbstractLessonsRequest
-	(*ListAbstractLessonsResponse)(nil),      // 19: timetable.ListAbstractLessonsResponse
-	(*CreateConcreteLessonRequest)(nil),      // 20: timetable.CreateConcreteLessonRequest
-	(*DeleteConcreteLessonRequest)(nil),      // 21: timetable.DeleteConcreteLessonRequest
-	(*PatchConcreteLessonRequest)(nil),       // 22: timetable.PatchConcreteLessonRequest
-	(*GetConcreteLessonRequest)(nil),         // 23: timetable.GetConcreteLessonRequest
-	(*GetConcreteLessonResponse)(nil),        // 24: timetable.GetConcreteLessonResponse
-	(*HomeworkBodyPUTUrlRequest)(nil),        // 25: timetable.HomeworkBodyPUTUrlRequest
-	(*HomeworkBodyPUTUrlResponse)(nil),       // 26: timetable.HomeworkBodyPUTUrlResponse
-	(*HomeworkAttachmentPUTUrlRequest)(nil),  // 27: timetable.HomeworkAttachmentPUTUrlRequest
-	(*HomeworkAttachmentPUTUrlResponse)(nil), // 28: timetable.HomeworkAttachmentPUTUrlResponse
-	(*HomeworkAttachmentGETUrlRequest)(nil),  // 29: timetable.HomeworkAttachmentGETUrlRequest
-	(*HomeworkAttachmentGETUrlResponse)(nil), // 30: timetable.HomeworkAttachmentGETUrlResponse
-	(*HomeworkBodyGETUrlRequest)(nil),        // 31: timetable.HomeworkBodyGETUrlRequest
-	(*HomeworkBodyGETUrlResponse)(nil),       // 32: timetable.HomeworkBodyGETUrlResponse
-	(*timestamppb.Timestamp)(nil),            // 33: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                    // 34: google.protobuf.Empty
+	(Day)(0),                                  // 0: timetable.Day
+	(*ListTimetablesRequest)(nil),             // 1: timetable.ListTimetablesRequest
+	(*GetTimetableRequest)(nil),               // 2: timetable.GetTimetableRequest
+	(*GetTimetableResponse)(nil),              // 3: timetable.GetTimetableResponse
+	(*AbstractLesson)(nil),                    // 4: timetable.AbstractLesson
+	(*ConcreteLesson)(nil),                    // 5: timetable.ConcreteLesson
+	(*ShortConcreteLesson)(nil),               // 6: timetable.ShortConcreteLesson
+	(*ConcreteLessonShortEntry)(nil),          // 7: timetable.ConcreteLessonShortEntry
+	(*ListTimetableResponse)(nil),             // 8: timetable.ListTimetableResponse
+	(*CreateAbstractLessonRequest)(nil),       // 9: timetable.CreateAbstractLessonRequest
+	(*Period)(nil),                            // 10: timetable.Period
+	(*GetPeriodRequest)(nil),                  // 11: timetable.GetPeriodRequest
+	(*GetPeriodsResponse)(nil),                // 12: timetable.GetPeriodsResponse
+	(*PatchPeriodsRequest)(nil),               // 13: timetable.PatchPeriodsRequest
+	(*DeleteAbstractLessonRequest)(nil),       // 14: timetable.DeleteAbstractLessonRequest
+	(*GetAbstractLessonRequest)(nil),          // 15: timetable.GetAbstractLessonRequest
+	(*GetAbstractLessonResponse)(nil),         // 16: timetable.GetAbstractLessonResponse
+	(*PatchAbstractLessonRequest)(nil),        // 17: timetable.PatchAbstractLessonRequest
+	(*ListAbstractLessonsRequest)(nil),        // 18: timetable.ListAbstractLessonsRequest
+	(*ListAbstractLessonsResponse)(nil),       // 19: timetable.ListAbstractLessonsResponse
+	(*CreateConcreteLessonRequest)(nil),       // 20: timetable.CreateConcreteLessonRequest
+	(*DeleteConcreteLessonRequest)(nil),       // 21: timetable.DeleteConcreteLessonRequest
+	(*PatchConcreteLessonRequest)(nil),        // 22: timetable.PatchConcreteLessonRequest
+	(*GetConcreteLessonRequest)(nil),          // 23: timetable.GetConcreteLessonRequest
+	(*GetConcreteLessonResponse)(nil),         // 24: timetable.GetConcreteLessonResponse
+	(*HomeworkBodyPUTUrlRequest)(nil),         // 25: timetable.HomeworkBodyPUTUrlRequest
+	(*HomeworkBodyPUTUrlResponse)(nil),        // 26: timetable.HomeworkBodyPUTUrlResponse
+	(*HomeworkAttachmentPUTUrlRequest)(nil),   // 27: timetable.HomeworkAttachmentPUTUrlRequest
+	(*HomeworkAttachmentPUTUrlResponse)(nil),  // 28: timetable.HomeworkAttachmentPUTUrlResponse
+	(*HomeworkAttachmentGETUrlsRequest)(nil),  // 29: timetable.HomeworkAttachmentGETUrlsRequest
+	(*HomeworkAttachmentGETUrlsResponse)(nil), // 30: timetable.HomeworkAttachmentGETUrlsResponse
+	(*HomeworkBodyGETUrlRequest)(nil),         // 31: timetable.HomeworkBodyGETUrlRequest
+	(*HomeworkBodyGETUrlResponse)(nil),        // 32: timetable.HomeworkBodyGETUrlResponse
+	(*timestamppb.Timestamp)(nil),             // 33: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                     // 34: google.protobuf.Empty
 }
 var file_proto_timetable_proto_depIdxs = []int32{
 	0,  // 0: timetable.GetTimetableRequest.day:type_name -> timetable.Day
@@ -2033,7 +2033,7 @@ var file_proto_timetable_proto_depIdxs = []int32{
 	25, // 35: timetable.TimetableService.HomeworkBodyPUTUrl:input_type -> timetable.HomeworkBodyPUTUrlRequest
 	31, // 36: timetable.TimetableService.HomeworkBodyGETUrl:input_type -> timetable.HomeworkBodyGETUrlRequest
 	27, // 37: timetable.TimetableService.HomeworkAttachmentPUTUrl:input_type -> timetable.HomeworkAttachmentPUTUrlRequest
-	29, // 38: timetable.TimetableService.HomeworkAttachmentGETUrl:input_type -> timetable.HomeworkAttachmentGETUrlRequest
+	29, // 38: timetable.TimetableService.HomeworkAttachmentGETUrl:input_type -> timetable.HomeworkAttachmentGETUrlsRequest
 	8,  // 39: timetable.TimetableService.ListTimetable:output_type -> timetable.ListTimetableResponse
 	3,  // 40: timetable.TimetableService.GetTimetable:output_type -> timetable.GetTimetableResponse
 	34, // 41: timetable.TimetableService.CreateAbstractLesson:output_type -> google.protobuf.Empty
@@ -2050,7 +2050,7 @@ var file_proto_timetable_proto_depIdxs = []int32{
 	26, // 52: timetable.TimetableService.HomeworkBodyPUTUrl:output_type -> timetable.HomeworkBodyPUTUrlResponse
 	32, // 53: timetable.TimetableService.HomeworkBodyGETUrl:output_type -> timetable.HomeworkBodyGETUrlResponse
 	28, // 54: timetable.TimetableService.HomeworkAttachmentPUTUrl:output_type -> timetable.HomeworkAttachmentPUTUrlResponse
-	30, // 55: timetable.TimetableService.HomeworkAttachmentGETUrl:output_type -> timetable.HomeworkAttachmentGETUrlResponse
+	30, // 55: timetable.TimetableService.HomeworkAttachmentGETUrl:output_type -> timetable.HomeworkAttachmentGETUrlsResponse
 	39, // [39:56] is the sub-list for method output_type
 	22, // [22:39] is the sub-list for method input_type
 	22, // [22:22] is the sub-list for extension type_name
