@@ -1251,6 +1251,7 @@ type PatchConcreteLessonRequest struct {
 	AbstractLessonUuid *string                `protobuf:"bytes,3,opt,name=abstract_lesson_uuid,json=abstractLessonUuid,proto3,oneof" json:"abstract_lesson_uuid,omitempty"`
 	TeacherUuid        *string                `protobuf:"bytes,4,opt,name=teacher_uuid,json=teacherUuid,proto3,oneof" json:"teacher_uuid,omitempty"`
 	ConcreteLessonUuid string                 `protobuf:"bytes,5,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
+	GroupUuid          string                 `protobuf:"bytes,6,opt,name=group_uuid,json=groupUuid,proto3" json:"group_uuid,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1316,6 +1317,13 @@ func (x *PatchConcreteLessonRequest) GetTeacherUuid() string {
 func (x *PatchConcreteLessonRequest) GetConcreteLessonUuid() string {
 	if x != nil {
 		return x.ConcreteLessonUuid
+	}
+	return ""
+}
+
+func (x *PatchConcreteLessonRequest) GetGroupUuid() string {
+	if x != nil {
+		return x.GroupUuid
 	}
 	return ""
 }
@@ -1851,13 +1859,15 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"group_uuid\x18\x05 \x01(\tR\tgroupUuid\x12\x16\n" +
 	"\x06period\x18\x06 \x01(\rR\x06period\"O\n" +
 	"\x1bDeleteConcreteLessonRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xd3\x02\n" +
+	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xf2\x02\n" +
 	"\x1aPatchConcreteLessonRequest\x125\n" +
 	"\x05start\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\x05start\x88\x01\x01\x121\n" +
 	"\x03end\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\x03end\x88\x01\x01\x125\n" +
 	"\x14abstract_lesson_uuid\x18\x03 \x01(\tH\x02R\x12abstractLessonUuid\x88\x01\x01\x12&\n" +
 	"\fteacher_uuid\x18\x04 \x01(\tH\x03R\vteacherUuid\x88\x01\x01\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x05 \x01(\tR\x12concreteLessonUuidB\b\n" +
+	"\x14concrete_lesson_uuid\x18\x05 \x01(\tR\x12concreteLessonUuid\x12\x1d\n" +
+	"\n" +
+	"group_uuid\x18\x06 \x01(\tR\tgroupUuidB\b\n" +
 	"\x06_startB\x06\n" +
 	"\x04_endB\x17\n" +
 	"\x15_abstract_lesson_uuidB\x0f\n" +

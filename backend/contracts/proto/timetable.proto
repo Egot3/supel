@@ -139,6 +139,7 @@ message PatchConcreteLessonRequest {
     optional string abstract_lesson_uuid = 3;
     optional string teacher_uuid = 4;
     string concrete_lesson_uuid = 5;
+    string group_uuid = 6;
 }
 
 message GetConcreteLessonRequest {
