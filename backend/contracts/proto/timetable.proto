@@ -49,6 +49,7 @@ message ConcreteLesson {
     string lesson_uuid = 7;
     repeated string marks = 8; //5- итд
     uint32 period = 9;
+    Day day = 10;
 }
 
 message ShortConcreteLesson {
@@ -57,6 +58,7 @@ message ShortConcreteLesson {
     uint32 period = 3;
     AbstractLesson abstract_lesson = 4;
     bool is_homework_due = 5;
+    Day day = 6;
 }
 
 message ConcreteLessonShortEntry {

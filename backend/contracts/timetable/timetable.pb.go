@@ -307,6 +307,7 @@ type ConcreteLesson struct {
 	LessonUuid                 string                 `protobuf:"bytes,7,opt,name=lesson_uuid,json=lessonUuid,proto3" json:"lesson_uuid,omitempty"`
 	Marks                      []string               `protobuf:"bytes,8,rep,name=marks,proto3" json:"marks,omitempty"` //5- итд
 	Period                     uint32                 `protobuf:"varint,9,opt,name=period,proto3" json:"period,omitempty"`
+	Day                        Day                    `protobuf:"varint,10,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -404,6 +405,13 @@ func (x *ConcreteLesson) GetPeriod() uint32 {
 	return 0
 }
 
+func (x *ConcreteLesson) GetDay() Day {
+	if x != nil {
+		return x.Day
+	}
+	return Day_UNSPECIFIED
+}
+
 type ShortConcreteLesson struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	WeekNumber     uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
@@ -411,6 +419,7 @@ type ShortConcreteLesson struct {
 	Period         uint32                 `protobuf:"varint,3,opt,name=period,proto3" json:"period,omitempty"`
 	AbstractLesson *AbstractLesson        `protobuf:"bytes,4,opt,name=abstract_lesson,json=abstractLesson,proto3" json:"abstract_lesson,omitempty"`
 	IsHomeworkDue  bool                   `protobuf:"varint,5,opt,name=is_homework_due,json=isHomeworkDue,proto3" json:"is_homework_due,omitempty"`
+	Day            Day                    `protobuf:"varint,6,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -478,6 +487,13 @@ func (x *ShortConcreteLesson) GetIsHomeworkDue() bool {
 		return x.IsHomeworkDue
 	}
 	return false
+}
+
+func (x *ShortConcreteLesson) GetDay() Day {
+	if x != nil {
+		return x.Day
+	}
+	return Day_UNSPECIFIED
 }
 
 type ConcreteLessonShortEntry struct {
@@ -1812,7 +1828,7 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\tTimetable\x18\x01 \x01(\v2#.timetable.ConcreteLessonShortEntryR\tTimetable\"8\n" +
 	"\x0eAbstractLesson\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x88\x03\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\xaa\x03\n" +
 	"\x0eConcreteLesson\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
 	"weekNumber\x12\x12\n" +
@@ -1825,15 +1841,18 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\vlesson_uuid\x18\a \x01(\tR\n" +
 	"lessonUuid\x12\x14\n" +
 	"\x05marks\x18\b \x03(\tR\x05marks\x12\x16\n" +
-	"\x06period\x18\t \x01(\rR\x06periodB\x18\n" +
-	"\x16_homework_text_get_url\"\xce\x01\n" +
+	"\x06period\x18\t \x01(\rR\x06period\x12 \n" +
+	"\x03day\x18\n" +
+	" \x01(\x0e2\x0e.timetable.DayR\x03dayB\x18\n" +
+	"\x16_homework_text_get_url\"\xf0\x01\n" +
 	"\x13ShortConcreteLesson\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
 	"weekNumber\x12\x12\n" +
 	"\x04year\x18\x02 \x01(\rR\x04year\x12\x16\n" +
 	"\x06period\x18\x03 \x01(\rR\x06period\x12B\n" +
 	"\x0fabstract_lesson\x18\x04 \x01(\v2\x19.timetable.AbstractLessonR\x0eabstractLesson\x12&\n" +
-	"\x0fis_homework_due\x18\x05 \x01(\bR\risHomeworkDue\"v\n" +
+	"\x0fis_homework_due\x18\x05 \x01(\bR\risHomeworkDue\x12 \n" +
+	"\x03day\x18\x06 \x01(\x0e2\x0e.timetable.DayR\x03day\"v\n" +
 	"\x18ConcreteLessonShortEntry\x12 \n" +
 	"\x03day\x18\x01 \x01(\x0e2\x0e.timetable.DayR\x03day\x128\n" +
 	"\alessons\x18\x02 \x03(\v2\x1e.timetable.ShortConcreteLessonR\alessons\"Z\n" +
@@ -2006,56 +2025,58 @@ var file_proto_timetable_proto_depIdxs = []int32{
 	0,  // 0: timetable.GetTimetableRequest.day:type_name -> timetable.Day
 	7,  // 1: timetable.GetTimetableResponse.Timetable:type_name -> timetable.ConcreteLessonShortEntry
 	4,  // 2: timetable.ConcreteLesson.lesson_info:type_name -> timetable.AbstractLesson
-	4,  // 3: timetable.ShortConcreteLesson.abstract_lesson:type_name -> timetable.AbstractLesson
-	0,  // 4: timetable.ConcreteLessonShortEntry.day:type_name -> timetable.Day
-	6,  // 5: timetable.ConcreteLessonShortEntry.lessons:type_name -> timetable.ShortConcreteLesson
-	7,  // 6: timetable.ListTimetableResponse.Timetable:type_name -> timetable.ConcreteLessonShortEntry
-	33, // 7: timetable.Period.start:type_name -> google.protobuf.Timestamp
-	33, // 8: timetable.Period.end:type_name -> google.protobuf.Timestamp
-	10, // 9: timetable.GetPeriodsResponse.periods:type_name -> timetable.Period
-	10, // 10: timetable.PatchPeriodsRequest.periods:type_name -> timetable.Period
-	4,  // 11: timetable.GetAbstractLessonResponse.lesson:type_name -> timetable.AbstractLesson
-	4,  // 12: timetable.ListAbstractLessonsResponse.abstract_lessons:type_name -> timetable.AbstractLesson
-	5,  // 13: timetable.GetConcreteLessonResponse.lesson:type_name -> timetable.ConcreteLesson
-	1,  // 14: timetable.TimetableService.ListTimetable:input_type -> timetable.ListTimetablesRequest
-	2,  // 15: timetable.TimetableService.GetTimetable:input_type -> timetable.GetTimetableRequest
-	9,  // 16: timetable.TimetableService.CreateAbstractLesson:input_type -> timetable.CreateAbstractLessonRequest
-	14, // 17: timetable.TimetableService.DeleteAbstractLesson:input_type -> timetable.DeleteAbstractLessonRequest
-	15, // 18: timetable.TimetableService.GetAbstractLesson:input_type -> timetable.GetAbstractLessonRequest
-	17, // 19: timetable.TimetableService.PatchAbstractLesson:input_type -> timetable.PatchAbstractLessonRequest
-	18, // 20: timetable.TimetableService.ListAbstractLessons:input_type -> timetable.ListAbstractLessonsRequest
-	20, // 21: timetable.TimetableService.CreateConcreteLesson:input_type -> timetable.CreateConcreteLessonRequest
-	21, // 22: timetable.TimetableService.DeleteConcreteLesson:input_type -> timetable.DeleteConcreteLessonRequest
-	22, // 23: timetable.TimetableService.PatchConcreteLesson:input_type -> timetable.PatchConcreteLessonRequest
-	23, // 24: timetable.TimetableService.GetConcreteLesson:input_type -> timetable.GetConcreteLessonRequest
-	11, // 25: timetable.TimetableService.GetPeriods:input_type -> timetable.GetPeriodRequest
-	13, // 26: timetable.TimetableService.PatchPeriods:input_type -> timetable.PatchPeriodsRequest
-	25, // 27: timetable.TimetableService.HomeworkBodyPUTUrl:input_type -> timetable.HomeworkBodyPUTUrlRequest
-	31, // 28: timetable.TimetableService.HomeworkBodyGETUrl:input_type -> timetable.HomeworkBodyGETUrlRequest
-	27, // 29: timetable.TimetableService.HomeworkAttachmentPUTUrl:input_type -> timetable.HomeworkAttachmentPUTUrlRequest
-	29, // 30: timetable.TimetableService.HomeworkAttachmentGETUrl:input_type -> timetable.HomeworkAttachmentGETUrlsRequest
-	8,  // 31: timetable.TimetableService.ListTimetable:output_type -> timetable.ListTimetableResponse
-	3,  // 32: timetable.TimetableService.GetTimetable:output_type -> timetable.GetTimetableResponse
-	34, // 33: timetable.TimetableService.CreateAbstractLesson:output_type -> google.protobuf.Empty
-	34, // 34: timetable.TimetableService.DeleteAbstractLesson:output_type -> google.protobuf.Empty
-	16, // 35: timetable.TimetableService.GetAbstractLesson:output_type -> timetable.GetAbstractLessonResponse
-	34, // 36: timetable.TimetableService.PatchAbstractLesson:output_type -> google.protobuf.Empty
-	19, // 37: timetable.TimetableService.ListAbstractLessons:output_type -> timetable.ListAbstractLessonsResponse
-	34, // 38: timetable.TimetableService.CreateConcreteLesson:output_type -> google.protobuf.Empty
-	34, // 39: timetable.TimetableService.DeleteConcreteLesson:output_type -> google.protobuf.Empty
-	34, // 40: timetable.TimetableService.PatchConcreteLesson:output_type -> google.protobuf.Empty
-	24, // 41: timetable.TimetableService.GetConcreteLesson:output_type -> timetable.GetConcreteLessonResponse
-	12, // 42: timetable.TimetableService.GetPeriods:output_type -> timetable.GetPeriodsResponse
-	34, // 43: timetable.TimetableService.PatchPeriods:output_type -> google.protobuf.Empty
-	26, // 44: timetable.TimetableService.HomeworkBodyPUTUrl:output_type -> timetable.HomeworkBodyPUTUrlResponse
-	32, // 45: timetable.TimetableService.HomeworkBodyGETUrl:output_type -> timetable.HomeworkBodyGETUrlResponse
-	28, // 46: timetable.TimetableService.HomeworkAttachmentPUTUrl:output_type -> timetable.HomeworkAttachmentPUTUrlResponse
-	30, // 47: timetable.TimetableService.HomeworkAttachmentGETUrl:output_type -> timetable.HomeworkAttachmentGETUrlsResponse
-	31, // [31:48] is the sub-list for method output_type
-	14, // [14:31] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	0,  // 3: timetable.ConcreteLesson.day:type_name -> timetable.Day
+	4,  // 4: timetable.ShortConcreteLesson.abstract_lesson:type_name -> timetable.AbstractLesson
+	0,  // 5: timetable.ShortConcreteLesson.day:type_name -> timetable.Day
+	0,  // 6: timetable.ConcreteLessonShortEntry.day:type_name -> timetable.Day
+	6,  // 7: timetable.ConcreteLessonShortEntry.lessons:type_name -> timetable.ShortConcreteLesson
+	7,  // 8: timetable.ListTimetableResponse.Timetable:type_name -> timetable.ConcreteLessonShortEntry
+	33, // 9: timetable.Period.start:type_name -> google.protobuf.Timestamp
+	33, // 10: timetable.Period.end:type_name -> google.protobuf.Timestamp
+	10, // 11: timetable.GetPeriodsResponse.periods:type_name -> timetable.Period
+	10, // 12: timetable.PatchPeriodsRequest.periods:type_name -> timetable.Period
+	4,  // 13: timetable.GetAbstractLessonResponse.lesson:type_name -> timetable.AbstractLesson
+	4,  // 14: timetable.ListAbstractLessonsResponse.abstract_lessons:type_name -> timetable.AbstractLesson
+	5,  // 15: timetable.GetConcreteLessonResponse.lesson:type_name -> timetable.ConcreteLesson
+	1,  // 16: timetable.TimetableService.ListTimetable:input_type -> timetable.ListTimetablesRequest
+	2,  // 17: timetable.TimetableService.GetTimetable:input_type -> timetable.GetTimetableRequest
+	9,  // 18: timetable.TimetableService.CreateAbstractLesson:input_type -> timetable.CreateAbstractLessonRequest
+	14, // 19: timetable.TimetableService.DeleteAbstractLesson:input_type -> timetable.DeleteAbstractLessonRequest
+	15, // 20: timetable.TimetableService.GetAbstractLesson:input_type -> timetable.GetAbstractLessonRequest
+	17, // 21: timetable.TimetableService.PatchAbstractLesson:input_type -> timetable.PatchAbstractLessonRequest
+	18, // 22: timetable.TimetableService.ListAbstractLessons:input_type -> timetable.ListAbstractLessonsRequest
+	20, // 23: timetable.TimetableService.CreateConcreteLesson:input_type -> timetable.CreateConcreteLessonRequest
+	21, // 24: timetable.TimetableService.DeleteConcreteLesson:input_type -> timetable.DeleteConcreteLessonRequest
+	22, // 25: timetable.TimetableService.PatchConcreteLesson:input_type -> timetable.PatchConcreteLessonRequest
+	23, // 26: timetable.TimetableService.GetConcreteLesson:input_type -> timetable.GetConcreteLessonRequest
+	11, // 27: timetable.TimetableService.GetPeriods:input_type -> timetable.GetPeriodRequest
+	13, // 28: timetable.TimetableService.PatchPeriods:input_type -> timetable.PatchPeriodsRequest
+	25, // 29: timetable.TimetableService.HomeworkBodyPUTUrl:input_type -> timetable.HomeworkBodyPUTUrlRequest
+	31, // 30: timetable.TimetableService.HomeworkBodyGETUrl:input_type -> timetable.HomeworkBodyGETUrlRequest
+	27, // 31: timetable.TimetableService.HomeworkAttachmentPUTUrl:input_type -> timetable.HomeworkAttachmentPUTUrlRequest
+	29, // 32: timetable.TimetableService.HomeworkAttachmentGETUrl:input_type -> timetable.HomeworkAttachmentGETUrlsRequest
+	8,  // 33: timetable.TimetableService.ListTimetable:output_type -> timetable.ListTimetableResponse
+	3,  // 34: timetable.TimetableService.GetTimetable:output_type -> timetable.GetTimetableResponse
+	34, // 35: timetable.TimetableService.CreateAbstractLesson:output_type -> google.protobuf.Empty
+	34, // 36: timetable.TimetableService.DeleteAbstractLesson:output_type -> google.protobuf.Empty
+	16, // 37: timetable.TimetableService.GetAbstractLesson:output_type -> timetable.GetAbstractLessonResponse
+	34, // 38: timetable.TimetableService.PatchAbstractLesson:output_type -> google.protobuf.Empty
+	19, // 39: timetable.TimetableService.ListAbstractLessons:output_type -> timetable.ListAbstractLessonsResponse
+	34, // 40: timetable.TimetableService.CreateConcreteLesson:output_type -> google.protobuf.Empty
+	34, // 41: timetable.TimetableService.DeleteConcreteLesson:output_type -> google.protobuf.Empty
+	34, // 42: timetable.TimetableService.PatchConcreteLesson:output_type -> google.protobuf.Empty
+	24, // 43: timetable.TimetableService.GetConcreteLesson:output_type -> timetable.GetConcreteLessonResponse
+	12, // 44: timetable.TimetableService.GetPeriods:output_type -> timetable.GetPeriodsResponse
+	34, // 45: timetable.TimetableService.PatchPeriods:output_type -> google.protobuf.Empty
+	26, // 46: timetable.TimetableService.HomeworkBodyPUTUrl:output_type -> timetable.HomeworkBodyPUTUrlResponse
+	32, // 47: timetable.TimetableService.HomeworkBodyGETUrl:output_type -> timetable.HomeworkBodyGETUrlResponse
+	28, // 48: timetable.TimetableService.HomeworkAttachmentPUTUrl:output_type -> timetable.HomeworkAttachmentPUTUrlResponse
+	30, // 49: timetable.TimetableService.HomeworkAttachmentGETUrl:output_type -> timetable.HomeworkAttachmentGETUrlsResponse
+	33, // [33:50] is the sub-list for method output_type
+	16, // [16:33] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_proto_timetable_proto_init() }
