@@ -1,3 +1,14 @@
+CREATE TYPE weekday AS ENUM (
+    'Monday', 
+    'Tuesday', 
+    'Wednesday', 
+    'Thursday', 
+    'Friday', 
+    'Saturday', 
+    'Sunday'
+);
+
+
 -- Create "abstract_lessons" table
 CREATE TABLE "abstract_lessons" (
   "uuid" uuid              PRIMARY KEY,
@@ -18,17 +29,18 @@ CREATE TABLE "concrete_lessons" (
 
   "homework_body_key" character varying GENERATED ALWAYS AS ('orgs/ETSEvilCorp/timetable/homework/body/' || "concrete_uuid"::text) STORED,
 
-  "start_time"   TIMESTAMPTZ NULL,
-  "end_time"     TIMESTAMPTZ NULL,
-  "period"       SMALLINT NULL,
+  "week_number"  SMALLINT NOT NULL,
+  "day_of_week"  weekday NOT NULL
+  "period"       SMALLINT NOT NULL,
+  "year"         SMALLINT NOT NULL,
 
   "deleted_at" TIMESTAMPTZ NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY ("concrete_uuid")
 );
-CREATE INDEX idx_start_group_uuid   ON concrete_lessons ("start_time","group_uuid") WHERE deleted_at IS NULL;
-CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("start_time","teacher_uuid") WHERE deleted_at IS NULL;
+CREATE INDEX idx_start_group_uuid   ON concrete_lessons ("week_number","group_uuid") WHERE deleted_at IS NULL;
+CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("weel_number","teacher_uuid") WHERE deleted_at IS NULL;
 
 -- Create "homework_attachment_keys"
 CREATE TABLE "homework_attachments" (

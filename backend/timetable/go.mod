@@ -21,7 +21,7 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.1.26 // indirect
+	github.com/Egot3/supel/backend/contracts v0.1.28 // indirect
 	github.com/aws/aws-sdk-go-v2 v1.41.7 // indirect
 	github.com/aws/aws-sdk-go-v2/credentials v1.19.16 // indirect
 	github.com/aws/aws-sdk-go-v2/feature/ec2/imds v1.18.23 // indirect

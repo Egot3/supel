@@ -37,11 +37,14 @@ func (r *bunConcreteLessonRepository) PatchConcreteLesson(ctx context.Context, p
 	if patchCl.GroupUUID != nil {
 		query = query.Set("group_uuid = ?", patchCl.GroupUUID)
 	}
-	if patchCl.StartTime != nil {
-		query = query.Set("start_time = ?", patchCl.StartTime)
+	if patchCl.Year != nil {
+		query = query.Set("year = ?", patchCl.Year)
 	}
-	if patchCl.EndTime != nil {
-		query = query.Set("end_time = ?", patchCl.EndTime)
+	if patchCl.WeekNumber != nil {
+		query = query.Set("week_number = ?", patchCl.WeekNumber)
+	}
+	if patchCl.DayOfWeek != nil {
+		query = query.Set("day_of_week = ?", patchCl.DayOfWeek)
 	}
 
 	res, err := query.Exec(ctx)

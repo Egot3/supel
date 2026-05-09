@@ -11,24 +11,18 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 	"google.golang.org/protobuf/types/known/emptypb"
-	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
 func (s *TimetableServer) CreateConcreteLesson(ctx context.Context, req *ttpb.CreateConcreteLessonRequest) (*emptypb.Empty, error) {
 	log.Println("Got request to create concrete Lesson")
-
-	period := uint16(req.Period) //ну кто бы мог подумать
-	start := req.Start.AsTime()
-	end := req.End.AsTime()
-
 	err := s.concreteLessonRepository.CreateConcreteLesson(ctx, models.ConcreteLesson{
 		TeacherUUID:  req.GetTeacherUuid(),
 		GroupUUID:    req.GetGroupUuid(),
 		AbstractUUID: req.GetAbstractLessonUuid(),
 
-		StartTime: &start,
-		EndTime:   &end,
-		Period:    &period,
+		Period:     uint16(req.Period),
+		WeekNumber: uint16(req.WeekNumber),
+		Year:       uint16(req.Year),
 	})
 	if err != nil {
 		log.Printf("Couldn't create concrete lesson: %v", err.Error())
@@ -90,15 +84,9 @@ func (s *TimetableServer) GetConcreteLesson(ctx context.Context, req *ttpb.GetCo
 		LessonUuid:                 concreteLesson.ConcreteUUID,
 		HomeworkTextGetUrl:         bodyURL,
 		HomeworkAttachmentsGetUrls: attachmentUrls,
-	}
-	if concreteLesson.StartTime != nil {
-		lesson.Start = timestamppb.New(*concreteLesson.StartTime)
-	}
-	if concreteLesson.EndTime != nil {
-		lesson.End = timestamppb.New(*concreteLesson.EndTime)
-	}
-	if concreteLesson.Period != nil {
-		lesson.Period = uint32(*concreteLesson.Period)
+		Year:                       uint32(concreteLesson.Year),
+		WeekNumber:                 uint32(concreteLesson.WeekNumber),
+		Day:                        ttpb.Day(concreteLesson.DayOfWeek),
 	}
 	return &ttpb.GetConcreteLessonResponse{
 		Lesson: lesson,
@@ -109,15 +97,17 @@ func (s *TimetableServer) PatchConcreteLesson(ctx context.Context, req *ttpb.Pat
 	log.Println("Got request to patch concrete Lesson")
 	//RBAC here
 
-	start := req.Start.AsTime()
-	end := req.End.AsTime()
+	period := uint16(req.Period)
+	year := uint16(req.Year)
+	weekNumber := uint16(req.WeekNumber)
 	err := s.concreteLessonRepository.PatchConcreteLesson(ctx, models.PatchConcreteLesson{
 		ConcreteUUID: req.ConcreteLessonUuid,
 		AbstractUUID: req.AbstractLessonUuid,
 		TeacherUUID:  req.TeacherUuid,
 		GroupUUID:    req.GroupUuid,
-		StartTime:    &start,
-		EndTime:      &end,
+		Period:       &period,
+		Year:         &year,
+		WeekNumber:   &weekNumber,
 	})
 	if err != nil {
 		log.Printf("couldn't patch concrete lesson: %v", err.Error())
