@@ -648,6 +648,8 @@ func local_request_TimetableService_HomeworkBodyGETUrl_0(ctx context.Context, ma
 	return msg, metadata, err
 }
 
+var filter_TimetableService_HomeworkAttachmentPUTUrl_0 = &utilities.DoubleArray{Encoding: map[string]int{"concrete_lesson_uuid": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq HomeworkAttachmentPUTUrlRequest
@@ -664,6 +666,12 @@ func request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Context, ma
 	protoReq.ConcreteLessonUuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_HomeworkAttachmentPUTUrl_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.HomeworkAttachmentPUTUrl(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -682,6 +690,12 @@ func local_request_TimetableService_HomeworkAttachmentPUTUrl_0(ctx context.Conte
 	protoReq.ConcreteLessonUuid, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "concrete_lesson_uuid", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_HomeworkAttachmentPUTUrl_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := server.HomeworkAttachmentPUTUrl(ctx, &protoReq)
 	return msg, metadata, err

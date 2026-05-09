@@ -1507,6 +1507,8 @@ func (x *HomeworkBodyPUTUrlResponse) GetHomeworkBodyUrl() string {
 type HomeworkAttachmentPUTUrlRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
+	Mime               string                 `protobuf:"bytes,2,opt,name=mime,proto3" json:"mime,omitempty"`
+	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1544,6 +1546,20 @@ func (*HomeworkAttachmentPUTUrlRequest) Descriptor() ([]byte, []int) {
 func (x *HomeworkAttachmentPUTUrlRequest) GetConcreteLessonUuid() string {
 	if x != nil {
 		return x.ConcreteLessonUuid
+	}
+	return ""
+}
+
+func (x *HomeworkAttachmentPUTUrlRequest) GetMime() string {
+	if x != nil {
+		return x.Mime
+	}
+	return ""
+}
+
+func (x *HomeworkAttachmentPUTUrlRequest) GetName() string {
+	if x != nil {
+		return x.Name
 	}
 	return ""
 }
@@ -1880,9 +1896,11 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x19HomeworkBodyPUTUrlRequest\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"H\n" +
 	"\x1aHomeworkBodyPUTUrlResponse\x12*\n" +
-	"\x11homework_body_url\x18\x01 \x01(\tR\x0fhomeworkBodyUrl\"S\n" +
+	"\x11homework_body_url\x18\x01 \x01(\tR\x0fhomeworkBodyUrl\"{\n" +
 	"\x1fHomeworkAttachmentPUTUrlRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\\\n" +
+	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\x12\x12\n" +
+	"\x04mime\x18\x02 \x01(\tR\x04mime\x12\x12\n" +
+	"\x04name\x18\x03 \x01(\tR\x04name\"\\\n" +
 	" HomeworkAttachmentPUTUrlResponse\x128\n" +
 	"\x18homework_attachment_urls\x18\x01 \x03(\tR\x16homeworkAttachmentUrls\"S\n" +
 	"\x1fHomeworkAttachmentGETUrlRequest\x120\n" +
