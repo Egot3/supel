@@ -40,8 +40,8 @@ message AbstractLesson {
 }
 
 message ConcreteLesson {
-    google.protobuf.Timestamp start = 1;
-    google.protobuf.Timestamp end = 2;
+    uint32 week_number = 1;
+    uint32 year = 2;
     AbstractLesson lesson_info = 3;
     string teacher_uuid = 4;
     optional string homework_text_get_url= 5;
@@ -52,9 +52,9 @@ message ConcreteLesson {
 }
 
 message ShortConcreteLesson {
-    optional google.protobuf.Timestamp start = 1;
-    optional google.protobuf.Timestamp end = 2;
-    optional uint32 period = 3;
+    uint32 week_number = 1;
+    uint32 year = 2;
+    uint32 period = 3;
     AbstractLesson abstract_lesson = 4;
     bool is_homework_due = 5;
 }
@@ -123,8 +123,8 @@ message ListAbstractLessonsResponse {
 message CreateConcreteLessonRequest {
     string abstract_lesson_uuid = 1;
     string teacher_uuid = 2;
-    google.protobuf.Timestamp start = 3;
-    google.protobuf.Timestamp end = 4;
+    uint32 week_number = 3;
+    uint32 year = 4;
     string group_uuid = 5;
     uint32 period = 6;
 }
@@ -134,8 +134,9 @@ message DeleteConcreteLessonRequest {
 }
 
 message PatchConcreteLessonRequest {
-    optional google.protobuf.Timestamp start = 1;
-    optional google.protobuf.Timestamp end = 2;
+    uint32 week_number = 1;
+    uint32 year = 2;
+    uint32 period = 7;
     optional string abstract_lesson_uuid = 3;
     optional string teacher_uuid = 4;
     string concrete_lesson_uuid = 5;
