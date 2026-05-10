@@ -6,6 +6,7 @@ import (
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/database/repositories"
 	storage "github.com/Egot3/supel/backend/timetable/internal/s3"
+	"github.com/samber/do/v2"
 	"google.golang.org/grpc/metadata"
 )
 
@@ -27,11 +28,28 @@ func UserFromContext(ctx context.Context) (userID string, role string, ok bool) 
 	return userID, role, !(len(userID) == 0 && len(role) == 0)
 }
 
-func NewTimetableService(storageService storage.StorageService, abstractLessonRepository repositories.AbstractLessonRepository, concreteLessonRepository repositories.ConcreteLessonRepository, homeworkAttachmentRepository repositories.HomeworkAttachmentRepository) *TimetableServer {
+func NewTimetableService(i do.Injector) (*TimetableServer, error) {
+	storageService, err := do.Invoke[storage.StorageService](i)
+	if err != nil {
+		return nil, err
+	}
+	abstractLessonRepository, err := do.Invoke[repositories.AbstractLessonRepository](i)
+	if err != nil {
+		return nil, err
+	}
+	concreteLessonRepository, err := do.Invoke[repositories.ConcreteLessonRepository](i)
+	if err != nil {
+		return nil, err
+	}
+	homeworkAttachmentRepository, err := do.Invoke[repositories.HomeworkAttachmentRepository](i)
+	if err != nil {
+		return nil, err
+	}
+
 	return &TimetableServer{
 		storageService:               storageService,
 		abstractLessonRepository:     abstractLessonRepository,
 		concreteLessonRepository:     concreteLessonRepository,
 		homeworkAttachmentRepository: homeworkAttachmentRepository,
-	}
+	}, nil
 }

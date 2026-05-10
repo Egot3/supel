@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/Egot3/supel/backend/timetable/internal/models"
+	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 )
 
@@ -11,8 +12,12 @@ type bunHomeworkAttachmentRepository struct {
 	db *bun.DB
 }
 
-func NewHomeworkAttachmentRepository(db *bun.DB) HomeworkAttachmentRepository {
-	return &bunHomeworkAttachmentRepository{db: db}
+func NewHomeworkAttachmentRepository(i do.Injector) (HomeworkAttachmentRepository, error) {
+	db, err := do.Invoke[*bun.DB](i)
+	if err != nil {
+		return nil, err
+	}
+	return &bunHomeworkAttachmentRepository{db: db}, nil
 }
 
 func (r *bunHomeworkAttachmentRepository) CreateHomeworkAttachment(ctx context.Context, hwa models.HomeworkAttachment) (*models.HomeworkAttachment, error) {

@@ -6,6 +6,7 @@ import (
 	"errors"
 
 	"github.com/Egot3/supel/backend/timetable/internal/models"
+	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 )
 
@@ -13,8 +14,13 @@ type bunAbstractLessonRepository struct {
 	db *bun.DB
 }
 
-func NewAbstractLessonRepository(db *bun.DB) AbstractLessonRepository {
-	return &bunAbstractLessonRepository{db: db}
+func NewAbstractLessonRepository(i do.Injector) (AbstractLessonRepository, error) {
+	db, err := do.Invoke[*bun.DB](i)
+	if err != nil {
+		return nil, err
+	}
+
+	return &bunAbstractLessonRepository{db: db}, err
 }
 
 func (r *bunAbstractLessonRepository) CreateAbstractLesson(ctx context.Context, name string) error {

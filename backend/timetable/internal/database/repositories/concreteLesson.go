@@ -5,6 +5,7 @@ import (
 	"database/sql"
 
 	"github.com/Egot3/supel/backend/timetable/internal/models"
+	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 )
 
@@ -12,8 +13,13 @@ type bunConcreteLessonRepository struct {
 	db *bun.DB
 }
 
-func NewConcreteLessonRepository(db *bun.DB) ConcreteLessonRepository {
-	return &bunConcreteLessonRepository{db: db}
+func NewConcreteLessonRepository(i do.Injector) (ConcreteLessonRepository, error) {
+	db, err := do.Invoke[*bun.DB](i)
+	if err != nil {
+		return nil, err
+	}
+
+	return &bunConcreteLessonRepository{db: db}, nil
 }
 
 func (r *bunConcreteLessonRepository) CreateConcreteLesson(ctx context.Context, cl models.ConcreteLesson) error {

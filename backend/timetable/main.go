@@ -2,17 +2,16 @@ package main
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"net"
-	"os"
 
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/database"
 	"github.com/Egot3/supel/backend/timetable/internal/database/repositories"
 	storage "github.com/Egot3/supel/backend/timetable/internal/s3"
 	"github.com/Egot3/supel/backend/timetable/internal/server"
-	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/samber/do/v2"
+	"github.com/uptrace/bun"
 
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/health"
@@ -20,9 +19,13 @@ import (
 )
 
 func main() {
-	database.InitDB()
+	injector := do.New()
+	do.Provide[*bun.DB](injector, database.InitDB)
+
+	db, err := do.Invoke[*bun.DB](injector)
+
 	ctx := context.Background()
-	if err := database.RunMigrations(ctx, database.DB); err != nil {
+	if err := database.RunMigrations(ctx, db); err != nil {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
 	}
 
@@ -31,43 +34,24 @@ func main() {
 	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
 	healthServer.SetServingStatus("timetable", grpc_health_v1.HealthCheckResponse_SERVING)
 
-	s3Config := storage.Config{
-		Endpoint: fmt.Sprintf("http://%v:%v", os.Getenv("STORAGE_HOST"),
-			os.Getenv("STORAGE_PORT")),
-		AccessKey: os.Getenv("STORAGE_ACCESS_KEY"),
-		SecretKey: os.Getenv("STORAGE_SECRET_KEY"),
-		Bucket:    os.Getenv("STORAGE_TIMETABLE_BUCKET"),
-	}
+	do.ProvideNamed(injector, "s3config.unsigned", storage.GenerateUnsignedS3Config)
+	do.Provide(injector, storage.NewUnsignedClient)
 
-	client, err := storage.NewClient(ctx, s3Config)
+	do.ProvideNamed(injector, "s3config.presigned", storage.GeneratePresignedS3Config)
+	do.Provide(injector, storage.NewPresignedClient)
+
+	do.Provide(injector, storage.NewStorageService)
+
+	do.Provide(injector, repositories.NewAbstractLessonRepository)
+	do.Provide(injector, repositories.NewConcreteLessonRepository)
+	do.Provide(injector, repositories.NewHomeworkAttachmentRepository)
+
+	do.Provide(injector, server.NewTimetableService)
+
+	TimetableServer, err := do.Invoke[*server.TimetableServer](injector)
 	if err != nil {
-		log.Fatalf("Failed to create storage client: %v", err)
+		log.Fatalf("Unable to run server: %v", err)
 	}
-
-	s3ConfigPresigned := storage.Config{
-		Endpoint: fmt.Sprintf("http://%v:%v", os.Getenv("STORAGE_PUBLIC_HOST"),
-			os.Getenv("STORAGE_PUBLIC_PORT")),
-		AccessKey: os.Getenv("STORAGE_ACCESS_KEY"),
-		SecretKey: os.Getenv("STORAGE_SECRET_KEY"),
-		Bucket:    os.Getenv("STORAGE_TIMETABLE_BUCKET"),
-	}
-
-	presignedClientClient, err := storage.NewClient(ctx, s3ConfigPresigned)
-	if err != nil {
-		log.Fatalf("Failed to create signed storage client: %v", err)
-	}
-	presignedClient := s3.NewPresignClient(presignedClientClient)
-
-	s3Service := storage.NewStorageService(client, presignedClient, s3Config.Bucket)
-	if err := s3Service.EnsureBuckets(ctx, []string{os.Getenv("STORAGE_TIMETABLE_BUCKET")}); err != nil {
-		log.Fatal(err)
-	}
-
-	abstractRepo := repositories.NewAbstractLessonRepository(database.DB)
-	concreteRepo := repositories.NewConcreteLessonRepository(database.DB)
-	homeworkAttachmentRepo := repositories.NewHomeworkAttachmentRepository(database.DB)
-
-	TimetableServer := server.NewTimetableService(*s3Service, abstractRepo, concreteRepo, homeworkAttachmentRepo)
 	ttpb.RegisterTimetableServiceServer(grpcServer, TimetableServer)
 
 	port := ":50051"

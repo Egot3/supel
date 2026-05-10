@@ -6,12 +6,18 @@ import (
 
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"github.com/samber/do/v2"
 )
 
-type StorageService struct {
+type s3StorageService struct {
 	client          *s3.Client
 	presignedClient *s3.PresignClient
 	bucket          string
+}
+type StorageService interface {
+	GETurl(ctx context.Context, key string) (string, error)
+	PUTurl(ctx context.Context, key, mime string) (string, error)
+	EnsureBuckets(ctx context.Context, buckets []string) error
 }
 
 // func NewS3Client(endpoint, accessKey, secretKey string) (*s3.Client, error) {
@@ -31,15 +37,28 @@ type StorageService struct {
 // 	}), nil
 // }
 
-func NewStorageService(client *s3.Client, presignedClient *s3.PresignClient, bucket string) *StorageService {
-	return &StorageService{
+func NewStorageService(i do.Injector) (StorageService, error) {
+	cfg, err := do.InvokeNamed[Config](i, "s3config.unsigned")
+	if err != nil {
+		return nil, err
+	}
+	client, err := do.Invoke[*s3.Client](i)
+	if err != nil {
+		return nil, err
+	}
+	presignedClient, err := do.Invoke[*s3.PresignClient](i)
+	if err != nil {
+		return nil, err
+	}
+
+	return &s3StorageService{
 		client:          client,
 		presignedClient: presignedClient,
-		bucket:          bucket,
-	}
+		bucket:          cfg.Bucket,
+	}, nil
 }
 
-func (s *StorageService) GETurl(ctx context.Context, key string) (string, error) {
+func (s *s3StorageService) GETurl(ctx context.Context, key string) (string, error) {
 	presignedUrl, err := s.presignedClient.PresignGetObject(ctx,
 		&s3.GetObjectInput{
 			Bucket: aws.String(s.bucket),
@@ -54,7 +73,7 @@ func (s *StorageService) GETurl(ctx context.Context, key string) (string, error)
 	return presignedUrl.URL, nil
 }
 
-func (s *StorageService) PUTurl(ctx context.Context, key, mime string) (string, error) {
+func (s *s3StorageService) PUTurl(ctx context.Context, key, mime string) (string, error) {
 	presignedUrl, err := s.presignedClient.PresignPutObject(ctx,
 		&s3.PutObjectInput{
 			Bucket:      aws.String(s.bucket),

@@ -11,7 +11,7 @@ import (
 	"github.com/aws/aws-sdk-go-v2/service/s3/types"
 )
 
-func (s *StorageService) EnsureBuckets(ctx context.Context, buckets []string) error {
+func (s *s3StorageService) EnsureBuckets(ctx context.Context, buckets []string) error {
 	for _, bucket := range buckets {
 		_, err := s.client.CreateBucket(ctx, &s3.CreateBucketInput{
 			Bucket: aws.String(bucket),
