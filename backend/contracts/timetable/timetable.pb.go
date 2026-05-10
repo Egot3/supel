@@ -1152,10 +1152,8 @@ type CreateConcreteLessonRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
 	AbstractLessonUuid string                 `protobuf:"bytes,1,opt,name=abstract_lesson_uuid,json=abstractLessonUuid,proto3" json:"abstract_lesson_uuid,omitempty"`
 	TeacherUuid        string                 `protobuf:"bytes,2,opt,name=teacher_uuid,json=teacherUuid,proto3" json:"teacher_uuid,omitempty"`
-	WeekNumber         uint32                 `protobuf:"varint,3,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	Year               uint32                 `protobuf:"varint,4,opt,name=year,proto3" json:"year,omitempty"`
 	GroupUuid          string                 `protobuf:"bytes,5,opt,name=group_uuid,json=groupUuid,proto3" json:"group_uuid,omitempty"`
-	Period             uint32                 `protobuf:"varint,6,opt,name=period,proto3" json:"period,omitempty"`
+	PeriodUuid         string                 `protobuf:"bytes,6,opt,name=period_uuid,json=periodUuid,proto3" json:"period_uuid,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1204,20 +1202,6 @@ func (x *CreateConcreteLessonRequest) GetTeacherUuid() string {
 	return ""
 }
 
-func (x *CreateConcreteLessonRequest) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *CreateConcreteLessonRequest) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
 func (x *CreateConcreteLessonRequest) GetGroupUuid() string {
 	if x != nil {
 		return x.GroupUuid
@@ -1225,11 +1209,11 @@ func (x *CreateConcreteLessonRequest) GetGroupUuid() string {
 	return ""
 }
 
-func (x *CreateConcreteLessonRequest) GetPeriod() uint32 {
+func (x *CreateConcreteLessonRequest) GetPeriodUuid() string {
 	if x != nil {
-		return x.Period
+		return x.PeriodUuid
 	}
-	return 0
+	return ""
 }
 
 type DeleteConcreteLessonRequest struct {
@@ -1278,9 +1262,6 @@ func (x *DeleteConcreteLessonRequest) GetConcreteLessonUuid() string {
 
 type PatchConcreteLessonRequest struct {
 	state              protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber         uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	Year               uint32                 `protobuf:"varint,2,opt,name=year,proto3" json:"year,omitempty"`
-	Period             uint32                 `protobuf:"varint,7,opt,name=period,proto3" json:"period,omitempty"`
 	AbstractLessonUuid *string                `protobuf:"bytes,3,opt,name=abstract_lesson_uuid,json=abstractLessonUuid,proto3,oneof" json:"abstract_lesson_uuid,omitempty"`
 	TeacherUuid        *string                `protobuf:"bytes,4,opt,name=teacher_uuid,json=teacherUuid,proto3,oneof" json:"teacher_uuid,omitempty"`
 	ConcreteLessonUuid string                 `protobuf:"bytes,5,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
@@ -1317,27 +1298,6 @@ func (x *PatchConcreteLessonRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use PatchConcreteLessonRequest.ProtoReflect.Descriptor instead.
 func (*PatchConcreteLessonRequest) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *PatchConcreteLessonRequest) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *PatchConcreteLessonRequest) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
-func (x *PatchConcreteLessonRequest) GetPeriod() uint32 {
-	if x != nil {
-		return x.Period
-	}
-	return 0
 }
 
 func (x *PatchConcreteLessonRequest) GetAbstractLessonUuid() string {
@@ -1909,23 +1869,17 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x04size\x18\x01 \x01(\x04R\x04size\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x04R\x04page\x12\x14\n" +
 	"\x05total\x18\x03 \x01(\x04R\x05total\x12D\n" +
-	"\x10abstract_lessons\x18\x04 \x03(\v2\x19.timetable.AbstractLessonR\x0fabstractLessons\"\xde\x01\n" +
+	"\x10abstract_lessons\x18\x04 \x03(\v2\x19.timetable.AbstractLessonR\x0fabstractLessons\"\xb2\x01\n" +
 	"\x1bCreateConcreteLessonRequest\x120\n" +
 	"\x14abstract_lesson_uuid\x18\x01 \x01(\tR\x12abstractLessonUuid\x12!\n" +
-	"\fteacher_uuid\x18\x02 \x01(\tR\vteacherUuid\x12\x1f\n" +
-	"\vweek_number\x18\x03 \x01(\rR\n" +
-	"weekNumber\x12\x12\n" +
-	"\x04year\x18\x04 \x01(\rR\x04year\x12\x1d\n" +
+	"\fteacher_uuid\x18\x02 \x01(\tR\vteacherUuid\x12\x1d\n" +
 	"\n" +
-	"group_uuid\x18\x05 \x01(\tR\tgroupUuid\x12\x16\n" +
-	"\x06period\x18\x06 \x01(\rR\x06period\"O\n" +
+	"group_uuid\x18\x05 \x01(\tR\tgroupUuid\x12\x1f\n" +
+	"\vperiod_uuid\x18\x06 \x01(\tR\n" +
+	"periodUuid\"O\n" +
 	"\x1bDeleteConcreteLessonRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xd7\x02\n" +
-	"\x1aPatchConcreteLessonRequest\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x12\n" +
-	"\x04year\x18\x02 \x01(\rR\x04year\x12\x16\n" +
-	"\x06period\x18\a \x01(\rR\x06period\x125\n" +
+	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\x8a\x02\n" +
+	"\x1aPatchConcreteLessonRequest\x125\n" +
 	"\x14abstract_lesson_uuid\x18\x03 \x01(\tH\x00R\x12abstractLessonUuid\x88\x01\x01\x12&\n" +
 	"\fteacher_uuid\x18\x04 \x01(\tH\x01R\vteacherUuid\x88\x01\x01\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x05 \x01(\tR\x12concreteLessonUuid\x12\"\n" +

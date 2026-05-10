@@ -127,10 +127,8 @@ message ListAbstractLessonsResponse {
 message CreateConcreteLessonRequest {
     string abstract_lesson_uuid = 1;
     string teacher_uuid = 2;
-    uint32 week_number = 3;
-    uint32 year = 4;
     string group_uuid = 5;
-    uint32 period = 6;
+    string period_uuid = 6;
 }
 
 message DeleteConcreteLessonRequest {
@@ -138,9 +136,6 @@ message DeleteConcreteLessonRequest {
 }
 
 message PatchConcreteLessonRequest {
-    uint32 week_number = 1;
-    uint32 year = 2;
-    uint32 period = 7;
     optional string abstract_lesson_uuid = 3;
     optional string teacher_uuid = 4;
     string concrete_lesson_uuid = 5;
