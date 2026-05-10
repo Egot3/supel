@@ -83,6 +83,8 @@ message Period {
 
 message GetPeriodRequest {
     uint32 week_number = 1;
+    Day day = 2;
+    uint32 year = 3;
 }
 
 message GetPeriodsResponse {
