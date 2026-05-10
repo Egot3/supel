@@ -4,7 +4,6 @@ import (
 	"context"
 	"time"
 
-	"github.com/Egot3/supel/backend/timetable/internal/types"
 	"github.com/uptrace/bun"
 )
 
@@ -15,18 +14,15 @@ type ConcreteLesson struct {
 	AbstractUUID string `bun:"abstract_uuid,notnull"`
 	TeacherUUID  string `bun:"teacher_uuid,notnull"`
 	GroupUUID    string `bun:"group_uuid,notnull"`
+	PeriodUUID   string `bun:"period_uuid"`
 
 	HomeworkBodyKey string `bun:"homework_body_key,type:character varying GENERATED ALWAYS AS ('orgs/ETSEvilCorp/timetable/homework/body/' || concrete_uuid) STORED,scanonly"`
-
-	WeekNumber uint16    `bun:"week_number"`
-	DayOfWeek  types.Day `bun:"day_of_week"`
-	Period     uint16    `bun:"period"`
-	Year       uint16    `bun:"year"`
 
 	CreatedAt time.Time  `bun:"created_at,notnull,default:now()"`
 	UpdatedAt time.Time  `bun:"updated_ay,notnull,default:now()"`
 	DeletedAt *time.Time `bun:"deleted_at,soft_delete"`
 
+	Period         Period                `bun:"rel:has-one,join:period_uuid=uuid"`
 	Attachments    []*HomeworkAttachment `bun:"rel:has-many,join:concrete_uuid=concrete_uuid"`
 	AbstractLesson AbstractLesson        `bun:"rel:belongs-to,join:abstract_uuid=uuid"`
 
@@ -49,8 +45,5 @@ type PatchConcreteLesson struct {
 	AbstractUUID *string
 	TeacherUUID  *string
 	GroupUUID    *string
-	Period       *uint16
-	DayOfWeek    *types.Day
-	Year         *uint16
-	WeekNumber   *uint16
+	PeriodUUID   *string
 }

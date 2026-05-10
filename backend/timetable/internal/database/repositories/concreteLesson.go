@@ -43,14 +43,8 @@ func (r *bunConcreteLessonRepository) PatchConcreteLesson(ctx context.Context, p
 	if patchCl.GroupUUID != nil {
 		query = query.Set("group_uuid = ?", patchCl.GroupUUID)
 	}
-	if patchCl.Year != nil {
-		query = query.Set("year = ?", patchCl.Year)
-	}
-	if patchCl.WeekNumber != nil {
-		query = query.Set("week_number = ?", patchCl.WeekNumber)
-	}
-	if patchCl.DayOfWeek != nil {
-		query = query.Set("day_of_week = ?", patchCl.DayOfWeek)
+	if patchCl.PeriodUUID != nil {
+		query = query.Set("period_uuid = ?", patchCl.PeriodUUID)
 	}
 
 	res, err := query.Exec(ctx)
@@ -66,7 +60,7 @@ func (r *bunConcreteLessonRepository) PatchConcreteLesson(ctx context.Context, p
 
 func (r *bunConcreteLessonRepository) GetConcreteLesson(ctx context.Context, uuid string) (*models.ConcreteLesson, error) {
 	cl := models.ConcreteLesson{ConcreteUUID: uuid}
-	err := r.db.NewSelect().Model(&cl).WherePK().Relation("abstract_lessons").Relation("homework_attachments").Scan(ctx)
+	err := r.db.NewSelect().Model(&cl).WherePK().Relation("abstract_lessons").Relation("homework_attachments").Relation("periods").Scan(ctx)
 	if err != nil {
 		return nil, err
 	}

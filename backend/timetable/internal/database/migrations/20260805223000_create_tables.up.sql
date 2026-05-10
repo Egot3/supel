@@ -8,6 +8,21 @@ CREATE TYPE weekday AS ENUM (
     'Sunday'
 );
 
+-- Create "periods" table
+CREATE TABLE "periods" {
+  "uuid" uuid PRIMARY KEY,
+  "position" SMALLINT NOT NULL,
+  "week_number"  SMALLINT NOT NULL,
+  "day_of_week"  weekday NOT NULL,
+  "year"         SMALLINT NOT NULL,
+
+  "start"      TIMESTAMPTZ UNIQUE NOT NULL,
+  "end"        TIMESTAMPTZ UNIQUE NOT NULL,
+  "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+  UNIQUE ("position", "week_number","day_of_week")
+}
+
 
 -- Create "abstract_lessons" table
 CREATE TABLE "abstract_lessons" (
@@ -26,13 +41,9 @@ CREATE TABLE "concrete_lessons" (
   "abstract_uuid" uuid NOT NULL REFERENCES abstract_lessons(uuid) ON UPDATE CASCADE ON DELETE CASCADE,
   "teacher_uuid"  uuid NOT NULL,--SAGA
   "group_uuid"    uuid NOT NULL,--SAGA
+  "period_uuid"   uuid NULL REFERENCES periods(uuid) ON UPDATE SET NULL ON DELETE SET NULL,
 
   "homework_body_key" character varying GENERATED ALWAYS AS ('orgs/ETSEvilCorp/timetable/homework/body/' || "concrete_uuid"::text) STORED,
-
-  "week_number"  SMALLINT NOT NULL,
-  "day_of_week"  weekday NOT NULL
-  "period"       SMALLINT NOT NULL,
-  "year"         SMALLINT NOT NULL,
 
   "deleted_at" TIMESTAMPTZ NULL,
   "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),

@@ -20,9 +20,7 @@ func (s *TimetableServer) CreateConcreteLesson(ctx context.Context, req *ttpb.Cr
 		GroupUUID:    req.GetGroupUuid(),
 		AbstractUUID: req.GetAbstractLessonUuid(),
 
-		Period:     uint16(req.Period),
-		WeekNumber: uint16(req.WeekNumber),
-		Year:       uint16(req.Year),
+		PeriodUUID: req.GetPeriodUuid(),
 	})
 	if err != nil {
 		log.Printf("Couldn't create concrete lesson: %v", err.Error())
@@ -84,9 +82,7 @@ func (s *TimetableServer) GetConcreteLesson(ctx context.Context, req *ttpb.GetCo
 		LessonUuid:                 concreteLesson.ConcreteUUID,
 		HomeworkTextGetUrl:         bodyURL,
 		HomeworkAttachmentsGetUrls: attachmentUrls,
-		Year:                       uint32(concreteLesson.Year),
-		WeekNumber:                 uint32(concreteLesson.WeekNumber),
-		Day:                        ttpb.Day(concreteLesson.DayOfWeek),
+		Period:                     uint32(concreteLesson.Period.Position),
 	}
 	return &ttpb.GetConcreteLessonResponse{
 		Lesson: lesson,
@@ -97,17 +93,11 @@ func (s *TimetableServer) PatchConcreteLesson(ctx context.Context, req *ttpb.Pat
 	log.Println("Got request to patch concrete Lesson")
 	//RBAC here
 
-	period := uint16(req.Period)
-	year := uint16(req.Year)
-	weekNumber := uint16(req.WeekNumber)
 	err := s.concreteLessonRepository.PatchConcreteLesson(ctx, models.PatchConcreteLesson{
 		ConcreteUUID: req.ConcreteLessonUuid,
 		AbstractUUID: req.AbstractLessonUuid,
 		TeacherUUID:  req.TeacherUuid,
 		GroupUUID:    req.GroupUuid,
-		Period:       &period,
-		Year:         &year,
-		WeekNumber:   &weekNumber,
 	})
 	if err != nil {
 		log.Printf("couldn't patch concrete lesson: %v", err.Error())
