@@ -2,12 +2,17 @@ package server
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 	"log"
+	"time"
 
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
+	"github.com/Egot3/supel/backend/timetable/internal/models"
 	"github.com/Egot3/supel/backend/timetable/internal/types"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
+	"google.golang.org/protobuf/types/known/emptypb"
 	"google.golang.org/protobuf/types/known/timestamppb"
 )
 
@@ -30,4 +35,56 @@ func (s *TimetableServer) GetPeriods(ctx context.Context, req *ttpb.GetPeriodReq
 	return &ttpb.GetPeriodsResponse{
 		Periods: protoPeriods,
 	}, nil
+}
+
+func (s *TimetableServer) PatchPeriod(ctx context.Context, req *ttpb.PatchPeriodRequest) (*emptypb.Empty, error) {
+	var start *time.Time = nil
+	if st := req.Start; st != nil {
+		tmp := st.AsTime()
+		start = &tmp
+	}
+
+	var end *time.Time = nil
+	if en := req.End; en != nil {
+		tmp := en.AsTime()
+		end = &tmp
+	}
+
+	var weekNumber *uint16 = nil
+	if wn := req.WeekNumber; wn != nil {
+		tmp := uint16(*wn)
+		weekNumber = &tmp
+	}
+
+	var year *uint16 = nil
+	if yr := req.Year; yr != nil {
+		tmp := uint16(*yr)
+		year = &tmp
+	}
+
+	var dayOfWeek *types.Day = nil
+	if day := req.Day; day != nil {
+		tmp := types.Day(*day)
+		dayOfWeek = &tmp
+	}
+
+	patchedPeriod := models.PatchedPeriod{
+		UUID:       req.PeriodUuid,
+		Start:      start,
+		End:        end,
+		WeekNumber: weekNumber,
+		Year:       year,
+		DayOfWeek:  dayOfWeek,
+	}
+
+	err := s.periodRepository.PatchPeriod(ctx, patchedPeriod)
+	if err != nil {
+		log.Printf("couldn't patch period: %v", err.Error())
+		if errors.Is(err, sql.ErrNoRows) {
+			return nil, status.Error(codes.NotFound, "period to patch was not found")
+		}
+		return nil, status.Error(codes.Internal, "couldn't patch period")
+	}
+
+	return nil, nil
 }
