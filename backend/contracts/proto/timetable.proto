@@ -79,6 +79,10 @@ message Period {
     uint32 number = 1;
     google.protobuf.Timestamp start = 2;
     google.protobuf.Timestamp end = 3;
+    Day day = 4;
+    uint32 year = 5;
+    uint32 week_number = 6;
+    string period_uuid = 7;
 }
 
 message GetPeriodRequest {
@@ -91,8 +95,14 @@ message GetPeriodsResponse {
     repeated Period periods = 1;
 }
 
-message PatchPeriodsRequest {
-    repeated Period periods = 1;
+message PatchPeriodRequest {
+    string period_uuid = 7;
+    optional uint32 number = 1;
+    optional google.protobuf.Timestamp start = 2;
+    optional google.protobuf.Timestamp end = 3;
+    optional Day day = 4;
+    optional uint32 year = 5;
+    optional uint32 week_number = 6;
 }
 
 message DeleteAbstractLessonRequest {
@@ -255,9 +265,9 @@ service TimetableService {
             get: "/v1/timetable/periods"
         };
     };
-    rpc PatchPeriods(PatchPeriodsRequest) returns (google.protobuf.Empty){
+    rpc PatchPeriod(PatchPeriodRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "/v1/timetable/periods"
+            patch: "/v1/timetable/periods/{period_uuid}"
             body: "*"
         };
     };

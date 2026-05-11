@@ -32,7 +32,7 @@ const (
 	TimetableService_PatchConcreteLesson_FullMethodName      = "/timetable.TimetableService/PatchConcreteLesson"
 	TimetableService_GetConcreteLesson_FullMethodName        = "/timetable.TimetableService/GetConcreteLesson"
 	TimetableService_GetPeriods_FullMethodName               = "/timetable.TimetableService/GetPeriods"
-	TimetableService_PatchPeriods_FullMethodName             = "/timetable.TimetableService/PatchPeriods"
+	TimetableService_PatchPeriod_FullMethodName              = "/timetable.TimetableService/PatchPeriod"
 	TimetableService_HomeworkBodyPUTUrl_FullMethodName       = "/timetable.TimetableService/HomeworkBodyPUTUrl"
 	TimetableService_HomeworkBodyGETUrl_FullMethodName       = "/timetable.TimetableService/HomeworkBodyGETUrl"
 	TimetableService_HomeworkAttachmentPUTUrl_FullMethodName = "/timetable.TimetableService/HomeworkAttachmentPUTUrl"
@@ -55,7 +55,7 @@ type TimetableServiceClient interface {
 	PatchConcreteLesson(ctx context.Context, in *PatchConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	GetConcreteLesson(ctx context.Context, in *GetConcreteLessonRequest, opts ...grpc.CallOption) (*GetConcreteLessonResponse, error)
 	GetPeriods(ctx context.Context, in *GetPeriodRequest, opts ...grpc.CallOption) (*GetPeriodsResponse, error)
-	PatchPeriods(ctx context.Context, in *PatchPeriodsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PatchPeriod(ctx context.Context, in *PatchPeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	HomeworkBodyPUTUrl(ctx context.Context, in *HomeworkBodyPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyPUTUrlResponse, error)
 	HomeworkBodyGETUrl(ctx context.Context, in *HomeworkBodyGETUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyGETUrlResponse, error)
 	HomeworkAttachmentPUTUrl(ctx context.Context, in *HomeworkAttachmentPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentPUTUrlResponse, error)
@@ -190,10 +190,10 @@ func (c *timetableServiceClient) GetPeriods(ctx context.Context, in *GetPeriodRe
 	return out, nil
 }
 
-func (c *timetableServiceClient) PatchPeriods(ctx context.Context, in *PatchPeriodsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) PatchPeriod(ctx context.Context, in *PatchPeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_PatchPeriods_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_PatchPeriod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -256,7 +256,7 @@ type TimetableServiceServer interface {
 	PatchConcreteLesson(context.Context, *PatchConcreteLessonRequest) (*emptypb.Empty, error)
 	GetConcreteLesson(context.Context, *GetConcreteLessonRequest) (*GetConcreteLessonResponse, error)
 	GetPeriods(context.Context, *GetPeriodRequest) (*GetPeriodsResponse, error)
-	PatchPeriods(context.Context, *PatchPeriodsRequest) (*emptypb.Empty, error)
+	PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error)
 	HomeworkBodyPUTUrl(context.Context, *HomeworkBodyPUTUrlRequest) (*HomeworkBodyPUTUrlResponse, error)
 	HomeworkBodyGETUrl(context.Context, *HomeworkBodyGETUrlRequest) (*HomeworkBodyGETUrlResponse, error)
 	HomeworkAttachmentPUTUrl(context.Context, *HomeworkAttachmentPUTUrlRequest) (*HomeworkAttachmentPUTUrlResponse, error)
@@ -307,8 +307,8 @@ func (UnimplementedTimetableServiceServer) GetConcreteLesson(context.Context, *G
 func (UnimplementedTimetableServiceServer) GetPeriods(context.Context, *GetPeriodRequest) (*GetPeriodsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method GetPeriods not implemented")
 }
-func (UnimplementedTimetableServiceServer) PatchPeriods(context.Context, *PatchPeriodsRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method PatchPeriods not implemented")
+func (UnimplementedTimetableServiceServer) PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchPeriod not implemented")
 }
 func (UnimplementedTimetableServiceServer) HomeworkBodyPUTUrl(context.Context, *HomeworkBodyPUTUrlRequest) (*HomeworkBodyPUTUrlResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method HomeworkBodyPUTUrl not implemented")
@@ -559,20 +559,20 @@ func _TimetableService_GetPeriods_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_PatchPeriods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PatchPeriodsRequest)
+func _TimetableService_PatchPeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchPeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).PatchPeriods(ctx, in)
+		return srv.(TimetableServiceServer).PatchPeriod(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_PatchPeriods_FullMethodName,
+		FullMethod: TimetableService_PatchPeriod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).PatchPeriods(ctx, req.(*PatchPeriodsRequest))
+		return srv.(TimetableServiceServer).PatchPeriod(ctx, req.(*PatchPeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -705,8 +705,8 @@ var TimetableService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TimetableService_GetPeriods_Handler,
 		},
 		{
-			MethodName: "PatchPeriods",
-			Handler:    _TimetableService_PatchPeriods_Handler,
+			MethodName: "PatchPeriod",
+			Handler:    _TimetableService_PatchPeriod_Handler,
 		},
 		{
 			MethodName: "HomeworkBodyPUTUrl",
