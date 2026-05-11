@@ -25,16 +25,13 @@ func NewPeriodRepository(i do.Injector) (PeriodRepository, error) {
 func (r *bunPeriodRepository) Period(ctx context.Context, periodNumber, weekNumber, year uint16, day types.Day) (*models.Period, error) {
 	var pr models.Period
 
-	res, err := r.db.NewSelect().
+	err := r.db.NewSelect().
 		Model(&pr).
 		Where("position = ?", periodNumber).
 		Where("week_number = ?", weekNumber).
 		Where("day_of_week = ?", day).
 		Where("year = ?", year).
-		Exec(ctx)
-	if val, _ := res.RowsAffected(); val == 0 {
-		return nil, sql.ErrNoRows
-	}
+		Scan(ctx)
 	if err != nil {
 		return nil, err
 	}
@@ -70,4 +67,20 @@ func (r *bunPeriodRepository) PatchPeriod(ctx context.Context, pcpr models.Patch
 	}
 
 	return nil
+}
+
+func (r *bunPeriodRepository) PeriodsByDay(ctx context.Context, weekNumber, year uint16, day types.Day) ([]*models.Period, error) {
+	var prs []*models.Period
+	err := r.db.NewSelect().
+		Model(&prs).
+		Where("week_number = ?", weekNumber).
+		Where("day_of_week = ?", day).
+		Where("year = ?", year).
+		OrderBy("position", bun.OrderAsc).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return prs, nil
 }

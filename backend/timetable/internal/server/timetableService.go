@@ -16,6 +16,7 @@ type TimetableServer struct {
 	abstractLessonRepository     repositories.AbstractLessonRepository
 	concreteLessonRepository     repositories.ConcreteLessonRepository
 	homeworkAttachmentRepository repositories.HomeworkAttachmentRepository
+	periodRepository             repositories.PeriodRepository
 }
 
 func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
@@ -45,11 +46,16 @@ func NewTimetableService(i do.Injector) (*TimetableServer, error) {
 	if err != nil {
 		return nil, err
 	}
+	periodRepository, err := do.Invoke[repositories.PeriodRepository](i)
+	if err != nil {
+		return nil, err
+	}
 
 	return &TimetableServer{
 		storageService:               storageService,
 		abstractLessonRepository:     abstractLessonRepository,
 		concreteLessonRepository:     concreteLessonRepository,
 		homeworkAttachmentRepository: homeworkAttachmentRepository,
+		periodRepository:             periodRepository,
 	}, nil
 }

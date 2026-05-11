@@ -136,6 +136,7 @@ message DeleteConcreteLessonRequest {
 }
 
 message PatchConcreteLessonRequest {
+    optional string period_uuid = 1;
     optional string abstract_lesson_uuid = 3;
     optional string teacher_uuid = 4;
     string concrete_lesson_uuid = 5;

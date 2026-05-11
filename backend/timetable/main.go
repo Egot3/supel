@@ -45,6 +45,7 @@ func main() {
 	do.Provide(injector, repositories.NewAbstractLessonRepository)
 	do.Provide(injector, repositories.NewConcreteLessonRepository)
 	do.Provide(injector, repositories.NewHomeworkAttachmentRepository)
+	do.Provide(injector, repositories.NewPeriodRepository)
 
 	do.Provide(injector, server.NewTimetableService)
 

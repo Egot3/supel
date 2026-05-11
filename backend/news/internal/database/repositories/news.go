@@ -57,6 +57,7 @@ func NewByUUID(ctx context.Context, uuid string) (*models.New, error) {
 	var New *models.New
 	_, err := database.DB.NewSelect().
 		Model(&New).
+		Where("new_uuid = ?", uuid).
 		Exec(ctx)
 	if err != nil {
 		return nil, err

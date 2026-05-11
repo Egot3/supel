@@ -20,9 +20,9 @@ CREATE TABLE "periods" {
   "end"        TIMESTAMPTZ UNIQUE NOT NULL,
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-  UNIQUE ("position", "week_number","day_of_week")
+  UNIQUE ("position","week_number","day_of_week")
 }
-
+CREATE INDEX idx_position ON "periods" ("position")
 
 -- Create "abstract_lessons" table
 CREATE TABLE "abstract_lessons" (

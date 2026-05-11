@@ -10,4 +10,5 @@ import (
 type PeriodRepository interface {
 	Period(ctx context.Context, periodNumber, weekNumber, year uint16, day types.Day) (*models.Period, error)
 	PatchPeriod(ctx context.Context, pcpr models.PatchedPeriod) error
+	PeriodsByDay(ctx context.Context, weekNumber, year uint16, day types.Day) ([]*models.Period, error)
 }
