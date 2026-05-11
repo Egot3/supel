@@ -2032,7 +2032,7 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x06FRIDAY\x10\x05\x12\f\n" +
 	"\bSATURDAY\x10\x06\x12\n" +
 	"\n" +
-	"\x06SUNDAY\x10\a2\xfb\x13\n" +
+	"\x06SUNDAY\x10\a2\x97\x14\n" +
 	"\x10TimetableService\x12\x85\x01\n" +
 	"\rListTimetable\x12 .timetable.ListTimetablesRequest\x1a .timetable.ListTimetableResponse\"0\x82\xd3\xe4\x93\x02*\x12(/v1/timetable/{group_uuid}/{week_number}\x12\x87\x01\n" +
 	"\fGetTimetable\x12\x1e.timetable.GetTimetableRequest\x1a\x1f.timetable.GetTimetableResponse\"6\x82\xd3\xe4\x93\x020\x12./v1/timetable/{group_uuid}/{week_number}/{day}\x12\x80\x01\n" +
@@ -2044,9 +2044,9 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x14CreateConcreteLesson\x12&.timetable.CreateConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/timetable/lesson/concrete\x12\x94\x01\n" +
 	"\x14DeleteConcreteLesson\x12&.timetable.DeleteConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"<\x82\xd3\xe4\x93\x026*4/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x92\x01\n" +
 	"\x13PatchConcreteLesson\x12%.timetable.PatchConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"<\x82\xd3\xe4\x93\x02624/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x9c\x01\n" +
-	"\x11GetConcreteLesson\x12#.timetable.GetConcreteLessonRequest\x1a$.timetable.GetConcreteLessonResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12g\n" +
+	"\x11GetConcreteLesson\x12#.timetable.GetConcreteLessonRequest\x1a$.timetable.GetConcreteLessonResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x82\x01\n" +
 	"\n" +
-	"GetPeriods\x12\x1b.timetable.GetPeriodRequest\x1a\x1d.timetable.GetPeriodsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/timetable/periods\x12t\n" +
+	"GetPeriods\x12\x1b.timetable.GetPeriodRequest\x1a\x1d.timetable.GetPeriodsResponse\"8\x82\xd3\xe4\x93\x022\x120/v1/timetable/periods/{year}/{week_number}/{day}\x12t\n" +
 	"\vPatchPeriod\x12\x1d.timetable.PatchPeriodRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*2#/v1/timetable/periods/{period_uuid}\x12\xaf\x01\n" +
 	"\x12HomeworkBodyPUTUrl\x12$.timetable.HomeworkBodyPUTUrlRequest\x1a%.timetable.HomeworkBodyPUTUrlResponse\"L\x82\xd3\xe4\x93\x02F\x12D/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload\x12\xa8\x01\n" +
 	"\x12HomeworkBodyGETUrl\x12$.timetable.HomeworkBodyGETUrlRequest\x1a%.timetable.HomeworkBodyGETUrlResponse\"E\x82\xd3\xe4\x93\x02?\x12=/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework\x12\xc4\x01\n" +

@@ -262,7 +262,7 @@ service TimetableService {
 
     rpc GetPeriods(GetPeriodRequest) returns (GetPeriodsResponse) {
         option (google.api.http) = {
-            get: "/v1/timetable/periods"
+            get: "/v1/timetable/periods/{year}/{week_number}/{day}"
         };
     };
     rpc PatchPeriod(PatchPeriodRequest) returns (google.protobuf.Empty){
