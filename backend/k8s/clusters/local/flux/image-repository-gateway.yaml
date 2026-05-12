@@ -1,0 +1,47 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: gateway
+  namespace: flux-system
+spec:
+  image: ghcr.io/egot3/supel/backend/gateway
+  interval: 1m
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: gateway
+  namespace: flux-system
+spec:
+  imageRepositoryRef:
+    name: gateway
+  policy:
+    alphabetical:
+      order: asc
+
+---
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+Kind: ImageUpdateAutomation
+metadata:
+  name: supel
+  namespace: flux-system
+spec:
+  interval: 5m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  git:
+    checkout:
+      ref:
+        branch: main
+    commit:
+      author:
+        email: fluxbot@users.noreply.github.com
+        name: Flux # fluz
+      messageTemplate: "chore(backend:k8s:flux): update {{range .Updated.Images}}{{.}}{{end}}"
+    push:
+      branch: main
+  update:
+    path: ./backend/k8s/clusters/local/
+    strategy: Setters
