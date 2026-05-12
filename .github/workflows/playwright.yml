@@ -12,8 +12,8 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
           node-version: lts/*
       - name: Install dependencies
@@ -24,7 +24,7 @@ jobs:
         run: sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDIRECT --to-port 8100
       - name: Run Playwright tests
         run: npx playwright test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: always()
         with:
           name: playwright-report
