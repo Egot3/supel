@@ -20,7 +20,7 @@ import (
 
 func main() {
 	injector := do.New()
-	do.Provide[*bun.DB](injector, database.InitDB)
+	do.Provide(injector, database.InitDB)
 
 	db, err := do.Invoke[*bun.DB](injector)
 

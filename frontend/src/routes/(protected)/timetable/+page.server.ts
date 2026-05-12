@@ -2,12 +2,23 @@ import type { Day, Timetable } from '$lib/types/timetable';
 import type { PageServerLoad } from './$types';
 import { fail, type Actions } from '@sveltejs/kit';
 
-export const load: PageServerLoad = async ({ /* fetch ,*/ cookies }) => {
+export const load: PageServerLoad = async ({ fetch, cookies }) => {
 	const token = cookies.get('auth_token');
 	if (!token) {
 		console.log('No token on load');
-		return { currentWeek: NaN };
+		return { currentWeek: -1 };
 	}
+
+	const responsePeriods = await fetch('http://localhost/v1/user/', {
+		headers: {
+			Authorization: `Bearer ${token}`
+		}
+	});
+	if (!responsePeriods.ok) {
+		console.log('response for periods is not ok', await responsePeriods.json());
+		return { currentWeek: -1 };
+	}
+	console.log(responsePeriods.json());
 
 	return { currentWeek: 1 };
 };

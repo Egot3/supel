@@ -18,6 +18,7 @@
 	let currentYear = $state(1970);
 	let chosen = $state(dayNames[new Date().getDay()]); //change to server time + offset
 	let weekDate = $derived.by((): string => {
+		console.log('curryear+weekNumber: ', currentYear, weekNumber);
 		const dateMonday = GetWeekDateFromWeek(currentYear, weekNumber);
 		const formattedDateMonday = FormattedStringFromDate(dateMonday);
 		console.log(dateMonday);
