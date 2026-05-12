@@ -22,7 +22,7 @@ spec:
 
 ---
 apiVersion: image.toolkit.fluxcd.io/v1beta2
-Kind: ImageUpdateAutomation
+kind: ImageUpdateAutomation
 metadata:
   name: supel
   namespace: flux-system
