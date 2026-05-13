@@ -16,12 +16,12 @@ spec:
       containers:
         - name: grafana
           image: grafana/grafana:10.4.0
-          env:
-            - name: GF_SECURITY_ADMIN_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  key: admin-password
-                  name: grafana-secrets
+          #          env:
+          #            - name: GF_SECURITY_ADMIN_PASSWORD
+          #              valueFrom:
+          #                secretKeyRef:
+          #                  key: admin-password
+          #                  name: grafana-secrets
           resources:
             limits:
               memory: "1Gi"
