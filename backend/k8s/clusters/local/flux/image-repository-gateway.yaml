@@ -19,29 +19,3 @@ spec:
   policy:
     alphabetical:
       order: asc
-
----
-apiVersion: image.toolkit.fluxcd.io/v1beta2
-kind: ImageUpdateAutomation
-metadata:
-  name: supel
-  namespace: flux-system
-spec:
-  interval: 5m
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  git:
-    checkout:
-      ref:
-        branch: main
-    commit:
-      author:
-        email: fluxbot@users.noreply.github.com
-        name: Flux # fluz
-      messageTemplate: "chore(backend:k8s:flux): update {{range .Updated.Images}}{{.}}{{end}}"
-    push:
-      branch: main
-  update:
-    path: ./backend/k8s/clusters/local/
-    strategy: Setters
