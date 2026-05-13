@@ -38,16 +38,16 @@ spec:
               mountPath: /etc/grafana/provisioning/dashboards
             - name: data
               mountPath: /var/lib/grafana
-    volumes:
-      - name: datasources
-        configMap:
-          name: grafana-datasources
-      - name: dashboard-providers
-        configMap:
-          name: grafana-dashboards-providers
-      - name: data
-        persistentVolumeClaim:
-          claimName: grafana-data
+      volumes:
+        - name: datasources
+          configMap:
+            name: grafana-datasources
+        - name: dashboard-providers
+          configMap:
+            name: grafana-dashboards-providers
+        - name: data
+          persistentVolumeClaim:
+            claimName: grafana-data
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
