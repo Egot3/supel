@@ -6,7 +6,6 @@ resources:
   - ./grafana-deployment.yaml
   - ./grafana-ingress.yaml
   - ./graphana.secret.yaml
-  - ./kustomization.yaml
   - ./prometheus-config.yaml
   - ./prometheus-rbac.yaml
   - ./prometheus-statefulset.yaml

@@ -13,6 +13,5 @@ resources:
   - ./echo-services.yaml
   - ./foxfort-dashboard-middleware.yaml
   - ./golf-dashboard-ingressroute.yaml
-  - ./kustomization.yaml
   - ./middleware.yaml
   - ./monitoring
