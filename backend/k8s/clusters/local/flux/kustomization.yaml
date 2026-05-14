@@ -4,7 +4,7 @@ metadata:
   name: namespaces
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m
   path: ./clusters/local/apps/namespaces
   prune: true
   sourceRef:
@@ -17,7 +17,7 @@ metadata:
   name: infrastructure
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m
   path: ./clusters/local/apps/infrastructure
   prune: true
   sourceRef:
@@ -33,7 +33,7 @@ metadata:
   name: services
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m
   path: ./clusters/local/apps/services
   prune: true
   sourceRef:
@@ -48,7 +48,7 @@ metadata:
   name: ingress
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1m
   path: ./clusters/local/apps/ingress
   prune: true
   sourceRef:
