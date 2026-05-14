@@ -1,2 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
+resources:
+  - ./1-postgresql.yaml
+  - ./banana-deployment.yaml
+  - ./bannut-postgresql.yaml
+  - ./beast-postgresql.yaml
+  - ./bernice-postgresql.yaml
+  - ./beta-rbac.yaml
+  - ./charlie-configmap.yaml
+  - ./delta-deployment.yaml
+  - ./echo-services.yaml
+  - ./foxfort-dashboard-middleware.yaml
+  - ./golf-dashboard-ingressroute.yaml
+  - ./kustomization.yaml
+  - ./middleware.yaml
+  - ./monitoring
