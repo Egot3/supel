@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
         - name: gateway-service
-          image: ghcr.io/egot3/supel/backend/gateway:latest # {"$imagepolicy": "flux-system:gateway"}
+          image: ghcr.io/egot3/supel/backend/gateway:v0.0.2 # {"$imagepolicy": "flux-system:gateway"}
           resources:
             requests:
               memory: "32Mi"
@@ -41,6 +41,10 @@ spec:
             - name: USER_SERVICE_HOST
               value: user-service.user-domain.svc.cluster.local
             - name: USER_SERVICE_PORT
+              value: "50051"
+            - name: TIMETABLE_SERVICE_HOST
+              value: timetable-service.timetable-domain.svc.cluster.local
+            - name: TIMETABLE_SERVICE_PORT
               value: "50051"
 ---
 apiVersion: v1
