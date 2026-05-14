@@ -44,13 +44,13 @@ func request_TimetableService_ListTimetable_0(ctx context.Context, marshaler run
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["group_uuid"]
+	val, ok := pathParams["user_uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "group_uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user_uuid")
 	}
-	protoReq.GroupUuid, err = runtime.String(val)
+	protoReq.UserUuid, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "group_uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user_uuid", err)
 	}
 	val, ok = pathParams["week_number"]
 	if !ok {
@@ -70,13 +70,13 @@ func local_request_TimetableService_ListTimetable_0(ctx context.Context, marshal
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["group_uuid"]
+	val, ok := pathParams["user_uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "group_uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user_uuid")
 	}
-	protoReq.GroupUuid, err = runtime.String(val)
+	protoReq.UserUuid, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "group_uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user_uuid", err)
 	}
 	val, ok = pathParams["week_number"]
 	if !ok {
@@ -100,13 +100,13 @@ func request_TimetableService_GetTimetable_0(ctx context.Context, marshaler runt
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["group_uuid"]
+	val, ok := pathParams["user_uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "group_uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user_uuid")
 	}
-	protoReq.GroupUuid, err = runtime.String(val)
+	protoReq.UserUuid, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "group_uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user_uuid", err)
 	}
 	val, ok = pathParams["week_number"]
 	if !ok {
@@ -136,13 +136,13 @@ func local_request_TimetableService_GetTimetable_0(ctx context.Context, marshale
 		e        int32
 		err      error
 	)
-	val, ok := pathParams["group_uuid"]
+	val, ok := pathParams["user_uuid"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "group_uuid")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "user_uuid")
 	}
-	protoReq.GroupUuid, err = runtime.String(val)
+	protoReq.UserUuid, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "group_uuid", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "user_uuid", err)
 	}
 	val, ok = pathParams["week_number"]
 	if !ok {
@@ -810,7 +810,7 @@ func RegisterTimetableServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/ListTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{group_uuid}/{week_number}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/ListTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{user_uuid}/{week_number}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -830,7 +830,7 @@ func RegisterTimetableServiceHandlerServer(ctx context.Context, mux *runtime.Ser
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/GetTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{group_uuid}/{week_number}/{day}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/timetable.TimetableService/GetTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{user_uuid}/{week_number}/{day}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1188,7 +1188,7 @@ func RegisterTimetableServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/ListTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{group_uuid}/{week_number}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/ListTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{user_uuid}/{week_number}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1205,7 +1205,7 @@ func RegisterTimetableServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/GetTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{group_uuid}/{week_number}/{day}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/timetable.TimetableService/GetTimetable", runtime.WithHTTPPathPattern("/v1/timetable/{user_uuid}/{week_number}/{day}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1477,8 +1477,8 @@ func RegisterTimetableServiceHandlerClient(ctx context.Context, mux *runtime.Ser
 }
 
 var (
-	pattern_TimetableService_ListTimetable_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "timetable", "group_uuid", "week_number"}, ""))
-	pattern_TimetableService_GetTimetable_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "group_uuid", "week_number", "day"}, ""))
+	pattern_TimetableService_ListTimetable_0            = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "timetable", "user_uuid", "week_number"}, ""))
+	pattern_TimetableService_GetTimetable_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 1, 0, 4, 1, 5, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "user_uuid", "week_number", "day"}, ""))
 	pattern_TimetableService_CreateAbstractLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3}, []string{"v1", "timetable", "lesson", "abstract"}, ""))
 	pattern_TimetableService_DeleteAbstractLesson_0     = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))
 	pattern_TimetableService_GetAbstractLesson_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 2, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "timetable", "lesson", "abstract", "lesson_uuid"}, ""))

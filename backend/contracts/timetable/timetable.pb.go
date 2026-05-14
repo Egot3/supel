@@ -91,7 +91,7 @@ func (Day) EnumDescriptor() ([]byte, []int) {
 type ListTimetablesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	WeekNumber    uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	GroupUuid     string                 `protobuf:"bytes,2,opt,name=group_uuid,json=groupUuid,proto3" json:"group_uuid,omitempty"`
+	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -133,9 +133,9 @@ func (x *ListTimetablesRequest) GetWeekNumber() uint32 {
 	return 0
 }
 
-func (x *ListTimetablesRequest) GetGroupUuid() string {
+func (x *ListTimetablesRequest) GetUserUuid() string {
 	if x != nil {
-		return x.GroupUuid
+		return x.UserUuid
 	}
 	return ""
 }
@@ -143,7 +143,7 @@ func (x *ListTimetablesRequest) GetGroupUuid() string {
 type GetTimetableRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	WeekNumber    uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	GroupUuid     string                 `protobuf:"bytes,2,opt,name=group_uuid,json=groupUuid,proto3" json:"group_uuid,omitempty"`
+	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
 	Day           Day                    `protobuf:"varint,3,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -186,9 +186,9 @@ func (x *GetTimetableRequest) GetWeekNumber() uint32 {
 	return 0
 }
 
-func (x *GetTimetableRequest) GetGroupUuid() string {
+func (x *GetTimetableRequest) GetUserUuid() string {
 	if x != nil {
-		return x.GroupUuid
+		return x.UserUuid
 	}
 	return ""
 }
@@ -1876,17 +1876,15 @@ var File_proto_timetable_proto protoreflect.FileDescriptor
 
 const file_proto_timetable_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/timetable.proto\x12\ttimetable\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"W\n" +
+	"\x15proto/timetable.proto\x12\ttimetable\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"U\n" +
 	"\x15ListTimetablesRequest\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x1d\n" +
-	"\n" +
-	"group_uuid\x18\x02 \x01(\tR\tgroupUuid\"w\n" +
+	"weekNumber\x12\x1b\n" +
+	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\"u\n" +
 	"\x13GetTimetableRequest\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x1d\n" +
-	"\n" +
-	"group_uuid\x18\x02 \x01(\tR\tgroupUuid\x12 \n" +
+	"weekNumber\x12\x1b\n" +
+	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12 \n" +
 	"\x03day\x18\x03 \x01(\x0e2\x0e.timetable.DayR\x03day\"Y\n" +
 	"\x14GetTimetableResponse\x12A\n" +
 	"\tTimetable\x18\x01 \x01(\v2#.timetable.ConcreteLessonShortEntryR\tTimetable\"8\n" +
@@ -2032,10 +2030,10 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x06FRIDAY\x10\x05\x12\f\n" +
 	"\bSATURDAY\x10\x06\x12\n" +
 	"\n" +
-	"\x06SUNDAY\x10\a2\x97\x14\n" +
-	"\x10TimetableService\x12\x85\x01\n" +
-	"\rListTimetable\x12 .timetable.ListTimetablesRequest\x1a .timetable.ListTimetableResponse\"0\x82\xd3\xe4\x93\x02*\x12(/v1/timetable/{group_uuid}/{week_number}\x12\x87\x01\n" +
-	"\fGetTimetable\x12\x1e.timetable.GetTimetableRequest\x1a\x1f.timetable.GetTimetableResponse\"6\x82\xd3\xe4\x93\x020\x12./v1/timetable/{group_uuid}/{week_number}/{day}\x12\x80\x01\n" +
+	"\x06SUNDAY\x10\a2\x95\x14\n" +
+	"\x10TimetableService\x12\x84\x01\n" +
+	"\rListTimetable\x12 .timetable.ListTimetablesRequest\x1a .timetable.ListTimetableResponse\"/\x82\xd3\xe4\x93\x02)\x12'/v1/timetable/{user_uuid}/{week_number}\x12\x86\x01\n" +
+	"\fGetTimetable\x12\x1e.timetable.GetTimetableRequest\x1a\x1f.timetable.GetTimetableResponse\"5\x82\xd3\xe4\x93\x02/\x12-/v1/timetable/{user_uuid}/{week_number}/{day}\x12\x80\x01\n" +
 	"\x14CreateAbstractLesson\x12&.timetable.CreateAbstractLessonRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/timetable/lesson/abstract\x12\x8b\x01\n" +
 	"\x14DeleteAbstractLesson\x12&.timetable.DeleteAbstractLessonRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-*+/v1/timetable/lesson/abstract/{lesson_uuid}\x12\x93\x01\n" +
 	"\x11GetAbstractLesson\x12#.timetable.GetAbstractLessonRequest\x1a$.timetable.GetAbstractLessonResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/timetable/lesson/abstract/{lesson_uuid}\x12\x8c\x01\n" +

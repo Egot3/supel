@@ -21,12 +21,12 @@ enum Day {
 
 message ListTimetablesRequest {
     uint32 week_number = 1;
-    string group_uuid = 2;
+    string user_uuid = 2;
 }
 
 message GetTimetableRequest {
     uint32 week_number = 1;
-    string group_uuid = 2;
+    string user_uuid = 2;
     Day day = 3;
 }
 
@@ -198,12 +198,12 @@ message HomeworkBodyGETUrlResponse {
 service TimetableService {
     rpc ListTimetable(ListTimetablesRequest) returns (ListTimetableResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/{group_uuid}/{week_number}"
+            get: "/v1/timetable/{user_uuid}/{week_number}"
         };
     };
     rpc GetTimetable(GetTimetableRequest) returns (GetTimetableResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/{group_uuid}/{week_number}/{day}"
+            get: "/v1/timetable/{user_uuid}/{week_number}/{day}"
         };
     };
 
