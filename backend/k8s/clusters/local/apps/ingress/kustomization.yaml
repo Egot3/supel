@@ -8,4 +8,3 @@ resources:
   - ./diogen-ingress.yaml
   - ./durian-ingress.yaml
   - ./ingress.yaml
-  - ./kustomization.yaml
