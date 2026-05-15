@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./clusters/local/apps/namespaces
+  path: ./backend/k8s/clusters/local/apps/namespaces
   prune: true
   sourceRef:
     kind: GitRepository
@@ -18,7 +18,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./clusters/local/apps/infrastructure
+  path: ./backend/k8s/clusters/local/apps/infrastructure
   prune: true
   sourceRef:
     kind: GitRepository
@@ -34,7 +34,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./clusters/local/apps/services
+  path: ./backend/k8s/clusters/local/apps/services
   prune: true
   sourceRef:
     kind: GitRepository
@@ -49,7 +49,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m
-  path: ./clusters/local/apps/ingress
+  path: ./backend/k8s/clusters/local/apps/ingress
   prune: true
   sourceRef:
     kind: GitRepository
