@@ -3,7 +3,6 @@ kind: Kustomization
 
 resources:
   - callback.yaml
-  - flux.secret.yaml
   - image-repository-gateway.yaml
   - image-update-automation.yaml
   - flux-kustomization.yaml
