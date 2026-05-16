@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  selector:
+    matchLabels:
+      app: loki
+  serviceName: loki
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: loki
+    spec:
+      securityContext:
+        fsGroup: 10001
+        runAsUser: 10001
+        runAsGroup: 10001
+      containers:
+        - name: loki
+          image: grafana/loki:3.4.2
+          ports:
+            - name: http
+              containerPort: 3100
+            - name: grpc
+              containerPort: 9096
+          args:
+            - -config.file=/etc/loki/loki.yaml
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: http
+            initialDelaySeconds: 15
+          volumeMounts:
+            - name: config
+              mountPath: /etc/loki
+            - name: storage
+              mountPath: /loki
+
+      volumes:
+        - name: config
+          configMap:
+            name: loki-config
+  volumeClaimTemplates:
+    - metadata:
+        name: storage
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: loki
+  namespace: monitoring
+spec:
+  selector:
+    app: loki
+  ports:
+    - name: http
+      port: 3100
+      targetPort: http
+    - name: grpc
+      port: 9096
+      targetPort: grpc
