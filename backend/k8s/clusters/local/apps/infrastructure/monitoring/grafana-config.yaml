@@ -4,7 +4,7 @@ metadata:
   name: grafana-datasources
   namespace: monitoring
 data:
-  prometheus.yaml: |
+  datasources.yaml: |
     apiVersion: 1
     datasources:
     - name: Prometheus
@@ -16,7 +16,7 @@ data:
     - name: Loki
       type: loki
       url: http://loki.monitoring.svc.cluster.local:3100
-
+      editable: false
 ---
 apiVersion: v1
 kind: ConfigMap
