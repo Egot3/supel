@@ -20,12 +20,13 @@ CREATE UNIQUE INDEX idx_actions_subscope_null ON "actions" ("scope", "verb") WHE
 CREATE TABLE IF NOT EXISTS "roles" (
     role_uuid        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_name        character varying NOT NULL UNIQUE,
-    role_description TEXT NOT NULL,
+    role_description TEXT NULL,
+
     extended_role_uuid     UUID NULL REFERENCES roles(role_uuid) ON UPDATE CASCADE ON DELETE SET NULL,
 
     created_at TIMESTAMPTZ DEFAULT now(),
     deleted_at TIMESTAMPTZ NULL,
-    updated_at TIMESTAMPTZ NULL
+    updated_at TIMESTAMPTZ DEFAULT now()
 );
 CREATE INDEX idx_role_uuid_active ON roles (role_uuid) WHERE deleted_at IS NULL;
 

@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/egot3/supel/backend/rbac/internal/database"
+	"github.com/egot3/supel/backend/rbac/internal/models"
 	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 	"google.golang.org/grpc"
@@ -22,6 +23,7 @@ func main() {
 	if err := database.RunMigrations(ctx, db); err != nil {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
 	}
+	db.RegisterModel((*models.RolesActions)(nil))
 
 	grpcServer := grpc.NewServer()
 	healthServer := health.NewServer()
