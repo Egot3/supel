@@ -35,9 +35,9 @@ spec:
               mountPath: /etc/alloy
             - name: storage
               mountPath: /var/lib/alloy/data
-    volumes:
-      - name: config
-        configMap:
-          name: alloy-config
-      - name: storage
-        emptyDir: {}
+      volumes:
+        - name: config
+          configMap:
+            name: alloy-config
+        - name: storage
+          emptyDir: {}
