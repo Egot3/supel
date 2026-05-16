@@ -11,6 +11,7 @@ data:
 
     discovery.relabel "pods" {
       targets = discovery.kubernetes.pods.targets
+
       rule {
         source_labels = ["__meta_kubernetes_pod_phase"]
         regex = "Pending|Running"
@@ -21,14 +22,17 @@ data:
         source_labels = ["__meta_kubernetes_namespace"]
         target_label = "namespace"
       }
+
       rule {
-        source_labels = ["__meta_kubernetes_pods_name]
+        source_labels = ["__meta_kubernetes_pod_name"]         
         target_label = "pod"
       }
+
       rule {
-        source_labels = ["__meta_kubernetes_pods_container_name"]
+        source_labels = ["__meta_kubernetes_pod_container_name"]
         target_label = "container"
       }
+
       rule {
         source_labels = ["__meta_kubernetes_pod_node_name"]
         target_label = "node"
@@ -36,7 +40,7 @@ data:
     }
 
     loki.source.kubernetes "pods" {
-      targets = discovery.relabel.pods.output
+      targets    = discovery.relabel.pods.output
       forward_to = [loki.write.loki.receiver]
     }
 
