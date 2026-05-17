@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc/metadata"
 )
 
-func HeaderIjector() runtime.ServeMuxOption {
+func HeaderInjector() runtime.ServeMuxOption {
 	return runtime.WithMetadata(
 		func(ctx context.Context, r *http.Request) metadata.MD {
 			md := metadata.MD{}

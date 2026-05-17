@@ -9,7 +9,9 @@ import (
 func NewGatewayMux() *runtime.ServeMux {
 	return runtime.NewServeMux(
 		interceptor.CookieSetter(),
-		interceptor.HeaderIjector(),
+		interceptor.HeaderInjector(),
+		interceptor.RequestUUIDInjectorIn(),
+		interceptor.RequestUUIDInjectorOut(),
 
 		runtime.WithIncomingHeaderMatcher(func(s string) (string, bool) {
 			switch s {

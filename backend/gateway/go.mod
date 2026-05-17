@@ -3,6 +3,7 @@ module github.com/Egot3/supel/backend/gateway
 go 1.26.1
 
 require (
+	github.com/google/uuid v1.6.0
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.28.0
 	github.com/rs/cors v1.11.1
 )
