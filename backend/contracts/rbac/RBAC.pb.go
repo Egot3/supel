@@ -84,7 +84,7 @@ func (Verb) EnumDescriptor() ([]byte, []int) {
 
 type HasPermissionQuestion struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User_UUID     string                 `protobuf:"bytes,1,opt,name=user_UUID,json=userUUID,proto3" json:"user_UUID,omitempty"`
+	UserUUID      string                 `protobuf:"bytes,1,opt,name=userUUID,proto3" json:"userUUID,omitempty"`
 	Scope         string                 `protobuf:"bytes,2,opt,name=scope,proto3" json:"scope,omitempty"`
 	SubScope      *string                `protobuf:"bytes,3,opt,name=subScope,proto3,oneof" json:"subScope,omitempty"`
 	Verb          Verb                   `protobuf:"varint,4,opt,name=verb,proto3,enum=RBAC.Verb" json:"verb,omitempty"`
@@ -122,9 +122,9 @@ func (*HasPermissionQuestion) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *HasPermissionQuestion) GetUser_UUID() string {
+func (x *HasPermissionQuestion) GetUserUUID() string {
 	if x != nil {
-		return x.User_UUID
+		return x.UserUUID
 	}
 	return ""
 }
@@ -196,7 +196,7 @@ func (x *HasPermissionAnswer) GetHas() bool {
 
 type DeleteRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -231,9 +231,9 @@ func (*DeleteRoleRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *DeleteRoleRequest) GetRole_UUID() string {
+func (x *DeleteRoleRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -241,7 +241,7 @@ func (x *DeleteRoleRequest) GetRole_UUID() string {
 type Action struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Scope         string                 `protobuf:"bytes,1,opt,name=scope,proto3" json:"scope,omitempty"`
-	SubScope      *string                `protobuf:"bytes,2,opt,name=sub_scope,json=subScope,proto3,oneof" json:"sub_scope,omitempty"`
+	Subscope      *string                `protobuf:"bytes,2,opt,name=subscope,proto3,oneof" json:"subscope,omitempty"`
 	Verb          Verb                   `protobuf:"varint,3,opt,name=verb,proto3,enum=RBAC.Verb" json:"verb,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -284,9 +284,9 @@ func (x *Action) GetScope() string {
 	return ""
 }
 
-func (x *Action) GetSubScope() string {
-	if x != nil && x.SubScope != nil {
-		return *x.SubScope
+func (x *Action) GetSubscope() string {
+	if x != nil && x.Subscope != nil {
+		return *x.Subscope
 	}
 	return ""
 }
@@ -302,7 +302,7 @@ type CreateRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Extended_UUID *string                `protobuf:"bytes,3,opt,name=extended_UUID,json=extendedUUID,proto3,oneof" json:"extended_UUID,omitempty"`
+	ExtendedUUID  *string                `protobuf:"bytes,3,opt,name=extendedUUID,proto3,oneof" json:"extendedUUID,omitempty"`
 	Priority      int32                  `protobuf:"varint,4,opt,name=priority,proto3" json:"priority,omitempty"`
 	Actions       []*Action              `protobuf:"bytes,5,rep,name=actions,proto3" json:"actions,omitempty"`
 	unknownFields protoimpl.UnknownFields
@@ -353,9 +353,9 @@ func (x *CreateRoleRequest) GetDescription() string {
 	return ""
 }
 
-func (x *CreateRoleRequest) GetExtended_UUID() string {
-	if x != nil && x.Extended_UUID != nil {
-		return *x.Extended_UUID
+func (x *CreateRoleRequest) GetExtendedUUID() string {
+	if x != nil && x.ExtendedUUID != nil {
+		return *x.ExtendedUUID
 	}
 	return ""
 }
@@ -376,7 +376,7 @@ func (x *CreateRoleRequest) GetActions() []*Action {
 
 type AssignorsAssigneesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Assignor_UUID string                 `protobuf:"bytes,1,opt,name=assignor_UUID,json=assignorUUID,proto3" json:"assignor_UUID,omitempty"`
+	AssignorUUID  string                 `protobuf:"bytes,1,opt,name=assignorUUID,proto3" json:"assignorUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -411,18 +411,18 @@ func (*AssignorsAssigneesRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *AssignorsAssigneesRequest) GetAssignor_UUID() string {
+func (x *AssignorsAssigneesRequest) GetAssignorUUID() string {
 	if x != nil {
-		return x.Assignor_UUID
+		return x.AssignorUUID
 	}
 	return ""
 }
 
 type AssignorsAssigneesResponse struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	Assignee_UUIDs []string               `protobuf:"bytes,1,rep,name=assignee_UUIDs,json=assigneeUUIDs,proto3" json:"assignee_UUIDs,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AssigneeUUIDs []string               `protobuf:"bytes,1,rep,name=assigneeUUIDs,proto3" json:"assigneeUUIDs,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
 func (x *AssignorsAssigneesResponse) Reset() {
@@ -455,17 +455,17 @@ func (*AssignorsAssigneesResponse) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *AssignorsAssigneesResponse) GetAssignee_UUIDs() []string {
+func (x *AssignorsAssigneesResponse) GetAssigneeUUIDs() []string {
 	if x != nil {
-		return x.Assignee_UUIDs
+		return x.AssigneeUUIDs
 	}
 	return nil
 }
 
 type RoleAssignorRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Assignee_UUID string                 `protobuf:"bytes,1,opt,name=assignee_UUID,json=assigneeUUID,proto3" json:"assignee_UUID,omitempty"`
-	Role_UUID     string                 `protobuf:"bytes,2,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	AssigneeUUID  string                 `protobuf:"bytes,1,opt,name=assigneeUUID,proto3" json:"assigneeUUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,2,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -500,23 +500,23 @@ func (*RoleAssignorRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{7}
 }
 
-func (x *RoleAssignorRequest) GetAssignee_UUID() string {
+func (x *RoleAssignorRequest) GetAssigneeUUID() string {
 	if x != nil {
-		return x.Assignee_UUID
+		return x.AssigneeUUID
 	}
 	return ""
 }
 
-func (x *RoleAssignorRequest) GetRole_UUID() string {
+func (x *RoleAssignorRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
 
 type RoleAssignorResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Assignor_UUID string                 `protobuf:"bytes,1,opt,name=assignor_UUID,json=assignorUUID,proto3" json:"assignor_UUID,omitempty"`
+	AssignorUUID  string                 `protobuf:"bytes,1,opt,name=assignorUUID,proto3" json:"assignorUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -551,16 +551,16 @@ func (*RoleAssignorResponse) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *RoleAssignorResponse) GetAssignor_UUID() string {
+func (x *RoleAssignorResponse) GetAssignorUUID() string {
 	if x != nil {
-		return x.Assignor_UUID
+		return x.AssignorUUID
 	}
 	return ""
 }
 
 type RoleAssigneesRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -595,16 +595,16 @@ func (*RoleAssigneesRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *RoleAssigneesRequest) GetRole_UUID() string {
+func (x *RoleAssigneesRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
 
 type RoleAssigneesResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	User_UUIDs    []string               `protobuf:"bytes,1,rep,name=user_UUIDs,json=userUUIDs,proto3" json:"user_UUIDs,omitempty"`
+	UserUUIDs     []string               `protobuf:"bytes,1,rep,name=userUUIDs,proto3" json:"userUUIDs,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -639,18 +639,18 @@ func (*RoleAssigneesResponse) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *RoleAssigneesResponse) GetUser_UUIDs() []string {
+func (x *RoleAssigneesResponse) GetUserUUIDs() []string {
 	if x != nil {
-		return x.User_UUIDs
+		return x.UserUUIDs
 	}
 	return nil
 }
 
 type AssignRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Assignee_UUID string                 `protobuf:"bytes,1,opt,name=assignee_UUID,json=assigneeUUID,proto3" json:"assignee_UUID,omitempty"`
-	Role_UUID     string                 `protobuf:"bytes,2,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
-	ExpiresAt     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expires_at,json=expiresAt,proto3,oneof" json:"expires_at,omitempty"`
+	AssigneeUUID  string                 `protobuf:"bytes,1,opt,name=assigneeUUID,proto3" json:"assigneeUUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,2,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
+	Expiresat     *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=expiresat,proto3,oneof" json:"expiresat,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -685,33 +685,33 @@ func (*AssignRoleRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *AssignRoleRequest) GetAssignee_UUID() string {
+func (x *AssignRoleRequest) GetAssigneeUUID() string {
 	if x != nil {
-		return x.Assignee_UUID
+		return x.AssigneeUUID
 	}
 	return ""
 }
 
-func (x *AssignRoleRequest) GetRole_UUID() string {
+func (x *AssignRoleRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
 
-func (x *AssignRoleRequest) GetExpiresAt() *timestamppb.Timestamp {
+func (x *AssignRoleRequest) GetExpiresat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.ExpiresAt
+		return x.Expiresat
 	}
 	return nil
 }
 
 type PatchRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
 	Description   *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Extended_UUID *string                `protobuf:"bytes,4,opt,name=extended_UUID,json=extendedUUID,proto3,oneof" json:"extended_UUID,omitempty"`
+	ExtendedUUID  *string                `protobuf:"bytes,4,opt,name=extendedUUID,proto3,oneof" json:"extendedUUID,omitempty"`
 	Priority      *int32                 `protobuf:"varint,5,opt,name=priority,proto3,oneof" json:"priority,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
@@ -747,9 +747,9 @@ func (*PatchRoleRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *PatchRoleRequest) GetRole_UUID() string {
+func (x *PatchRoleRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -768,9 +768,9 @@ func (x *PatchRoleRequest) GetDescription() string {
 	return ""
 }
 
-func (x *PatchRoleRequest) GetExtended_UUID() string {
-	if x != nil && x.Extended_UUID != nil {
-		return *x.Extended_UUID
+func (x *PatchRoleRequest) GetExtendedUUID() string {
+	if x != nil && x.ExtendedUUID != nil {
+		return *x.ExtendedUUID
 	}
 	return ""
 }
@@ -784,7 +784,7 @@ func (x *PatchRoleRequest) GetPriority() int32 {
 
 type RoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -819,23 +819,23 @@ func (*RoleRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *RoleRequest) GetRole_UUID() string {
+func (x *RoleRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
 
 type RoleResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Extended_UUID *string                `protobuf:"bytes,4,opt,name=extended_UUID,json=extendedUUID,proto3,oneof" json:"extended_UUID,omitempty"`
+	ExtendedUUID  *string                `protobuf:"bytes,4,opt,name=extendedUUID,proto3,oneof" json:"extendedUUID,omitempty"`
 	Priority      int32                  `protobuf:"varint,5,opt,name=priority,proto3" json:"priority,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Createdat     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=createdat,proto3" json:"createdat,omitempty"`
+	Deletedat     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deletedat,proto3,oneof" json:"deletedat,omitempty"`
+	Updatedat     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updatedat,proto3" json:"updatedat,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -870,9 +870,9 @@ func (*RoleResponse) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{14}
 }
 
-func (x *RoleResponse) GetRole_UUID() string {
+func (x *RoleResponse) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -891,9 +891,9 @@ func (x *RoleResponse) GetDescription() string {
 	return ""
 }
 
-func (x *RoleResponse) GetExtended_UUID() string {
-	if x != nil && x.Extended_UUID != nil {
-		return *x.Extended_UUID
+func (x *RoleResponse) GetExtendedUUID() string {
+	if x != nil && x.ExtendedUUID != nil {
+		return *x.ExtendedUUID
 	}
 	return ""
 }
@@ -905,23 +905,23 @@ func (x *RoleResponse) GetPriority() int32 {
 	return 0
 }
 
-func (x *RoleResponse) GetCreatedAt() *timestamppb.Timestamp {
+func (x *RoleResponse) GetCreatedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreatedAt
+		return x.Createdat
 	}
 	return nil
 }
 
-func (x *RoleResponse) GetDeletedAt() *timestamppb.Timestamp {
+func (x *RoleResponse) GetDeletedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.DeletedAt
+		return x.Deletedat
 	}
 	return nil
 }
 
-func (x *RoleResponse) GetUpdatedAt() *timestamppb.Timestamp {
+func (x *RoleResponse) GetUpdatedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdatedAt
+		return x.Updatedat
 	}
 	return nil
 }
@@ -1048,8 +1048,8 @@ func (x *ListRolesResponse) GetTotal() int64 {
 
 type AddActionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Action_UUIDs  []string               `protobuf:"bytes,1,rep,name=action_UUIDs,json=actionUUIDs,proto3" json:"action_UUIDs,omitempty"`
-	Role_UUID     string                 `protobuf:"bytes,2,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	ActionUUIDs   []string               `protobuf:"bytes,1,rep,name=actionUUIDs,proto3" json:"actionUUIDs,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,2,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1084,24 +1084,24 @@ func (*AddActionsRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{17}
 }
 
-func (x *AddActionsRequest) GetAction_UUIDs() []string {
+func (x *AddActionsRequest) GetActionUUIDs() []string {
 	if x != nil {
-		return x.Action_UUIDs
+		return x.ActionUUIDs
 	}
 	return nil
 }
 
-func (x *AddActionsRequest) GetRole_UUID() string {
+func (x *AddActionsRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
 
 type RevokeActionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Action_UUIDs  []string               `protobuf:"bytes,1,rep,name=action_UUIDs,json=actionUUIDs,proto3" json:"action_UUIDs,omitempty"`
-	Role_UUID     string                 `protobuf:"bytes,2,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	ActionUUIDs   []string               `protobuf:"bytes,1,rep,name=actionUUIDs,proto3" json:"actionUUIDs,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,2,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1136,16 +1136,16 @@ func (*RevokeActionsRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{18}
 }
 
-func (x *RevokeActionsRequest) GetAction_UUIDs() []string {
+func (x *RevokeActionsRequest) GetActionUUIDs() []string {
 	if x != nil {
-		return x.Action_UUIDs
+		return x.ActionUUIDs
 	}
 	return nil
 }
 
-func (x *RevokeActionsRequest) GetRole_UUID() string {
+func (x *RevokeActionsRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -1272,7 +1272,7 @@ func (x *ListActionsResponse) GetTotal() int64 {
 
 type ActionsByRoleRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1307,9 +1307,9 @@ func (*ActionsByRoleRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *ActionsByRoleRequest) GetRole_UUID() string {
+func (x *ActionsByRoleRequest) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -1360,7 +1360,7 @@ func (x *ActionsByRoleResponse) GetActions() []*Action {
 
 type ActionRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Action_UUID   string                 `protobuf:"bytes,1,opt,name=action_UUID,json=actionUUID,proto3" json:"action_UUID,omitempty"`
+	ActionUUID    string                 `protobuf:"bytes,1,opt,name=actionUUID,proto3" json:"actionUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1395,9 +1395,9 @@ func (*ActionRequest) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{23}
 }
 
-func (x *ActionRequest) GetAction_UUID() string {
+func (x *ActionRequest) GetActionUUID() string {
 	if x != nil {
-		return x.Action_UUID
+		return x.ActionUUID
 	}
 	return ""
 }
@@ -1448,14 +1448,14 @@ func (x *ActionResponse) GetAction() *Action {
 
 type ListRolesResponse_Role struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Role_UUID     string                 `protobuf:"bytes,1,opt,name=role_UUID,json=roleUUID,proto3" json:"role_UUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,1,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
 	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	Description   *string                `protobuf:"bytes,3,opt,name=description,proto3,oneof" json:"description,omitempty"`
-	Extended_UUID *string                `protobuf:"bytes,4,opt,name=extended_UUID,json=extendedUUID,proto3,oneof" json:"extended_UUID,omitempty"`
+	ExtendedUUID  *string                `protobuf:"bytes,4,opt,name=extendedUUID,proto3,oneof" json:"extendedUUID,omitempty"`
 	Priority      int32                  `protobuf:"varint,5,opt,name=priority,proto3" json:"priority,omitempty"`
-	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
-	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
-	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	Createdat     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=createdat,proto3" json:"createdat,omitempty"`
+	Deletedat     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deletedat,proto3,oneof" json:"deletedat,omitempty"`
+	Updatedat     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updatedat,proto3" json:"updatedat,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1490,9 +1490,9 @@ func (*ListRolesResponse_Role) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{16, 0}
 }
 
-func (x *ListRolesResponse_Role) GetRole_UUID() string {
+func (x *ListRolesResponse_Role) GetRoleUUID() string {
 	if x != nil {
-		return x.Role_UUID
+		return x.RoleUUID
 	}
 	return ""
 }
@@ -1511,9 +1511,9 @@ func (x *ListRolesResponse_Role) GetDescription() string {
 	return ""
 }
 
-func (x *ListRolesResponse_Role) GetExtended_UUID() string {
-	if x != nil && x.Extended_UUID != nil {
-		return *x.Extended_UUID
+func (x *ListRolesResponse_Role) GetExtendedUUID() string {
+	if x != nil && x.ExtendedUUID != nil {
+		return *x.ExtendedUUID
 	}
 	return ""
 }
@@ -1525,23 +1525,23 @@ func (x *ListRolesResponse_Role) GetPriority() int32 {
 	return 0
 }
 
-func (x *ListRolesResponse_Role) GetCreatedAt() *timestamppb.Timestamp {
+func (x *ListRolesResponse_Role) GetCreatedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.CreatedAt
+		return x.Createdat
 	}
 	return nil
 }
 
-func (x *ListRolesResponse_Role) GetDeletedAt() *timestamppb.Timestamp {
+func (x *ListRolesResponse_Role) GetDeletedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.DeletedAt
+		return x.Deletedat
 	}
 	return nil
 }
 
-func (x *ListRolesResponse_Role) GetUpdatedAt() *timestamppb.Timestamp {
+func (x *ListRolesResponse_Role) GetUpdatedat() *timestamppb.Timestamp {
 	if x != nil {
-		return x.UpdatedAt
+		return x.Updatedat
 	}
 	return nil
 }
@@ -1550,109 +1550,103 @@ var File_proto_RBAC_proto protoreflect.FileDescriptor
 
 const file_proto_RBAC_proto_rawDesc = "" +
 	"\n" +
-	"\x10proto/RBAC.proto\x12\x04RBAC\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x98\x01\n" +
-	"\x15HasPermissionQuestion\x12\x1b\n" +
-	"\tuser_UUID\x18\x01 \x01(\tR\buserUUID\x12\x14\n" +
+	"\x10proto/RBAC.proto\x12\x04RBAC\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"\x97\x01\n" +
+	"\x15HasPermissionQuestion\x12\x1a\n" +
+	"\buserUUID\x18\x01 \x01(\tR\buserUUID\x12\x14\n" +
 	"\x05scope\x18\x02 \x01(\tR\x05scope\x12\x1f\n" +
 	"\bsubScope\x18\x03 \x01(\tH\x00R\bsubScope\x88\x01\x01\x12\x1e\n" +
 	"\x04verb\x18\x04 \x01(\x0e2\n" +
 	".RBAC.VerbR\x04verbB\v\n" +
 	"\t_subScope\"'\n" +
 	"\x13HasPermissionAnswer\x12\x10\n" +
-	"\x03has\x18\x01 \x01(\bR\x03has\"0\n" +
-	"\x11DeleteRoleRequest\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\"n\n" +
+	"\x03has\x18\x01 \x01(\bR\x03has\"/\n" +
+	"\x11DeleteRoleRequest\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"l\n" +
 	"\x06Action\x12\x14\n" +
-	"\x05scope\x18\x01 \x01(\tR\x05scope\x12 \n" +
-	"\tsub_scope\x18\x02 \x01(\tH\x00R\bsubScope\x88\x01\x01\x12\x1e\n" +
+	"\x05scope\x18\x01 \x01(\tR\x05scope\x12\x1f\n" +
+	"\bsubscope\x18\x02 \x01(\tH\x00R\bsubscope\x88\x01\x01\x12\x1e\n" +
 	"\x04verb\x18\x03 \x01(\x0e2\n" +
-	".RBAC.VerbR\x04verbB\f\n" +
-	"\n" +
-	"_sub_scope\"\xde\x01\n" +
+	".RBAC.VerbR\x04verbB\v\n" +
+	"\t_subscope\"\xdc\x01\n" +
 	"\x11CreateRoleRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12%\n" +
-	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12(\n" +
-	"\rextended_UUID\x18\x03 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
+	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12'\n" +
+	"\fextendedUUID\x18\x03 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
 	"\bpriority\x18\x04 \x01(\x05R\bpriority\x12&\n" +
 	"\aactions\x18\x05 \x03(\v2\f.RBAC.ActionR\aactionsB\x0e\n" +
-	"\f_descriptionB\x10\n" +
-	"\x0e_extended_UUID\"@\n" +
-	"\x19AssignorsAssigneesRequest\x12#\n" +
-	"\rassignor_UUID\x18\x01 \x01(\tR\fassignorUUID\"C\n" +
-	"\x1aAssignorsAssigneesResponse\x12%\n" +
-	"\x0eassignee_UUIDs\x18\x01 \x03(\tR\rassigneeUUIDs\"W\n" +
-	"\x13RoleAssignorRequest\x12#\n" +
-	"\rassignee_UUID\x18\x01 \x01(\tR\fassigneeUUID\x12\x1b\n" +
-	"\trole_UUID\x18\x02 \x01(\tR\broleUUID\";\n" +
-	"\x14RoleAssignorResponse\x12#\n" +
-	"\rassignor_UUID\x18\x01 \x01(\tR\fassignorUUID\"3\n" +
-	"\x14RoleAssigneesRequest\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\"6\n" +
-	"\x15RoleAssigneesResponse\x12\x1d\n" +
+	"\f_descriptionB\x0f\n" +
+	"\r_extendedUUID\"?\n" +
+	"\x19AssignorsAssigneesRequest\x12\"\n" +
+	"\fassignorUUID\x18\x01 \x01(\tR\fassignorUUID\"B\n" +
+	"\x1aAssignorsAssigneesResponse\x12$\n" +
+	"\rassigneeUUIDs\x18\x01 \x03(\tR\rassigneeUUIDs\"U\n" +
+	"\x13RoleAssignorRequest\x12\"\n" +
+	"\fassigneeUUID\x18\x01 \x01(\tR\fassigneeUUID\x12\x1a\n" +
+	"\broleUUID\x18\x02 \x01(\tR\broleUUID\":\n" +
+	"\x14RoleAssignorResponse\x12\"\n" +
+	"\fassignorUUID\x18\x01 \x01(\tR\fassignorUUID\"2\n" +
+	"\x14RoleAssigneesRequest\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"5\n" +
+	"\x15RoleAssigneesResponse\x12\x1c\n" +
+	"\tuserUUIDs\x18\x01 \x03(\tR\tuserUUIDs\"\xa0\x01\n" +
+	"\x11AssignRoleRequest\x12\"\n" +
+	"\fassigneeUUID\x18\x01 \x01(\tR\fassigneeUUID\x12\x1a\n" +
+	"\broleUUID\x18\x02 \x01(\tR\broleUUID\x12=\n" +
+	"\texpiresat\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresat\x88\x01\x01B\f\n" +
 	"\n" +
-	"user_UUIDs\x18\x01 \x03(\tR\tuserUUIDs\"\xa4\x01\n" +
-	"\x11AssignRoleRequest\x12#\n" +
-	"\rassignee_UUID\x18\x01 \x01(\tR\fassigneeUUID\x12\x1b\n" +
-	"\trole_UUID\x18\x02 \x01(\tR\broleUUID\x12>\n" +
-	"\n" +
-	"expires_at\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\texpiresAt\x88\x01\x01B\r\n" +
-	"\v_expires_at\"\xf2\x01\n" +
-	"\x10PatchRoleRequest\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\x12\x17\n" +
+	"_expiresat\"\xef\x01\n" +
+	"\x10PatchRoleRequest\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12%\n" +
-	"\vdescription\x18\x03 \x01(\tH\x01R\vdescription\x88\x01\x01\x12(\n" +
-	"\rextended_UUID\x18\x04 \x01(\tH\x02R\fextendedUUID\x88\x01\x01\x12\x1f\n" +
+	"\vdescription\x18\x03 \x01(\tH\x01R\vdescription\x88\x01\x01\x12'\n" +
+	"\fextendedUUID\x18\x04 \x01(\tH\x02R\fextendedUUID\x88\x01\x01\x12\x1f\n" +
 	"\bpriority\x18\x05 \x01(\x05H\x03R\bpriority\x88\x01\x01B\a\n" +
 	"\x05_nameB\x0e\n" +
-	"\f_descriptionB\x10\n" +
-	"\x0e_extended_UUIDB\v\n" +
-	"\t_priority\"*\n" +
-	"\vRoleRequest\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\"\x93\x03\n" +
-	"\fRoleResponse\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\x12\x12\n" +
+	"\f_descriptionB\x0f\n" +
+	"\r_extendedUUIDB\v\n" +
+	"\t_priority\")\n" +
+	"\vRoleRequest\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"\x8c\x03\n" +
+	"\fRoleResponse\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
-	"\vdescription\x18\x03 \x01(\tH\x00R\vdescription\x88\x01\x01\x12(\n" +
-	"\rextended_UUID\x18\x04 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x05 \x01(\x05R\bpriority\x129\n" +
+	"\vdescription\x18\x03 \x01(\tH\x00R\vdescription\x88\x01\x01\x12'\n" +
+	"\fextendedUUID\x18\x04 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
+	"\bpriority\x18\x05 \x01(\x05R\bpriority\x128\n" +
+	"\tcreatedat\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedat\x12=\n" +
+	"\tdeletedat\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedat\x88\x01\x01\x128\n" +
+	"\tupdatedat\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedatB\x0e\n" +
+	"\f_descriptionB\x0f\n" +
+	"\r_extendedUUIDB\f\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
-	"\n" +
-	"deleted_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedAt\x88\x01\x01\x129\n" +
-	"\n" +
-	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0e\n" +
-	"\f_descriptionB\x10\n" +
-	"\x0e_extended_UUIDB\r\n" +
-	"\v_deleted_at\":\n" +
+	"_deletedat\":\n" +
 	"\x10ListRolesRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x02 \x01(\x05R\x04size\"\x93\x04\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"\x8c\x04\n" +
 	"\x11ListRolesResponse\x122\n" +
 	"\x05roles\x18\x01 \x03(\v2\x1c.RBAC.ListRolesResponse.RoleR\x05roles\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x03R\x05total\x1a\x8b\x03\n" +
-	"\x04Role\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\x12\x12\n" +
+	"\x05total\x18\x04 \x01(\x03R\x05total\x1a\x84\x03\n" +
+	"\x04Role\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
-	"\vdescription\x18\x03 \x01(\tH\x00R\vdescription\x88\x01\x01\x12(\n" +
-	"\rextended_UUID\x18\x04 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
-	"\bpriority\x18\x05 \x01(\x05R\bpriority\x129\n" +
+	"\vdescription\x18\x03 \x01(\tH\x00R\vdescription\x88\x01\x01\x12'\n" +
+	"\fextendedUUID\x18\x04 \x01(\tH\x01R\fextendedUUID\x88\x01\x01\x12\x1a\n" +
+	"\bpriority\x18\x05 \x01(\x05R\bpriority\x128\n" +
+	"\tcreatedat\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedat\x12=\n" +
+	"\tdeletedat\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedat\x88\x01\x01\x128\n" +
+	"\tupdatedat\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedatB\x0e\n" +
+	"\f_descriptionB\x0f\n" +
+	"\r_extendedUUIDB\f\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\x12>\n" +
-	"\n" +
-	"deleted_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedAt\x88\x01\x01\x129\n" +
-	"\n" +
-	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAtB\x0e\n" +
-	"\f_descriptionB\x10\n" +
-	"\x0e_extended_UUIDB\r\n" +
-	"\v_deleted_at\"S\n" +
-	"\x11AddActionsRequest\x12!\n" +
-	"\faction_UUIDs\x18\x01 \x03(\tR\vactionUUIDs\x12\x1b\n" +
-	"\trole_UUID\x18\x02 \x01(\tR\broleUUID\"V\n" +
-	"\x14RevokeActionsRequest\x12!\n" +
-	"\faction_UUIDs\x18\x01 \x03(\tR\vactionUUIDs\x12\x1b\n" +
-	"\trole_UUID\x18\x02 \x01(\tR\broleUUID\"<\n" +
+	"_deletedat\"Q\n" +
+	"\x11AddActionsRequest\x12 \n" +
+	"\vactionUUIDs\x18\x01 \x03(\tR\vactionUUIDs\x12\x1a\n" +
+	"\broleUUID\x18\x02 \x01(\tR\broleUUID\"T\n" +
+	"\x14RevokeActionsRequest\x12 \n" +
+	"\vactionUUIDs\x18\x01 \x03(\tR\vactionUUIDs\x12\x1a\n" +
+	"\broleUUID\x18\x02 \x01(\tR\broleUUID\"<\n" +
 	"\x12ListActionsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x02 \x01(\x05R\x04size\"y\n" +
@@ -1660,13 +1654,14 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\x06action\x18\x01 \x03(\v2\f.RBAC.ActionR\x06action\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x14\n" +
-	"\x05total\x18\x04 \x01(\x03R\x05total\"3\n" +
-	"\x14ActionsByRoleRequest\x12\x1b\n" +
-	"\trole_UUID\x18\x01 \x01(\tR\broleUUID\"?\n" +
+	"\x05total\x18\x04 \x01(\x03R\x05total\"2\n" +
+	"\x14ActionsByRoleRequest\x12\x1a\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"?\n" +
 	"\x15ActionsByRoleResponse\x12&\n" +
-	"\aactions\x18\x01 \x03(\v2\f.RBAC.ActionR\aactions\"0\n" +
-	"\rActionRequest\x12\x1f\n" +
-	"\vaction_UUID\x18\x01 \x01(\tR\n" +
+	"\aactions\x18\x01 \x03(\v2\f.RBAC.ActionR\aactions\"/\n" +
+	"\rActionRequest\x12\x1e\n" +
+	"\n" +
+	"actionUUID\x18\x01 \x01(\tR\n" +
 	"actionUUID\"6\n" +
 	"\x0eActionResponse\x12$\n" +
 	"\x06action\x18\x01 \x01(\v2\f.RBAC.ActionR\x06action*H\n" +
@@ -1677,27 +1672,27 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\x03PUT\x10\x03\x12\t\n" +
 	"\x05PATCH\x10\x04\x12\n" +
 	"\n" +
-	"\x06DELETE\x10\x052\xaa\f\n" +
+	"\x06DELETE\x10\x052\x9d\f\n" +
 	"\vRBACService\x12G\n" +
-	"\rHasPermission\x12\x1b.RBAC.HasPermissionQuestion\x1a\x19.RBAC.HasPermissionAnswer\x12a\n" +
+	"\rHasPermission\x12\x1b.RBAC.HasPermissionQuestion\x1a\x19.RBAC.HasPermissionAnswer\x12`\n" +
 	"\n" +
-	"DeleteRole\x12\x17.RBAC.DeleteRoleRequest\x1a\x16.google.protobuf.Empty\"\"\x82\xd3\xe4\x93\x02\x1c*\x1a/v1/RBAC/roles/{role_UUID}\x12Q\n" +
-	"\x04Role\x12\x11.RBAC.RoleRequest\x1a\x12.RBAC.RoleResponse\"\"\x82\xd3\xe4\x93\x02\x1c\x12\x1a/v1/RBAC/roles/{role_UUID}\x12b\n" +
-	"\tPatchRole\x12\x16.RBAC.PatchRoleRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f:\x01*2\x1a/v1/RBAC/roles/{role_UUID}\x12X\n" +
+	"DeleteRole\x12\x17.RBAC.DeleteRoleRequest\x1a\x16.google.protobuf.Empty\"!\x82\xd3\xe4\x93\x02\x1b*\x19/v1/RBAC/roles/{roleUUID}\x12P\n" +
+	"\x04Role\x12\x11.RBAC.RoleRequest\x1a\x12.RBAC.RoleResponse\"!\x82\xd3\xe4\x93\x02\x1b\x12\x19/v1/RBAC/roles/{roleUUID}\x12a\n" +
+	"\tPatchRole\x12\x16.RBAC.PatchRoleRequest\x1a\x16.google.protobuf.Empty\"$\x82\xd3\xe4\x93\x02\x1e:\x01*2\x19/v1/RBAC/roles/{roleUUID}\x12X\n" +
 	"\n" +
 	"CreateRole\x12\x17.RBAC.CreateRoleRequest\x1a\x16.google.protobuf.Empty\"\x19\x82\xd3\xe4\x93\x02\x13:\x01*\"\x0e/v1/RBAC/roles\x12T\n" +
-	"\tListRoles\x12\x16.RBAC.ListRolesRequest\x1a\x17.RBAC.ListRolesResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/RBAC/roles\x12\x83\x01\n" +
-	"\x12AssignorsAssignees\x12\x1f.RBAC.AssignorsAssigneesRequest\x1a .RBAC.AssignorsAssigneesResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/v1/RBAC/assignors/{assignor_UUID}\x12}\n" +
-	"\fRoleAssignor\x12\x19.RBAC.RoleAssignorRequest\x1a\x1a.RBAC.RoleAssignorResponse\"6\x82\xd3\xe4\x93\x020\x12./v1/RBAC/assignees/{assignee_UUID}/{role_UUID}\x12v\n" +
-	"\rRoleAssignees\x12\x1a.RBAC.RoleAssigneesRequest\x1a\x1b.RBAC.RoleAssigneesResponse\",\x82\xd3\xe4\x93\x02&\x12$/v1/RBAC/roles/{role_UUID}/assignees\x12{\n" +
+	"\tListRoles\x12\x16.RBAC.ListRolesRequest\x1a\x17.RBAC.ListRolesResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/RBAC/roles\x12\x82\x01\n" +
+	"\x12AssignorsAssignees\x12\x1f.RBAC.AssignorsAssigneesRequest\x1a .RBAC.AssignorsAssigneesResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/RBAC/assignors/{assignorUUID}\x12{\n" +
+	"\fRoleAssignor\x12\x19.RBAC.RoleAssignorRequest\x1a\x1a.RBAC.RoleAssignorResponse\"4\x82\xd3\xe4\x93\x02.\x12,/v1/RBAC/assignees/{assigneeUUID}/{roleUUID}\x12u\n" +
+	"\rRoleAssignees\x12\x1a.RBAC.RoleAssigneesRequest\x1a\x1b.RBAC.RoleAssigneesResponse\"+\x82\xd3\xe4\x93\x02%\x12#/v1/RBAC/roles/{roleUUID}/assignees\x12y\n" +
 	"\n" +
-	"AssignRole\x12\x17.RBAC.AssignRoleRequest\x1a\x16.google.protobuf.Empty\"<\x82\xd3\xe4\x93\x026\"4/v1/RBAC/roles/{role_UUID}/assignees/{assignee_UUID}\x12l\n" +
+	"AssignRole\x12\x17.RBAC.AssignRoleRequest\x1a\x16.google.protobuf.Empty\":\x82\xd3\xe4\x93\x024\"2/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}\x12k\n" +
 	"\n" +
-	"AddActions\x12\x17.RBAC.AddActionsRequest\x1a\x16.google.protobuf.Empty\"-\x82\xd3\xe4\x93\x02':\x01*\"\"/v1/RBAC/roles/{role_UUID}/actions\x12o\n" +
-	"\rRevokeActions\x12\x1a.RBAC.RevokeActionsRequest\x1a\x16.google.protobuf.Empty\"*\x82\xd3\xe4\x93\x02$*\"/v1/RBAC/roles/{role_UUID}/actions\x12\\\n" +
-	"\vListActions\x12\x18.RBAC.ListActionsRequest\x1a\x19.RBAC.ListActionsResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/RBAC/actions\x12t\n" +
-	"\rActionsByRole\x12\x1a.RBAC.ActionsByRoleRequest\x1a\x1b.RBAC.ActionsByRoleResponse\"*\x82\xd3\xe4\x93\x02$\x12\"/v1/RBAC/roles/{role_UUID}/actions\x12[\n" +
-	"\x06Action\x12\x13.RBAC.ActionRequest\x1a\x14.RBAC.ActionResponse\"&\x82\xd3\xe4\x93\x02 \x12\x1e/v1/RBAC/actions/{action_UUID}B\x04Z\x02./b\x06proto3"
+	"AddActions\x12\x17.RBAC.AddActionsRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&:\x01*\"!/v1/RBAC/roles/{roleUUID}/actions\x12n\n" +
+	"\rRevokeActions\x12\x1a.RBAC.RevokeActionsRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/RBAC/roles/{roleUUID}/actions\x12\\\n" +
+	"\vListActions\x12\x18.RBAC.ListActionsRequest\x1a\x19.RBAC.ListActionsResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/RBAC/actions\x12s\n" +
+	"\rActionsByRole\x12\x1a.RBAC.ActionsByRoleRequest\x1a\x1b.RBAC.ActionsByRoleResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/RBAC/roles/{roleUUID}/actions\x12Z\n" +
+	"\x06Action\x12\x13.RBAC.ActionRequest\x1a\x14.RBAC.ActionResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/RBAC/actions/{actionUUID}B\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_RBAC_proto_rawDescOnce sync.Once
@@ -1748,17 +1743,17 @@ var file_proto_RBAC_proto_depIdxs = []int32{
 	0,  // 0: RBAC.HasPermissionQuestion.verb:type_name -> RBAC.Verb
 	0,  // 1: RBAC.Action.verb:type_name -> RBAC.Verb
 	4,  // 2: RBAC.CreateRoleRequest.actions:type_name -> RBAC.Action
-	27, // 3: RBAC.AssignRoleRequest.expires_at:type_name -> google.protobuf.Timestamp
-	27, // 4: RBAC.RoleResponse.created_at:type_name -> google.protobuf.Timestamp
-	27, // 5: RBAC.RoleResponse.deleted_at:type_name -> google.protobuf.Timestamp
-	27, // 6: RBAC.RoleResponse.updated_at:type_name -> google.protobuf.Timestamp
+	27, // 3: RBAC.AssignRoleRequest.expiresat:type_name -> google.protobuf.Timestamp
+	27, // 4: RBAC.RoleResponse.createdat:type_name -> google.protobuf.Timestamp
+	27, // 5: RBAC.RoleResponse.deletedat:type_name -> google.protobuf.Timestamp
+	27, // 6: RBAC.RoleResponse.updatedat:type_name -> google.protobuf.Timestamp
 	26, // 7: RBAC.ListRolesResponse.roles:type_name -> RBAC.ListRolesResponse.Role
 	4,  // 8: RBAC.ListActionsResponse.action:type_name -> RBAC.Action
 	4,  // 9: RBAC.ActionsByRoleResponse.actions:type_name -> RBAC.Action
 	4,  // 10: RBAC.ActionResponse.action:type_name -> RBAC.Action
-	27, // 11: RBAC.ListRolesResponse.Role.created_at:type_name -> google.protobuf.Timestamp
-	27, // 12: RBAC.ListRolesResponse.Role.deleted_at:type_name -> google.protobuf.Timestamp
-	27, // 13: RBAC.ListRolesResponse.Role.updated_at:type_name -> google.protobuf.Timestamp
+	27, // 11: RBAC.ListRolesResponse.Role.createdat:type_name -> google.protobuf.Timestamp
+	27, // 12: RBAC.ListRolesResponse.Role.deletedat:type_name -> google.protobuf.Timestamp
+	27, // 13: RBAC.ListRolesResponse.Role.updatedat:type_name -> google.protobuf.Timestamp
 	1,  // 14: RBAC.RBACService.HasPermission:input_type -> RBAC.HasPermissionQuestion
 	3,  // 15: RBAC.RBACService.DeleteRole:input_type -> RBAC.DeleteRoleRequest
 	14, // 16: RBAC.RBACService.Role:input_type -> RBAC.RoleRequest

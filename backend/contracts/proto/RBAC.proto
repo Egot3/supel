@@ -18,7 +18,7 @@ enum Verb {
 }
 
 message HasPermissionQuestion {
-    string user_UUID = 1;
+    string userUUID = 1;
     string scope = 2;
     optional string subScope = 3;
     Verb verb = 4;
@@ -30,13 +30,13 @@ message HasPermissionAnswer {
 
 
 message DeleteRoleRequest {
-    string role_UUID = 1;
+    string roleUUID = 1;
 }
 
 
 message Action {
     string scope = 1;
-    optional string sub_scope = 2;
+    optional string subscope = 2;
     Verb verb = 3;
 }
 
@@ -44,7 +44,7 @@ message Action {
 message CreateRoleRequest {
     string name = 1;
     optional string description = 2;
-    optional string extended_UUID = 3;
+    optional string extendedUUID = 3;
     int32 priority = 4;
 
     repeated Action actions = 5;
@@ -52,63 +52,63 @@ message CreateRoleRequest {
 
 
 message AssignorsAssigneesRequest {
-    string assignor_UUID = 1;
+    string assignorUUID = 1;
 }
 
 message AssignorsAssigneesResponse {
-    repeated string assignee_UUIDs = 1;
+    repeated string assigneeUUIDs = 1;
 }
 
 
 message RoleAssignorRequest {
-    string assignee_UUID = 1;
-    string role_UUID = 2;
+    string assigneeUUID = 1;
+    string roleUUID = 2;
 }
 
 message RoleAssignorResponse {
-    string assignor_UUID = 1;
+    string assignorUUID = 1;
 }
 
 
 message RoleAssigneesRequest {
-    string role_UUID = 1;
+    string roleUUID = 1;
 }
 
 message RoleAssigneesResponse {
-    repeated string user_UUIDs = 1;
+    repeated string userUUIDs = 1;
 }
 
 
 message AssignRoleRequest {
-    string assignee_UUID = 1;
-    string role_UUID = 2;
-    optional google.protobuf.Timestamp expires_at = 3;
+    string assigneeUUID = 1;
+    string roleUUID = 2;
+    optional google.protobuf.Timestamp expiresat = 3;
 }
 
 message PatchRoleRequest {
-    string role_UUID = 1;
+    string roleUUID = 1;
     optional string name = 2;
     optional string description = 3;
-    optional string extended_UUID = 4;
+    optional string extendedUUID = 4;
     optional int32  priority = 5;
 }
 
 
 message RoleRequest {
-    string role_UUID = 1;
+    string roleUUID = 1;
 }
 
 message RoleResponse {
-    string role_UUID = 1;
+    string roleUUID = 1;
     string name = 2;
     optional string description = 3;
-    optional string extended_UUID = 4;
+    optional string extendedUUID = 4;
 
     int32  priority = 5;
 
-    google.protobuf.Timestamp created_at = 6;
-    optional google.protobuf.Timestamp deleted_at = 7;
-    google.protobuf.Timestamp updated_at = 8;
+    google.protobuf.Timestamp createdat = 6;
+    optional google.protobuf.Timestamp deletedat = 7;
+    google.protobuf.Timestamp updatedat = 8;
 }
 
 message ListRolesRequest {
@@ -118,16 +118,16 @@ message ListRolesRequest {
 
 message ListRolesResponse {
     message Role {
-        string role_UUID = 1;
+        string roleUUID = 1;
         string name = 2;
         optional string description = 3;
-        optional string extended_UUID = 4;
+        optional string extendedUUID = 4;
 
         int32  priority = 5;
 
-        google.protobuf.Timestamp created_at = 6;
-        optional google.protobuf.Timestamp deleted_at = 7;
-        google.protobuf.Timestamp updated_at = 8;
+        google.protobuf.Timestamp createdat = 6;
+        optional google.protobuf.Timestamp deletedat = 7;
+        google.protobuf.Timestamp updatedat = 8;
     }
 
     repeated Role roles = 1;
@@ -141,17 +141,17 @@ service RBACService {
     
     rpc DeleteRole(DeleteRoleRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            delete: "/v1/RBAC/roles/{role_UUID}"
+            delete: "/v1/RBAC/roles/{roleUUID}"
         };
     }; 
     rpc Role(RoleRequest) returns (RoleResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/roles/{role_UUID}"
+            get: "/v1/RBAC/roles/{roleUUID}"
         };
     };
     rpc PatchRole(PatchRoleRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "/v1/RBAC/roles/{role_UUID}"
+            patch: "/v1/RBAC/roles/{roleUUID}"
             body: "*"
         };
     };
@@ -169,35 +169,35 @@ service RBACService {
 
     rpc AssignorsAssignees(AssignorsAssigneesRequest) returns (AssignorsAssigneesResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/assignors/{assignor_UUID}"
+            get: "/v1/RBAC/assignors/{assignorUUID}"
         };
     };
     rpc RoleAssignor(RoleAssignorRequest) returns (RoleAssignorResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/assignees/{assignee_UUID}/{role_UUID}"
+            get: "/v1/RBAC/assignees/{assigneeUUID}/{roleUUID}"
         };
     };
     rpc RoleAssignees(RoleAssigneesRequest) returns (RoleAssigneesResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/roles/{role_UUID}/assignees"
+            get: "/v1/RBAC/roles/{roleUUID}/assignees"
         };
     };
     rpc AssignRole(AssignRoleRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/v1/RBAC/roles/{role_UUID}/assignees/{assignee_UUID}"
+            post: "/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}"
         };
     };
 
 
     rpc AddActions(AddActionsRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/v1/RBAC/roles/{role_UUID}/actions"
+            post: "/v1/RBAC/roles/{roleUUID}/actions"
             body: "*"
         };
     };
     rpc RevokeActions(RevokeActionsRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            delete: "/v1/RBAC/roles/{role_UUID}/actions"
+            delete: "/v1/RBAC/roles/{roleUUID}/actions"
         };
     };
     rpc ListActions(ListActionsRequest) returns (ListActionsResponse){
@@ -207,24 +207,24 @@ service RBACService {
     };
     rpc ActionsByRole(ActionsByRoleRequest) returns (ActionsByRoleResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/roles/{role_UUID}/actions"
+            get: "/v1/RBAC/roles/{roleUUID}/actions"
         };
     };
     rpc Action(ActionRequest) returns (ActionResponse){
         option (google.api.http) = {
-            get: "/v1/RBAC/actions/{action_UUID}"
+            get: "/v1/RBAC/actions/{actionUUID}"
         };
     };
 }
 
 message AddActionsRequest {
-    repeated string action_UUIDs = 1;
-    string role_UUID = 2;
+    repeated string actionUUIDs = 1;
+    string roleUUID = 2;
 }
 
 message RevokeActionsRequest {
-    repeated string action_UUIDs = 1;
-    string role_UUID = 2;
+    repeated string actionUUIDs = 1;
+    string roleUUID = 2;
 }
 
 message ListActionsRequest {
@@ -240,7 +240,7 @@ message ListActionsResponse {
 }
 
 message ActionsByRoleRequest {
-    string role_UUID = 1;
+    string roleUUID = 1;
 }
 
 message ActionsByRoleResponse {
@@ -248,7 +248,7 @@ message ActionsByRoleResponse {
 }
 
 message ActionRequest {
-    string action_UUID = 1;
+    string actionUUID = 1;
 }
 
 message ActionResponse {

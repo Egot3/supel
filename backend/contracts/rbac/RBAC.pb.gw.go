@@ -44,13 +44,13 @@ func request_RBACService_DeleteRole_0(ctx context.Context, marshaler runtime.Mar
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.DeleteRole(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -62,13 +62,13 @@ func local_request_RBACService_DeleteRole_0(ctx context.Context, marshaler runti
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.DeleteRole(ctx, &protoReq)
 	return msg, metadata, err
@@ -83,13 +83,13 @@ func request_RBACService_Role_0(ctx context.Context, marshaler runtime.Marshaler
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.Role(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -101,13 +101,13 @@ func local_request_RBACService_Role_0(ctx context.Context, marshaler runtime.Mar
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.Role(ctx, &protoReq)
 	return msg, metadata, err
@@ -125,13 +125,13 @@ func request_RBACService_PatchRole_0(ctx context.Context, marshaler runtime.Mars
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.PatchRole(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -146,13 +146,13 @@ func local_request_RBACService_PatchRole_0(ctx context.Context, marshaler runtim
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.PatchRole(ctx, &protoReq)
 	return msg, metadata, err
@@ -229,13 +229,13 @@ func request_RBACService_AssignorsAssignees_0(ctx context.Context, marshaler run
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["assignor_UUID"]
+	val, ok := pathParams["assignorUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignor_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignorUUID")
 	}
-	protoReq.Assignor_UUID, err = runtime.String(val)
+	protoReq.AssignorUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignor_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignorUUID", err)
 	}
 	msg, err := client.AssignorsAssignees(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -247,13 +247,13 @@ func local_request_RBACService_AssignorsAssignees_0(ctx context.Context, marshal
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["assignor_UUID"]
+	val, ok := pathParams["assignorUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignor_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignorUUID")
 	}
-	protoReq.Assignor_UUID, err = runtime.String(val)
+	protoReq.AssignorUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignor_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignorUUID", err)
 	}
 	msg, err := server.AssignorsAssignees(ctx, &protoReq)
 	return msg, metadata, err
@@ -268,21 +268,21 @@ func request_RBACService_RoleAssignor_0(ctx context.Context, marshaler runtime.M
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["assignee_UUID"]
+	val, ok := pathParams["assigneeUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignee_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assigneeUUID")
 	}
-	protoReq.Assignee_UUID, err = runtime.String(val)
+	protoReq.AssigneeUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignee_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assigneeUUID", err)
 	}
-	val, ok = pathParams["role_UUID"]
+	val, ok = pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.RoleAssignor(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -294,21 +294,21 @@ func local_request_RBACService_RoleAssignor_0(ctx context.Context, marshaler run
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["assignee_UUID"]
+	val, ok := pathParams["assigneeUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignee_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assigneeUUID")
 	}
-	protoReq.Assignee_UUID, err = runtime.String(val)
+	protoReq.AssigneeUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignee_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assigneeUUID", err)
 	}
-	val, ok = pathParams["role_UUID"]
+	val, ok = pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.RoleAssignor(ctx, &protoReq)
 	return msg, metadata, err
@@ -323,13 +323,13 @@ func request_RBACService_RoleAssignees_0(ctx context.Context, marshaler runtime.
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.RoleAssignees(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -341,19 +341,19 @@ func local_request_RBACService_RoleAssignees_0(ctx context.Context, marshaler ru
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.RoleAssignees(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-var filter_RBACService_AssignRole_0 = &utilities.DoubleArray{Encoding: map[string]int{"role_UUID": 0, "assignee_UUID": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
+var filter_RBACService_AssignRole_0 = &utilities.DoubleArray{Encoding: map[string]int{"roleUUID": 0, "assigneeUUID": 1}, Base: []int{1, 1, 2, 0, 0}, Check: []int{0, 1, 1, 2, 3}}
 
 func request_RBACService_AssignRole_0(ctx context.Context, marshaler runtime.Marshaler, client RBACServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -364,21 +364,21 @@ func request_RBACService_AssignRole_0(ctx context.Context, marshaler runtime.Mar
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
-	val, ok = pathParams["assignee_UUID"]
+	val, ok = pathParams["assigneeUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignee_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assigneeUUID")
 	}
-	protoReq.Assignee_UUID, err = runtime.String(val)
+	protoReq.AssigneeUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignee_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assigneeUUID", err)
 	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -396,21 +396,21 @@ func local_request_RBACService_AssignRole_0(ctx context.Context, marshaler runti
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
-	val, ok = pathParams["assignee_UUID"]
+	val, ok = pathParams["assigneeUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assignee_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "assigneeUUID")
 	}
-	protoReq.Assignee_UUID, err = runtime.String(val)
+	protoReq.AssigneeUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assignee_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "assigneeUUID", err)
 	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -434,13 +434,13 @@ func request_RBACService_AddActions_0(ctx context.Context, marshaler runtime.Mar
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.AddActions(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -455,19 +455,19 @@ func local_request_RBACService_AddActions_0(ctx context.Context, marshaler runti
 	if err := marshaler.NewDecoder(req.Body).Decode(&protoReq); err != nil && !errors.Is(err, io.EOF) {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.AddActions(ctx, &protoReq)
 	return msg, metadata, err
 }
 
-var filter_RBACService_RevokeActions_0 = &utilities.DoubleArray{Encoding: map[string]int{"role_UUID": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+var filter_RBACService_RevokeActions_0 = &utilities.DoubleArray{Encoding: map[string]int{"roleUUID": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
 
 func request_RBACService_RevokeActions_0(ctx context.Context, marshaler runtime.Marshaler, client RBACServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -478,13 +478,13 @@ func request_RBACService_RevokeActions_0(ctx context.Context, marshaler runtime.
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -502,13 +502,13 @@ func local_request_RBACService_RevokeActions_0(ctx context.Context, marshaler ru
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	if err := req.ParseForm(); err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
@@ -564,13 +564,13 @@ func request_RBACService_ActionsByRole_0(ctx context.Context, marshaler runtime.
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := client.ActionsByRole(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -582,13 +582,13 @@ func local_request_RBACService_ActionsByRole_0(ctx context.Context, marshaler ru
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["role_UUID"]
+	val, ok := pathParams["roleUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "role_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "roleUUID")
 	}
-	protoReq.Role_UUID, err = runtime.String(val)
+	protoReq.RoleUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "role_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "roleUUID", err)
 	}
 	msg, err := server.ActionsByRole(ctx, &protoReq)
 	return msg, metadata, err
@@ -603,13 +603,13 @@ func request_RBACService_Action_0(ctx context.Context, marshaler runtime.Marshal
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
 	}
-	val, ok := pathParams["action_UUID"]
+	val, ok := pathParams["actionUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "action_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "actionUUID")
 	}
-	protoReq.Action_UUID, err = runtime.String(val)
+	protoReq.ActionUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "action_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "actionUUID", err)
 	}
 	msg, err := client.Action(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -621,13 +621,13 @@ func local_request_RBACService_Action_0(ctx context.Context, marshaler runtime.M
 		metadata runtime.ServerMetadata
 		err      error
 	)
-	val, ok := pathParams["action_UUID"]
+	val, ok := pathParams["actionUUID"]
 	if !ok {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "action_UUID")
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "missing parameter %s", "actionUUID")
 	}
-	protoReq.Action_UUID, err = runtime.String(val)
+	protoReq.ActionUUID, err = runtime.String(val)
 	if err != nil {
-		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "action_UUID", err)
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "actionUUID", err)
 	}
 	msg, err := server.Action(ctx, &protoReq)
 	return msg, metadata, err
@@ -645,7 +645,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/DeleteRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/DeleteRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -665,7 +665,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/Role", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/Role", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -685,7 +685,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/PatchRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/PatchRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -745,7 +745,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AssignorsAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/assignors/{assignor_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AssignorsAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/assignors/{assignorUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -765,7 +765,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignor", runtime.WithHTTPPathPattern("/v1/RBAC/assignees/{assignee_UUID}/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignor", runtime.WithHTTPPathPattern("/v1/RBAC/assignees/{assigneeUUID}/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -785,7 +785,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/assignees"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/assignees"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -805,7 +805,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AssignRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/assignees/{assignee_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AssignRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -825,7 +825,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AddActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/AddActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -845,7 +845,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RevokeActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/RevokeActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -885,7 +885,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/ActionsByRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/ActionsByRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -905,7 +905,7 @@ func RegisterRBACServiceHandlerServer(ctx context.Context, mux *runtime.ServeMux
 		var stream runtime.ServerTransportStream
 		ctx = grpc.NewContextWithServerTransportStream(ctx, &stream)
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/Action", runtime.WithHTTPPathPattern("/v1/RBAC/actions/{action_UUID}"))
+		annotatedContext, err := runtime.AnnotateIncomingContext(ctx, mux, req, "/RBAC.RBACService/Action", runtime.WithHTTPPathPattern("/v1/RBAC/actions/{actionUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -963,7 +963,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/DeleteRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/DeleteRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -980,7 +980,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/Role", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/Role", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -997,7 +997,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/PatchRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/PatchRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1048,7 +1048,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AssignorsAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/assignors/{assignor_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AssignorsAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/assignors/{assignorUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1065,7 +1065,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignor", runtime.WithHTTPPathPattern("/v1/RBAC/assignees/{assignee_UUID}/{role_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignor", runtime.WithHTTPPathPattern("/v1/RBAC/assignees/{assigneeUUID}/{roleUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1082,7 +1082,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/assignees"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RoleAssignees", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/assignees"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1099,7 +1099,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AssignRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/assignees/{assignee_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AssignRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1116,7 +1116,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AddActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/AddActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1133,7 +1133,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RevokeActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/RevokeActions", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1167,7 +1167,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/ActionsByRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{role_UUID}/actions"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/ActionsByRole", runtime.WithHTTPPathPattern("/v1/RBAC/roles/{roleUUID}/actions"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1184,7 +1184,7 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 		ctx, cancel := context.WithCancel(req.Context())
 		defer cancel()
 		inboundMarshaler, outboundMarshaler := runtime.MarshalerForRequest(mux, req)
-		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/Action", runtime.WithHTTPPathPattern("/v1/RBAC/actions/{action_UUID}"))
+		annotatedContext, err := runtime.AnnotateContext(ctx, mux, req, "/RBAC.RBACService/Action", runtime.WithHTTPPathPattern("/v1/RBAC/actions/{actionUUID}"))
 		if err != nil {
 			runtime.HTTPError(ctx, mux, outboundMarshaler, w, req, err)
 			return
@@ -1201,20 +1201,20 @@ func RegisterRBACServiceHandlerClient(ctx context.Context, mux *runtime.ServeMux
 }
 
 var (
-	pattern_RBACService_DeleteRole_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "role_UUID"}, ""))
-	pattern_RBACService_Role_0               = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "role_UUID"}, ""))
-	pattern_RBACService_PatchRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "role_UUID"}, ""))
+	pattern_RBACService_DeleteRole_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "roleUUID"}, ""))
+	pattern_RBACService_Role_0               = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "roleUUID"}, ""))
+	pattern_RBACService_PatchRole_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "roles", "roleUUID"}, ""))
 	pattern_RBACService_CreateRole_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "RBAC", "roles"}, ""))
 	pattern_RBACService_ListRoles_0          = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "RBAC", "roles"}, ""))
-	pattern_RBACService_AssignorsAssignees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "assignors", "assignor_UUID"}, ""))
-	pattern_RBACService_RoleAssignor_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "RBAC", "assignees", "assignee_UUID", "role_UUID"}, ""))
-	pattern_RBACService_RoleAssignees_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "role_UUID", "assignees"}, ""))
-	pattern_RBACService_AssignRole_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "RBAC", "roles", "role_UUID", "assignees", "assignee_UUID"}, ""))
-	pattern_RBACService_AddActions_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "role_UUID", "actions"}, ""))
-	pattern_RBACService_RevokeActions_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "role_UUID", "actions"}, ""))
+	pattern_RBACService_AssignorsAssignees_0 = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "assignors", "assignorUUID"}, ""))
+	pattern_RBACService_RoleAssignor_0       = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 1, 0, 4, 1, 5, 4}, []string{"v1", "RBAC", "assignees", "assigneeUUID", "roleUUID"}, ""))
+	pattern_RBACService_RoleAssignees_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "roleUUID", "assignees"}, ""))
+	pattern_RBACService_AssignRole_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4, 1, 0, 4, 1, 5, 5}, []string{"v1", "RBAC", "roles", "roleUUID", "assignees", "assigneeUUID"}, ""))
+	pattern_RBACService_AddActions_0         = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "roleUUID", "actions"}, ""))
+	pattern_RBACService_RevokeActions_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "roleUUID", "actions"}, ""))
 	pattern_RBACService_ListActions_0        = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2}, []string{"v1", "RBAC", "actions"}, ""))
-	pattern_RBACService_ActionsByRole_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "role_UUID", "actions"}, ""))
-	pattern_RBACService_Action_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "actions", "action_UUID"}, ""))
+	pattern_RBACService_ActionsByRole_0      = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3, 2, 4}, []string{"v1", "RBAC", "roles", "roleUUID", "actions"}, ""))
+	pattern_RBACService_Action_0             = runtime.MustPattern(runtime.NewPattern(1, []int{2, 0, 2, 1, 2, 2, 1, 0, 4, 1, 5, 3}, []string{"v1", "RBAC", "actions", "actionUUID"}, ""))
 )
 
 var (
