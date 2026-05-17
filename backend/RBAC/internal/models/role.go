@@ -16,12 +16,14 @@ type Role struct {
 	Description  string     `bun:"role_description"`
 	ExtendedUUID *uuid.UUID `bun:"extended_role_uuid"`
 
+	Priority int16 `bun:"priority,nullzero"`
+
 	CreatedAt time.Time  `bun:"created_at,default:now()"`
 	DeletedAt *time.Time `bun:"deleted_at,soft_delete"`
 	UpdatedAt time.Time  `bun:"updated_at,default:now()"`
 
-	ExtendedRole *Role   `bun:"rel:belongs-to,join:role_uuid=extended_role_uuid"`
-	Actions      *Action `bun:"m2m:roles_actions,join:role_uuid=role_uuid"`
+	ExtendedRole *Role     `bun:"rel:belongs-to,join:extended_role_uuid=role_uuid"`
+	Actions      []*Action `bun:"m2m:roles_actions,join:role_uuid=role_uuid"`
 }
 
 var _ bun.BeforeAppendModelHook = (*Role)(nil)
@@ -35,4 +37,12 @@ func (r *Role) BeforeAppendModel(ctx context.Context, query bun.Query) error {
 		r.UpdatedAt = time.Now()
 	}
 	return nil
+}
+
+type PatchedRole struct {
+	UUID         uuid.UUID
+	Name         *string
+	Description  *string
+	ExtendedUUID *string
+	Priority     *int16
 }

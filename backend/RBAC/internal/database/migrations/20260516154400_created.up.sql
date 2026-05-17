@@ -2,7 +2,8 @@
 CREATE TYPE IF NOT EXISTS verb AS ENUM (
     'GET', 
     'POST', 
-    'PUT', --PUT in favour of PATCH, as semantically the whole col is replaced 
+    'PUT',
+    'PATCH',
     'DELETE'
 );
 
@@ -21,6 +22,8 @@ CREATE TABLE IF NOT EXISTS "roles" (
     role_uuid        UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     role_name        character varying NOT NULL UNIQUE,
     role_description TEXT NULL,
+
+    "priority" smallint DEFAULT 0 NOT NULL, 
 
     extended_role_uuid     UUID NULL REFERENCES roles(role_uuid) ON UPDATE CASCADE ON DELETE SET NULL,
 
@@ -50,3 +53,4 @@ CREATE TABLE IF NOT EXISTS "users_roles" (
     PRIMARY KEY(user_uuid, role_uuid)
 );
 CREATE INDEX idx_user_uuid ON "users_roles" ("user_uuid");
+CREATE INDEX idx_users_roles_active ON users_roles (user_uuid) WHERE expires_at IS NULL OR expires_at > now();
