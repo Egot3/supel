@@ -8,6 +8,7 @@ import (
 	"os"
 
 	pb "github.com/Egot3/supel/backend/contracts"
+	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/gateway/gateways"
 	"google.golang.org/grpc"
@@ -40,10 +41,13 @@ func main() {
 		log.Fatalf("Timetable conn fell: %v", err.Error())
 	}
 
+	rbacConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("RBAC_SERVICE_HOST"), os.Getenv("RBAC_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
+
 	pb.RegisterIdentityServiceHandler(ctx, mux, identityConn)
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
 	pb.RegisterUserServiceHandler(ctx, mux, userConn)
 	ttpb.RegisterTimetableServiceHandler(ctx, mux, timetableConn)
+	rbacpb.RegisterRBACServiceHandler(ctx, mux, rbacConn)
 
 	// corsMiddleware := middleware.NewCORSMiddleware()
 	// handler := corsMiddleware(mux)
