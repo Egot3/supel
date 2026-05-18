@@ -1,5 +1,7 @@
 github.com/Egot3/supel/backend/contracts v0.2.6 h1:uApSA/PaDHHPuTqN8T1iS03jkpiseVKJhozWFZhYegI=
 github.com/Egot3/supel/backend/contracts v0.2.6/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.2.7 h1:rQwAnoPOcuOBABZ8C+H2J9xj5YEcDjsY4ng/WOZgfG0=
+github.com/Egot3/supel/backend/contracts v0.2.7/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/go-logr/logr v1.4.3 h1:CjnDlHq8ikf6E492q6eKboGOC0T8CDaOvkHCIg8idEI=
