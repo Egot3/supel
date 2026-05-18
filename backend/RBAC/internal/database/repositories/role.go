@@ -3,8 +3,11 @@ package repositories
 import (
 	"context"
 	"database/sql"
+	"fmt"
+	"log/slog"
 	"time"
 
+	"github.com/egot3/supel/backend/rbac/internal/logctx"
 	"github.com/egot3/supel/backend/rbac/internal/models"
 	"github.com/egot3/supel/backend/rbac/types"
 	"github.com/google/uuid"
@@ -26,6 +29,16 @@ func NewRoleRepository(i do.Injector) (RoleRepository, error) {
 }
 
 func (r *bunRoleRepository) HasPermission(ctx context.Context, userUUID uuid.UUID, scope string, subScope *string, verb types.Verb) (bool, error) {
+	logger := logctx.LoggerFromContext(ctx).With(
+		slog.String("layer", "repository"),
+		slog.String("table", "users_roles,roles,actions"),
+		slog.String("operation", "select"),
+	)
+
+	logger.InfoContext(ctx, "starting db request", slog.String("userUUID", userUUID.String()),
+		slog.String("action", fmt.Sprintf("%v.%v:%v", scope, subScope, verb)),
+	)
+	start := time.Now()
 	anchor := r.db.NewSelect().TableExpr("users_roles").
 		ColumnExpr("users_roles.role_uuid").
 		Where("users_roles.user_uuid = ?", userUUID).
@@ -54,20 +67,40 @@ func (r *bunRoleRepository) HasPermission(ctx context.Context, userUUID uuid.UUI
 	}
 
 	can, err := query.ColumnExpr("1").Exists(ctx) //effieciency
+
+	elapsed := time.Since(start)
 	if err != nil {
+		logger.ErrorContext(ctx, "db request failed",
+			slog.Duration("elapsed", elapsed),
+			slog.String("err", err.Error()),
+		)
 		return false, err
 	}
 
+	logger.InfoContext(ctx, "db request succeeded", slog.Duration("elapsed", elapsed))
 	return can, nil
 }
 
-func (r *bunRoleRepository) UserRolePriority(ctx context.Context, userUUID string) (priority int16, err error) {
+func (r *bunRoleRepository) UserRolePriority(ctx context.Context, userUUID uuid.UUID) (priority int16, err error) {
 	err = r.db.NewSelect().
 		TableExpr("users_roles AS user").
 		Where("user.user_uuid = ?", userUUID).
 		Join("JOIN roles AS role ON role.role_uuid = user.role_uuid").
 		Column("role.priority").
 		Order("role.priority DESC").Limit(1).Scan(ctx, &priority)
+	if err != nil {
+		return 0, err
+	}
+
+	return priority, nil
+}
+
+func (r *bunRoleRepository) RolePriority(ctx context.Context, roleUUID uuid.UUID) (priority int16, err error) {
+	err = r.db.NewSelect().
+		TableExpr("roles AS role").
+		Where("role.role_uuid = ?", roleUUID).
+		Column("role.priority").
+		Scan(ctx, &priority)
 	if err != nil {
 		return 0, err
 	}
@@ -83,7 +116,18 @@ func (r *bunRoleRepository) AssignRole(ctx context.Context, assigneeUUID, assign
 	return err
 }
 
-func (r *bunRoleRepository) RoleAssignees(ctx context.Context, roleUUID uuid.UUID) (userUUIDs []uuid.UUID, err error) {
+func (r *bunRoleRepository) RevokeRole(ctx context.Context, assigneeUUID, roleUUID uuid.UUID) error {
+	_, err := r.db.NewDelete().
+		Model(&models.UserRoles{
+			UserUUID: assigneeUUID,
+			RoleUUID: roleUUID,
+		}).
+		WherePK().
+		Exec(ctx)
+	return err
+}
+
+func (r *bunRoleRepository) RoleAssignees(ctx context.Context, roleUUID uuid.UUID) (userUUIDs uuid.UUIDs, err error) {
 	err = r.db.NewSelect().
 		Model((*models.UserRoles)(nil)).
 		Where("role_uuid = ?", roleUUID).
@@ -111,7 +155,7 @@ func (r *bunRoleRepository) RoleAssignor(ctx context.Context, roleUUID, assignee
 	return assignorUUID, nil
 }
 
-func (r *bunRoleRepository) AssignorsAssignees(ctx context.Context, assignorUUID uuid.UUID) (assignees []uuid.UUID, err error) {
+func (r *bunRoleRepository) AssignorsAssignees(ctx context.Context, assignorUUID uuid.UUID) (assignees uuid.UUIDs, err error) {
 	err = r.db.NewSelect().
 		Model((*models.UserRoles)(nil)).
 		Where("assignor_uuid = ?", assignorUUID).
@@ -163,6 +207,14 @@ func (r *bunRoleRepository) CreateRole(ctx context.Context, role models.Role, ac
 }
 
 func (r *bunRoleRepository) DeleteRole(ctx context.Context, roleUUID uuid.UUID) error {
+	logger := logctx.LoggerFromContext(ctx).With(
+		slog.String("layer", "repository"),
+		slog.String("table", "roles_actions,roles"),
+		slog.String("operation", "Delete"),
+	)
+
+	logger.InfoContext(ctx, "starting db request", slog.String("roleUUID", roleUUID.String()))
+
 	_, err := r.db.NewDelete().Model(&models.Role{UUID: roleUUID}).Exec(ctx)
 	return err
 }
@@ -184,4 +236,30 @@ func (r *bunRoleRepository) PatchRole(ctx context.Context, patchedModel models.P
 
 	_, err := query.Exec(ctx)
 	return err
+}
+
+func (r *bunRoleRepository) Role(ctx context.Context, roleUUID uuid.UUID) (*models.Role, error) {
+	role := models.Role{}
+	err := r.db.NewSelect().Model(&role).Where("role_uuid = ?", roleUUID).WhereAllWithDeleted().Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &role, nil
+}
+
+func (r *bunRoleRepository) ListRoles(ctx context.Context, page, size int) ([]models.Role, int, error) {
+	var roles []models.Role
+
+	total, err := r.db.NewSelect().
+		Model(&roles).
+		WhereAllWithDeleted().
+		Limit(size).
+		Offset(page * size).
+		ScanAndCount(ctx)
+
+	if err != nil {
+		return nil, 0, err
+	}
+	return roles, total, nil
 }

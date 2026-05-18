@@ -10,7 +10,7 @@ CREATE TYPE weekday AS ENUM (
 
 -- Create "periods" table
 CREATE TABLE "periods" {
-  "uuid" uuid PRIMARY KEY,
+  "uuid" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "position" SMALLINT NOT NULL,
   "week_number"  SMALLINT NOT NULL,
   "day_of_week"  weekday NOT NULL,
@@ -26,7 +26,7 @@ CREATE INDEX idx_position ON "periods" ("position")
 
 -- Create "abstract_lessons" table
 CREATE TABLE "abstract_lessons" (
-  "uuid" uuid              PRIMARY KEY,
+  "uuid" uuid              PRIMARY KEY DEFAULT gen_random_uuid(),
   "name" character varying NOT NULL,
 
   "deleted_at" TIMESTAMPTZ NULL,
@@ -37,7 +37,7 @@ CREATE TABLE "abstract_lessons" (
 
 -- Create "concrete_lessons" table
 CREATE TABLE "concrete_lessons" (
-  "concrete_uuid" uuid NOT NULL,
+  "concrete_uuid" uuid NOT NULL DEFAULT gen_random_uuid(),
   "abstract_uuid" uuid NOT NULL REFERENCES abstract_lessons(uuid) ON UPDATE CASCADE ON DELETE CASCADE,
   "teacher_uuid"  uuid NOT NULL,--SAGA
   "group_uuid"    uuid NOT NULL,--SAGA
@@ -55,7 +55,7 @@ CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("week_number","teacher_
 
 -- Create "homework_attachment_keys"
 CREATE TABLE "homework_attachments" (
-  "file_uuid"     uuid PRIMARY KEY,
+  "file_uuid"     uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "name"          character varying NOT NULL,
   "mime"          character varying NOT NULL,
   "concrete_uuid" uuid NOT NULL REFERENCES concrete_lessons(concrete_uuid) ON UPDATE NO ACTION ON DELETE CASCADE,

@@ -13,7 +13,7 @@ type Role struct {
 
 	UUID         uuid.UUID  `bun:"role_uuid,pk"`
 	Name         string     `bun:"role_name,unique,notnull"`
-	Description  string     `bun:"role_description"`
+	Description  *string    `bun:"role_description"`
 	ExtendedUUID *uuid.UUID `bun:"extended_role_uuid"`
 
 	Priority int16 `bun:"priority,nullzero"`

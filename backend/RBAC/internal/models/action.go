@@ -11,6 +11,6 @@ type Action struct {
 
 	UUID     uuid.UUID  `bun:"action_uuid,default:now()"`
 	Scope    string     `bun:"scope,notnull"`
-	SubScope string     `bun:"sub_scope"`
+	SubScope *string    `bun:"sub_scope"`
 	Verb     types.Verb `bun:"verb,notnull"`
 }

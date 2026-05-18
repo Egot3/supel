@@ -35,8 +35,8 @@ INSERT INTO actions (scope, sub_scope, verb) VALUES --ai gen
 ('news', 'comments', 'PUT'),
 ('news', 'comments', 'PATCH'),
 ('news', 'comments', 'DELETE'),
-('rbac', 'assign', 'POST'),
-('rbac', 'assign', 'DELETE'),
+('rbac', 'role.assign', 'POST'),
+('rbac', 'role.assign', 'DELETE'),
 ('rbac', 'role', 'POST'),
 ('rbac', 'role', 'DELETE'),
 ('rbac', 'role', 'PATCH');

@@ -1264,7 +1264,7 @@ func (x *ListActionsRequest) GetSize() int32 {
 
 type ListActionsResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Action        []*Action              `protobuf:"bytes,1,rep,name=action,proto3" json:"action,omitempty"`
+	Actions       []*Action              `protobuf:"bytes,1,rep,name=actions,proto3" json:"actions,omitempty"`
 	Page          int32                  `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
 	Size          int32                  `protobuf:"varint,3,opt,name=size,proto3" json:"size,omitempty"`
 	Total         int64                  `protobuf:"varint,4,opt,name=total,proto3" json:"total,omitempty"`
@@ -1302,9 +1302,9 @@ func (*ListActionsResponse) Descriptor() ([]byte, []int) {
 	return file_proto_RBAC_proto_rawDescGZIP(), []int{21}
 }
 
-func (x *ListActionsResponse) GetAction() []*Action {
+func (x *ListActionsResponse) GetActions() []*Action {
 	if x != nil {
-		return x.Action
+		return x.Actions
 	}
 	return nil
 }
@@ -1715,9 +1715,9 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\broleUUID\x18\x02 \x01(\tR\broleUUID\"<\n" +
 	"\x12ListActionsRequest\x12\x12\n" +
 	"\x04page\x18\x01 \x01(\x05R\x04page\x12\x12\n" +
-	"\x04size\x18\x02 \x01(\x05R\x04size\"y\n" +
-	"\x13ListActionsResponse\x12$\n" +
-	"\x06action\x18\x01 \x03(\v2\f.RBAC.ActionR\x06action\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\x05R\x04size\"{\n" +
+	"\x13ListActionsResponse\x12&\n" +
+	"\aactions\x18\x01 \x03(\v2\f.RBAC.ActionR\aactions\x12\x12\n" +
 	"\x04page\x18\x02 \x01(\x05R\x04page\x12\x12\n" +
 	"\x04size\x18\x03 \x01(\x05R\x04size\x12\x14\n" +
 	"\x05total\x18\x04 \x01(\x03R\x05total\"2\n" +
@@ -1817,7 +1817,7 @@ var file_proto_RBAC_proto_depIdxs = []int32{
 	28, // 5: RBAC.RoleResponse.deletedat:type_name -> google.protobuf.Timestamp
 	28, // 6: RBAC.RoleResponse.updatedat:type_name -> google.protobuf.Timestamp
 	27, // 7: RBAC.ListRolesResponse.roles:type_name -> RBAC.ListRolesResponse.Role
-	4,  // 8: RBAC.ListActionsResponse.action:type_name -> RBAC.Action
+	4,  // 8: RBAC.ListActionsResponse.actions:type_name -> RBAC.Action
 	4,  // 9: RBAC.ActionsByRoleResponse.actions:type_name -> RBAC.Action
 	4,  // 10: RBAC.ActionResponse.action:type_name -> RBAC.Action
 	28, // 11: RBAC.ListRolesResponse.Role.createdat:type_name -> google.protobuf.Timestamp

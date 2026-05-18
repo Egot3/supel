@@ -15,7 +15,7 @@ type AbstractLesson struct {
 	ConcreteLessons []*ConcreteLesson `bun:"rel:has-many,join:uuid=abstract_uuid"`
 
 	CreatedAt time.Time  `bun:"created_at,notnull,default:now()"`
-	UpdatedAt time.Time  `bun:"updated_ay,notnull,default:now()"`
+	UpdatedAt time.Time  `bun:"updated_at,notnull,default:now()"`
 	DeletedAt *time.Time `bun:"deleted_at,soft_delete"`
 
 	_ struct{} `bun:"unique:uuid_idx"`
