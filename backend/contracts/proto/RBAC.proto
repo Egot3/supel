@@ -38,6 +38,7 @@ message Action {
     string scope = 1;
     optional string subscope = 2;
     Verb verb = 3;
+    string actionUUID = 4;
 }
 
 

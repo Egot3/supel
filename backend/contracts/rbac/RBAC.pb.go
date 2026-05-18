@@ -243,6 +243,7 @@ type Action struct {
 	Scope         string                 `protobuf:"bytes,1,opt,name=scope,proto3" json:"scope,omitempty"`
 	Subscope      *string                `protobuf:"bytes,2,opt,name=subscope,proto3,oneof" json:"subscope,omitempty"`
 	Verb          Verb                   `protobuf:"varint,3,opt,name=verb,proto3,enum=RBAC.Verb" json:"verb,omitempty"`
+	ActionUUID    string                 `protobuf:"bytes,4,opt,name=actionUUID,proto3" json:"actionUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -296,6 +297,13 @@ func (x *Action) GetVerb() Verb {
 		return x.Verb
 	}
 	return Verb_UNDEFINED
+}
+
+func (x *Action) GetActionUUID() string {
+	if x != nil {
+		return x.ActionUUID
+	}
+	return ""
 }
 
 type CreateRoleRequest struct {
@@ -1561,12 +1569,15 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\x13HasPermissionAnswer\x12\x10\n" +
 	"\x03has\x18\x01 \x01(\bR\x03has\"/\n" +
 	"\x11DeleteRoleRequest\x12\x1a\n" +
-	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"l\n" +
+	"\broleUUID\x18\x01 \x01(\tR\broleUUID\"\x8c\x01\n" +
 	"\x06Action\x12\x14\n" +
 	"\x05scope\x18\x01 \x01(\tR\x05scope\x12\x1f\n" +
 	"\bsubscope\x18\x02 \x01(\tH\x00R\bsubscope\x88\x01\x01\x12\x1e\n" +
 	"\x04verb\x18\x03 \x01(\x0e2\n" +
-	".RBAC.VerbR\x04verbB\v\n" +
+	".RBAC.VerbR\x04verb\x12\x1e\n" +
+	"\n" +
+	"actionUUID\x18\x04 \x01(\tR\n" +
+	"actionUUIDB\v\n" +
 	"\t_subscope\"\xdc\x01\n" +
 	"\x11CreateRoleRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12%\n" +
