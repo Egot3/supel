@@ -30,6 +30,7 @@ const (
 	RBACService_RoleAssignor_FullMethodName       = "/RBAC.RBACService/RoleAssignor"
 	RBACService_RoleAssignees_FullMethodName      = "/RBAC.RBACService/RoleAssignees"
 	RBACService_AssignRole_FullMethodName         = "/RBAC.RBACService/AssignRole"
+	RBACService_RevokeRole_FullMethodName         = "/RBAC.RBACService/RevokeRole"
 	RBACService_AddActions_FullMethodName         = "/RBAC.RBACService/AddActions"
 	RBACService_RevokeActions_FullMethodName      = "/RBAC.RBACService/RevokeActions"
 	RBACService_ListActions_FullMethodName        = "/RBAC.RBACService/ListActions"
@@ -51,6 +52,7 @@ type RBACServiceClient interface {
 	RoleAssignor(ctx context.Context, in *RoleAssignorRequest, opts ...grpc.CallOption) (*RoleAssignorResponse, error)
 	RoleAssignees(ctx context.Context, in *RoleAssigneesRequest, opts ...grpc.CallOption) (*RoleAssigneesResponse, error)
 	AssignRole(ctx context.Context, in *AssignRoleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	RevokeRole(ctx context.Context, in *RevokeRoleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AddActions(ctx context.Context, in *AddActionsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RevokeActions(ctx context.Context, in *RevokeActionsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListActions(ctx context.Context, in *ListActionsRequest, opts ...grpc.CallOption) (*ListActionsResponse, error)
@@ -166,6 +168,16 @@ func (c *rBACServiceClient) AssignRole(ctx context.Context, in *AssignRoleReques
 	return out, nil
 }
 
+func (c *rBACServiceClient) RevokeRole(ctx context.Context, in *RevokeRoleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, RBACService_RevokeRole_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *rBACServiceClient) AddActions(ctx context.Context, in *AddActionsRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
@@ -230,6 +242,7 @@ type RBACServiceServer interface {
 	RoleAssignor(context.Context, *RoleAssignorRequest) (*RoleAssignorResponse, error)
 	RoleAssignees(context.Context, *RoleAssigneesRequest) (*RoleAssigneesResponse, error)
 	AssignRole(context.Context, *AssignRoleRequest) (*emptypb.Empty, error)
+	RevokeRole(context.Context, *RevokeRoleRequest) (*emptypb.Empty, error)
 	AddActions(context.Context, *AddActionsRequest) (*emptypb.Empty, error)
 	RevokeActions(context.Context, *RevokeActionsRequest) (*emptypb.Empty, error)
 	ListActions(context.Context, *ListActionsRequest) (*ListActionsResponse, error)
@@ -274,6 +287,9 @@ func (UnimplementedRBACServiceServer) RoleAssignees(context.Context, *RoleAssign
 }
 func (UnimplementedRBACServiceServer) AssignRole(context.Context, *AssignRoleRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method AssignRole not implemented")
+}
+func (UnimplementedRBACServiceServer) RevokeRole(context.Context, *RevokeRoleRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method RevokeRole not implemented")
 }
 func (UnimplementedRBACServiceServer) AddActions(context.Context, *AddActionsRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method AddActions not implemented")
@@ -491,6 +507,24 @@ func _RBACService_AssignRole_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
+func _RBACService_RevokeRole_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(RevokeRoleRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RBACServiceServer).RevokeRole(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RBACService_RevokeRole_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RBACServiceServer).RevokeRole(ctx, req.(*RevokeRoleRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _RBACService_AddActions_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(AddActionsRequest)
 	if err := dec(in); err != nil {
@@ -627,6 +661,10 @@ var RBACService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "AssignRole",
 			Handler:    _RBACService_AssignRole_Handler,
+		},
+		{
+			MethodName: "RevokeRole",
+			Handler:    _RBACService_RevokeRole_Handler,
 		},
 		{
 			MethodName: "AddActions",

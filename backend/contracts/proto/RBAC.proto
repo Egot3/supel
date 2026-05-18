@@ -137,6 +137,11 @@ message ListRolesResponse {
     int64 total = 4;
 }
 
+message RevokeRoleRequest {
+    string assigneeUUID = 1;
+    string roleUUID = 2;
+}
+
 service RBACService {
     rpc HasPermission(HasPermissionQuestion) returns (HasPermissionAnswer);
     
@@ -186,6 +191,11 @@ service RBACService {
     rpc AssignRole(AssignRoleRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}"
+        };
+    };
+    rpc RevokeRole(RevokeRoleRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}"
         };
     };
 

@@ -1054,6 +1054,58 @@ func (x *ListRolesResponse) GetTotal() int64 {
 	return 0
 }
 
+type RevokeRoleRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	AssigneeUUID  string                 `protobuf:"bytes,1,opt,name=assigneeUUID,proto3" json:"assigneeUUID,omitempty"`
+	RoleUUID      string                 `protobuf:"bytes,2,opt,name=roleUUID,proto3" json:"roleUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RevokeRoleRequest) Reset() {
+	*x = RevokeRoleRequest{}
+	mi := &file_proto_RBAC_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RevokeRoleRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RevokeRoleRequest) ProtoMessage() {}
+
+func (x *RevokeRoleRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_RBAC_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RevokeRoleRequest.ProtoReflect.Descriptor instead.
+func (*RevokeRoleRequest) Descriptor() ([]byte, []int) {
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *RevokeRoleRequest) GetAssigneeUUID() string {
+	if x != nil {
+		return x.AssigneeUUID
+	}
+	return ""
+}
+
+func (x *RevokeRoleRequest) GetRoleUUID() string {
+	if x != nil {
+		return x.RoleUUID
+	}
+	return ""
+}
+
 type AddActionsRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	ActionUUIDs   []string               `protobuf:"bytes,1,rep,name=actionUUIDs,proto3" json:"actionUUIDs,omitempty"`
@@ -1064,7 +1116,7 @@ type AddActionsRequest struct {
 
 func (x *AddActionsRequest) Reset() {
 	*x = AddActionsRequest{}
-	mi := &file_proto_RBAC_proto_msgTypes[17]
+	mi := &file_proto_RBAC_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1076,7 +1128,7 @@ func (x *AddActionsRequest) String() string {
 func (*AddActionsRequest) ProtoMessage() {}
 
 func (x *AddActionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[17]
+	mi := &file_proto_RBAC_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1089,7 +1141,7 @@ func (x *AddActionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddActionsRequest.ProtoReflect.Descriptor instead.
 func (*AddActionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{17}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *AddActionsRequest) GetActionUUIDs() []string {
@@ -1116,7 +1168,7 @@ type RevokeActionsRequest struct {
 
 func (x *RevokeActionsRequest) Reset() {
 	*x = RevokeActionsRequest{}
-	mi := &file_proto_RBAC_proto_msgTypes[18]
+	mi := &file_proto_RBAC_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1128,7 +1180,7 @@ func (x *RevokeActionsRequest) String() string {
 func (*RevokeActionsRequest) ProtoMessage() {}
 
 func (x *RevokeActionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[18]
+	mi := &file_proto_RBAC_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1141,7 +1193,7 @@ func (x *RevokeActionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeActionsRequest.ProtoReflect.Descriptor instead.
 func (*RevokeActionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{18}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *RevokeActionsRequest) GetActionUUIDs() []string {
@@ -1168,7 +1220,7 @@ type ListActionsRequest struct {
 
 func (x *ListActionsRequest) Reset() {
 	*x = ListActionsRequest{}
-	mi := &file_proto_RBAC_proto_msgTypes[19]
+	mi := &file_proto_RBAC_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1180,7 +1232,7 @@ func (x *ListActionsRequest) String() string {
 func (*ListActionsRequest) ProtoMessage() {}
 
 func (x *ListActionsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[19]
+	mi := &file_proto_RBAC_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1193,7 +1245,7 @@ func (x *ListActionsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActionsRequest.ProtoReflect.Descriptor instead.
 func (*ListActionsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{19}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *ListActionsRequest) GetPage() int32 {
@@ -1222,7 +1274,7 @@ type ListActionsResponse struct {
 
 func (x *ListActionsResponse) Reset() {
 	*x = ListActionsResponse{}
-	mi := &file_proto_RBAC_proto_msgTypes[20]
+	mi := &file_proto_RBAC_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1234,7 +1286,7 @@ func (x *ListActionsResponse) String() string {
 func (*ListActionsResponse) ProtoMessage() {}
 
 func (x *ListActionsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[20]
+	mi := &file_proto_RBAC_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1247,7 +1299,7 @@ func (x *ListActionsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListActionsResponse.ProtoReflect.Descriptor instead.
 func (*ListActionsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{20}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *ListActionsResponse) GetAction() []*Action {
@@ -1287,7 +1339,7 @@ type ActionsByRoleRequest struct {
 
 func (x *ActionsByRoleRequest) Reset() {
 	*x = ActionsByRoleRequest{}
-	mi := &file_proto_RBAC_proto_msgTypes[21]
+	mi := &file_proto_RBAC_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1299,7 +1351,7 @@ func (x *ActionsByRoleRequest) String() string {
 func (*ActionsByRoleRequest) ProtoMessage() {}
 
 func (x *ActionsByRoleRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[21]
+	mi := &file_proto_RBAC_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1312,7 +1364,7 @@ func (x *ActionsByRoleRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionsByRoleRequest.ProtoReflect.Descriptor instead.
 func (*ActionsByRoleRequest) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{21}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *ActionsByRoleRequest) GetRoleUUID() string {
@@ -1331,7 +1383,7 @@ type ActionsByRoleResponse struct {
 
 func (x *ActionsByRoleResponse) Reset() {
 	*x = ActionsByRoleResponse{}
-	mi := &file_proto_RBAC_proto_msgTypes[22]
+	mi := &file_proto_RBAC_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1343,7 +1395,7 @@ func (x *ActionsByRoleResponse) String() string {
 func (*ActionsByRoleResponse) ProtoMessage() {}
 
 func (x *ActionsByRoleResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[22]
+	mi := &file_proto_RBAC_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1356,7 +1408,7 @@ func (x *ActionsByRoleResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionsByRoleResponse.ProtoReflect.Descriptor instead.
 func (*ActionsByRoleResponse) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{22}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *ActionsByRoleResponse) GetActions() []*Action {
@@ -1375,7 +1427,7 @@ type ActionRequest struct {
 
 func (x *ActionRequest) Reset() {
 	*x = ActionRequest{}
-	mi := &file_proto_RBAC_proto_msgTypes[23]
+	mi := &file_proto_RBAC_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1387,7 +1439,7 @@ func (x *ActionRequest) String() string {
 func (*ActionRequest) ProtoMessage() {}
 
 func (x *ActionRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[23]
+	mi := &file_proto_RBAC_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1400,7 +1452,7 @@ func (x *ActionRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionRequest.ProtoReflect.Descriptor instead.
 func (*ActionRequest) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{23}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *ActionRequest) GetActionUUID() string {
@@ -1419,7 +1471,7 @@ type ActionResponse struct {
 
 func (x *ActionResponse) Reset() {
 	*x = ActionResponse{}
-	mi := &file_proto_RBAC_proto_msgTypes[24]
+	mi := &file_proto_RBAC_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1431,7 +1483,7 @@ func (x *ActionResponse) String() string {
 func (*ActionResponse) ProtoMessage() {}
 
 func (x *ActionResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[24]
+	mi := &file_proto_RBAC_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1444,7 +1496,7 @@ func (x *ActionResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ActionResponse.ProtoReflect.Descriptor instead.
 func (*ActionResponse) Descriptor() ([]byte, []int) {
-	return file_proto_RBAC_proto_rawDescGZIP(), []int{24}
+	return file_proto_RBAC_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *ActionResponse) GetAction() *Action {
@@ -1470,7 +1522,7 @@ type ListRolesResponse_Role struct {
 
 func (x *ListRolesResponse_Role) Reset() {
 	*x = ListRolesResponse_Role{}
-	mi := &file_proto_RBAC_proto_msgTypes[25]
+	mi := &file_proto_RBAC_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1482,7 +1534,7 @@ func (x *ListRolesResponse_Role) String() string {
 func (*ListRolesResponse_Role) ProtoMessage() {}
 
 func (x *ListRolesResponse_Role) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_RBAC_proto_msgTypes[25]
+	mi := &file_proto_RBAC_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1651,7 +1703,10 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\f_descriptionB\x0f\n" +
 	"\r_extendedUUIDB\f\n" +
 	"\n" +
-	"_deletedat\"Q\n" +
+	"_deletedat\"S\n" +
+	"\x11RevokeRoleRequest\x12\"\n" +
+	"\fassigneeUUID\x18\x01 \x01(\tR\fassigneeUUID\x12\x1a\n" +
+	"\broleUUID\x18\x02 \x01(\tR\broleUUID\"Q\n" +
 	"\x11AddActionsRequest\x12 \n" +
 	"\vactionUUIDs\x18\x01 \x03(\tR\vactionUUIDs\x12\x1a\n" +
 	"\broleUUID\x18\x02 \x01(\tR\broleUUID\"T\n" +
@@ -1683,7 +1738,7 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\x03PUT\x10\x03\x12\t\n" +
 	"\x05PATCH\x10\x04\x12\n" +
 	"\n" +
-	"\x06DELETE\x10\x052\x9d\f\n" +
+	"\x06DELETE\x10\x052\x98\r\n" +
 	"\vRBACService\x12G\n" +
 	"\rHasPermission\x12\x1b.RBAC.HasPermissionQuestion\x1a\x19.RBAC.HasPermissionAnswer\x12`\n" +
 	"\n" +
@@ -1697,7 +1752,9 @@ const file_proto_RBAC_proto_rawDesc = "" +
 	"\fRoleAssignor\x12\x19.RBAC.RoleAssignorRequest\x1a\x1a.RBAC.RoleAssignorResponse\"4\x82\xd3\xe4\x93\x02.\x12,/v1/RBAC/assignees/{assigneeUUID}/{roleUUID}\x12u\n" +
 	"\rRoleAssignees\x12\x1a.RBAC.RoleAssigneesRequest\x1a\x1b.RBAC.RoleAssigneesResponse\"+\x82\xd3\xe4\x93\x02%\x12#/v1/RBAC/roles/{roleUUID}/assignees\x12y\n" +
 	"\n" +
-	"AssignRole\x12\x17.RBAC.AssignRoleRequest\x1a\x16.google.protobuf.Empty\":\x82\xd3\xe4\x93\x024\"2/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}\x12k\n" +
+	"AssignRole\x12\x17.RBAC.AssignRoleRequest\x1a\x16.google.protobuf.Empty\":\x82\xd3\xe4\x93\x024\"2/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}\x12y\n" +
+	"\n" +
+	"RevokeRole\x12\x17.RBAC.RevokeRoleRequest\x1a\x16.google.protobuf.Empty\":\x82\xd3\xe4\x93\x024*2/v1/RBAC/roles/{roleUUID}/assignees/{assigneeUUID}\x12k\n" +
 	"\n" +
 	"AddActions\x12\x17.RBAC.AddActionsRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&:\x01*\"!/v1/RBAC/roles/{roleUUID}/actions\x12n\n" +
 	"\rRevokeActions\x12\x1a.RBAC.RevokeActionsRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/RBAC/roles/{roleUUID}/actions\x12\\\n" +
@@ -1718,7 +1775,7 @@ func file_proto_RBAC_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_RBAC_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_RBAC_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_proto_RBAC_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_proto_RBAC_proto_goTypes = []any{
 	(Verb)(0),                          // 0: RBAC.Verb
 	(*HasPermissionQuestion)(nil),      // 1: RBAC.HasPermissionQuestion
@@ -1738,33 +1795,34 @@ var file_proto_RBAC_proto_goTypes = []any{
 	(*RoleResponse)(nil),               // 15: RBAC.RoleResponse
 	(*ListRolesRequest)(nil),           // 16: RBAC.ListRolesRequest
 	(*ListRolesResponse)(nil),          // 17: RBAC.ListRolesResponse
-	(*AddActionsRequest)(nil),          // 18: RBAC.AddActionsRequest
-	(*RevokeActionsRequest)(nil),       // 19: RBAC.RevokeActionsRequest
-	(*ListActionsRequest)(nil),         // 20: RBAC.ListActionsRequest
-	(*ListActionsResponse)(nil),        // 21: RBAC.ListActionsResponse
-	(*ActionsByRoleRequest)(nil),       // 22: RBAC.ActionsByRoleRequest
-	(*ActionsByRoleResponse)(nil),      // 23: RBAC.ActionsByRoleResponse
-	(*ActionRequest)(nil),              // 24: RBAC.ActionRequest
-	(*ActionResponse)(nil),             // 25: RBAC.ActionResponse
-	(*ListRolesResponse_Role)(nil),     // 26: RBAC.ListRolesResponse.Role
-	(*timestamppb.Timestamp)(nil),      // 27: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),              // 28: google.protobuf.Empty
+	(*RevokeRoleRequest)(nil),          // 18: RBAC.RevokeRoleRequest
+	(*AddActionsRequest)(nil),          // 19: RBAC.AddActionsRequest
+	(*RevokeActionsRequest)(nil),       // 20: RBAC.RevokeActionsRequest
+	(*ListActionsRequest)(nil),         // 21: RBAC.ListActionsRequest
+	(*ListActionsResponse)(nil),        // 22: RBAC.ListActionsResponse
+	(*ActionsByRoleRequest)(nil),       // 23: RBAC.ActionsByRoleRequest
+	(*ActionsByRoleResponse)(nil),      // 24: RBAC.ActionsByRoleResponse
+	(*ActionRequest)(nil),              // 25: RBAC.ActionRequest
+	(*ActionResponse)(nil),             // 26: RBAC.ActionResponse
+	(*ListRolesResponse_Role)(nil),     // 27: RBAC.ListRolesResponse.Role
+	(*timestamppb.Timestamp)(nil),      // 28: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),              // 29: google.protobuf.Empty
 }
 var file_proto_RBAC_proto_depIdxs = []int32{
 	0,  // 0: RBAC.HasPermissionQuestion.verb:type_name -> RBAC.Verb
 	0,  // 1: RBAC.Action.verb:type_name -> RBAC.Verb
 	4,  // 2: RBAC.CreateRoleRequest.actions:type_name -> RBAC.Action
-	27, // 3: RBAC.AssignRoleRequest.expiresat:type_name -> google.protobuf.Timestamp
-	27, // 4: RBAC.RoleResponse.createdat:type_name -> google.protobuf.Timestamp
-	27, // 5: RBAC.RoleResponse.deletedat:type_name -> google.protobuf.Timestamp
-	27, // 6: RBAC.RoleResponse.updatedat:type_name -> google.protobuf.Timestamp
-	26, // 7: RBAC.ListRolesResponse.roles:type_name -> RBAC.ListRolesResponse.Role
+	28, // 3: RBAC.AssignRoleRequest.expiresat:type_name -> google.protobuf.Timestamp
+	28, // 4: RBAC.RoleResponse.createdat:type_name -> google.protobuf.Timestamp
+	28, // 5: RBAC.RoleResponse.deletedat:type_name -> google.protobuf.Timestamp
+	28, // 6: RBAC.RoleResponse.updatedat:type_name -> google.protobuf.Timestamp
+	27, // 7: RBAC.ListRolesResponse.roles:type_name -> RBAC.ListRolesResponse.Role
 	4,  // 8: RBAC.ListActionsResponse.action:type_name -> RBAC.Action
 	4,  // 9: RBAC.ActionsByRoleResponse.actions:type_name -> RBAC.Action
 	4,  // 10: RBAC.ActionResponse.action:type_name -> RBAC.Action
-	27, // 11: RBAC.ListRolesResponse.Role.createdat:type_name -> google.protobuf.Timestamp
-	27, // 12: RBAC.ListRolesResponse.Role.deletedat:type_name -> google.protobuf.Timestamp
-	27, // 13: RBAC.ListRolesResponse.Role.updatedat:type_name -> google.protobuf.Timestamp
+	28, // 11: RBAC.ListRolesResponse.Role.createdat:type_name -> google.protobuf.Timestamp
+	28, // 12: RBAC.ListRolesResponse.Role.deletedat:type_name -> google.protobuf.Timestamp
+	28, // 13: RBAC.ListRolesResponse.Role.updatedat:type_name -> google.protobuf.Timestamp
 	1,  // 14: RBAC.RBACService.HasPermission:input_type -> RBAC.HasPermissionQuestion
 	3,  // 15: RBAC.RBACService.DeleteRole:input_type -> RBAC.DeleteRoleRequest
 	14, // 16: RBAC.RBACService.Role:input_type -> RBAC.RoleRequest
@@ -1775,28 +1833,30 @@ var file_proto_RBAC_proto_depIdxs = []int32{
 	8,  // 21: RBAC.RBACService.RoleAssignor:input_type -> RBAC.RoleAssignorRequest
 	10, // 22: RBAC.RBACService.RoleAssignees:input_type -> RBAC.RoleAssigneesRequest
 	12, // 23: RBAC.RBACService.AssignRole:input_type -> RBAC.AssignRoleRequest
-	18, // 24: RBAC.RBACService.AddActions:input_type -> RBAC.AddActionsRequest
-	19, // 25: RBAC.RBACService.RevokeActions:input_type -> RBAC.RevokeActionsRequest
-	20, // 26: RBAC.RBACService.ListActions:input_type -> RBAC.ListActionsRequest
-	22, // 27: RBAC.RBACService.ActionsByRole:input_type -> RBAC.ActionsByRoleRequest
-	24, // 28: RBAC.RBACService.Action:input_type -> RBAC.ActionRequest
-	2,  // 29: RBAC.RBACService.HasPermission:output_type -> RBAC.HasPermissionAnswer
-	28, // 30: RBAC.RBACService.DeleteRole:output_type -> google.protobuf.Empty
-	15, // 31: RBAC.RBACService.Role:output_type -> RBAC.RoleResponse
-	28, // 32: RBAC.RBACService.PatchRole:output_type -> google.protobuf.Empty
-	28, // 33: RBAC.RBACService.CreateRole:output_type -> google.protobuf.Empty
-	17, // 34: RBAC.RBACService.ListRoles:output_type -> RBAC.ListRolesResponse
-	7,  // 35: RBAC.RBACService.AssignorsAssignees:output_type -> RBAC.AssignorsAssigneesResponse
-	9,  // 36: RBAC.RBACService.RoleAssignor:output_type -> RBAC.RoleAssignorResponse
-	11, // 37: RBAC.RBACService.RoleAssignees:output_type -> RBAC.RoleAssigneesResponse
-	28, // 38: RBAC.RBACService.AssignRole:output_type -> google.protobuf.Empty
-	28, // 39: RBAC.RBACService.AddActions:output_type -> google.protobuf.Empty
-	28, // 40: RBAC.RBACService.RevokeActions:output_type -> google.protobuf.Empty
-	21, // 41: RBAC.RBACService.ListActions:output_type -> RBAC.ListActionsResponse
-	23, // 42: RBAC.RBACService.ActionsByRole:output_type -> RBAC.ActionsByRoleResponse
-	25, // 43: RBAC.RBACService.Action:output_type -> RBAC.ActionResponse
-	29, // [29:44] is the sub-list for method output_type
-	14, // [14:29] is the sub-list for method input_type
+	18, // 24: RBAC.RBACService.RevokeRole:input_type -> RBAC.RevokeRoleRequest
+	19, // 25: RBAC.RBACService.AddActions:input_type -> RBAC.AddActionsRequest
+	20, // 26: RBAC.RBACService.RevokeActions:input_type -> RBAC.RevokeActionsRequest
+	21, // 27: RBAC.RBACService.ListActions:input_type -> RBAC.ListActionsRequest
+	23, // 28: RBAC.RBACService.ActionsByRole:input_type -> RBAC.ActionsByRoleRequest
+	25, // 29: RBAC.RBACService.Action:input_type -> RBAC.ActionRequest
+	2,  // 30: RBAC.RBACService.HasPermission:output_type -> RBAC.HasPermissionAnswer
+	29, // 31: RBAC.RBACService.DeleteRole:output_type -> google.protobuf.Empty
+	15, // 32: RBAC.RBACService.Role:output_type -> RBAC.RoleResponse
+	29, // 33: RBAC.RBACService.PatchRole:output_type -> google.protobuf.Empty
+	29, // 34: RBAC.RBACService.CreateRole:output_type -> google.protobuf.Empty
+	17, // 35: RBAC.RBACService.ListRoles:output_type -> RBAC.ListRolesResponse
+	7,  // 36: RBAC.RBACService.AssignorsAssignees:output_type -> RBAC.AssignorsAssigneesResponse
+	9,  // 37: RBAC.RBACService.RoleAssignor:output_type -> RBAC.RoleAssignorResponse
+	11, // 38: RBAC.RBACService.RoleAssignees:output_type -> RBAC.RoleAssigneesResponse
+	29, // 39: RBAC.RBACService.AssignRole:output_type -> google.protobuf.Empty
+	29, // 40: RBAC.RBACService.RevokeRole:output_type -> google.protobuf.Empty
+	29, // 41: RBAC.RBACService.AddActions:output_type -> google.protobuf.Empty
+	29, // 42: RBAC.RBACService.RevokeActions:output_type -> google.protobuf.Empty
+	22, // 43: RBAC.RBACService.ListActions:output_type -> RBAC.ListActionsResponse
+	24, // 44: RBAC.RBACService.ActionsByRole:output_type -> RBAC.ActionsByRoleResponse
+	26, // 45: RBAC.RBACService.Action:output_type -> RBAC.ActionResponse
+	30, // [30:46] is the sub-list for method output_type
+	14, // [14:30] is the sub-list for method input_type
 	14, // [14:14] is the sub-list for extension type_name
 	14, // [14:14] is the sub-list for extension extendee
 	0,  // [0:14] is the sub-list for field type_name
@@ -1813,14 +1873,14 @@ func file_proto_RBAC_proto_init() {
 	file_proto_RBAC_proto_msgTypes[11].OneofWrappers = []any{}
 	file_proto_RBAC_proto_msgTypes[12].OneofWrappers = []any{}
 	file_proto_RBAC_proto_msgTypes[14].OneofWrappers = []any{}
-	file_proto_RBAC_proto_msgTypes[25].OneofWrappers = []any{}
+	file_proto_RBAC_proto_msgTypes[26].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_RBAC_proto_rawDesc), len(file_proto_RBAC_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   26,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
