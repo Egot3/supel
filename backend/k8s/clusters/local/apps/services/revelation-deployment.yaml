@@ -13,13 +13,6 @@ spec:
       labels:
         app: timetable-service
     spec:
-      initContainers:
-        - name: wait-for-db
-          image: ghcr.io/containerd/busybox:1.36
-          command:
-            - sh
-            - -c
-            - "until nc -z timetable-db-0.timetable-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
         - name: timetable-service
           image: ghcr.io/egot3/supel/backend/timetable:latest
