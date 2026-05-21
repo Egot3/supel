@@ -1,0 +1,254 @@
+syntax = "proto3";
+
+package group;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "./";
+
+enum GroupType {
+    UNSPECIFIED = 0;
+    GROUP       = 1;
+	CLUB        = 2;
+}
+
+message Group {
+    string UUID = 1;
+    string name = 2;
+    optional string description = 3;
+    GroupType group_type = 4;
+    
+    google.protobuf.Timestamp UpdatedAt = 5;
+    google.protobuf.Timestamp CreatedAt = 6;
+    google.protobuf.Timestamp DeletedAt = 7;
+}
+
+message GroupRequest {
+    string groupUUID = 1;
+}
+
+message GroupResponse {
+    Group group = 1;
+}
+
+message CreateGroupRequest {
+    string name = 1;
+    optional string description = 2;
+    GroupType group_type = 3;
+}
+
+message SearchGroupRequest {
+    string sample = 1;
+    int32 limit = 2;
+}
+
+message SearchGroupResponse {
+    repeated Group groups = 1;
+}
+
+message DeleteGroupRequest {
+    string groupUUID = 1;
+}
+
+message ListGroupsRequest {
+    uint32 page = 1;
+    uint32 size = 2;
+    GroupType group_type = 3;
+}
+
+message ListGroupsResponse {
+    uint32 page = 1;
+    uint32 size = 2;
+    uint64 total = 3;
+
+    repeated Group groups = 4;
+}
+
+message AddMemberRequest {
+    string memberUUID = 1;
+    string groupUUID = 2;
+}
+
+message RemoveMemberRequest {
+    string memberUUID = 1;
+    string groupUUID = 2;
+}
+
+message MembersGroupsRequest {
+    uint32 page = 1;
+    uint32 size = 2;
+    string memberUUID = 3;
+}
+
+message MembersGroupsResponse {
+    uint32 page = 1;
+    uint32 size = 2;
+    uint64 total = 3;
+
+    repeated Group groups = 4;
+}
+
+message ListMembersRequest {
+    uint32 page = 1;
+    uint32 size = 2;
+    string groupUUID = 3;
+}
+
+message User {
+    string uuid = 1;
+    string nickname = 2;
+    string avatar_url = 3;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message ListMembersResponse {
+    uint32 page = 1;
+    uint32 size = 2;
+    uint64 total = 3;
+
+    repeated User Members = 4;
+}
+
+message AssignCuratorToSeniorRequest {
+    string seniorUUID = 1;
+    string subordinateUUID = 2;
+}
+
+message RevokeCuratorFromSeniorRequest {
+    string seniorUUID = 1;
+    string subordinateUUID = 2;
+}
+
+message AssignCuratorToGroupRequest {
+    string curatorUUID = 1;
+    string groupUUID = 2;
+}
+
+message RevokeCuratorFromGroupRequest {
+    string curatorUUID = 1;
+    string groupUUID = 2;
+}
+
+message AddCuratorRequest {
+    string seniorUUID = 1;
+    string curatorUUID = 2;
+    string groupUUID = 3;
+}
+
+message RevokeCuratorRequest {
+    string curatorUUID = 1;
+}
+
+message GroupsCuratorsRequest {
+    string groupUUID = 1;
+} 
+
+message GroupsCuratorsResponse {
+    repeated User curators = 1;
+}
+
+message CuratorsGroupsRequest {
+    string curatorUUID = 1;
+}
+
+message CuratorsGroupsResponse {
+    repeated Group groups = 1;
+}
+
+
+service GroupService {
+    rpc AssignCuratorToSenior(AssignCuratorToSeniorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/group/curator/{seniorUUID}/{subordinateUUID}"
+        };
+    };
+    rpc AssignCuratorToGroup(AssignCuratorToGroupRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/group/{groupUUID}/curator/{curatorUUID}"
+        };
+    };
+    rpc RevokeCuratorFromSenior(RevokeCuratorFromSeniorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/group/curator/{seniorUUID}/{subordinateUUID}"
+        };
+    };
+    rpc RevokeCuratorFromGroup(RevokeCuratorFromGroupRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/group/{groupUUID}/curator/{curatorUUID}"
+        };
+    };
+    rpc AddCurator(AddCuratorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/group/curator"
+            body: "*"
+        };
+    };
+    rpc RevokeCurator(RevokeCuratorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/group/curator/{curatorUUID}"
+        };
+    };
+    rpc GroupsCurators(GroupsCuratorsRequest) returns (GroupsCuratorsResponse){
+        option (google.api.http) = {
+            post: "/v1/group/{groupUUID}/curator"
+        };
+    };
+    
+
+    rpc AddMember(AddMemberRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/group/{groupUUID}"
+            body: "*"
+        };
+    };
+    rpc RemoveMember(RemoveMemberRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/group/{groupUUID}/{memberUUID}"
+        };
+    };
+    rpc MembersGroups(MembersGroupsRequest) returns (MembersGroupsResponse){
+        option (google.api.http) = {
+            get: "/v1/group/member/{memberUUID}"
+        };
+    };
+    rpc ListMembers(ListMembersRequest) returns (ListMembersResponse){
+        option (google.api.http) = {
+            get: "/v1/group/{groupUUID}/member"
+        };
+    };
+
+
+    rpc Group(GroupRequest) returns (GroupResponse){
+        option (google.api.http) = {
+            get: "/v1/group/{groupUUID}"
+        };
+    };
+    rpc CreateGroup(CreateGroupRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/group"
+            body: "*"
+        };
+    };
+    rpc SearchGroup(CreateGroupRequest) returns (SearchGroupResponse){
+        option (google.api.http) = {
+            get: "/v1/group/search"
+        };
+    };
+    rpc DeleteGroup(DeleteGroupRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/group/{groupUUID}"
+        };
+    };
+    rpc ListGroups(ListGroupsRequest) returns (ListGroupsResponse){
+        option (google.api.http) = {
+            get: "/v1/group"
+        };
+    };
+    rpc CuratorsGroups(CuratorsGroupsRequest) returns (CuratorsGroupsResponse){
+        option (google.api.http) = {
+            post: "/v1/group/curator/{curatorUUID}"
+        };
+    };
+}

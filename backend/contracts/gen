@@ -3,5 +3,6 @@
 protoc -I . --proto_path=./proto --go_out=. --go-grpc_out=. --grpc-gateway_out=. ./proto/news.proto ./proto/identity.proto ./proto/user.proto
 protoc -I . --proto_path=./proto --go_out=./timetable --go-grpc_out=./timetable --grpc-gateway_out=./timetable ./proto/timetable.proto
 protoc -I . --proto_path=./proto --go_out=./rbac --go-grpc_out=./rbac --grpc-gateway_out=./rbac ./proto/RBAC.proto
+protoc -I . --proto_path=./proto --go_out=./group --go-grpc_out=./group --grpc-gateway_out=./group ./proto/group.proto
 
 # protoc -I . --proto_path=./proto --plugin=./node_modules/.bin/protoc-gen-ts_proto --ts_proto_out=.. ./proto/news.proto ./proto/identity.proto
