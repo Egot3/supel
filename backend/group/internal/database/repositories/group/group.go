@@ -23,7 +23,7 @@ func NewGroupRepository(i do.Injector) (GroupRepository, error) {
 		return nil, err
 	}
 
-	return bunGroupRepository{db: db}, nil
+	return &bunGroupRepository{db: db}, nil
 }
 
 func (r *bunGroupRepository) Group(ctx context.Context, groupUUID uuid.UUID) (*models.Group, error) {
@@ -41,22 +41,21 @@ func (r *bunGroupRepository) Group(ctx context.Context, groupUUID uuid.UUID) (*m
 }
 
 func (r *bunGroupRepository) CreateGroup(ctx context.Context, requestor uuid.UUID, name string, description *string, groupType types.GroupType) error {
-	err := r.db.RunInTx(ctx, &sql.TxOptions{}, func(ctx context.Context, tx bun.Tx) error {
+	return r.db.RunInTx(ctx, &sql.TxOptions{}, func(ctx context.Context, tx bun.Tx) error {
 		insert := models.Group{
 			Name:        name,
 			Description: description,
 			GroupType:   groupType,
 		}
-		_, err := tx.NewInsert().Model(&insert).Exec(ctx)
+		_, err := tx.NewInsert().Model(&insert).Returning("uuid").Exec(ctx)
 		if err != nil {
 			return err
 		}
 
-		/* getting curatee there*/
+		_, err = tx.NewInsert().Model(&models.GroupsCurators{GroupUUID: insert.UUID, CuratorUUID: requestor}).Exec(ctx)
 
-		return nil
+		return err
 	})
-	return err
 }
 
 func (r *bunGroupRepository) Search(ctx context.Context, sample string, limit int) ([]models.Group, error) {
@@ -84,4 +83,53 @@ func (r *bunGroupRepository) Search(ctx context.Context, sample string, limit in
 	return groups, nil
 }
 
-func (r *bunGroupRepository) DeleteGroup(ctx context.Context, groupUUID uuid.UUID) error
+func (r *bunGroupRepository) DeleteGroup(ctx context.Context, groupUUID uuid.UUID) error {
+	_, err := r.db.NewDelete().Model(&models.Group{UUID: groupUUID}).WherePK().Exec(ctx)
+	return err
+}
+
+func (r *bunGroupRepository) PatchGroup(ctx context.Context, patched models.GroupPatched) error {
+	isUpdated := false
+
+	query := r.db.NewUpdate().Model((*models.Group)(nil)).Where("uuid = ?", patched.UUID)
+	if patched.Name != nil {
+		query = query.Set("name = ?", *patched.Name)
+		isUpdated = true
+	}
+	if patched.Description != nil {
+		query = query.Set("description = ?", patched.Description)
+		isUpdated = true
+	}
+
+	if !isUpdated {
+		return nil
+	}
+
+	_, err := query.Exec(ctx)
+	return err
+}
+
+/* func (r *bunGroupRepository) UsersGroups(ctx context.Context, userUUID uuid.UUID) (uuid.UUIDs, error) {
+	groups := uuid.UUIDs{}
+	err := r.db.NewSelect().Model((*models.GroupsMembers)(nil)).Where("member_uuid = ?", userUUID).Column("group_uuid").Scan(ctx, &groups)
+	if err != nil {
+		return nil, err
+	}
+
+	return groups, nil
+} */
+
+func (r *bunGroupRepository) ListGroups(ctx context.Context, page, size uint32, groupType types.GroupType, order bun.Order) ([]models.Group, uint64, error) {
+	groups := []models.Group{}
+	query := r.db.NewSelect().Model(&groups).Limit(int(size)).Offset(int(size*page)).Order("created_at", string(order))
+	if groupType != types.UNSPECIFIED {
+		query = query.Where("group_type = ?", groupType)
+	}
+
+	total, err := query.ScanAndCount(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return groups, uint64(total), nil
+}

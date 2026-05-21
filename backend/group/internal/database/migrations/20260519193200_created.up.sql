@@ -6,10 +6,10 @@ CREATE TYPE IF NOT EXISTS group_type AS ENUM {
 };
 
 CREATE TABLE IF NOT EXISTS "groups" (
-    uuid           UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
-    "name"         VARCHAR(45) NOT NULL,
-    "description"  TEXT        NULL,
-    "group_type"   group_type  NOT NULL,
+    uuid                UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
+    "name"              VARCHAR(45) NOT NULL,
+    "description"       TEXT        NULL,
+    "group_type"        group_type  NOT NULL,
     "parent_group_uuid" UUID        NULL REFERENCES groups(uuid) ON UPDATE CASCADE ON DELETE SET NULL,
 
     deleted_at     TIMESTAMPTZ NULL,
