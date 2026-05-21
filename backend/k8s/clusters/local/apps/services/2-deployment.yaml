@@ -13,13 +13,6 @@ spec:
       labels:
         app: news-service
     spec:
-      initContainers:
-        - name: wait-for-db
-          image: busybox
-          command:
-            - sh
-            - -c
-            - "until nc -z news-db-0.news-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
         - name: news-service
           image: ghcr.io/egot3/supel/backend/news:latest

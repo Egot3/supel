@@ -13,13 +13,6 @@ spec:
       labels:
         app: identity-service
     spec:
-      initContainers:
-        - name: wait-for-db
-          image: busybox
-          command:
-            - sh
-            - -c
-            - "until nc -z identity-db-0.identity-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
         - name: identity-service
           image: ghcr.io/egot3/supel/backend/identity:latest

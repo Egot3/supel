@@ -13,13 +13,6 @@ spec:
       labels:
         app: user-service
     spec:
-      initContainers:
-        - name: wait-for-db
-          image: busybox
-          command:
-            - sh
-            - -c
-            - "until nc -z user-db-0.user-db 5432; do echo 'nothing ever happens(db)'; sleep 2; done"
       containers:
         - name: user-service
           image: ghcr.io/egot3/supel/backend/user:latest
