@@ -32,7 +32,7 @@ func (s *GroupService) Group(ctx context.Context, req *grpb.GroupRequest) (*grpb
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
 
-	group, err := s.GoupRepository.Group(ctx, groupUUID)
+	group, err := s.GroupRepository.Group(ctx, groupUUID)
 	if err != nil {
 		if errors.Is(err, carefulness.Gone) {
 			metadata.AppendToOutgoingContext(ctx, "reponse-code", "501")
@@ -88,7 +88,7 @@ func (s *GroupService) CreateGroup(ctx context.Context, req *grpb.CreateGroupReq
 		}
 	}
 
-	err = s.GoupRepository.CreateGroup(ctx, curatorUUID, req.Name, req.Description, types.GroupType(req.GroupType.String()))
+	err = s.GroupRepository.CreateGroup(ctx, curatorUUID, req.Name, req.Description, types.GroupType(req.GroupType.String()))
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't create group")
 	}
@@ -104,7 +104,7 @@ func (s *GroupService) SearchGroup(ctx context.Context, req *grpb.SearchGroupReq
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	serp, err := s.GoupRepository.Search(ctx, req.Sample, int(req.Limit))
+	serp, err := s.GroupRepository.Search(ctx, req.Sample, int(req.Limit))
 	if err != nil {
 		if errors.Is(sql.ErrNoRows, err) {
 			return nil, status.Error(codes.NotFound, "couldn't find anything for this query")
@@ -151,7 +151,7 @@ func (s *GroupService) DeleteGroup(ctx context.Context, req *grpb.DeleteGroupReq
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
 
-	err = s.GoupRepository.DeleteGroup(ctx, groupUUID)
+	err = s.GroupRepository.DeleteGroup(ctx, groupUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't delete group")
 	}
@@ -167,7 +167,7 @@ func (s *GroupService) ListGroups(ctx context.Context, req *grpb.ListGroupsReque
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	list, total, err := s.GoupRepository.ListGroups(ctx, req.Page, req.Size, types.GroupType(req.GroupType), bun.OrderDesc)
+	list, total, err := s.GroupRepository.ListGroups(ctx, req.Page, req.Size, types.GroupType(req.GroupType), bun.OrderDesc)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to get groups for listing")
 	}
@@ -196,7 +196,7 @@ func (s *GroupService) CuratorsGroups(ctx context.Context, req *grpb.CuratorsGro
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
-	groups, err := s.GoupRepository.CuratorsGroups(ctx, curatorUUID)
+	groups, err := s.GroupRepository.CuratorsGroups(ctx, curatorUUID)
 	if err != nil {
 		if errors.Is(sql.ErrNoRows, err) {
 			return nil, status.Error(codes.NotFound, "couldn't find curator with this uuid owning groups")

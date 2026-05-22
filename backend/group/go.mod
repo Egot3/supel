@@ -5,7 +5,7 @@ go 1.26.1
 require github.com/uptrace/bun v1.2.18
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.2.10 // indirect
+	github.com/Egot3/supel/backend/contracts v0.3.0 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.29.0 // indirect
 	github.com/samber/go-type-to-string v1.8.0 // indirect

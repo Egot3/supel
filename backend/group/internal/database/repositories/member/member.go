@@ -32,7 +32,7 @@ func (r *bunMemberRepository) RemoveMember(ctx context.Context, groupUUID, membe
 	return err
 }
 
-func (r *bunMemberRepository) MembersGroups(ctx context.Context, userUUID uuid.UUID, page, size int32) (uuid.UUIDs, int64, error) {
+func (r *bunMemberRepository) MembersGroups(ctx context.Context, userUUID uuid.UUID, page, size uint32) (uuid.UUIDs, uint64, error) {
 	var groups uuid.UUIDs
 	total, err := r.db.NewSelect().
 		Model((*models.GroupsMembers)(nil)).
@@ -44,10 +44,10 @@ func (r *bunMemberRepository) MembersGroups(ctx context.Context, userUUID uuid.U
 		return nil, 0, err
 	}
 
-	return groups, int64(total), nil
+	return groups, uint64(total), nil
 }
 
-func (r *bunMemberRepository) ListMembers(ctx context.Context, groupUUID uuid.UUID, page, size int32) (uuid.UUIDs, int64, error) {
+func (r *bunMemberRepository) ListMembers(ctx context.Context, groupUUID uuid.UUID, page, size uint32) (uuid.UUIDs, uint64, error) {
 	var members uuid.UUIDs
 	total, err := r.db.NewSelect().
 		Model((*models.GroupsMembers)(nil)).
@@ -58,5 +58,5 @@ func (r *bunMemberRepository) ListMembers(ctx context.Context, groupUUID uuid.UU
 		return nil, 0, err
 	}
 
-	return members, int64(total), nil
+	return members, uint64(total), nil
 }
