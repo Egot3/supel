@@ -138,3 +138,27 @@ func (r *bunCuratorRepository) RevokeCurator(ctx context.Context, curatorUUID uu
 		return err
 	})
 }
+
+func (r *bunCuratorRepository) GroupsCurators(ctx context.Context, groupUUID uuid.UUID) (uuid.UUIDs, error) {
+	var curUUIDs uuid.UUIDs
+	err := r.db.NewSelect().
+		Model((*models.GroupsCurators)(nil)).
+		Where("group_uuid = ?", groupUUID).Column("curator_uuid").Scan(ctx, &curUUIDs)
+	if err != nil {
+		return nil, err
+	}
+
+	return curUUIDs, nil
+}
+
+func (r *bunCuratorRepository) IsCurator(ctx context.Context, userUUID uuid.UUID) (bool, error) {
+	is, err := r.db.NewSelect().
+		Model((*models.CuratorsHierarchy)(nil)).
+		Where("subordinate_uuid = ?", userUUID).Exists(ctx)
+
+	if err != nil {
+		return false, err
+	}
+
+	return is, nil
+}

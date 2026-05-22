@@ -133,3 +133,18 @@ func (r *bunGroupRepository) ListGroups(ctx context.Context, page, size uint32, 
 
 	return groups, uint64(total), nil
 }
+
+func (r *bunGroupRepository) CuratorsGroups(ctx context.Context, curatorsUUID uuid.UUID) ([]models.Group, error) {
+	var groups []models.Group
+
+	err := r.db.NewSelect().Model((*models.Group)(nil)).
+		TableExpr("groups_curators as gc").
+		Join("groups as g").JoinOn("g.uuid = gc.group_uuid").
+		Where("gc.curator_uuid = ?", curatorsUUID).
+		Scan(ctx, &groups)
+	if err != nil {
+		return nil, err
+	}
+
+	return groups, nil
+}

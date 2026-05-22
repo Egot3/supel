@@ -3,6 +3,8 @@ package server
 import (
 	"context"
 
+	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
+
 	grpb "github.com/Egot3/supel/backend/contracts/group"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/curator"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/group"
@@ -17,6 +19,7 @@ type GroupService struct {
 	GoupRepository    group.GroupRepository
 	CuratorRepository curator.CuratorRepository
 	MemberRepository  member.MemberRepository
+	RBACClient        rbacpb.RBACServiceClient
 }
 
 func UserFromContext(ctx context.Context) (userUUID uuid.UUID, ok bool) {

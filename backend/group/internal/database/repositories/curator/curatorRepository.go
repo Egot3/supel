@@ -15,4 +15,6 @@ type CuratorRepository interface {
 	CanEdit(ctx context.Context, curatorUUID, groupUUID uuid.UUID) (bool, error)
 	WillCycle(ctx context.Context, seniorUUID, subordinateUUID uuid.UUID) (bool, error)
 	RevokeCurator(ctx context.Context, curatorUUID uuid.UUID) error
+	GroupsCurators(ctx context.Context, groupUUID uuid.UUID) (uuid.UUIDs, error)
+	IsCurator(ctx context.Context, userUUID uuid.UUID) (bool, error)
 }

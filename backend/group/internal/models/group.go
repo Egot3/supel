@@ -12,11 +12,10 @@ import (
 type Group struct {
 	bun.BaseModel `bun:"groups"`
 
-	UUID            uuid.UUID       `bun:"uuid,pk"`
-	Name            string          `bun:"name,notnull"`
-	Description     *string         `bun:"description"`
-	GroupType       types.GroupType `bun:"group_type,notnull"`
-	ParentGroupUUID uuid.UUID       `bun:"parent_group_uuid"`
+	UUID        uuid.UUID       `bun:"uuid,pk"`
+	Name        string          `bun:"name,notnull"`
+	Description *string         `bun:"description"`
+	GroupType   types.GroupType `bun:"group_type,notnull"`
 
 	ParentGroup *Group `bun:"rel:belongs-to,join:parent_group_uuid=uuid"`
 
