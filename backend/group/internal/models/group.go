@@ -27,7 +27,7 @@ type Group struct {
 
 type GroupPatched struct {
 	UUID        uuid.UUID
-	Name        string
+	Name        *string
 	Description *string
 }
 
