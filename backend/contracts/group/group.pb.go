@@ -589,6 +589,74 @@ func (x *ListGroupsResponse) GetGroups() []*Group {
 	return nil
 }
 
+type PatchGroupRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          *string                `protobuf:"bytes,1,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
+	GroupType     *GroupType             `protobuf:"varint,3,opt,name=group_type,json=groupType,proto3,enum=group.GroupType,oneof" json:"group_type,omitempty"`
+	GroupUUID     string                 `protobuf:"bytes,4,opt,name=groupUUID,proto3" json:"groupUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PatchGroupRequest) Reset() {
+	*x = PatchGroupRequest{}
+	mi := &file_proto_group_proto_msgTypes[9]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchGroupRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchGroupRequest) ProtoMessage() {}
+
+func (x *PatchGroupRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_group_proto_msgTypes[9]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchGroupRequest.ProtoReflect.Descriptor instead.
+func (*PatchGroupRequest) Descriptor() ([]byte, []int) {
+	return file_proto_group_proto_rawDescGZIP(), []int{9}
+}
+
+func (x *PatchGroupRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *PatchGroupRequest) GetDescription() string {
+	if x != nil && x.Description != nil {
+		return *x.Description
+	}
+	return ""
+}
+
+func (x *PatchGroupRequest) GetGroupType() GroupType {
+	if x != nil && x.GroupType != nil {
+		return *x.GroupType
+	}
+	return GroupType_UNSPECIFIED
+}
+
+func (x *PatchGroupRequest) GetGroupUUID() string {
+	if x != nil {
+		return x.GroupUUID
+	}
+	return ""
+}
+
 type AddMemberRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	MemberUUID    string                 `protobuf:"bytes,1,opt,name=memberUUID,proto3" json:"memberUUID,omitempty"`
@@ -599,7 +667,7 @@ type AddMemberRequest struct {
 
 func (x *AddMemberRequest) Reset() {
 	*x = AddMemberRequest{}
-	mi := &file_proto_group_proto_msgTypes[9]
+	mi := &file_proto_group_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -611,7 +679,7 @@ func (x *AddMemberRequest) String() string {
 func (*AddMemberRequest) ProtoMessage() {}
 
 func (x *AddMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[9]
+	mi := &file_proto_group_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -624,7 +692,7 @@ func (x *AddMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddMemberRequest.ProtoReflect.Descriptor instead.
 func (*AddMemberRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{9}
+	return file_proto_group_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *AddMemberRequest) GetMemberUUID() string {
@@ -651,7 +719,7 @@ type RemoveMemberRequest struct {
 
 func (x *RemoveMemberRequest) Reset() {
 	*x = RemoveMemberRequest{}
-	mi := &file_proto_group_proto_msgTypes[10]
+	mi := &file_proto_group_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -663,7 +731,7 @@ func (x *RemoveMemberRequest) String() string {
 func (*RemoveMemberRequest) ProtoMessage() {}
 
 func (x *RemoveMemberRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[10]
+	mi := &file_proto_group_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -676,7 +744,7 @@ func (x *RemoveMemberRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RemoveMemberRequest.ProtoReflect.Descriptor instead.
 func (*RemoveMemberRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{10}
+	return file_proto_group_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *RemoveMemberRequest) GetMemberUUID() string {
@@ -704,7 +772,7 @@ type MembersGroupsRequest struct {
 
 func (x *MembersGroupsRequest) Reset() {
 	*x = MembersGroupsRequest{}
-	mi := &file_proto_group_proto_msgTypes[11]
+	mi := &file_proto_group_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -716,7 +784,7 @@ func (x *MembersGroupsRequest) String() string {
 func (*MembersGroupsRequest) ProtoMessage() {}
 
 func (x *MembersGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[11]
+	mi := &file_proto_group_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -729,7 +797,7 @@ func (x *MembersGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MembersGroupsRequest.ProtoReflect.Descriptor instead.
 func (*MembersGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{11}
+	return file_proto_group_proto_rawDescGZIP(), []int{12}
 }
 
 func (x *MembersGroupsRequest) GetPage() uint32 {
@@ -765,7 +833,7 @@ type MembersGroupsResponse struct {
 
 func (x *MembersGroupsResponse) Reset() {
 	*x = MembersGroupsResponse{}
-	mi := &file_proto_group_proto_msgTypes[12]
+	mi := &file_proto_group_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -777,7 +845,7 @@ func (x *MembersGroupsResponse) String() string {
 func (*MembersGroupsResponse) ProtoMessage() {}
 
 func (x *MembersGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[12]
+	mi := &file_proto_group_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -790,7 +858,7 @@ func (x *MembersGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use MembersGroupsResponse.ProtoReflect.Descriptor instead.
 func (*MembersGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{12}
+	return file_proto_group_proto_rawDescGZIP(), []int{13}
 }
 
 func (x *MembersGroupsResponse) GetPage() uint32 {
@@ -832,7 +900,7 @@ type ListMembersRequest struct {
 
 func (x *ListMembersRequest) Reset() {
 	*x = ListMembersRequest{}
-	mi := &file_proto_group_proto_msgTypes[13]
+	mi := &file_proto_group_proto_msgTypes[14]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -844,7 +912,7 @@ func (x *ListMembersRequest) String() string {
 func (*ListMembersRequest) ProtoMessage() {}
 
 func (x *ListMembersRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[13]
+	mi := &file_proto_group_proto_msgTypes[14]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -857,7 +925,7 @@ func (x *ListMembersRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMembersRequest.ProtoReflect.Descriptor instead.
 func (*ListMembersRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{13}
+	return file_proto_group_proto_rawDescGZIP(), []int{14}
 }
 
 func (x *ListMembersRequest) GetPage() uint32 {
@@ -893,7 +961,7 @@ type User struct {
 
 func (x *User) Reset() {
 	*x = User{}
-	mi := &file_proto_group_proto_msgTypes[14]
+	mi := &file_proto_group_proto_msgTypes[15]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -905,7 +973,7 @@ func (x *User) String() string {
 func (*User) ProtoMessage() {}
 
 func (x *User) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[14]
+	mi := &file_proto_group_proto_msgTypes[15]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -918,7 +986,7 @@ func (x *User) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use User.ProtoReflect.Descriptor instead.
 func (*User) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{14}
+	return file_proto_group_proto_rawDescGZIP(), []int{15}
 }
 
 func (x *User) GetUuid() string {
@@ -961,7 +1029,7 @@ type ListMembersResponse struct {
 
 func (x *ListMembersResponse) Reset() {
 	*x = ListMembersResponse{}
-	mi := &file_proto_group_proto_msgTypes[15]
+	mi := &file_proto_group_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -973,7 +1041,7 @@ func (x *ListMembersResponse) String() string {
 func (*ListMembersResponse) ProtoMessage() {}
 
 func (x *ListMembersResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[15]
+	mi := &file_proto_group_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -986,7 +1054,7 @@ func (x *ListMembersResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListMembersResponse.ProtoReflect.Descriptor instead.
 func (*ListMembersResponse) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{15}
+	return file_proto_group_proto_rawDescGZIP(), []int{16}
 }
 
 func (x *ListMembersResponse) GetPage() uint32 {
@@ -1027,7 +1095,7 @@ type AssignCuratorToSeniorRequest struct {
 
 func (x *AssignCuratorToSeniorRequest) Reset() {
 	*x = AssignCuratorToSeniorRequest{}
-	mi := &file_proto_group_proto_msgTypes[16]
+	mi := &file_proto_group_proto_msgTypes[17]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1039,7 +1107,7 @@ func (x *AssignCuratorToSeniorRequest) String() string {
 func (*AssignCuratorToSeniorRequest) ProtoMessage() {}
 
 func (x *AssignCuratorToSeniorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[16]
+	mi := &file_proto_group_proto_msgTypes[17]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1052,7 +1120,7 @@ func (x *AssignCuratorToSeniorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignCuratorToSeniorRequest.ProtoReflect.Descriptor instead.
 func (*AssignCuratorToSeniorRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{16}
+	return file_proto_group_proto_rawDescGZIP(), []int{17}
 }
 
 func (x *AssignCuratorToSeniorRequest) GetSeniorUUID() string {
@@ -1079,7 +1147,7 @@ type RevokeCuratorFromSeniorRequest struct {
 
 func (x *RevokeCuratorFromSeniorRequest) Reset() {
 	*x = RevokeCuratorFromSeniorRequest{}
-	mi := &file_proto_group_proto_msgTypes[17]
+	mi := &file_proto_group_proto_msgTypes[18]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1091,7 +1159,7 @@ func (x *RevokeCuratorFromSeniorRequest) String() string {
 func (*RevokeCuratorFromSeniorRequest) ProtoMessage() {}
 
 func (x *RevokeCuratorFromSeniorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[17]
+	mi := &file_proto_group_proto_msgTypes[18]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1104,7 +1172,7 @@ func (x *RevokeCuratorFromSeniorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeCuratorFromSeniorRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCuratorFromSeniorRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{17}
+	return file_proto_group_proto_rawDescGZIP(), []int{18}
 }
 
 func (x *RevokeCuratorFromSeniorRequest) GetSeniorUUID() string {
@@ -1131,7 +1199,7 @@ type AssignCuratorToGroupRequest struct {
 
 func (x *AssignCuratorToGroupRequest) Reset() {
 	*x = AssignCuratorToGroupRequest{}
-	mi := &file_proto_group_proto_msgTypes[18]
+	mi := &file_proto_group_proto_msgTypes[19]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1143,7 +1211,7 @@ func (x *AssignCuratorToGroupRequest) String() string {
 func (*AssignCuratorToGroupRequest) ProtoMessage() {}
 
 func (x *AssignCuratorToGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[18]
+	mi := &file_proto_group_proto_msgTypes[19]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1156,7 +1224,7 @@ func (x *AssignCuratorToGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AssignCuratorToGroupRequest.ProtoReflect.Descriptor instead.
 func (*AssignCuratorToGroupRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{18}
+	return file_proto_group_proto_rawDescGZIP(), []int{19}
 }
 
 func (x *AssignCuratorToGroupRequest) GetCuratorUUID() string {
@@ -1183,7 +1251,7 @@ type RevokeCuratorFromGroupRequest struct {
 
 func (x *RevokeCuratorFromGroupRequest) Reset() {
 	*x = RevokeCuratorFromGroupRequest{}
-	mi := &file_proto_group_proto_msgTypes[19]
+	mi := &file_proto_group_proto_msgTypes[20]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1195,7 +1263,7 @@ func (x *RevokeCuratorFromGroupRequest) String() string {
 func (*RevokeCuratorFromGroupRequest) ProtoMessage() {}
 
 func (x *RevokeCuratorFromGroupRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[19]
+	mi := &file_proto_group_proto_msgTypes[20]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1208,7 +1276,7 @@ func (x *RevokeCuratorFromGroupRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeCuratorFromGroupRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCuratorFromGroupRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{19}
+	return file_proto_group_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *RevokeCuratorFromGroupRequest) GetCuratorUUID() string {
@@ -1236,7 +1304,7 @@ type AddCuratorRequest struct {
 
 func (x *AddCuratorRequest) Reset() {
 	*x = AddCuratorRequest{}
-	mi := &file_proto_group_proto_msgTypes[20]
+	mi := &file_proto_group_proto_msgTypes[21]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1248,7 +1316,7 @@ func (x *AddCuratorRequest) String() string {
 func (*AddCuratorRequest) ProtoMessage() {}
 
 func (x *AddCuratorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[20]
+	mi := &file_proto_group_proto_msgTypes[21]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1261,7 +1329,7 @@ func (x *AddCuratorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddCuratorRequest.ProtoReflect.Descriptor instead.
 func (*AddCuratorRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{20}
+	return file_proto_group_proto_rawDescGZIP(), []int{21}
 }
 
 func (x *AddCuratorRequest) GetSeniorUUID() string {
@@ -1294,7 +1362,7 @@ type RevokeCuratorRequest struct {
 
 func (x *RevokeCuratorRequest) Reset() {
 	*x = RevokeCuratorRequest{}
-	mi := &file_proto_group_proto_msgTypes[21]
+	mi := &file_proto_group_proto_msgTypes[22]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1306,7 +1374,7 @@ func (x *RevokeCuratorRequest) String() string {
 func (*RevokeCuratorRequest) ProtoMessage() {}
 
 func (x *RevokeCuratorRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[21]
+	mi := &file_proto_group_proto_msgTypes[22]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1319,7 +1387,7 @@ func (x *RevokeCuratorRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RevokeCuratorRequest.ProtoReflect.Descriptor instead.
 func (*RevokeCuratorRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{21}
+	return file_proto_group_proto_rawDescGZIP(), []int{22}
 }
 
 func (x *RevokeCuratorRequest) GetCuratorUUID() string {
@@ -1338,7 +1406,7 @@ type GroupsCuratorsRequest struct {
 
 func (x *GroupsCuratorsRequest) Reset() {
 	*x = GroupsCuratorsRequest{}
-	mi := &file_proto_group_proto_msgTypes[22]
+	mi := &file_proto_group_proto_msgTypes[23]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1350,7 +1418,7 @@ func (x *GroupsCuratorsRequest) String() string {
 func (*GroupsCuratorsRequest) ProtoMessage() {}
 
 func (x *GroupsCuratorsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[22]
+	mi := &file_proto_group_proto_msgTypes[23]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1363,7 +1431,7 @@ func (x *GroupsCuratorsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroupsCuratorsRequest.ProtoReflect.Descriptor instead.
 func (*GroupsCuratorsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{22}
+	return file_proto_group_proto_rawDescGZIP(), []int{23}
 }
 
 func (x *GroupsCuratorsRequest) GetGroupUUID() string {
@@ -1382,7 +1450,7 @@ type GroupsCuratorsResponse struct {
 
 func (x *GroupsCuratorsResponse) Reset() {
 	*x = GroupsCuratorsResponse{}
-	mi := &file_proto_group_proto_msgTypes[23]
+	mi := &file_proto_group_proto_msgTypes[24]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1394,7 +1462,7 @@ func (x *GroupsCuratorsResponse) String() string {
 func (*GroupsCuratorsResponse) ProtoMessage() {}
 
 func (x *GroupsCuratorsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[23]
+	mi := &file_proto_group_proto_msgTypes[24]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1407,7 +1475,7 @@ func (x *GroupsCuratorsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GroupsCuratorsResponse.ProtoReflect.Descriptor instead.
 func (*GroupsCuratorsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{23}
+	return file_proto_group_proto_rawDescGZIP(), []int{24}
 }
 
 func (x *GroupsCuratorsResponse) GetCurators() []*User {
@@ -1426,7 +1494,7 @@ type CuratorsGroupsRequest struct {
 
 func (x *CuratorsGroupsRequest) Reset() {
 	*x = CuratorsGroupsRequest{}
-	mi := &file_proto_group_proto_msgTypes[24]
+	mi := &file_proto_group_proto_msgTypes[25]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1438,7 +1506,7 @@ func (x *CuratorsGroupsRequest) String() string {
 func (*CuratorsGroupsRequest) ProtoMessage() {}
 
 func (x *CuratorsGroupsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[24]
+	mi := &file_proto_group_proto_msgTypes[25]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1451,7 +1519,7 @@ func (x *CuratorsGroupsRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CuratorsGroupsRequest.ProtoReflect.Descriptor instead.
 func (*CuratorsGroupsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{24}
+	return file_proto_group_proto_rawDescGZIP(), []int{25}
 }
 
 func (x *CuratorsGroupsRequest) GetCuratorUUID() string {
@@ -1470,7 +1538,7 @@ type CuratorsGroupsResponse struct {
 
 func (x *CuratorsGroupsResponse) Reset() {
 	*x = CuratorsGroupsResponse{}
-	mi := &file_proto_group_proto_msgTypes[25]
+	mi := &file_proto_group_proto_msgTypes[26]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -1482,7 +1550,7 @@ func (x *CuratorsGroupsResponse) String() string {
 func (*CuratorsGroupsResponse) ProtoMessage() {}
 
 func (x *CuratorsGroupsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_group_proto_msgTypes[25]
+	mi := &file_proto_group_proto_msgTypes[26]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1495,7 +1563,7 @@ func (x *CuratorsGroupsResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CuratorsGroupsResponse.ProtoReflect.Descriptor instead.
 func (*CuratorsGroupsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_group_proto_rawDescGZIP(), []int{25}
+	return file_proto_group_proto_rawDescGZIP(), []int{26}
 }
 
 func (x *CuratorsGroupsResponse) GetGroups() []*Group {
@@ -1547,7 +1615,16 @@ const file_proto_group_proto_rawDesc = "" +
 	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
 	"\x04size\x18\x02 \x01(\rR\x04size\x12\x14\n" +
 	"\x05total\x18\x03 \x01(\x04R\x05total\x12$\n" +
-	"\x06groups\x18\x04 \x03(\v2\f.group.GroupR\x06groups\"P\n" +
+	"\x06groups\x18\x04 \x03(\v2\f.group.GroupR\x06groups\"\xcf\x01\n" +
+	"\x11PatchGroupRequest\x12\x17\n" +
+	"\x04name\x18\x01 \x01(\tH\x00R\x04name\x88\x01\x01\x12%\n" +
+	"\vdescription\x18\x02 \x01(\tH\x01R\vdescription\x88\x01\x01\x124\n" +
+	"\n" +
+	"group_type\x18\x03 \x01(\x0e2\x10.group.GroupTypeH\x02R\tgroupType\x88\x01\x01\x12\x1c\n" +
+	"\tgroupUUID\x18\x04 \x01(\tR\tgroupUUIDB\a\n" +
+	"\x05_nameB\x0e\n" +
+	"\f_descriptionB\r\n" +
+	"\v_group_type\"P\n" +
 	"\x10AddMemberRequest\x12\x1e\n" +
 	"\n" +
 	"memberUUID\x18\x01 \x01(\tR\n" +
@@ -1620,7 +1697,7 @@ const file_proto_group_proto_rawDesc = "" +
 	"\tGroupType\x12\x0f\n" +
 	"\vUNSPECIFIED\x10\x00\x12\t\n" +
 	"\x05GROUP\x10\x01\x12\b\n" +
-	"\x04CLUB\x10\x022\xf8\x0e\n" +
+	"\x04CLUB\x10\x022\xda\x0f\n" +
 	"\fGroupService\x12\x8e\x01\n" +
 	"\x15AssignCuratorToSenior\x12#.group.AssignCuratorToSeniorRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x022\"0/v1/group/curator/{seniorUUID}/{subordinateUUID}\x12\x87\x01\n" +
 	"\x14AssignCuratorToGroup\x12\".group.AssignCuratorToGroupRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-\"+/v1/group/{groupUUID}/curator/{curatorUUID}\x12\x92\x01\n" +
@@ -1636,11 +1713,13 @@ const file_proto_group_proto_rawDesc = "" +
 	"\vListMembers\x12\x19.group.ListMembersRequest\x1a\x1a.group.ListMembersResponse\"$\x82\xd3\xe4\x93\x02\x1e\x12\x1c/v1/group/{groupUUID}/member\x12Q\n" +
 	"\x05Group\x12\x13.group.GroupRequest\x1a\x14.group.GroupResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/group/{groupUUID}\x12V\n" +
 	"\vCreateGroup\x12\x19.group.CreateGroupRequest\x1a\x16.google.protobuf.Empty\"\x14\x82\xd3\xe4\x93\x02\x0e:\x01*\"\t/v1/group\x12^\n" +
-	"\vSearchGroup\x12\x19.group.CreateGroupRequest\x1a\x1a.group.SearchGroupResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/group/search\x12_\n" +
+	"\vSearchGroup\x12\x19.group.SearchGroupRequest\x1a\x1a.group.SearchGroupResponse\"\x18\x82\xd3\xe4\x93\x02\x12\x12\x10/v1/group/search\x12_\n" +
 	"\vDeleteGroup\x12\x19.group.DeleteGroupRequest\x1a\x16.google.protobuf.Empty\"\x1d\x82\xd3\xe4\x93\x02\x17*\x15/v1/group/{groupUUID}\x12T\n" +
 	"\n" +
 	"ListGroups\x12\x18.group.ListGroupsRequest\x1a\x19.group.ListGroupsResponse\"\x11\x82\xd3\xe4\x93\x02\v\x12\t/v1/group\x12v\n" +
-	"\x0eCuratorsGroups\x12\x1c.group.CuratorsGroupsRequest\x1a\x1d.group.CuratorsGroupsResponse\"'\x82\xd3\xe4\x93\x02!\"\x1f/v1/group/curator/{curatorUUID}B\x04Z\x02./b\x06proto3"
+	"\x0eCuratorsGroups\x12\x1c.group.CuratorsGroupsRequest\x1a\x1d.group.CuratorsGroupsResponse\"'\x82\xd3\xe4\x93\x02!\"\x1f/v1/group/curator/{curatorUUID}\x12`\n" +
+	"\n" +
+	"PatchGroup\x12\x18.group.PatchGroupRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a:\x01*2\x15/v1/group/{groupUUID}B\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_group_proto_rawDescOnce sync.Once
@@ -1655,7 +1734,7 @@ func file_proto_group_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_group_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_group_proto_msgTypes = make([]protoimpl.MessageInfo, 26)
+var file_proto_group_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
 var file_proto_group_proto_goTypes = []any{
 	(GroupType)(0),                         // 0: group.GroupType
 	(*Group)(nil),                          // 1: group.Group
@@ -1667,80 +1746,84 @@ var file_proto_group_proto_goTypes = []any{
 	(*DeleteGroupRequest)(nil),             // 7: group.DeleteGroupRequest
 	(*ListGroupsRequest)(nil),              // 8: group.ListGroupsRequest
 	(*ListGroupsResponse)(nil),             // 9: group.ListGroupsResponse
-	(*AddMemberRequest)(nil),               // 10: group.AddMemberRequest
-	(*RemoveMemberRequest)(nil),            // 11: group.RemoveMemberRequest
-	(*MembersGroupsRequest)(nil),           // 12: group.MembersGroupsRequest
-	(*MembersGroupsResponse)(nil),          // 13: group.MembersGroupsResponse
-	(*ListMembersRequest)(nil),             // 14: group.ListMembersRequest
-	(*User)(nil),                           // 15: group.User
-	(*ListMembersResponse)(nil),            // 16: group.ListMembersResponse
-	(*AssignCuratorToSeniorRequest)(nil),   // 17: group.AssignCuratorToSeniorRequest
-	(*RevokeCuratorFromSeniorRequest)(nil), // 18: group.RevokeCuratorFromSeniorRequest
-	(*AssignCuratorToGroupRequest)(nil),    // 19: group.AssignCuratorToGroupRequest
-	(*RevokeCuratorFromGroupRequest)(nil),  // 20: group.RevokeCuratorFromGroupRequest
-	(*AddCuratorRequest)(nil),              // 21: group.AddCuratorRequest
-	(*RevokeCuratorRequest)(nil),           // 22: group.RevokeCuratorRequest
-	(*GroupsCuratorsRequest)(nil),          // 23: group.GroupsCuratorsRequest
-	(*GroupsCuratorsResponse)(nil),         // 24: group.GroupsCuratorsResponse
-	(*CuratorsGroupsRequest)(nil),          // 25: group.CuratorsGroupsRequest
-	(*CuratorsGroupsResponse)(nil),         // 26: group.CuratorsGroupsResponse
-	(*timestamppb.Timestamp)(nil),          // 27: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                  // 28: google.protobuf.Empty
+	(*PatchGroupRequest)(nil),              // 10: group.PatchGroupRequest
+	(*AddMemberRequest)(nil),               // 11: group.AddMemberRequest
+	(*RemoveMemberRequest)(nil),            // 12: group.RemoveMemberRequest
+	(*MembersGroupsRequest)(nil),           // 13: group.MembersGroupsRequest
+	(*MembersGroupsResponse)(nil),          // 14: group.MembersGroupsResponse
+	(*ListMembersRequest)(nil),             // 15: group.ListMembersRequest
+	(*User)(nil),                           // 16: group.User
+	(*ListMembersResponse)(nil),            // 17: group.ListMembersResponse
+	(*AssignCuratorToSeniorRequest)(nil),   // 18: group.AssignCuratorToSeniorRequest
+	(*RevokeCuratorFromSeniorRequest)(nil), // 19: group.RevokeCuratorFromSeniorRequest
+	(*AssignCuratorToGroupRequest)(nil),    // 20: group.AssignCuratorToGroupRequest
+	(*RevokeCuratorFromGroupRequest)(nil),  // 21: group.RevokeCuratorFromGroupRequest
+	(*AddCuratorRequest)(nil),              // 22: group.AddCuratorRequest
+	(*RevokeCuratorRequest)(nil),           // 23: group.RevokeCuratorRequest
+	(*GroupsCuratorsRequest)(nil),          // 24: group.GroupsCuratorsRequest
+	(*GroupsCuratorsResponse)(nil),         // 25: group.GroupsCuratorsResponse
+	(*CuratorsGroupsRequest)(nil),          // 26: group.CuratorsGroupsRequest
+	(*CuratorsGroupsResponse)(nil),         // 27: group.CuratorsGroupsResponse
+	(*timestamppb.Timestamp)(nil),          // 28: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                  // 29: google.protobuf.Empty
 }
 var file_proto_group_proto_depIdxs = []int32{
 	0,  // 0: group.Group.group_type:type_name -> group.GroupType
-	27, // 1: group.Group.UpdatedAt:type_name -> google.protobuf.Timestamp
-	27, // 2: group.Group.CreatedAt:type_name -> google.protobuf.Timestamp
-	27, // 3: group.Group.DeletedAt:type_name -> google.protobuf.Timestamp
+	28, // 1: group.Group.UpdatedAt:type_name -> google.protobuf.Timestamp
+	28, // 2: group.Group.CreatedAt:type_name -> google.protobuf.Timestamp
+	28, // 3: group.Group.DeletedAt:type_name -> google.protobuf.Timestamp
 	1,  // 4: group.GroupResponse.group:type_name -> group.Group
 	0,  // 5: group.CreateGroupRequest.group_type:type_name -> group.GroupType
 	1,  // 6: group.SearchGroupResponse.groups:type_name -> group.Group
 	0,  // 7: group.ListGroupsRequest.group_type:type_name -> group.GroupType
 	1,  // 8: group.ListGroupsResponse.groups:type_name -> group.Group
-	1,  // 9: group.MembersGroupsResponse.groups:type_name -> group.Group
-	27, // 10: group.User.created_at:type_name -> google.protobuf.Timestamp
-	15, // 11: group.ListMembersResponse.Members:type_name -> group.User
-	15, // 12: group.GroupsCuratorsResponse.curators:type_name -> group.User
-	1,  // 13: group.CuratorsGroupsResponse.groups:type_name -> group.Group
-	17, // 14: group.GroupService.AssignCuratorToSenior:input_type -> group.AssignCuratorToSeniorRequest
-	19, // 15: group.GroupService.AssignCuratorToGroup:input_type -> group.AssignCuratorToGroupRequest
-	18, // 16: group.GroupService.RevokeCuratorFromSenior:input_type -> group.RevokeCuratorFromSeniorRequest
-	20, // 17: group.GroupService.RevokeCuratorFromGroup:input_type -> group.RevokeCuratorFromGroupRequest
-	21, // 18: group.GroupService.AddCurator:input_type -> group.AddCuratorRequest
-	22, // 19: group.GroupService.RevokeCurator:input_type -> group.RevokeCuratorRequest
-	23, // 20: group.GroupService.GroupsCurators:input_type -> group.GroupsCuratorsRequest
-	10, // 21: group.GroupService.AddMember:input_type -> group.AddMemberRequest
-	11, // 22: group.GroupService.RemoveMember:input_type -> group.RemoveMemberRequest
-	12, // 23: group.GroupService.MembersGroups:input_type -> group.MembersGroupsRequest
-	14, // 24: group.GroupService.ListMembers:input_type -> group.ListMembersRequest
-	2,  // 25: group.GroupService.Group:input_type -> group.GroupRequest
-	4,  // 26: group.GroupService.CreateGroup:input_type -> group.CreateGroupRequest
-	4,  // 27: group.GroupService.SearchGroup:input_type -> group.CreateGroupRequest
-	7,  // 28: group.GroupService.DeleteGroup:input_type -> group.DeleteGroupRequest
-	8,  // 29: group.GroupService.ListGroups:input_type -> group.ListGroupsRequest
-	25, // 30: group.GroupService.CuratorsGroups:input_type -> group.CuratorsGroupsRequest
-	28, // 31: group.GroupService.AssignCuratorToSenior:output_type -> google.protobuf.Empty
-	28, // 32: group.GroupService.AssignCuratorToGroup:output_type -> google.protobuf.Empty
-	28, // 33: group.GroupService.RevokeCuratorFromSenior:output_type -> google.protobuf.Empty
-	28, // 34: group.GroupService.RevokeCuratorFromGroup:output_type -> google.protobuf.Empty
-	28, // 35: group.GroupService.AddCurator:output_type -> google.protobuf.Empty
-	28, // 36: group.GroupService.RevokeCurator:output_type -> google.protobuf.Empty
-	24, // 37: group.GroupService.GroupsCurators:output_type -> group.GroupsCuratorsResponse
-	28, // 38: group.GroupService.AddMember:output_type -> google.protobuf.Empty
-	28, // 39: group.GroupService.RemoveMember:output_type -> google.protobuf.Empty
-	13, // 40: group.GroupService.MembersGroups:output_type -> group.MembersGroupsResponse
-	16, // 41: group.GroupService.ListMembers:output_type -> group.ListMembersResponse
-	3,  // 42: group.GroupService.Group:output_type -> group.GroupResponse
-	28, // 43: group.GroupService.CreateGroup:output_type -> google.protobuf.Empty
-	6,  // 44: group.GroupService.SearchGroup:output_type -> group.SearchGroupResponse
-	28, // 45: group.GroupService.DeleteGroup:output_type -> google.protobuf.Empty
-	9,  // 46: group.GroupService.ListGroups:output_type -> group.ListGroupsResponse
-	26, // 47: group.GroupService.CuratorsGroups:output_type -> group.CuratorsGroupsResponse
-	31, // [31:48] is the sub-list for method output_type
-	14, // [14:31] is the sub-list for method input_type
-	14, // [14:14] is the sub-list for extension type_name
-	14, // [14:14] is the sub-list for extension extendee
-	0,  // [0:14] is the sub-list for field type_name
+	0,  // 9: group.PatchGroupRequest.group_type:type_name -> group.GroupType
+	1,  // 10: group.MembersGroupsResponse.groups:type_name -> group.Group
+	28, // 11: group.User.created_at:type_name -> google.protobuf.Timestamp
+	16, // 12: group.ListMembersResponse.Members:type_name -> group.User
+	16, // 13: group.GroupsCuratorsResponse.curators:type_name -> group.User
+	1,  // 14: group.CuratorsGroupsResponse.groups:type_name -> group.Group
+	18, // 15: group.GroupService.AssignCuratorToSenior:input_type -> group.AssignCuratorToSeniorRequest
+	20, // 16: group.GroupService.AssignCuratorToGroup:input_type -> group.AssignCuratorToGroupRequest
+	19, // 17: group.GroupService.RevokeCuratorFromSenior:input_type -> group.RevokeCuratorFromSeniorRequest
+	21, // 18: group.GroupService.RevokeCuratorFromGroup:input_type -> group.RevokeCuratorFromGroupRequest
+	22, // 19: group.GroupService.AddCurator:input_type -> group.AddCuratorRequest
+	23, // 20: group.GroupService.RevokeCurator:input_type -> group.RevokeCuratorRequest
+	24, // 21: group.GroupService.GroupsCurators:input_type -> group.GroupsCuratorsRequest
+	11, // 22: group.GroupService.AddMember:input_type -> group.AddMemberRequest
+	12, // 23: group.GroupService.RemoveMember:input_type -> group.RemoveMemberRequest
+	13, // 24: group.GroupService.MembersGroups:input_type -> group.MembersGroupsRequest
+	15, // 25: group.GroupService.ListMembers:input_type -> group.ListMembersRequest
+	2,  // 26: group.GroupService.Group:input_type -> group.GroupRequest
+	4,  // 27: group.GroupService.CreateGroup:input_type -> group.CreateGroupRequest
+	5,  // 28: group.GroupService.SearchGroup:input_type -> group.SearchGroupRequest
+	7,  // 29: group.GroupService.DeleteGroup:input_type -> group.DeleteGroupRequest
+	8,  // 30: group.GroupService.ListGroups:input_type -> group.ListGroupsRequest
+	26, // 31: group.GroupService.CuratorsGroups:input_type -> group.CuratorsGroupsRequest
+	10, // 32: group.GroupService.PatchGroup:input_type -> group.PatchGroupRequest
+	29, // 33: group.GroupService.AssignCuratorToSenior:output_type -> google.protobuf.Empty
+	29, // 34: group.GroupService.AssignCuratorToGroup:output_type -> google.protobuf.Empty
+	29, // 35: group.GroupService.RevokeCuratorFromSenior:output_type -> google.protobuf.Empty
+	29, // 36: group.GroupService.RevokeCuratorFromGroup:output_type -> google.protobuf.Empty
+	29, // 37: group.GroupService.AddCurator:output_type -> google.protobuf.Empty
+	29, // 38: group.GroupService.RevokeCurator:output_type -> google.protobuf.Empty
+	25, // 39: group.GroupService.GroupsCurators:output_type -> group.GroupsCuratorsResponse
+	29, // 40: group.GroupService.AddMember:output_type -> google.protobuf.Empty
+	29, // 41: group.GroupService.RemoveMember:output_type -> google.protobuf.Empty
+	14, // 42: group.GroupService.MembersGroups:output_type -> group.MembersGroupsResponse
+	17, // 43: group.GroupService.ListMembers:output_type -> group.ListMembersResponse
+	3,  // 44: group.GroupService.Group:output_type -> group.GroupResponse
+	29, // 45: group.GroupService.CreateGroup:output_type -> google.protobuf.Empty
+	6,  // 46: group.GroupService.SearchGroup:output_type -> group.SearchGroupResponse
+	29, // 47: group.GroupService.DeleteGroup:output_type -> google.protobuf.Empty
+	9,  // 48: group.GroupService.ListGroups:output_type -> group.ListGroupsResponse
+	27, // 49: group.GroupService.CuratorsGroups:output_type -> group.CuratorsGroupsResponse
+	29, // 50: group.GroupService.PatchGroup:output_type -> google.protobuf.Empty
+	33, // [33:51] is the sub-list for method output_type
+	15, // [15:33] is the sub-list for method input_type
+	15, // [15:15] is the sub-list for extension type_name
+	15, // [15:15] is the sub-list for extension extendee
+	0,  // [0:15] is the sub-list for field type_name
 }
 
 func init() { file_proto_group_proto_init() }
@@ -1750,13 +1833,14 @@ func file_proto_group_proto_init() {
 	}
 	file_proto_group_proto_msgTypes[0].OneofWrappers = []any{}
 	file_proto_group_proto_msgTypes[3].OneofWrappers = []any{}
+	file_proto_group_proto_msgTypes[9].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_group_proto_rawDesc), len(file_proto_group_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   26,
+			NumMessages:   27,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

@@ -67,6 +67,13 @@ message ListGroupsResponse {
     repeated Group groups = 4;
 }
 
+message PatchGroupRequest {
+    optional string name = 1;
+    optional string description = 2;
+    optional GroupType group_type = 3;
+    string groupUUID = 4;
+}
+
 message AddMemberRequest {
     string memberUUID = 1;
     string groupUUID = 2;
@@ -232,7 +239,7 @@ service GroupService {
             body: "*"
         };
     };
-    rpc SearchGroup(CreateGroupRequest) returns (SearchGroupResponse){
+    rpc SearchGroup(SearchGroupRequest) returns (SearchGroupResponse){
         option (google.api.http) = {
             get: "/v1/group/search"
         };
@@ -250,6 +257,12 @@ service GroupService {
     rpc CuratorsGroups(CuratorsGroupsRequest) returns (CuratorsGroupsResponse){
         option (google.api.http) = {
             post: "/v1/group/curator/{curatorUUID}"
+        };
+    };
+    rpc PatchGroup(PatchGroupRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/group/{groupUUID}"
+            body: "*"
         };
     };
 }

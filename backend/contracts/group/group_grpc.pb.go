@@ -37,6 +37,7 @@ const (
 	GroupService_DeleteGroup_FullMethodName             = "/group.GroupService/DeleteGroup"
 	GroupService_ListGroups_FullMethodName              = "/group.GroupService/ListGroups"
 	GroupService_CuratorsGroups_FullMethodName          = "/group.GroupService/CuratorsGroups"
+	GroupService_PatchGroup_FullMethodName              = "/group.GroupService/PatchGroup"
 )
 
 // GroupServiceClient is the client API for GroupService service.
@@ -56,10 +57,11 @@ type GroupServiceClient interface {
 	ListMembers(ctx context.Context, in *ListMembersRequest, opts ...grpc.CallOption) (*ListMembersResponse, error)
 	Group(ctx context.Context, in *GroupRequest, opts ...grpc.CallOption) (*GroupResponse, error)
 	CreateGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	SearchGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*SearchGroupResponse, error)
+	SearchGroup(ctx context.Context, in *SearchGroupRequest, opts ...grpc.CallOption) (*SearchGroupResponse, error)
 	DeleteGroup(ctx context.Context, in *DeleteGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListGroups(ctx context.Context, in *ListGroupsRequest, opts ...grpc.CallOption) (*ListGroupsResponse, error)
 	CuratorsGroups(ctx context.Context, in *CuratorsGroupsRequest, opts ...grpc.CallOption) (*CuratorsGroupsResponse, error)
+	PatchGroup(ctx context.Context, in *PatchGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 }
 
 type groupServiceClient struct {
@@ -200,7 +202,7 @@ func (c *groupServiceClient) CreateGroup(ctx context.Context, in *CreateGroupReq
 	return out, nil
 }
 
-func (c *groupServiceClient) SearchGroup(ctx context.Context, in *CreateGroupRequest, opts ...grpc.CallOption) (*SearchGroupResponse, error) {
+func (c *groupServiceClient) SearchGroup(ctx context.Context, in *SearchGroupRequest, opts ...grpc.CallOption) (*SearchGroupResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(SearchGroupResponse)
 	err := c.cc.Invoke(ctx, GroupService_SearchGroup_FullMethodName, in, out, cOpts...)
@@ -240,6 +242,16 @@ func (c *groupServiceClient) CuratorsGroups(ctx context.Context, in *CuratorsGro
 	return out, nil
 }
 
+func (c *groupServiceClient) PatchGroup(ctx context.Context, in *PatchGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, GroupService_PatchGroup_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // GroupServiceServer is the server API for GroupService service.
 // All implementations must embed UnimplementedGroupServiceServer
 // for forward compatibility.
@@ -257,10 +269,11 @@ type GroupServiceServer interface {
 	ListMembers(context.Context, *ListMembersRequest) (*ListMembersResponse, error)
 	Group(context.Context, *GroupRequest) (*GroupResponse, error)
 	CreateGroup(context.Context, *CreateGroupRequest) (*emptypb.Empty, error)
-	SearchGroup(context.Context, *CreateGroupRequest) (*SearchGroupResponse, error)
+	SearchGroup(context.Context, *SearchGroupRequest) (*SearchGroupResponse, error)
 	DeleteGroup(context.Context, *DeleteGroupRequest) (*emptypb.Empty, error)
 	ListGroups(context.Context, *ListGroupsRequest) (*ListGroupsResponse, error)
 	CuratorsGroups(context.Context, *CuratorsGroupsRequest) (*CuratorsGroupsResponse, error)
+	PatchGroup(context.Context, *PatchGroupRequest) (*emptypb.Empty, error)
 	mustEmbedUnimplementedGroupServiceServer()
 }
 
@@ -310,7 +323,7 @@ func (UnimplementedGroupServiceServer) Group(context.Context, *GroupRequest) (*G
 func (UnimplementedGroupServiceServer) CreateGroup(context.Context, *CreateGroupRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreateGroup not implemented")
 }
-func (UnimplementedGroupServiceServer) SearchGroup(context.Context, *CreateGroupRequest) (*SearchGroupResponse, error) {
+func (UnimplementedGroupServiceServer) SearchGroup(context.Context, *SearchGroupRequest) (*SearchGroupResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method SearchGroup not implemented")
 }
 func (UnimplementedGroupServiceServer) DeleteGroup(context.Context, *DeleteGroupRequest) (*emptypb.Empty, error) {
@@ -321,6 +334,9 @@ func (UnimplementedGroupServiceServer) ListGroups(context.Context, *ListGroupsRe
 }
 func (UnimplementedGroupServiceServer) CuratorsGroups(context.Context, *CuratorsGroupsRequest) (*CuratorsGroupsResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CuratorsGroups not implemented")
+}
+func (UnimplementedGroupServiceServer) PatchGroup(context.Context, *PatchGroupRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchGroup not implemented")
 }
 func (UnimplementedGroupServiceServer) mustEmbedUnimplementedGroupServiceServer() {}
 func (UnimplementedGroupServiceServer) testEmbeddedByValue()                      {}
@@ -578,7 +594,7 @@ func _GroupService_CreateGroup_Handler(srv interface{}, ctx context.Context, dec
 }
 
 func _GroupService_SearchGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateGroupRequest)
+	in := new(SearchGroupRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -590,7 +606,7 @@ func _GroupService_SearchGroup_Handler(srv interface{}, ctx context.Context, dec
 		FullMethod: GroupService_SearchGroup_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(GroupServiceServer).SearchGroup(ctx, req.(*CreateGroupRequest))
+		return srv.(GroupServiceServer).SearchGroup(ctx, req.(*SearchGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -645,6 +661,24 @@ func _GroupService_CuratorsGroups_Handler(srv interface{}, ctx context.Context, 
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(GroupServiceServer).CuratorsGroups(ctx, req.(*CuratorsGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GroupService_PatchGroup_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchGroupRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).PatchGroup(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GroupService_PatchGroup_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).PatchGroup(ctx, req.(*PatchGroupRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -723,6 +757,10 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CuratorsGroups",
 			Handler:    _GroupService_CuratorsGroups_Handler,
+		},
+		{
+			MethodName: "PatchGroup",
+			Handler:    _GroupService_PatchGroup_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
