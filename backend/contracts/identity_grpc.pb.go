@@ -20,11 +20,12 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	IdentityService_RemintToken_FullMethodName   = "/identity.IdentityService/RemintToken"
-	IdentityService_ValidateToken_FullMethodName = "/identity.IdentityService/ValidateToken"
-	IdentityService_Login_FullMethodName         = "/identity.IdentityService/Login"
-	IdentityService_Register_FullMethodName      = "/identity.IdentityService/Register"
-	IdentityService_DisableUser_FullMethodName   = "/identity.IdentityService/DisableUser"
+	IdentityService_RemintToken_FullMethodName    = "/identity.IdentityService/RemintToken"
+	IdentityService_ValidateToken_FullMethodName  = "/identity.IdentityService/ValidateToken"
+	IdentityService_Login_FullMethodName          = "/identity.IdentityService/Login"
+	IdentityService_Register_FullMethodName       = "/identity.IdentityService/Register"
+	IdentityService_DisableUser_FullMethodName    = "/identity.IdentityService/DisableUser"
+	IdentityService_CheckExistance_FullMethodName = "/identity.IdentityService/CheckExistance"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -36,6 +37,7 @@ type IdentityServiceClient interface {
 	Login(ctx context.Context, in *LoginRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DisableUser(ctx context.Context, in *DisableUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CheckExistance(ctx context.Context, in *CheckExistanceRequest, opts ...grpc.CallOption) (*CheckExistanceResponse, error)
 }
 
 type identityServiceClient struct {
@@ -96,6 +98,16 @@ func (c *identityServiceClient) DisableUser(ctx context.Context, in *DisableUser
 	return out, nil
 }
 
+func (c *identityServiceClient) CheckExistance(ctx context.Context, in *CheckExistanceRequest, opts ...grpc.CallOption) (*CheckExistanceResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CheckExistanceResponse)
+	err := c.cc.Invoke(ctx, IdentityService_CheckExistance_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility.
@@ -105,6 +117,7 @@ type IdentityServiceServer interface {
 	Login(context.Context, *LoginRequest) (*emptypb.Empty, error)
 	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
 	DisableUser(context.Context, *DisableUserRequest) (*emptypb.Empty, error)
+	CheckExistance(context.Context, *CheckExistanceRequest) (*CheckExistanceResponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -129,6 +142,9 @@ func (UnimplementedIdentityServiceServer) Register(context.Context, *RegisterReq
 }
 func (UnimplementedIdentityServiceServer) DisableUser(context.Context, *DisableUserRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DisableUser not implemented")
+}
+func (UnimplementedIdentityServiceServer) CheckExistance(context.Context, *CheckExistanceRequest) (*CheckExistanceResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CheckExistance not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 func (UnimplementedIdentityServiceServer) testEmbeddedByValue()                         {}
@@ -241,6 +257,24 @@ func _IdentityService_DisableUser_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_CheckExistance_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CheckExistanceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).CheckExistance(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_CheckExistance_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).CheckExistance(ctx, req.(*CheckExistanceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -267,6 +301,10 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DisableUser",
 			Handler:    _IdentityService_DisableUser_Handler,
+		},
+		{
+			MethodName: "CheckExistance",
+			Handler:    _IdentityService_CheckExistance_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

@@ -357,6 +357,94 @@ func (x *RegisterRequest) GetNickname() string {
 	return ""
 }
 
+type CheckExistanceRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckExistanceRequest) Reset() {
+	*x = CheckExistanceRequest{}
+	mi := &file_proto_identity_proto_msgTypes[6]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckExistanceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckExistanceRequest) ProtoMessage() {}
+
+func (x *CheckExistanceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_identity_proto_msgTypes[6]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckExistanceRequest.ProtoReflect.Descriptor instead.
+func (*CheckExistanceRequest) Descriptor() ([]byte, []int) {
+	return file_proto_identity_proto_rawDescGZIP(), []int{6}
+}
+
+func (x *CheckExistanceRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+type CheckExistanceResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Exists        bool                   `protobuf:"varint,1,opt,name=exists,proto3" json:"exists,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CheckExistanceResponse) Reset() {
+	*x = CheckExistanceResponse{}
+	mi := &file_proto_identity_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CheckExistanceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CheckExistanceResponse) ProtoMessage() {}
+
+func (x *CheckExistanceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_identity_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CheckExistanceResponse.ProtoReflect.Descriptor instead.
+func (*CheckExistanceResponse) Descriptor() ([]byte, []int) {
+	return file_proto_identity_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *CheckExistanceResponse) GetExists() bool {
+	if x != nil {
+		return x.Exists
+	}
+	return false
+}
+
 var File_proto_identity_proto protoreflect.FileDescriptor
 
 const file_proto_identity_proto_rawDesc = "" +
@@ -376,16 +464,21 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\x0fRegisterRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
 	"\bpassword\x18\x02 \x01(\tR\bpassword\x12\x1a\n" +
-	"\bnickname\x18\x03 \x01(\tR\bnickname*\x1b\n" +
+	"\bnickname\x18\x03 \x01(\tR\bnickname\"+\n" +
+	"\x15CheckExistanceRequest\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"0\n" +
+	"\x16CheckExistanceResponse\x12\x16\n" +
+	"\x06exists\x18\x01 \x01(\bR\x06exists*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
-	"\x05ADMIN\x10\x012\xb8\x03\n" +
+	"\x05ADMIN\x10\x012\x8d\x04\n" +
 	"\x0fIdentityService\x12/\n" +
 	"\vRemintToken\x12\x0f.identity.Token\x1a\x0f.identity.Token\x12]\n" +
 	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/public/validate/{token}\x12T\n" +
 	"\x05Login\x12\x16.identity.LoginRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/public/login\x12]\n" +
 	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x16.google.protobuf.Empty\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/v1/public/register\x12`\n" +
-	"\vDisableUser\x12\x1c.identity.DisableUserRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/v1/identity/{uuid}B\x04Z\x02./b\x06proto3"
+	"\vDisableUser\x12\x1c.identity.DisableUserRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/v1/identity/{uuid}\x12S\n" +
+	"\x0eCheckExistance\x12\x1f.identity.CheckExistanceRequest\x1a .identity.CheckExistanceResponseB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_identity_proto_rawDescOnce sync.Once
@@ -400,16 +493,18 @@ func file_proto_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_proto_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
 var file_proto_identity_proto_goTypes = []any{
-	(Role)(0),                  // 0: identity.Role
-	(*TokenRequest)(nil),       // 1: identity.TokenRequest
-	(*Token)(nil),              // 2: identity.Token
-	(*TokenPayload)(nil),       // 3: identity.TokenPayload
-	(*DisableUserRequest)(nil), // 4: identity.DisableUserRequest
-	(*LoginRequest)(nil),       // 5: identity.LoginRequest
-	(*RegisterRequest)(nil),    // 6: identity.RegisterRequest
-	(*emptypb.Empty)(nil),      // 7: google.protobuf.Empty
+	(Role)(0),                      // 0: identity.Role
+	(*TokenRequest)(nil),           // 1: identity.TokenRequest
+	(*Token)(nil),                  // 2: identity.Token
+	(*TokenPayload)(nil),           // 3: identity.TokenPayload
+	(*DisableUserRequest)(nil),     // 4: identity.DisableUserRequest
+	(*LoginRequest)(nil),           // 5: identity.LoginRequest
+	(*RegisterRequest)(nil),        // 6: identity.RegisterRequest
+	(*CheckExistanceRequest)(nil),  // 7: identity.CheckExistanceRequest
+	(*CheckExistanceResponse)(nil), // 8: identity.CheckExistanceResponse
+	(*emptypb.Empty)(nil),          // 9: google.protobuf.Empty
 }
 var file_proto_identity_proto_depIdxs = []int32{
 	2, // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
@@ -417,13 +512,15 @@ var file_proto_identity_proto_depIdxs = []int32{
 	5, // 2: identity.IdentityService.Login:input_type -> identity.LoginRequest
 	6, // 3: identity.IdentityService.Register:input_type -> identity.RegisterRequest
 	4, // 4: identity.IdentityService.DisableUser:input_type -> identity.DisableUserRequest
-	2, // 5: identity.IdentityService.RemintToken:output_type -> identity.Token
-	3, // 6: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
-	7, // 7: identity.IdentityService.Login:output_type -> google.protobuf.Empty
-	7, // 8: identity.IdentityService.Register:output_type -> google.protobuf.Empty
-	7, // 9: identity.IdentityService.DisableUser:output_type -> google.protobuf.Empty
-	5, // [5:10] is the sub-list for method output_type
-	0, // [0:5] is the sub-list for method input_type
+	7, // 5: identity.IdentityService.CheckExistance:input_type -> identity.CheckExistanceRequest
+	2, // 6: identity.IdentityService.RemintToken:output_type -> identity.Token
+	3, // 7: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
+	9, // 8: identity.IdentityService.Login:output_type -> google.protobuf.Empty
+	9, // 9: identity.IdentityService.Register:output_type -> google.protobuf.Empty
+	9, // 10: identity.IdentityService.DisableUser:output_type -> google.protobuf.Empty
+	8, // 11: identity.IdentityService.CheckExistance:output_type -> identity.CheckExistanceResponse
+	6, // [6:12] is the sub-list for method output_type
+	0, // [0:6] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
@@ -440,7 +537,7 @@ func file_proto_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_identity_proto_rawDesc), len(file_proto_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   6,
+			NumMessages:   8,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

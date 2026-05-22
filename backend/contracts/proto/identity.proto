@@ -52,6 +52,7 @@ service IdentityService {
             delete: "/v1/identity/{uuid}"
         };
     };
+    rpc CheckExistance(CheckExistanceRequest) returns (CheckExistanceResponse);
 }
 
 message LoginRequest {
@@ -63,4 +64,12 @@ message RegisterRequest {
     string email = 1;
     string password = 2;
     string nickname = 3;
+}
+
+message CheckExistanceRequest {
+    string uuid = 1;
+}
+
+message CheckExistanceResponse {
+    bool exists = 1;
 }
