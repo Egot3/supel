@@ -28,18 +28,17 @@ func NewIdentityServer(userClient pb.UserServiceClient) *IdentityServer {
 	return &IdentityServer{userClient: userClient} //not so duh
 }
 
-func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
+func UserFromContext(ctx context.Context) (userID string, ok bool) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		return "", "", false
+		return "", false
 	}
-	if len(userID) <= 0 || len(role) <= 0 {
-		log.Printf("got empty user and role")
-		return "", "", false
+	if len(userID) <= 0 {
+		log.Printf("got empty user ")
+		return "", false
 	}
 	userID = md.Get("user-uuid")[0]
-	role = md.Get("user-role")[0]
-	return userID, role, !(len(userID) == 0 && len(role) == 0)
+	return userID, !(len(userID) == 0)
 }
 
 func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.TokenPayload, error) {
@@ -56,7 +55,6 @@ func (s *IdentityServer) ValidateToken(ctx context.Context, req *pb.Token) (*pb.
 
 	return &pb.TokenPayload{
 		Uuid: user.UUID,
-		Role: string(user.Role),
 	}, nil
 }
 
@@ -71,7 +69,7 @@ func (s *IdentityServer) RemintToken(ctx context.Context, req *pb.Token) (*pb.To
 func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*emptypb.Empty, error) {
 
 	log.Printf("email: %v, password: %v", req.Email, req.Password)
-	uuid, role, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
+	uuid, err := repositories.Login(ctx, req.GetEmail(), req.GetPassword())
 	if err != nil {
 		if errors.Is(err, carefulness.InvalidCreditantials) {
 			log.Printf("Bad creds %v", err)
@@ -84,7 +82,7 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*empt
 		}
 	}
 
-	token, err := jwtutils.GenerateToken(uuid, role)
+	token, err := jwtutils.GenerateToken(uuid)
 	if err != nil {
 		log.Printf("Error generating token %v", err)
 		return nil, status.Error(codes.Internal, "Internal server error")
@@ -101,7 +99,7 @@ func (s *IdentityServer) Login(ctx context.Context, req *pb.LoginRequest) (*empt
 
 func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) (*emptypb.Empty, error) {
 	//log.Printf("email: %v, password: %v", req.Email, req.Password)
-	uuid, role, err := repositories.Register(ctx, req.Email, req.Password)
+	uuid, err := repositories.Register(ctx, req.Email, req.Password)
 
 	if err != nil {
 		if errors.Is(err, carefulness.ErrEmailAlreadyExists) {
@@ -120,7 +118,7 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 		return nil, status.Error(codes.Internal, "failed to create pub user")
 	}
 
-	token, err := jwtutils.GenerateToken(uuid, role)
+	token, err := jwtutils.GenerateToken(uuid)
 	if err != nil {
 		log.Printf("err: %v", err)
 		return nil, status.Error(codes.Internal, "Token gen error")
@@ -136,14 +134,15 @@ func (s *IdentityServer) Register(ctx context.Context, req *pb.RegisterRequest) 
 }
 
 func (s *IdentityServer) DisableUser(ctx context.Context, req *pb.DisableUserRequest) (*emptypb.Empty, error) {
-	userUUID, role, ok := UserFromContext(ctx)
+	userUUID, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("user not found in context(deletion)")
 		return nil, status.Error(codes.DataLoss, "Data loss")
 	}
 	targetUUID := req.GetUuid()
 
-	if !(role == "ADMIN" || userUUID == targetUUID) {
+	//TODO
+	if !(userUUID == targetUUID) {
 		log.Printf("Got not enough power now for %v by %v", targetUUID, userUUID)
 		return nil, status.Error(codes.PermissionDenied, "NOT ENOUGH POWER")
 	}

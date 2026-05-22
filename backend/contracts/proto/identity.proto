@@ -22,7 +22,6 @@ message Token {
 
 message TokenPayload {
     string uuid = 1;
-    string role = 2;
 }
 
 message DisableUserRequest {

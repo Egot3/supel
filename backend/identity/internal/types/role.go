@@ -6,3 +6,4 @@ const (
 	RoleUser  UserRole = "USER"
 	RoleAdmin UserRole = "ADMIN"
 )
+// deprecated
