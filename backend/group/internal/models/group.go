@@ -28,6 +28,7 @@ type GroupPatched struct {
 	UUID        uuid.UUID
 	Name        *string
 	Description *string
+	GroupType   types.GroupType
 }
 
 var _ bun.BeforeAppendModelHook = (*Group)(nil)

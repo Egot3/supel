@@ -100,6 +100,10 @@ func (r *bunGroupRepository) PatchGroup(ctx context.Context, patched models.Grou
 		query = query.Set("description = ?", patched.Description)
 		isUpdated = true
 	}
+	if patched.GroupType != types.UNSPECIFIED {
+		query = query.Set("description = ?", patched.GroupType)
+		isUpdated = true
+	}
 
 	if !isUpdated {
 		return nil

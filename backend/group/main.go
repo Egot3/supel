@@ -1,3 +1,69 @@
 package main
 
-func main() {}
+import (
+	"context"
+	"log"
+	"log/slog"
+	"net"
+	"os"
+
+	grpb "github.com/Egot3/supel/backend/contracts/group"
+	"github.com/egot3/supel/backend/group/internal/database"
+	"github.com/egot3/supel/backend/group/internal/database/repositories/curator"
+	"github.com/egot3/supel/backend/group/internal/database/repositories/group"
+	"github.com/egot3/supel/backend/group/internal/database/repositories/member"
+	"github.com/egot3/supel/backend/group/internal/hooks"
+	"github.com/egot3/supel/backend/group/internal/interceptors"
+	"github.com/egot3/supel/backend/group/internal/server"
+	"github.com/samber/do/v2"
+	"github.com/uptrace/bun"
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/health"
+	"google.golang.org/grpc/health/grpc_health_v1"
+)
+
+func main() {
+	logger := slog.New(slog.NewJSONHandler(os.Stdout, &slog.HandlerOptions{
+		Level: slog.LevelDebug,
+	}))
+
+	injector := do.New()
+	do.Provide(injector, database.InitDB)
+
+	db, _ := do.Invoke[*bun.DB](injector)
+
+	ctx := context.Background()
+	if err := database.RunMigrations(ctx, db); err != nil {
+		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
+	}
+	db.AddQueryHook(&hooks.SlogQueryHook{})
+
+	grpcServer := grpc.NewServer(
+		grpc.UnaryInterceptor(interceptors.LoggingUnaryInterceptor(logger)),
+	)
+	healthServer := health.NewServer()
+	grpc_health_v1.RegisterHealthServer(grpcServer, healthServer)
+	healthServer.SetServingStatus("group", grpc_health_v1.HealthCheckResponse_SERVING)
+
+	do.Provide(injector, group.NewGroupRepository)
+	do.Provide(injector, member.NewMemberRepository)
+	do.Provide(injector, curator.NewGroupRepository)
+
+	GroupServer, err := do.Invoke[*server.GroupService](injector)
+	if err != nil {
+		log.Fatalf("Unable to run server: %v", err)
+	}
+	grpb.RegisterGroupServiceServer(grpcServer, GroupServer)
+
+	port := ":50051"
+	listener, err := net.Listen("tcp", port)
+	if err != nil {
+		log.Fatalf("Failed to listen on port %s: %v", port, err)
+	}
+
+	log.Printf("group Service gRPC server on %s", port)
+
+	if err := grpcServer.Serve(listener); err != nil {
+		log.Fatalf("Failed to serve: %v", err)
+	}
+}

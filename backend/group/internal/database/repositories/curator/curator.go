@@ -154,7 +154,9 @@ func (r *bunCuratorRepository) GroupsCurators(ctx context.Context, groupUUID uui
 func (r *bunCuratorRepository) IsCurator(ctx context.Context, userUUID uuid.UUID) (bool, error) {
 	is, err := r.db.NewSelect().
 		Model((*models.CuratorsHierarchy)(nil)).
-		Where("subordinate_uuid = ?", userUUID).Exists(ctx)
+		WhereGroup(" OR ", func(sq *bun.SelectQuery) *bun.SelectQuery {
+			return sq.WhereOr("subordinate_uuid = ?", userUUID).WhereOr("senior_uuid = ?", userUUID)
+		}).Exists(ctx)
 
 	if err != nil {
 		return false, err

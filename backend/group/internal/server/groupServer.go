@@ -10,6 +10,7 @@ import (
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	"github.com/egot3/supel/backend/group/internal/carefulness"
 	"github.com/egot3/supel/backend/group/internal/logctx"
+	"github.com/egot3/supel/backend/group/internal/models"
 	"github.com/egot3/supel/backend/group/internal/moprconv"
 	"github.com/egot3/supel/backend/group/internal/types"
 	"github.com/google/uuid"
@@ -212,4 +213,55 @@ func (s *GroupService) CuratorsGroups(ctx context.Context, req *grpb.CuratorsGro
 	return &grpb.CuratorsGroupsResponse{
 		Groups: groupsProto,
 	}, nil
+}
+
+func (s *GroupService) PatchGroup(ctx context.Context, req *grpb.PatchGroupRequest) (*emptypb.Empty, error) {
+	logger := logctx.LoggerFromContext(ctx).With(
+		slog.String("layer", "handler"),
+		slog.String("groupUUID", req.GroupUUID),
+	)
+	ctx = logctx.WithLogger(ctx, logger)
+
+	ownUUID, ok := UserFromContext(ctx)
+	if !ok {
+		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
+	}
+
+	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
+		Scope:    "group",
+		Verb:     rbacpb.Verb_PATCH,
+		UserUUID: ownUUID.String(),
+	})
+	if err != nil {
+		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
+	}
+	if !can.Has {
+		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to patch group")
+	}
+
+	groupUUID, err := uuid.Parse(req.GroupUUID)
+	if err != nil {
+		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
+	}
+
+	canEdit, err := s.CuratorRepository.CanEdit(ctx, ownUUID, groupUUID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "unable to check curator's group relation")
+	}
+	if !canEdit {
+		return nil, status.Error(codes.PermissionDenied, "can't edit this group")
+	}
+
+	err = s.GroupRepository.PatchGroup(ctx,
+		models.GroupPatched{
+			UUID:        groupUUID,
+			Name:        req.Name,
+			Description: req.Description,
+			GroupType:   types.GroupType(req.GroupType.String())})
+
+	if err != nil {
+		return nil, status.Error(codes.Internal, "couldn't patch group")
+	}
+
+	return nil, nil
 }
