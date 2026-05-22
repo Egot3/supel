@@ -54,15 +54,18 @@ func (r *bunCuratorRepository) RevokeCuratorFromGroup(ctx context.Context, curat
 
 func (r *bunCuratorRepository) AddCurator(ctx context.Context, seniorUUID, curatorUUID, groupUUID uuid.UUID) error {
 	return r.db.RunInTx(ctx, &sql.TxOptions{}, func(ctx context.Context, tx bun.Tx) error {
-		_, err := tx.NewInsert().
-			Model(&models.GroupsCurators{CuratorUUID: curatorUUID, GroupUUID: groupUUID}).
-			Exec(ctx)
-		if err != nil {
-			return err
+
+		if groupUUID != uuid.Nil {
+			_, err := tx.NewInsert().
+				Model(&models.GroupsCurators{CuratorUUID: curatorUUID, GroupUUID: groupUUID}).
+				Exec(ctx)
+			if err != nil {
+				return err
+			}
 		}
 
-		_, err = tx.NewInsert().
-			Model(&models.GroupsCurators{CuratorUUID: curatorUUID, GroupUUID: groupUUID}).
+		_, err := tx.NewInsert().
+			Model(&models.CuratorsHierarchy{SeniorUUID: seniorUUID, SubordinateUUID: curatorUUID}).
 			Exec(ctx)
 		return err
 	})

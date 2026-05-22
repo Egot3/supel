@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS "groups" (
     "name"              VARCHAR(45) NOT NULL,
     "description"       TEXT        NULL,
     "group_type"        group_type  NOT NULL,
-    "parent_group_uuid" UUID        NULL REFERENCES groups(uuid) ON UPDATE CASCADE ON DELETE SET NULL,
 
     deleted_at     TIMESTAMPTZ NULL,
     updated_at     TIMESTAMPTZ DEFAULT NOW() NOT NULL,

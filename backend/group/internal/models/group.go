@@ -17,8 +17,6 @@ type Group struct {
 	Description *string         `bun:"description"`
 	GroupType   types.GroupType `bun:"group_type,notnull"`
 
-	ParentGroup *Group `bun:"rel:belongs-to,join:parent_group_uuid=uuid"`
-
 	DeletedAt *time.Time `bun:"deleted_at,soft_delete"`
 	UpdatedAt time.Time  `bun:"updated_at,default:NOW(),notnull"`
 	CreatedAt time.Time  `bun:"created_at,default:NOW(),notnull"`
