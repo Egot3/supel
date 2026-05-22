@@ -160,7 +160,6 @@ func (x *Token) GetToken() string {
 type TokenPayload struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	Role          string                 `protobuf:"bytes,2,opt,name=role,proto3" json:"role,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -198,13 +197,6 @@ func (*TokenPayload) Descriptor() ([]byte, []int) {
 func (x *TokenPayload) GetUuid() string {
 	if x != nil {
 		return x.Uuid
-	}
-	return ""
-}
-
-func (x *TokenPayload) GetRole() string {
-	if x != nil {
-		return x.Role
 	}
 	return ""
 }
@@ -373,10 +365,9 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\fTokenRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"\x1d\n" +
 	"\x05Token\x12\x14\n" +
-	"\x05token\x18\x01 \x01(\tR\x05token\"6\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\"\"\n" +
 	"\fTokenPayload\x12\x12\n" +
-	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
-	"\x04role\x18\x02 \x01(\tR\x04role\"(\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"(\n" +
 	"\x12DisableUserRequest\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"@\n" +
 	"\fLoginRequest\x12\x14\n" +

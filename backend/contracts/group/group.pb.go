@@ -258,6 +258,7 @@ type CreateGroupRequest struct {
 	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
 	Description   *string                `protobuf:"bytes,2,opt,name=description,proto3,oneof" json:"description,omitempty"`
 	GroupType     GroupType              `protobuf:"varint,3,opt,name=group_type,json=groupType,proto3,enum=group.GroupType" json:"group_type,omitempty"`
+	CuratorUUID   string                 `protobuf:"bytes,4,opt,name=curatorUUID,proto3" json:"curatorUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -311,6 +312,13 @@ func (x *CreateGroupRequest) GetGroupType() GroupType {
 		return x.GroupType
 	}
 	return GroupType_UNSPECIFIED
+}
+
+func (x *CreateGroupRequest) GetCuratorUUID() string {
+	if x != nil {
+		return x.CuratorUUID
+	}
+	return ""
 }
 
 type SearchGroupRequest struct {
@@ -1515,12 +1523,13 @@ const file_proto_group_proto_rawDesc = "" +
 	"\fGroupRequest\x12\x1c\n" +
 	"\tgroupUUID\x18\x01 \x01(\tR\tgroupUUID\"3\n" +
 	"\rGroupResponse\x12\"\n" +
-	"\x05group\x18\x01 \x01(\v2\f.group.GroupR\x05group\"\x90\x01\n" +
+	"\x05group\x18\x01 \x01(\v2\f.group.GroupR\x05group\"\xb2\x01\n" +
 	"\x12CreateGroupRequest\x12\x12\n" +
 	"\x04name\x18\x01 \x01(\tR\x04name\x12%\n" +
 	"\vdescription\x18\x02 \x01(\tH\x00R\vdescription\x88\x01\x01\x12/\n" +
 	"\n" +
-	"group_type\x18\x03 \x01(\x0e2\x10.group.GroupTypeR\tgroupTypeB\x0e\n" +
+	"group_type\x18\x03 \x01(\x0e2\x10.group.GroupTypeR\tgroupType\x12 \n" +
+	"\vcuratorUUID\x18\x04 \x01(\tR\vcuratorUUIDB\x0e\n" +
 	"\f_description\"B\n" +
 	"\x12SearchGroupRequest\x12\x16\n" +
 	"\x06sample\x18\x01 \x01(\tR\x06sample\x12\x14\n" +

@@ -37,6 +37,7 @@ message CreateGroupRequest {
     string name = 1;
     optional string description = 2;
     GroupType group_type = 3;
+    string curatorUUID = 4;
 }
 
 message SearchGroupRequest {
