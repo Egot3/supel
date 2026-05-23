@@ -1,13 +1,12 @@
 package server
 
 import (
-	"context"
-
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/database/repositories"
+	grpcutils "github.com/Egot3/supel/backend/timetable/internal/grpcUtils"
 	storage "github.com/Egot3/supel/backend/timetable/internal/s3"
+	"github.com/Egot3/supel/backend/timetable/internal/services"
 	"github.com/samber/do/v2"
-	"google.golang.org/grpc/metadata"
 )
 
 type TimetableServer struct {
@@ -17,16 +16,9 @@ type TimetableServer struct {
 	concreteLessonRepository     repositories.ConcreteLessonRepository
 	homeworkAttachmentRepository repositories.HomeworkAttachmentRepository
 	periodRepository             repositories.PeriodRepository
-}
-
-func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
-	md, ok := metadata.FromIncomingContext(ctx)
-	if !ok {
-		return "", "", false
-	}
-	userID = md.Get("user-uuid")[0]
-	role = md.Get("user-role")[0]
-	return userID, role, !(len(userID) == 0 && len(role) == 0)
+	timetableRepository          repositories.TimetableRepository
+	Client                       services.Client
+	su                           grpcutils.ServerUtils
 }
 
 func NewTimetableService(i do.Injector) (*TimetableServer, error) {
@@ -51,11 +43,18 @@ func NewTimetableService(i do.Injector) (*TimetableServer, error) {
 		return nil, err
 	}
 
+	timetableRepository := do.MustInvoke[repositories.TimetableRepository](i)
+	client := do.MustInvoke[services.Client](i)
+	su := do.MustInvoke[grpcutils.ServerUtils](i)
+
 	return &TimetableServer{
 		storageService:               storageService,
 		abstractLessonRepository:     abstractLessonRepository,
 		concreteLessonRepository:     concreteLessonRepository,
 		homeworkAttachmentRepository: homeworkAttachmentRepository,
 		periodRepository:             periodRepository,
+		timetableRepository:          timetableRepository,
+		Client:                       client,
+		su:                           su,
 	}, nil
 }

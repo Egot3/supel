@@ -16,6 +16,9 @@ type ConcreteLesson struct {
 	GroupUUID    string `bun:"group_uuid,notnull"`
 	PeriodUUID   string `bun:"period_uuid"`
 
+	Building   *string `bun:"building"`
+	Auditorium *string `bun:"auditorium"`
+
 	HomeworkBodyKey string `bun:"homework_body_key,type:character varying GENERATED ALWAYS AS ('orgs/ETSEvilCorp/timetable/homework/body/' || concrete_uuid) STORED,scanonly"`
 
 	CreatedAt time.Time  `bun:"created_at,notnull,default:now()"`
@@ -46,4 +49,6 @@ type PatchConcreteLesson struct {
 	TeacherUUID  *string
 	GroupUUID    *string
 	PeriodUUID   *string
+	Building     *string
+	Auditorium   *string
 }

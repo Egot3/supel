@@ -20,7 +20,7 @@ CREATE TABLE "periods" {
   "end"        TIMESTAMPTZ UNIQUE NOT NULL,
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-  UNIQUE ("position","week_number","day_of_week")
+  UNIQUE ("position","week_number","day_of_week","year")
 }
 CREATE INDEX idx_position ON "periods" ("position")
 
@@ -42,6 +42,8 @@ CREATE TABLE "concrete_lessons" (
   "teacher_uuid"  uuid NOT NULL,--SAGA
   "group_uuid"    uuid NOT NULL,--SAGA
   "period_uuid"   uuid NULL REFERENCES periods(uuid) ON UPDATE SET NULL ON DELETE SET NULL,
+  "building"      VARCHAR(255) NULL,
+  "auditorium"    VARCHAR(10) NULL,
 
   "homework_body_key" character varying GENERATED ALWAYS AS ('orgs/ETSEvilCorp/timetable/homework/body/' || "concrete_uuid"::text) STORED,
 

@@ -7,6 +7,7 @@ import (
 	"log"
 	"time"
 
+	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/models"
 	"github.com/Egot3/supel/backend/timetable/internal/types"
@@ -38,6 +39,21 @@ func (s *TimetableServer) GetPeriods(ctx context.Context, req *ttpb.GetPeriodReq
 }
 
 func (s *TimetableServer) PatchPeriod(ctx context.Context, req *ttpb.PatchPeriodRequest) (*emptypb.Empty, error) {
+
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		log.Panicf("uuid is not ok: %v", ownUUID)
+		return nil, status.Error(codes.InvalidArgument, "bad uuid")
+	}
+
+	can, err := s.Client.HasPermission(ctx, ownUUID, "periods", nil, rbacpb.Verb_POST)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "rbac got an error while getting permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "you lack permissions")
+	}
+
 	var start *time.Time = nil
 	if st := req.Start; st != nil {
 		tmp := st.AsTime()
@@ -77,7 +93,7 @@ func (s *TimetableServer) PatchPeriod(ctx context.Context, req *ttpb.PatchPeriod
 		DayOfWeek:  dayOfWeek,
 	}
 
-	err := s.periodRepository.PatchPeriod(ctx, patchedPeriod)
+	err = s.periodRepository.PatchPeriod(ctx, patchedPeriod)
 	if err != nil {
 		log.Printf("couldn't patch period: %v", err.Error())
 		if errors.Is(err, sql.ErrNoRows) {

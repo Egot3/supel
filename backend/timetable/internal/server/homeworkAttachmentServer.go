@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log"
 
+	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/models"
 	"google.golang.org/grpc/codes"
@@ -42,6 +43,21 @@ func (s *TimetableServer) HomeworkAttachmentGETUrl(ctx context.Context, req *ttp
 
 func (s *TimetableServer) HomeworkAttachmentPUTUrl(ctx context.Context, req *ttpb.HomeworkAttachmentPUTUrlRequest) (*ttpb.HomeworkAttachmentPUTUrlResponse, error) {
 	log.Println("got request for put urls for hwa")
+
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		log.Printf("uuid is not ok: %v", ownUUID)
+		return nil, status.Error(codes.InvalidArgument, "bad uuid")
+	}
+
+	subScope := "concrete.homework"
+	can, err := s.Client.HasPermission(ctx, ownUUID, "lesson", &subScope, rbacpb.Verb_PUT)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "rbac got an error while getting permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "you lack permissions")
+	}
 
 	hwa, err := s.homeworkAttachmentRepository.CreateHomeworkAttachment(ctx, models.HomeworkAttachment{
 		Name:         req.Name,

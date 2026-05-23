@@ -6,6 +6,7 @@ import (
 	"errors"
 	"log"
 
+	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/models"
 	"google.golang.org/grpc/codes"
@@ -15,7 +16,23 @@ import (
 
 func (s *TimetableServer) CreateConcreteLesson(ctx context.Context, req *ttpb.CreateConcreteLessonRequest) (*emptypb.Empty, error) {
 	log.Println("Got request to create concrete Lesson")
-	err := s.concreteLessonRepository.CreateConcreteLesson(ctx, models.ConcreteLesson{
+
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		log.Printf("uuid is not ok: %v", ownUUID)
+		return nil, status.Error(codes.InvalidArgument, "bad uuid")
+	}
+
+	subScope := "concrete"
+	can, err := s.Client.HasPermission(ctx, ownUUID, "lesson", &subScope, rbacpb.Verb_POST)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "rbac got an error while getting permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "you lack permissions")
+	}
+
+	err = s.concreteLessonRepository.CreateConcreteLesson(ctx, models.ConcreteLesson{
 		TeacherUUID:  req.GetTeacherUuid(),
 		GroupUUID:    req.GetGroupUuid(),
 		AbstractUUID: req.GetAbstractLessonUuid(),
@@ -33,7 +50,22 @@ func (s *TimetableServer) CreateConcreteLesson(ctx context.Context, req *ttpb.Cr
 func (s *TimetableServer) DeleteConcreteLesson(ctx context.Context, req *ttpb.DeleteConcreteLessonRequest) (*emptypb.Empty, error) {
 	log.Println("got request to delete concrete lesson")
 
-	err := s.concreteLessonRepository.DeleteConcreteLesson(ctx, req.GetConcreteLessonUuid())
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		log.Printf("uuid is not ok: %v", ownUUID)
+		return nil, status.Error(codes.InvalidArgument, "bad uuid")
+	}
+
+	subScope := "concrete"
+	can, err := s.Client.HasPermission(ctx, ownUUID, "lesson", &subScope, rbacpb.Verb_DELETE)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "rbac got an error while getting permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "you lack permissions")
+	}
+
+	err = s.concreteLessonRepository.DeleteConcreteLesson(ctx, req.GetConcreteLessonUuid())
 	if err != nil {
 		log.Printf("couldn't delete concrete lesson: %v", err.Error())
 		if errors.Is(err, sql.ErrNoRows) {
@@ -91,9 +123,23 @@ func (s *TimetableServer) GetConcreteLesson(ctx context.Context, req *ttpb.GetCo
 
 func (s *TimetableServer) PatchConcreteLesson(ctx context.Context, req *ttpb.PatchConcreteLessonRequest) (*emptypb.Empty, error) {
 	log.Println("Got request to patch concrete Lesson")
-	//RBAC here
 
-	err := s.concreteLessonRepository.PatchConcreteLesson(ctx, models.PatchConcreteLesson{
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		log.Printf("uuid is not ok: %v", ownUUID)
+		return nil, status.Error(codes.InvalidArgument, "bad uuid")
+	}
+
+	subScope := "concrete"
+	can, err := s.Client.HasPermission(ctx, ownUUID, "lesson", &subScope, rbacpb.Verb_PATCH)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "rbac got an error while getting permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "you lack permissions")
+	}
+
+	err = s.concreteLessonRepository.PatchConcreteLesson(ctx, models.PatchConcreteLesson{
 		ConcreteUUID: req.ConcreteLessonUuid,
 		AbstractUUID: req.AbstractLessonUuid,
 		TeacherUUID:  req.TeacherUuid,

@@ -8,8 +8,10 @@ import (
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
 	"github.com/Egot3/supel/backend/timetable/internal/database"
 	"github.com/Egot3/supel/backend/timetable/internal/database/repositories"
+	grpcutils "github.com/Egot3/supel/backend/timetable/internal/grpcUtils"
 	storage "github.com/Egot3/supel/backend/timetable/internal/s3"
 	"github.com/Egot3/supel/backend/timetable/internal/server"
+	"github.com/Egot3/supel/backend/timetable/internal/services"
 	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 
@@ -46,6 +48,12 @@ func main() {
 	do.Provide(injector, repositories.NewConcreteLessonRepository)
 	do.Provide(injector, repositories.NewHomeworkAttachmentRepository)
 	do.Provide(injector, repositories.NewPeriodRepository)
+	do.Provide(injector, repositories.NewTimetableRepository)
+
+	do.Provide(injector, services.NewGRPCClient)
+	do.Provide(injector, func(i do.Injector) (grpcutils.ServerUtils, error) {
+		return grpcutils.GRPCServerUtils{}, nil
+	})
 
 	do.Provide(injector, server.NewTimetableService)
 
