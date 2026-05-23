@@ -53,7 +53,7 @@ func (r *bunRoleRepository) HasPermission(ctx context.Context, userUUID uuid.UUI
 	cte := anchor.UnionAll(recursive)
 
 	query := r.db.NewSelect().
-		With("role_deps", cte).
+		WithRecursive("role_deps", cte).
 		TableExpr("role_deps").
 		Join("JOIN roles_actions AS ra ON ra.role_uuid = role_deps.role_uuid").
 		Join("JOIN actions AS action ON action.action_uuid = ra.action_uuid").

@@ -15,3 +15,6 @@ resources:
   - ./golf-dashboard-ingressroute.yaml
   - ./middleware.yaml
   - ./monitoring
+  - ./group-postgresql.yaml
+  - ./rbac-postgresql.yaml
+  - ./timetable-postgresql.yaml

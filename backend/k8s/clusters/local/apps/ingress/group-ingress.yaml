@@ -1,0 +1,17 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: group-service
+  namespace: group-domain
+spec:
+  entryPoints: [web]
+  routes:
+    - match: PathPrefix(`/v1/group`)
+      kind: Rule
+      middlewares:
+        - name: jwt-forward-auth
+          namespace: traefik
+      services:
+        - name: group-service
+          port: 50051
+          scheme: h2c

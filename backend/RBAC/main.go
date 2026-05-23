@@ -29,7 +29,7 @@ func main() {
 	injector := do.New()
 	do.Provide(injector, database.InitDB)
 
-	db, _ := do.Invoke[*bun.DB](injector)
+	db := do.MustInvoke[*bun.DB](injector)
 
 	ctx := context.Background()
 	if err := database.RunMigrations(ctx, db); err != nil {

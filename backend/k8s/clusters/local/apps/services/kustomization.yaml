@@ -7,3 +7,6 @@ resources:
   - ./cashew-deployment.yaml
   - ./cora-deployment.yaml
   - ./revelation-deployment.yaml
+  - ./group-deployment.yaml
+  - ./rbac-deployment.yaml
+  - ./timetable-deployment.yaml

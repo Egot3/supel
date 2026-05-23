@@ -8,3 +8,6 @@ resources:
   - ./diogen-ingress.yaml
   - ./durian-ingress.yaml
   - ./ingress.yaml
+  - ./group-ingress.yaml
+  - ./rbac-ingress.yaml
+  - ./timetable-ingress.yaml

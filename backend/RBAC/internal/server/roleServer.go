@@ -260,7 +260,7 @@ func (s *RBACService) ListRoles(ctx context.Context, req *rbacpb.ListRolesReques
 		return nil, status.Error(codes.Internal, "unable to get roles for listing")
 	}
 
-	roles := make([]*rbacpb.ListRolesResponse_Role, total)
+	roles := make([]*rbacpb.ListRolesResponse_Role, len(list))
 	for i, role := range list {
 		var extendedUUID *string = nil
 		if eu := role.ExtendedUUID; eu != nil {
