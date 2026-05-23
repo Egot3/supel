@@ -50,6 +50,10 @@ spec:
               value: rbac-service.rbac-domain.svc.cluster.local
             - name: RBAC_SERVICE_PORT
               value: "50051"
+            - name: GROUP_SERVICE_HOST
+              value: group-service.group-domain.svc.cluster.local
+            - name: GROUP_SERVICE_PORT
+              value: "50051"
 ---
 apiVersion: v1
 kind: Service

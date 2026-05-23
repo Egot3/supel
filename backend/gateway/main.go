@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 
+	grpb "github.com/Egot3/supel/backend/contracts/group"
+
 	pb "github.com/Egot3/supel/backend/contracts"
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	ttpb "github.com/Egot3/supel/backend/contracts/timetable"
@@ -42,7 +44,16 @@ func main() {
 	}
 
 	rbacConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("RBAC_SERVICE_HOST"), os.Getenv("RBAC_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("RbacConn fell: %v", rbacConn)
+	}
 
+	groupConn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("GROUP_SERVICE_HOST"), os.Getenv("GROUP_SERVICE_PORT")), grpc.WithTransportCredentials(insecure.NewCredentials()))
+	if err != nil {
+		log.Fatalf("GroupConn fell: %v", rbacConn)
+	}
+
+	grpb.RegisterGroupServiceHandler(ctx, mux, groupConn)
 	pb.RegisterIdentityServiceHandler(ctx, mux, identityConn)
 	pb.RegisterNewsServiceHandler(ctx, mux, newsConn)
 	pb.RegisterUserServiceHandler(ctx, mux, userConn)

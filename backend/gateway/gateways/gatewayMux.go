@@ -15,7 +15,7 @@ func NewGatewayMux() *runtime.ServeMux {
 
 		runtime.WithIncomingHeaderMatcher(func(s string) (string, bool) {
 			switch s {
-			case "user-uuid", "user-role":
+			case "user-uuid":
 				return s, true
 			default:
 				return runtime.DefaultHeaderMatcher(s)
