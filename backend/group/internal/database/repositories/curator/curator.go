@@ -3,6 +3,7 @@ package curator
 import (
 	"context"
 	"database/sql"
+	"log/slog"
 
 	"github.com/egot3/supel/backend/group/internal/models"
 	"github.com/google/uuid"
@@ -113,6 +114,7 @@ func (r *bunCuratorRepository) WillCycle(ctx context.Context, seniorUUID, subord
 		Where("subordinate_uuid = ?", seniorUUID).Exists(ctx)
 
 	if err != nil {
+		slog.Info(err.Error())
 		return true, err
 	}
 
@@ -143,7 +145,7 @@ func (r *bunCuratorRepository) RevokeCurator(ctx context.Context, curatorUUID uu
 }
 
 func (r *bunCuratorRepository) GroupsCurators(ctx context.Context, groupUUID uuid.UUID) (uuid.UUIDs, error) {
-	var curUUIDs uuid.UUIDs
+	curUUIDs := uuid.UUIDs{}
 	err := r.db.NewSelect().
 		Model((*models.GroupsCurators)(nil)).
 		Where("group_uuid = ?", groupUUID).Column("curator_uuid").Scan(ctx, &curUUIDs)

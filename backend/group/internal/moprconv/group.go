@@ -13,6 +13,7 @@ func GroupMoToPr(mo *models.Group) *grpb.Group {
 		grType = int32(grpb.GroupType_UNSPECIFIED)
 	}
 	return &grpb.Group{
+		UUID:        mo.UUID.String(),
 		GroupType:   grpb.GroupType(grType),
 		Name:        mo.Name,
 		Description: mo.Description,

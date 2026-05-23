@@ -53,7 +53,7 @@ func (r *bunMemberRepository) ListMembers(ctx context.Context, groupUUID uuid.UU
 		Model((*models.GroupsMembers)(nil)).
 		Where("group_uuid = ?", groupUUID).
 		Limit(int(size)).Offset(int(page*size)).
-		Column("group_uuid").ScanAndCount(ctx, &members)
+		Column("member_uuid").ScanAndCount(ctx, &members)
 	if err != nil {
 		return nil, 0, err
 	}

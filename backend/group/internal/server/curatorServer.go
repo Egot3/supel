@@ -23,7 +23,7 @@ func (s *GroupService) AssignCuratorToSenior(ctx context.Context, req *grpb.Assi
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -42,7 +42,7 @@ func (s *GroupService) AssignCuratorToSenior(ctx context.Context, req *grpb.Assi
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to assign a sub to sen")
 	}
 
-	subordinateUUID, ok := UserFromContext(ctx)
+	subordinateUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get subordinate uuid from token")
 	}
@@ -50,7 +50,7 @@ func (s *GroupService) AssignCuratorToSenior(ctx context.Context, req *grpb.Assi
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to identify a user")
 	}
-	if exists {
+	if !exists {
 		return nil, status.Error(codes.NotFound, "requested user wasn't found")
 	}
 
@@ -98,7 +98,7 @@ func (s *GroupService) AssignCuratorToGroup(ctx context.Context, req *grpb.Assig
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -112,7 +112,7 @@ func (s *GroupService) AssignCuratorToGroup(ctx context.Context, req *grpb.Assig
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to assign a cur to gr")
 	}
 
-	curUUID, ok := UserFromContext(ctx)
+	curUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get cur uuid from token")
 	}
@@ -153,7 +153,7 @@ func (s *GroupService) RevokeCuratorFromSenior(ctx context.Context, req *grpb.Re
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -181,6 +181,14 @@ func (s *GroupService) RevokeCuratorFromSenior(ctx context.Context, req *grpb.Re
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
 
+	will, err := s.CuratorRepository.WillCycle(ctx, seniorUUID, subordinateUUID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "couldn't check for cycles")
+	}
+	if will {
+		return nil, status.Error(codes.FailedPrecondition, "this assignment will create a cycle, terminating")
+	}
+
 	err = s.CuratorRepository.RevokeCuratorFromSenior(ctx, seniorUUID, subordinateUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't revoke sub from sen")
@@ -197,7 +205,7 @@ func (s *GroupService) RevokeCuratorFromGroup(ctx context.Context, req *grpb.Rev
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -238,7 +246,7 @@ func (s *GroupService) AddCurator(ctx context.Context, req *grpb.AddCuratorReque
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -305,7 +313,7 @@ func (s *GroupService) RevokeCurator(ctx context.Context, req *grpb.RevokeCurato
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}

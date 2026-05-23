@@ -12,6 +12,7 @@ import (
 	"github.com/egot3/supel/backend/group/internal/database/repositories/curator"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/group"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/member"
+	grpcutils "github.com/egot3/supel/backend/group/internal/grpcUtils"
 	"github.com/egot3/supel/backend/group/internal/hooks"
 	"github.com/egot3/supel/backend/group/internal/interceptors"
 	"github.com/egot3/supel/backend/group/internal/server"
@@ -51,6 +52,9 @@ func main() {
 	do.Provide(injector, curator.NewGroupRepository)
 
 	do.Provide(injector, services.NewGRPCClient)
+	do.Provide(injector, func(i do.Injector) (grpcutils.ServerUtils, error) {
+		return grpcutils.GRPCServerUtils{}, nil
+	})
 
 	GroupServer, err := do.Invoke[*server.GroupService](injector)
 	if err != nil {

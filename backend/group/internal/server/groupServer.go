@@ -57,7 +57,11 @@ func (s *GroupService) CreateGroup(ctx context.Context, req *grpb.CreateGroupReq
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	if len(req.Name) < 3 {
+		return nil, status.Error(codes.InvalidArgument, "group name must be  >=3 chars long")
+	}
+
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -85,7 +89,7 @@ func (s *GroupService) CreateGroup(ctx context.Context, req *grpb.CreateGroupReq
 		}
 	}
 
-	err = s.GroupRepository.CreateGroup(ctx, curatorUUID, req.Name, req.Description, types.GroupType(req.GroupType.String()))
+	err = s.GroupRepository.CreateGroup(ctx, curatorUUID, req.Name, req.Description, types.GroupTypeFromProto(req.GroupType))
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't create group")
 	}
@@ -126,7 +130,7 @@ func (s *GroupService) DeleteGroup(ctx context.Context, req *grpb.DeleteGroupReq
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -163,7 +167,7 @@ func (s *GroupService) ListGroups(ctx context.Context, req *grpb.ListGroupsReque
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	list, total, err := s.GroupRepository.ListGroups(ctx, req.Page, req.Size, types.GroupType(req.GroupType), bun.OrderDesc)
+	list, total, err := s.GroupRepository.ListGroups(ctx, req.Page, req.Size, types.GroupTypeFromProto(req.GroupType), bun.OrderAsc)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to get groups for listing")
 	}
@@ -217,7 +221,7 @@ func (s *GroupService) PatchGroup(ctx context.Context, req *grpb.PatchGroupReque
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}

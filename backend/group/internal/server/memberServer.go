@@ -24,7 +24,7 @@ func (s *GroupService) AddMember(ctx context.Context, req *grpb.AddMemberRequest
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
@@ -56,6 +56,14 @@ func (s *GroupService) AddMember(ctx context.Context, req *grpb.AddMemberRequest
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
 
+	is, err := s.GroupRepository.IsGroup(ctx, groupUUID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "couldn't determine if given uuid is assigned to a group")
+	}
+	if !is {
+		return nil, status.Error(codes.NotFound, "couldn't find a group with this uuid")
+	}
+
 	err = s.MemberRepository.AddMember(ctx, groupUUID, memberUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't add member to group")
@@ -72,7 +80,7 @@ func (s *GroupService) RemoveMember(ctx context.Context, req *grpb.RemoveMemberR
 	)
 	ctx = logctx.WithLogger(ctx, logger)
 
-	ownUUID, ok := UserFromContext(ctx)
+	ownUUID, ok := s.su.UserFromContext(ctx)
 	if !ok {
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}

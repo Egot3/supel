@@ -3,6 +3,7 @@ package group
 import (
 	"context"
 	"database/sql"
+	"log/slog"
 	"time"
 
 	"github.com/egot3/supel/backend/group/internal/carefulness"
@@ -47,15 +48,25 @@ func (r *bunGroupRepository) CreateGroup(ctx context.Context, requestor uuid.UUI
 			Description: description,
 			GroupType:   groupType,
 		}
-		_, err := tx.NewInsert().Model(&insert).Returning("uuid").Exec(ctx)
+		err := tx.NewInsert().Model(&insert).Returning("uuid").Scan(ctx)
 		if err != nil {
+			slog.Info(err.Error())
 			return err
 		}
 
-		_, err = tx.NewInsert().Model(&models.GroupsCurators{GroupUUID: insert.UUID, CuratorUUID: requestor}).Exec(ctx)
+		if requestor != uuid.Nil {
+			_, err = tx.NewInsert().Model(&models.GroupsCurators{GroupUUID: insert.UUID, CuratorUUID: requestor}).Exec(ctx)
+			if err != nil {
+				return err
+			}
+		}
 
-		return err
+		return nil
 	})
+}
+
+func (r *bunGroupRepository) IsGroup(ctx context.Context, groupUUID uuid.UUID) (bool, error) {
+	return r.db.NewSelect().Model(&models.Group{UUID: groupUUID}).ColumnExpr("1").Exists(ctx)
 }
 
 func (r *bunGroupRepository) Search(ctx context.Context, sample string, limit int) ([]models.Group, error) {

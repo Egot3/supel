@@ -12,7 +12,7 @@ import (
 type Group struct {
 	bun.BaseModel `bun:"groups"`
 
-	UUID        uuid.UUID       `bun:"uuid,type:uuid,pk"`
+	UUID        uuid.UUID       `bun:"uuid,type:uuid,pk,default:gen_random_uuid()"`
 	Name        string          `bun:"name,notnull"`
 	Description *string         `bun:"description"`
 	GroupType   types.GroupType `bun:"group_type,notnull"`

@@ -15,7 +15,6 @@ CREATE TABLE IF NOT EXISTS "groups" (
     updated_at          TEXT        NOT NULL DEFAULT (datetime('now')),
     created_at          TEXT        NOT NULL DEFAULT (datetime('now'))
 );
---да, я люблю структурировать бд
 CREATE INDEX idx_groups_name ON groups("name");
 
 CREATE TABLE IF NOT EXISTS "groups_members" (
@@ -39,6 +38,6 @@ CREATE TABLE IF NOT EXISTS "curators_hierarchy" (
     subordinate_uuid TEXT NOT NULL,
     created_at       TEXT NOT NULL DEFAULT (datetime('now')),
     PRIMARY KEY (senior_uuid, subordinate_uuid),
-    CHECK (senior_uuid != subordinate_uuid) --так тоже можно
+    CHECK (senior_uuid != subordinate_uuid)
 );
 CREATE INDEX idx_curators_hierarchy_subordinate_uuid ON "curators_hierarchy" ("subordinate_uuid");
