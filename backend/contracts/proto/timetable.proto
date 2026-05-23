@@ -50,6 +50,8 @@ message ConcreteLesson {
     repeated string marks = 8; //5- итд
     uint32 period = 9;
     Day day = 10;
+    optional string building = 11;
+    optional string auditorium = 12;
 }
 
 message ShortConcreteLesson {
@@ -59,6 +61,8 @@ message ShortConcreteLesson {
     AbstractLesson abstract_lesson = 4;
     bool is_homework_due = 5;
     Day day = 6;
+    optional string building = 7;
+    optional string auditorium = 8;
 }
 
 message ConcreteLessonShortEntry {
@@ -151,6 +155,8 @@ message PatchConcreteLessonRequest {
     optional string teacher_uuid = 4;
     string concrete_lesson_uuid = 5;
     optional string group_uuid = 6;
+    optional string building = 7;
+    optional string auditorium = 8;
 }
 
 message GetConcreteLessonRequest {

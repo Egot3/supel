@@ -308,6 +308,8 @@ type ConcreteLesson struct {
 	Marks                      []string               `protobuf:"bytes,8,rep,name=marks,proto3" json:"marks,omitempty"` //5- итд
 	Period                     uint32                 `protobuf:"varint,9,opt,name=period,proto3" json:"period,omitempty"`
 	Day                        Day                    `protobuf:"varint,10,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
+	Building                   *string                `protobuf:"bytes,11,opt,name=building,proto3,oneof" json:"building,omitempty"`
+	Auditorium                 *string                `protobuf:"bytes,12,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
 	unknownFields              protoimpl.UnknownFields
 	sizeCache                  protoimpl.SizeCache
 }
@@ -412,6 +414,20 @@ func (x *ConcreteLesson) GetDay() Day {
 	return Day_UNSPECIFIED
 }
 
+func (x *ConcreteLesson) GetBuilding() string {
+	if x != nil && x.Building != nil {
+		return *x.Building
+	}
+	return ""
+}
+
+func (x *ConcreteLesson) GetAuditorium() string {
+	if x != nil && x.Auditorium != nil {
+		return *x.Auditorium
+	}
+	return ""
+}
+
 type ShortConcreteLesson struct {
 	state          protoimpl.MessageState `protogen:"open.v1"`
 	WeekNumber     uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
@@ -420,6 +436,8 @@ type ShortConcreteLesson struct {
 	AbstractLesson *AbstractLesson        `protobuf:"bytes,4,opt,name=abstract_lesson,json=abstractLesson,proto3" json:"abstract_lesson,omitempty"`
 	IsHomeworkDue  bool                   `protobuf:"varint,5,opt,name=is_homework_due,json=isHomeworkDue,proto3" json:"is_homework_due,omitempty"`
 	Day            Day                    `protobuf:"varint,6,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
+	Building       *string                `protobuf:"bytes,7,opt,name=building,proto3,oneof" json:"building,omitempty"`
+	Auditorium     *string                `protobuf:"bytes,8,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
 	unknownFields  protoimpl.UnknownFields
 	sizeCache      protoimpl.SizeCache
 }
@@ -494,6 +512,20 @@ func (x *ShortConcreteLesson) GetDay() Day {
 		return x.Day
 	}
 	return Day_UNSPECIFIED
+}
+
+func (x *ShortConcreteLesson) GetBuilding() string {
+	if x != nil && x.Building != nil {
+		return *x.Building
+	}
+	return ""
+}
+
+func (x *ShortConcreteLesson) GetAuditorium() string {
+	if x != nil && x.Auditorium != nil {
+		return *x.Auditorium
+	}
+	return ""
 }
 
 type ConcreteLessonShortEntry struct {
@@ -1347,6 +1379,8 @@ type PatchConcreteLessonRequest struct {
 	TeacherUuid        *string                `protobuf:"bytes,4,opt,name=teacher_uuid,json=teacherUuid,proto3,oneof" json:"teacher_uuid,omitempty"`
 	ConcreteLessonUuid string                 `protobuf:"bytes,5,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
 	GroupUuid          *string                `protobuf:"bytes,6,opt,name=group_uuid,json=groupUuid,proto3,oneof" json:"group_uuid,omitempty"`
+	Building           *string                `protobuf:"bytes,7,opt,name=building,proto3,oneof" json:"building,omitempty"`
+	Auditorium         *string                `protobuf:"bytes,8,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
 	unknownFields      protoimpl.UnknownFields
 	sizeCache          protoimpl.SizeCache
 }
@@ -1412,6 +1446,20 @@ func (x *PatchConcreteLessonRequest) GetConcreteLessonUuid() string {
 func (x *PatchConcreteLessonRequest) GetGroupUuid() string {
 	if x != nil && x.GroupUuid != nil {
 		return *x.GroupUuid
+	}
+	return ""
+}
+
+func (x *PatchConcreteLessonRequest) GetBuilding() string {
+	if x != nil && x.Building != nil {
+		return *x.Building
+	}
+	return ""
+}
+
+func (x *PatchConcreteLessonRequest) GetAuditorium() string {
+	if x != nil && x.Auditorium != nil {
+		return *x.Auditorium
 	}
 	return ""
 }
@@ -1890,7 +1938,7 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\tTimetable\x18\x01 \x01(\v2#.timetable.ConcreteLessonShortEntryR\tTimetable\"8\n" +
 	"\x0eAbstractLesson\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\xaa\x03\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\"\x8c\x04\n" +
 	"\x0eConcreteLesson\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
 	"weekNumber\x12\x12\n" +
@@ -1905,8 +1953,14 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x05marks\x18\b \x03(\tR\x05marks\x12\x16\n" +
 	"\x06period\x18\t \x01(\rR\x06period\x12 \n" +
 	"\x03day\x18\n" +
-	" \x01(\x0e2\x0e.timetable.DayR\x03dayB\x18\n" +
-	"\x16_homework_text_get_url\"\xf0\x01\n" +
+	" \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x1f\n" +
+	"\bbuilding\x18\v \x01(\tH\x01R\bbuilding\x88\x01\x01\x12#\n" +
+	"\n" +
+	"auditorium\x18\f \x01(\tH\x02R\n" +
+	"auditorium\x88\x01\x01B\x18\n" +
+	"\x16_homework_text_get_urlB\v\n" +
+	"\t_buildingB\r\n" +
+	"\v_auditorium\"\xd2\x02\n" +
 	"\x13ShortConcreteLesson\x12\x1f\n" +
 	"\vweek_number\x18\x01 \x01(\rR\n" +
 	"weekNumber\x12\x12\n" +
@@ -1914,7 +1968,13 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x06period\x18\x03 \x01(\rR\x06period\x12B\n" +
 	"\x0fabstract_lesson\x18\x04 \x01(\v2\x19.timetable.AbstractLessonR\x0eabstractLesson\x12&\n" +
 	"\x0fis_homework_due\x18\x05 \x01(\bR\risHomeworkDue\x12 \n" +
-	"\x03day\x18\x06 \x01(\x0e2\x0e.timetable.DayR\x03day\"v\n" +
+	"\x03day\x18\x06 \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x1f\n" +
+	"\bbuilding\x18\a \x01(\tH\x00R\bbuilding\x88\x01\x01\x12#\n" +
+	"\n" +
+	"auditorium\x18\b \x01(\tH\x01R\n" +
+	"auditorium\x88\x01\x01B\v\n" +
+	"\t_buildingB\r\n" +
+	"\v_auditorium\"v\n" +
 	"\x18ConcreteLessonShortEntry\x12 \n" +
 	"\x03day\x18\x01 \x01(\x0e2\x0e.timetable.DayR\x03day\x128\n" +
 	"\alessons\x18\x02 \x03(\v2\x1e.timetable.ShortConcreteLessonR\alessons\"Z\n" +
@@ -1984,7 +2044,7 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\vperiod_uuid\x18\x06 \x01(\tR\n" +
 	"periodUuid\"O\n" +
 	"\x1bDeleteConcreteLessonRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xc0\x02\n" +
+	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xa2\x03\n" +
 	"\x1aPatchConcreteLessonRequest\x12$\n" +
 	"\vperiod_uuid\x18\x01 \x01(\tH\x00R\n" +
 	"periodUuid\x88\x01\x01\x125\n" +
@@ -1992,11 +2052,17 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\fteacher_uuid\x18\x04 \x01(\tH\x02R\vteacherUuid\x88\x01\x01\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x05 \x01(\tR\x12concreteLessonUuid\x12\"\n" +
 	"\n" +
-	"group_uuid\x18\x06 \x01(\tH\x03R\tgroupUuid\x88\x01\x01B\x0e\n" +
+	"group_uuid\x18\x06 \x01(\tH\x03R\tgroupUuid\x88\x01\x01\x12\x1f\n" +
+	"\bbuilding\x18\a \x01(\tH\x04R\bbuilding\x88\x01\x01\x12#\n" +
+	"\n" +
+	"auditorium\x18\b \x01(\tH\x05R\n" +
+	"auditorium\x88\x01\x01B\x0e\n" +
 	"\f_period_uuidB\x17\n" +
 	"\x15_abstract_lesson_uuidB\x0f\n" +
 	"\r_teacher_uuidB\r\n" +
-	"\v_group_uuid\"L\n" +
+	"\v_group_uuidB\v\n" +
+	"\t_buildingB\r\n" +
+	"\v_auditorium\"L\n" +
 	"\x18GetConcreteLessonRequest\x120\n" +
 	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"N\n" +
 	"\x19GetConcreteLessonResponse\x121\n" +
@@ -2170,6 +2236,7 @@ func file_proto_timetable_proto_init() {
 		return
 	}
 	file_proto_timetable_proto_msgTypes[4].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[5].OneofWrappers = []any{}
 	file_proto_timetable_proto_msgTypes[12].OneofWrappers = []any{}
 	file_proto_timetable_proto_msgTypes[16].OneofWrappers = []any{}
 	file_proto_timetable_proto_msgTypes[21].OneofWrappers = []any{}
