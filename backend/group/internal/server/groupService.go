@@ -3,14 +3,12 @@ package server
 import (
 	"context"
 
-	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
-
-	pb "github.com/Egot3/supel/backend/contracts"
 	grpb "github.com/Egot3/supel/backend/contracts/group"
 
 	"github.com/egot3/supel/backend/group/internal/database/repositories/curator"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/group"
 	"github.com/egot3/supel/backend/group/internal/database/repositories/member"
+	"github.com/egot3/supel/backend/group/internal/services"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
 	"google.golang.org/grpc/metadata"
@@ -21,9 +19,7 @@ type GroupService struct {
 	GroupRepository   group.GroupRepository
 	CuratorRepository curator.CuratorRepository
 	MemberRepository  member.MemberRepository
-	RBACClient        rbacpb.RBACServiceClient
-	IdentityClient    pb.IdentityServiceClient
-	UserClient        pb.UserServiceClient
+	Client            services.Client
 }
 
 func UserFromContext(ctx context.Context) (userUUID uuid.UUID, ok bool) {
@@ -56,27 +52,12 @@ func NewGroupService(i do.Injector) (*GroupService, error) {
 		return nil, err
 	}
 
-	RBACClient, err := do.Invoke[rbacpb.RBACServiceClient](i)
-	if err != nil {
-		return nil, err
-	}
-
-	IdentityClient, err := do.Invoke[pb.IdentityServiceClient](i)
-	if err != nil {
-		return nil, err
-	}
-
-	UserClient, err := do.Invoke[pb.UserServiceClient](i)
-	if err != nil {
-		return nil, err
-	}
+	Client := do.MustInvoke[services.Client](i)
 
 	return &GroupService{
 		GroupRepository:   groupRepository,
 		CuratorRepository: curatorRepository,
 		MemberRepository:  memberRepository,
-		RBACClient:        RBACClient,
-		IdentityClient:    IdentityClient,
-		UserClient:        UserClient,
+		Client:            Client,
 	}, nil
 }

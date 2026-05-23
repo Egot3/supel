@@ -19,7 +19,7 @@ func NewUserService(i do.Injector) (pb.UserServiceClient, error) {
 		return nil, err
 	}
 	defer conn.Close()
-	identityClient := pb.NewUserServiceClient(conn)
+	userClient := pb.NewUserServiceClient(conn)
 
-	return identityClient, nil
+	return userClient, nil
 }

@@ -6,7 +6,6 @@ import (
 	"errors"
 	"log/slog"
 
-	pb "github.com/Egot3/supel/backend/contracts"
 	grpb "github.com/Egot3/supel/backend/contracts/group"
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	"github.com/egot3/supel/backend/group/internal/logctx"
@@ -30,31 +29,31 @@ func (s *GroupService) AssignCuratorToSenior(ctx context.Context, req *grpb.Assi
 	}
 
 	subscope := "curator.heirarchy"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_POST,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx,
+		ownUUID,
+		"group",
+		&subscope,
+		rbacpb.Verb_POST,
+	)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to assign a sub to sen")
 	}
 
-	identityResp, err := s.IdentityClient.CheckExistance(ctx, &pb.CheckExistanceRequest{Uuid: req.SubordinateUUID})
+	subordinateUUID, ok := UserFromContext(ctx)
+	if !ok {
+		return nil, status.Error(codes.Internal, "unable to get subordinate uuid from token")
+	}
+	exists, err := s.Client.CheckExistance(ctx, subordinateUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to identify a user")
 	}
-	if !identityResp.Exists {
+	if exists {
 		return nil, status.Error(codes.NotFound, "requested user wasn't found")
 	}
 
-	subordinateUUID, err := uuid.Parse(req.SubordinateUUID)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
-	}
 	is, err := s.CuratorRepository.IsCurator(ctx, subordinateUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to find sub in curator repository")
@@ -105,32 +104,27 @@ func (s *GroupService) AssignCuratorToGroup(ctx context.Context, req *grpb.Assig
 	}
 
 	subscope := "group.curator"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_POST,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_POST)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to assign a cur to gr")
 	}
 
-	identityResp, err := s.IdentityClient.CheckExistance(ctx, &pb.CheckExistanceRequest{Uuid: req.CuratorUUID})
+	curUUID, ok := UserFromContext(ctx)
+	if !ok {
+		return nil, status.Error(codes.Internal, "unable to get cur uuid from token")
+	}
+	exist, err := s.Client.CheckExistance(ctx, curUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to identify a user")
 	}
-	if !identityResp.Exists {
+	if exist {
 		return nil, status.Error(codes.NotFound, "requested user wasn't found")
 	}
 
-	curatorUUID, err := uuid.Parse(req.CuratorUUID)
-	if err != nil {
-		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
-	}
-	is, err := s.CuratorRepository.IsCurator(ctx, curatorUUID)
+	is, err := s.CuratorRepository.IsCurator(ctx, curUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to find sub in curator repository")
 	}
@@ -143,7 +137,7 @@ func (s *GroupService) AssignCuratorToGroup(ctx context.Context, req *grpb.Assig
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
 
-	err = s.CuratorRepository.AssignCuratorToGroup(ctx, curatorUUID, groupUUID)
+	err = s.CuratorRepository.AssignCuratorToGroup(ctx, curUUID, groupUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't assign cur to gr")
 	}
@@ -165,16 +159,15 @@ func (s *GroupService) RevokeCuratorFromSenior(ctx context.Context, req *grpb.Re
 	}
 
 	subscope := "curator.heirarchy"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_DELETE,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID,
+		"group",
+		&subscope,
+		rbacpb.Verb_DELETE,
+	)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to revoke a sub from sen")
 	}
 
@@ -210,16 +203,11 @@ func (s *GroupService) RevokeCuratorFromGroup(ctx context.Context, req *grpb.Rev
 	}
 
 	subscope := "group.curator"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_DELETE,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_DELETE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to revoke a cur from gr")
 	}
 
@@ -256,31 +244,27 @@ func (s *GroupService) AddCurator(ctx context.Context, req *grpb.AddCuratorReque
 	}
 
 	subscope := "curator"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_POST,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_POST)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to create a cur")
-	}
-
-	identityResp, err := s.IdentityClient.CheckExistance(ctx, &pb.CheckExistanceRequest{Uuid: req.CuratorUUID})
-	if err != nil {
-		return nil, status.Error(codes.Internal, "unable to identify a user")
-	}
-	if !identityResp.Exists {
-		return nil, status.Error(codes.NotFound, "requested user wasn't found")
 	}
 
 	curatorUUID, err := uuid.Parse(req.CuratorUUID)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
+
+	exists, err := s.Client.CheckExistance(ctx, curatorUUID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "unable to identify a user")
+	}
+	if !exists {
+		return nil, status.Error(codes.NotFound, "requested user wasn't found")
+	}
+
 	is, err := s.CuratorRepository.IsCurator(ctx, curatorUUID)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "unable to find sub in curator repository")
@@ -327,16 +311,11 @@ func (s *GroupService) RevokeCurator(ctx context.Context, req *grpb.RevokeCurato
 	}
 
 	subscope := "curator"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_DELETE,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_DELETE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to delete a cur")
 	}
 
@@ -378,15 +357,15 @@ func (s *GroupService) GroupsCurators(ctx context.Context, req *grpb.GroupsCurat
 
 	curatorsProto := make([]*grpb.User, len(curatorUUIDs))
 	for i, curatorUUID := range curatorUUIDs {
-		user, err := s.UserClient.GetUser(ctx, &pb.GetUserRequest{Uuid: curatorUUID.String()})
+		user, err := s.Client.GetUser(ctx, curatorUUID)
 		if err != nil {
 			return nil, status.Error(codes.Internal, "couldn't get one member")
 		}
 		curatorsProto[i] = &grpb.User{
-			Uuid:      user.User.Uuid,
-			Nickname:  user.User.Nickname,
-			AvatarUrl: user.User.AvatarUrl,
-			CreatedAt: user.User.CreatedAt,
+			Uuid:      user.Uuid,
+			Nickname:  user.Nickname,
+			AvatarUrl: user.AvatarUrl,
+			CreatedAt: user.CreatedAt,
 		}
 	}
 

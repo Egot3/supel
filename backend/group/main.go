@@ -15,6 +15,7 @@ import (
 	"github.com/egot3/supel/backend/group/internal/hooks"
 	"github.com/egot3/supel/backend/group/internal/interceptors"
 	"github.com/egot3/supel/backend/group/internal/server"
+	"github.com/egot3/supel/backend/group/internal/services"
 	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 	"google.golang.org/grpc"
@@ -48,6 +49,8 @@ func main() {
 	do.Provide(injector, group.NewGroupRepository)
 	do.Provide(injector, member.NewMemberRepository)
 	do.Provide(injector, curator.NewGroupRepository)
+
+	do.Provide(injector, services.NewGRPCClient)
 
 	GroupServer, err := do.Invoke[*server.GroupService](injector)
 	if err != nil {

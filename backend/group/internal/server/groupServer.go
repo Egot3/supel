@@ -62,15 +62,11 @@ func (s *GroupService) CreateGroup(ctx context.Context, req *grpb.CreateGroupReq
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
 
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		Verb:     rbacpb.Verb_POST,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", nil, rbacpb.Verb_POST)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to createGroup")
 	}
 
@@ -135,15 +131,14 @@ func (s *GroupService) DeleteGroup(ctx context.Context, req *grpb.DeleteGroupReq
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
 
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		Verb:     rbacpb.Verb_DELETE,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID,
+		"group",
+		nil,
+		rbacpb.Verb_DELETE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to delete a Group")
 	}
 
@@ -227,15 +222,11 @@ func (s *GroupService) PatchGroup(ctx context.Context, req *grpb.PatchGroupReque
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
 
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		Verb:     rbacpb.Verb_PATCH,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", nil, rbacpb.Verb_PATCH)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to patch group")
 	}
 

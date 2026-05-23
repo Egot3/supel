@@ -10,8 +10,8 @@ import (
 type CuratorsHierarchy struct {
 	bun.BaseModel `bun:"table:curators_hierarchy"`
 
-	SeniorUUID      uuid.UUID `bun:"senior_uuid,notnull,pk"`
-	SubordinateUUID uuid.UUID `bun:"subordinate_uuid,notnull,pk"`
+	SeniorUUID      uuid.UUID `bun:"senior_uuid,notnull,type:uuid,pk"`
+	SubordinateUUID uuid.UUID `bun:"subordinate_uuid,notnull,type:uuid,pk"`
 
 	CreatedAt time.Time `bun:"created_at,default:NOW(),notnull"`
 }

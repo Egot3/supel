@@ -61,6 +61,7 @@ func TestGroup_CreateCurator(t *testing.T) {
 	do.Provide(i, group.NewGroupRepository)
 	do.Provide(i, curator.NewGroupRepository)
 	do.Provide(i, member.NewMemberRepository)
+	do.Provide(i, testutils.AllowAllStub)
 
 	testCurUUID := uuid.New()
 	/* testSenUUID := uuid.New() */
@@ -78,19 +79,22 @@ func TestGroup_CreateCurator(t *testing.T) {
 		if total != 1 {
 			return fmt.Errorf("%d groups created from 1", total)
 		}
-		testGrUUID = groups[0].UUID
+		testGrUUID = groups[1].UUID
 		return nil
 	}())
 	require.NoError(t, curRepo.AddCurator(context.Background(), uuid.Nil, testCurUUID, testGrUUID))
+	require.NoError(t, curRepo.AssignCuratorToGroup(context.Background(), testCurUUID, testGrUUID))
 
 	conn := startProdServer(t, i)
 	client := grpb.NewGroupServiceClient(conn)
 
 	t.Run("known curator and group", func(t *testing.T) {
+		t.Logf("Test gr uuid: %v", testGrUUID.String())
 		resp, err := client.GroupsCurators(context.Background(), &grpb.GroupsCuratorsRequest{
 			GroupUUID: testGrUUID.String(),
 		})
 		require.NoError(t, err)
+		t.Logf("get curs resp: %v", resp.Curators)
 		assert.Equal(t, testCurUUID, resp.GetCurators()[0].Uuid)
 	})
 }

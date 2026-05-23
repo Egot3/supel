@@ -6,7 +6,6 @@ import (
 	"errors"
 	"log/slog"
 
-	pb "github.com/Egot3/supel/backend/contracts"
 	grpb "github.com/Egot3/supel/backend/contracts/group"
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	"github.com/egot3/supel/backend/group/internal/logctx"
@@ -30,32 +29,28 @@ func (s *GroupService) AddMember(ctx context.Context, req *grpb.AddMemberRequest
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
 
-	identityResp, err := s.IdentityClient.CheckExistance(ctx, &pb.CheckExistanceRequest{Uuid: req.MemberUUID})
-	if err != nil {
-		return nil, status.Error(codes.Internal, "unable to identify a user")
-	}
-	if !identityResp.Exists {
-		return nil, status.Error(codes.NotFound, "requested user wasn't found")
-	}
-
-	subscope := "member"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_POST,
-		UserUUID: ownUUID.String(),
-	})
-	if err != nil {
-		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
-	}
-	if !can.Has {
-		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to add a member to Group")
-	}
-
 	memberUUID, err := uuid.Parse(req.MemberUUID)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
 	}
+
+	exists, err := s.Client.CheckExistance(ctx, memberUUID)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "unable to identify a user")
+	}
+	if !exists {
+		return nil, status.Error(codes.NotFound, "requested user wasn't found")
+	}
+
+	subscope := "member"
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_POST)
+	if err != nil {
+		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
+	}
+	if !can {
+		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to add a member to Group")
+	}
+
 	groupUUID, err := uuid.Parse(req.GroupUUID)
 	if err != nil {
 		return nil, status.Error(codes.InvalidArgument, "Bad uuid")
@@ -83,16 +78,11 @@ func (s *GroupService) RemoveMember(ctx context.Context, req *grpb.RemoveMemberR
 	}
 
 	subscope := "member"
-	can, err := s.RBACClient.HasPermission(ctx, &rbacpb.HasPermissionQuestion{
-		Scope:    "group",
-		SubScope: &subscope,
-		Verb:     rbacpb.Verb_DELETE,
-		UserUUID: ownUUID.String(),
-	})
+	can, err := s.Client.HasPermission(ctx, ownUUID, "group", &subscope, rbacpb.Verb_DELETE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't call an rbac to check permissions")
 	}
-	if !can.Has {
+	if !can {
 		return nil, status.Error(codes.PermissionDenied, "don't have enough permissions to delete a member from Group")
 	}
 
@@ -172,15 +162,15 @@ func (s *GroupService) ListMembers(ctx context.Context, req *grpb.ListMembersReq
 
 	usersProto := make([]*grpb.User, len(userUUIDs))
 	for i, userUUID := range userUUIDs {
-		user, err := s.UserClient.GetUser(ctx, &pb.GetUserRequest{Uuid: userUUID.String()})
+		user, err := s.Client.GetUser(ctx, userUUID)
 		if err != nil {
 			return nil, status.Error(codes.Internal, "couldn't get one member")
 		}
 		usersProto[i] = &grpb.User{
-			Uuid:      user.User.Uuid,
-			Nickname:  user.User.Nickname,
-			AvatarUrl: user.User.AvatarUrl,
-			CreatedAt: user.User.CreatedAt,
+			Uuid:      user.Uuid,
+			Nickname:  user.Nickname,
+			AvatarUrl: user.AvatarUrl,
+			CreatedAt: user.CreatedAt,
 		}
 	}
 
