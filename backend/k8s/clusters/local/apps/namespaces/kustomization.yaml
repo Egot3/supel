@@ -12,4 +12,3 @@ resources:
   - ./monitoring-namespace.yaml
   - ./group-namespace.yaml
   - ./rbac-namespace.yaml
-  - ./timetable-namespace.yaml

@@ -17,4 +17,3 @@ resources:
   - ./monitoring
   - ./group-postgresql.yaml
   - ./rbac-postgresql.yaml
-  - ./timetable-postgresql.yaml

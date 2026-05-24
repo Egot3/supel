@@ -10,4 +10,3 @@ resources:
   - ./ingress.yaml
   - ./group-ingress.yaml
   - ./rbac-ingress.yaml
-  - ./timetable-ingress.yaml
