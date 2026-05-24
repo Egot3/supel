@@ -15,4 +15,5 @@ type PuddleRepository interface {
 	PatchPuddle(ctx context.Context, patched models.PuddlePatched) error
 	DeletePuddle(ctx context.Context, puddleUUID uuid.UUID) error
 	ListPuddleMembers(ctx context.Context, puddleUUID uuid.UUID, page, size uint32) (uuid.UUIDs, error)
+	PuddleMemberCount(ctx context.Context, puddleUUID uuid.UUID) (int, error)
 }

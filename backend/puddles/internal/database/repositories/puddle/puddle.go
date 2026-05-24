@@ -176,3 +176,7 @@ func (r *bunPuddleRepository) ListPuddleMembers(ctx context.Context, puddleUUID 
 
 	return userUUIDs, nil
 }
+
+func (r *bunPuddleRepository) PuddleMemberCount(ctx context.Context, puddleUUID uuid.UUID) (int, error) {
+	return r.db.NewSelect().Model((*models.PuddlesMembers)(nil)).Where("puddle_uuid = ?", puddleUUID).Count(ctx)
+}
