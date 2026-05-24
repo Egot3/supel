@@ -1,0 +1,293 @@
+syntax = "proto3";
+
+package puddle;
+
+import "google/protobuf/timestamp.proto";
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+option go_package = "./";
+
+enum PuddleType {
+    UNSPECIFIED = 0;
+	GROUP       = 1;
+	ONEONONE    = 2;
+	CHANNEL     = 3;
+}
+
+message Puddle {
+    string UUID = 1;
+    string name = 2;
+    optional string description = 3;
+    PuddleType puddle_type = 4;
+
+    google.protobuf.Timestamp UpdatedAt = 5;
+    google.protobuf.Timestamp CreatedAt = 6;
+    google.protobuf.Timestamp DeletedAt = 7;
+
+    uint64 userCount = 8;
+}
+
+message User {
+    string uuid = 1;
+    string nickname = 2;
+    string avatar_url = 3;
+    bool   isModerator = 4;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message PuddleRequest {
+    string puddleUUID = 1;
+}
+
+message PuddleResponse {
+    Puddle puddle = 1;
+}
+
+message CreatePuddleRequest {
+    string name = 1;
+    optional string description = 2;
+    PuddleType puddle_type = 3;
+    repeated string invitedUsersUUIDs = 4;
+}
+
+message PatchPuddleRequest {
+    string puddleUUID = 1;
+    optional string name = 2;
+    optional string description = 3;
+}
+
+message DeletePuddleRequest {
+    string puddleUUID = 1;
+}
+
+message ListPuddleMembersRequest {
+    string puddleUUID = 1;
+    uint32 page = 2;
+    uint32 size = 3;
+}
+
+message ListPuddleMembersResponse {
+
+    repeated User users = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message AddMemberRequest {
+    string userUUID = 1;
+    string puddleUUID = 2;
+}
+
+message ListMembersPuddlesRequest {
+    string memberUUID = 1;
+    uint32 page = 2;
+    uint32 size = 3;
+}
+
+message ListMembersPuddlesResponse {
+    repeated Puddle puddles = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message ListMembersPuddlesIntersectionsRequest {
+    string userAUUID = 1;
+    string userBUUID = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message ListMembersPuddlesIntersectionsResponse{
+    repeated Puddle puddles = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message ListAddersAddorsRequest {
+    string adderUUID = 1;
+    uint32 page = 2;
+    uint32 size = 3;
+    string puddleUUID = 4;
+}
+
+message ListAddersAddorsResponse {
+    repeated User users = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message PuddleMemberRequest {
+    string puddleUUID = 1;
+    string memberUUID = 2;
+}
+
+message PuddleMemberResponse {
+    User member = 1;
+    User adder = 2;
+}
+
+message RemoveMemberRequest {
+    string puddleUUID = 1;
+    string memberUUID = 2;
+}
+
+message AssignModeratorRequest {
+    string userUUID = 1;
+    string puddleUUID = 2;
+}
+
+message IsModeratorRequest {
+    string userUUID = 1;
+    string puddleUUID = 2;
+}
+
+message IsModeratorResponse {
+    bool is = 1;
+}
+
+message RevokeModeratorRequest {
+    string moderatorUUID = 1;
+    string puddleUUID = 2;
+}
+
+message AssignorModeratorsRequest {
+    string assignorUUID = 1;
+    string puddleUUID = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message AssignorModeratorsResponse {
+    repeated User moderators = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+message Moderator {
+    string moderatorUUID = 1;
+    string nickname = 2;
+    string avatar_url = 3;
+    bool   isModerator = 4;
+    string assignorUUID = 5;
+    string puddleUUID = 8;
+
+    google.protobuf.Timestamp assigned_at = 6;
+    google.protobuf.Timestamp created_at = 7;
+}
+
+message ModeratorRequest {
+    string moderatorUUID = 1;
+    string puddleUUID = 2;
+}
+
+message ModeratorResponse {
+    Moderator moderator = 1;
+}
+
+message ListAssignorModeratorsRequest {
+    string puddleUUID = 1;
+}
+
+message ListAssignorModeratorsResponse {
+    repeated Moderator moderators = 1;
+    uint64 total = 2;
+    uint32 page = 3;
+    uint32 size = 4;
+}
+
+service PuddleService {
+    rpc AssignModerator(AssignModeratorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/puddle/{puddleUUID}/moderators"
+            body: "*"
+        };
+    };
+    rpc IsModerator(IsModeratorRequest) returns (IsModeratorResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/moderators/{userUUID}/is"
+        };
+    };
+    rpc RevokeModerator(RevokeModeratorRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/puddle/{puddleUUID}/moderators/{moderatorUUID}"
+            body: "*"
+        };
+    };
+    rpc ListAssignorModerators(ListAssignorModeratorsRequest) returns (ListAssignorModeratorsResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/moderators"
+        };
+    };
+    rpc Moderator(ModeratorRequest) returns (ModeratorResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/moderators/{moderatorUUID}"
+        };
+    };
+
+    rpc AddMember(AddMemberRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/puddle/{puddleUUID}/members"
+            body: "*"
+        };
+    };
+    rpc ListMembersPuddles(ListMembersPuddlesRequest) returns (ListMembersPuddlesResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{memberUUID}/puddles"
+        };
+    };
+    rpc ListMembersPuddlesIntersections(ListMembersPuddlesIntersectionsRequest) returns (ListMembersPuddlesIntersectionsResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/intersections/{userAUUID}/{userBUUID}"
+        };
+    };
+    rpc ListAddersAddors(ListAddersAddorsRequest) returns (ListAddersAddorsResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/members/{adderUUID}/addors"
+        };
+    };
+    rpc PuddleMember (PuddleMemberRequest) returns (PuddleMemberResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/members/{memberUUID}"
+        };
+    };
+    rpc RemoveMember(RemoveMemberRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/puddle/{puddleUUID}/members/{memberUUID}"
+        };
+    };
+
+
+    rpc Puddle(PuddleRequest) returns (PuddleResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}"
+        };
+    };
+    rpc CreatePuddle(CreatePuddleRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/puddle"
+            body: "*"
+        };
+    };
+    rpc PatchPuddle(PatchPuddleRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/puddle/{puddleUUID}"
+            body: "*"
+        };
+    };
+    rpc DeletePuddle(DeletePuddleRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/puddle/{puddleUUID}"
+        };
+    };
+    rpc ListPuddleMembers(ListPuddleMembersRequest) returns (ListPuddleMembersResponse){
+        option (google.api.http) = {
+            get: "/v1/puddle/{puddleUUID}/members"
+        };
+    };
+}
