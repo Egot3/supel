@@ -56,6 +56,8 @@ func main() {
 		return grpcutils.GRPCServerUtils{}, nil
 	})
 
+	do.Provide(injector, server.NewGroupService)
+
 	GroupServer, err := do.Invoke[*server.GroupService](injector)
 	if err != nil {
 		log.Fatalf("Unable to run server: %v", err)

@@ -9,7 +9,7 @@ import (
 type Action struct {
 	bun.BaseModel `bun:"table:actions"`
 
-	UUID     uuid.UUID  `bun:"action_uuid,default:now()"`
+	UUID     uuid.UUID  `bun:"action_uuid,default:now(),pk"`
 	Scope    string     `bun:"scope,notnull"`
 	SubScope *string    `bun:"sub_scope"`
 	Verb     types.Verb `bun:"verb,notnull"`

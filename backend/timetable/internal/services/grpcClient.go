@@ -19,11 +19,11 @@ type GRPCClient struct {
 	GroupStub grpb.GroupServiceClient
 }
 
-func NewGRPCClient(i do.Injector) (GRPCClient, error) {
+func NewGRPCClient(i do.Injector) (Client, error) {
 	RBACStub := do.MustInvoke[rbacpb.RBACServiceClient](i)
 	GroupStub := do.MustInvoke[grpb.GroupServiceClient](i)
 
-	return GRPCClient{
+	return &GRPCClient{
 		RBACStub:  RBACStub,
 		GroupStub: GroupStub,
 	}, nil
