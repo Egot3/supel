@@ -51,6 +51,10 @@ func main() {
 	do.Provide(injector, member.NewMemberRepository)
 	do.Provide(injector, curator.NewGroupRepository)
 
+	do.Provide(injector, services.NewRBACClient)
+	do.Provide(injector, services.NewUserService)
+	do.Provide(injector, services.NewIdentityService)
+
 	do.Provide(injector, services.NewGRPCClient)
 	do.Provide(injector, func(i do.Injector) (grpcutils.ServerUtils, error) {
 		return grpcutils.GRPCServerUtils{}, nil
