@@ -21,12 +21,12 @@ type GRPCClient struct {
 	UserStub     pb.UserServiceClient
 }
 
-func NewGRPCClient(i do.Injector) (GRPCClient, error) {
+func NewGRPCClient(i do.Injector) (Client, error) {
 	RBACStub := do.MustInvoke[rbacpb.RBACServiceClient](i)
 	IdentityStub := do.MustInvoke[pb.IdentityServiceClient](i)
 	UserStub := do.MustInvoke[pb.UserServiceClient](i)
 
-	return GRPCClient{
+	return &GRPCClient{
 		RBACStub:     RBACStub,
 		IdentityStub: IdentityStub,
 		UserStub:     UserStub,
