@@ -13,4 +13,5 @@ type MemberRepository interface {
 	ListMembersPuddlesIntersections(ctx context.Context, memberAUUID, memberBUUID uuid.UUID, page, size uint32) (uuid.UUIDs, int, error)
 	ListAddersAddors(ctx context.Context, adderUUID uuid.UUID, page, size uint32) (uuid.UUIDs, int, error)
 	PuddleMember(ctx context.Context, puddleUUID, memberUUID uuid.UUID) (*models.PuddlesMembers, error)
+	RemoveMember(ctx context.Context, puddleUUID, memberUUID uuid.UUID) error
 }

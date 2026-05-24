@@ -2,6 +2,8 @@ package member
 
 import (
 	"context"
+	"database/sql"
+	"errors"
 
 	"github.com/egot3/supel/backend/puddles/internal/models"
 	"github.com/google/uuid"
@@ -21,14 +23,6 @@ func NewMemberRepository(i do.Injector) (MemberRepository, error) {
 func (r *bunMemberRepository) AddMember(ctx context.Context, memberUUID uuid.UUID, adderUUID *uuid.UUID, puddleUUID uuid.UUID) error {
 	_, err := r.db.NewInsert().
 		Model(&models.PuddlesMembers{PuddleUUID: puddleUUID, AdderUUID: adderUUID, MemberUUID: memberUUID}).Exec(ctx)
-	return err
-}
-
-func (r *bunMemberRepository) RemoveMember(ctx context.Context, memberUUID, puddleUUID uuid.UUID) error {
-	_, err := r.db.NewDelete().Model((*models.PuddlesMembers)(nil)).
-		Where("member_uuid = ?", memberUUID).Where("puddle_uuid = ?", puddleUUID).
-		Exec(ctx)
-
 	return err
 }
 
@@ -87,4 +81,27 @@ func (r *bunMemberRepository) PuddleMember(ctx context.Context, puddleUUID, memb
 	}
 
 	return &pMembers, nil
+}
+
+func (r *bunMemberRepository) RemoveMember(ctx context.Context, puddleUUID, memberUUID uuid.UUID) error {
+	return r.db.RunInTx(ctx, &sql.TxOptions{}, func(ctx context.Context, tx bun.Tx) error {
+		_, err := tx.NewDelete().Model(&models.PuddlesMembers{PuddleUUID: puddleUUID, MemberUUID: memberUUID}).
+			WherePK().Exec(ctx)
+		if err != nil {
+			return err
+		}
+
+		_, err = tx.NewDelete().
+			Model(&models.PuddlesModerators{PuddleUUID: puddleUUID, ModeratorUUID: memberUUID}).
+			WherePK().Exec(ctx)
+		if err != nil {
+			if errors.Is(err, sql.ErrNoRows) {
+				return nil
+			}
+
+			return err
+		}
+
+		return nil
+	})
 }

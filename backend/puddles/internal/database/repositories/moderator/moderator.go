@@ -41,7 +41,7 @@ func (r *bunModeratorRepository) RevokeModerator(ctx context.Context, puddleUUID
 	return err
 }
 
-func (r *bunModeratorRepository) AssignorsModerator(ctx context.Context, puddleUUID, assignorUUID uuid.UUID, page, size uint32) (uuid.UUIDs, int, error) {
+func (r *bunModeratorRepository) ListAssignorModerators(ctx context.Context, puddleUUID, assignorUUID uuid.UUID, page, size uint32) (uuid.UUIDs, int, error) {
 	var moderatorUUIDs uuid.UUIDs
 	total, err := r.db.NewSelect().Model((*models.PuddlesModerators)(nil)).
 		Where("assignor_uuid = ?", assignorUUID).Where("puddle_uuid = ?", puddleUUID).

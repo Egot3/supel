@@ -10,6 +10,7 @@ require (
 	github.com/samber/go-type-to-string v1.8.0 // indirect
 	go.opentelemetry.io/otel v1.43.0 // indirect
 	go.opentelemetry.io/otel/trace v1.43.0 // indirect
+	go.uber.org/atomic v1.11.0 // indirect
 	golang.org/x/crypto v0.48.0 // indirect
 	golang.org/x/net v0.51.0 // indirect
 	golang.org/x/text v0.36.0 // indirect
@@ -20,10 +21,11 @@ require (
 )
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.3.2
+	github.com/Egot3/supel/backend/contracts v0.3.3
 	github.com/google/uuid v1.6.0
 	github.com/jinzhu/inflection v1.0.0 // indirect
 	github.com/puzpuzpuz/xsync/v3 v3.5.1 // indirect
+	github.com/redis/go-redis/v9 v9.19.0
 	github.com/samber/do/v2 v2.0.0
 	github.com/tmthrgd/go-hex v0.0.0-20190904060850-447a3041c3bc // indirect
 	github.com/uptrace/bun/dialect/pgdialect v1.2.18

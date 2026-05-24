@@ -85,7 +85,7 @@ type Puddle struct {
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=UpdatedAt,proto3" json:"UpdatedAt,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=CreatedAt,proto3" json:"CreatedAt,omitempty"`
 	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=DeletedAt,proto3" json:"DeletedAt,omitempty"`
-	UserCount     uint64                 `protobuf:"varint,8,opt,name=userCount,proto3" json:"userCount,omitempty"`
+	MemberCount   uint64                 `protobuf:"varint,8,opt,name=memberCount,proto3" json:"memberCount,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -169,9 +169,9 @@ func (x *Puddle) GetDeletedAt() *timestamppb.Timestamp {
 	return nil
 }
 
-func (x *Puddle) GetUserCount() uint64 {
+func (x *Puddle) GetMemberCount() uint64 {
 	if x != nil {
-		return x.UserCount
+		return x.MemberCount
 	}
 	return 0
 }
@@ -1896,7 +1896,7 @@ var File_proto_puddle_proto protoreflect.FileDescriptor
 
 const file_proto_puddle_proto_rawDesc = "" +
 	"\n" +
-	"\x12proto/puddle.proto\x12\x06puddle\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xe8\x02\n" +
+	"\x12proto/puddle.proto\x12\x06puddle\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"\xec\x02\n" +
 	"\x06Puddle\x12\x12\n" +
 	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12%\n" +
@@ -1905,8 +1905,8 @@ const file_proto_puddle_proto_rawDesc = "" +
 	"puddleType\x128\n" +
 	"\tUpdatedAt\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tUpdatedAt\x128\n" +
 	"\tCreatedAt\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tCreatedAt\x128\n" +
-	"\tDeletedAt\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tDeletedAt\x12\x1c\n" +
-	"\tuserCount\x18\b \x01(\x04R\tuserCountB\x0e\n" +
+	"\tDeletedAt\x18\a \x01(\v2\x1a.google.protobuf.TimestampR\tDeletedAt\x12 \n" +
+	"\vmemberCount\x18\b \x01(\x04R\vmemberCountB\x0e\n" +
 	"\f_description\"\xb2\x01\n" +
 	"\x04User\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x1a\n" +

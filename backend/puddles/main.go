@@ -9,6 +9,7 @@ import (
 	"github.com/egot3/supel/backend/puddles/internal/database"
 	"github.com/egot3/supel/backend/puddles/internal/hooks"
 	"github.com/egot3/supel/backend/puddles/internal/interceptors"
+	"github.com/egot3/supel/backend/puddles/internal/redisdatabase"
 	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 	"google.golang.org/grpc"
@@ -31,6 +32,15 @@ func main() {
 		log.Fatalf("Fatal Migraton Fail(FMF): %s", err)
 	}
 	db.AddQueryHook(&hooks.SlogQueryHook{})
+
+	do.Provide(injector, func(i do.Injector) (redisdatabase.Config, error) {
+		return redisdatabase.Config{
+			Addr:     os.Getenv("REDIS_ADDR"),
+			Password: os.Getenv("REDDIS_PASSWORD"),
+			DB:       0,
+		}, nil
+	})
+	do.Provide(injector, redisdatabase.New)
 
 	grpcServer := grpc.NewServer(
 		grpc.UnaryInterceptor(interceptors.LoggingUnaryInterceptor(logger)),
