@@ -14,8 +14,8 @@ type PuddlesMembers struct {
 	PuddleUUID uuid.UUID `bun:"puddle_uuid,type:uuid,pk"`
 	Puddle     *Puddle   `bun:"rel:belongs-to,join:puddle_uuid=uuid"`
 
-	MemberUUID uuid.UUID  `bun:"member_uuid,type:uuid,pk"`
-	AdderUUID  *uuid.UUID `bun:"adder_uuid,type:uuid"`
+	MemberUUID uuid.UUID `bun:"member_uuid,type:uuid,pk"`
+	AdderUUID  uuid.UUID `bun:"adder_uuid,type:uuid,nullzero"`
 
 	JoinedAt time.Time `bun:"joined_at,default:NOW(),notnull"`
 }

@@ -80,7 +80,7 @@ func (r *bunPuddleRepository) CreateOneOnOnePuddle(ctx context.Context, name str
 	})
 }
 
-func (r *bunPuddleRepository) CreateGroup(ctx context.Context, name string, description *string, startingUserUUIDs []uuid.UUID, ownerUUID uuid.UUID) error {
+func (r *bunPuddleRepository) CreateGroup(ctx context.Context, name string, description *string, startingUserUUIDs uuid.UUIDs, ownerUUID uuid.UUID) error {
 	return r.db.RunInTx(ctx, &sql.TxOptions{}, func(ctx context.Context, tx bun.Tx) error {
 		createdPuddle := models.Puddle{
 			Name:        name,
@@ -164,17 +164,17 @@ func (r *bunPuddleRepository) DeletePuddle(ctx context.Context, puddleUUID uuid.
 	return err
 }
 
-func (r *bunPuddleRepository) ListPuddleMembers(ctx context.Context, puddleUUID uuid.UUID, page, size uint32) (uuid.UUIDs, error) {
+func (r *bunPuddleRepository) ListPuddleMembers(ctx context.Context, puddleUUID uuid.UUID, page, size uint32) (uuid.UUIDs, int, error) {
 	var userUUIDs uuid.UUIDs
-	err := r.db.NewSelect().Model((*models.PuddlesMembers)(nil)).
+	total, err := r.db.NewSelect().Model((*models.PuddlesMembers)(nil)).
 		Where("puddle_uuid = ?", puddleUUID).
 		Limit(int(size)).Offset(int(size*page)).
-		Column("member_uuid").Scan(ctx, &userUUIDs)
+		Column("member_uuid").ScanAndCount(ctx, &userUUIDs)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
-	return userUUIDs, nil
+	return userUUIDs, total, nil
 }
 
 func (r *bunPuddleRepository) PuddleMemberCount(ctx context.Context, puddleUUID uuid.UUID) (int, error) {

@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"errors"
 
+	"github.com/egot3/supel/backend/puddles/internal/carefulness"
 	"github.com/egot3/supel/backend/puddles/internal/models"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
@@ -20,9 +21,13 @@ func NewMemberRepository(i do.Injector) (MemberRepository, error) {
 	return &bunMemberRepository{db: db}, nil
 }
 
-func (r *bunMemberRepository) AddMember(ctx context.Context, memberUUID uuid.UUID, adderUUID *uuid.UUID, puddleUUID uuid.UUID) error {
-	_, err := r.db.NewInsert().
+func (r *bunMemberRepository) AddMember(ctx context.Context, memberUUID uuid.UUID, adderUUID uuid.UUID, puddleUUID uuid.UUID) error {
+	resp, err := r.db.NewInsert().
 		Model(&models.PuddlesMembers{PuddleUUID: puddleUUID, AdderUUID: adderUUID, MemberUUID: memberUUID}).Exec(ctx)
+	if c, _ := resp.RowsAffected(); c == 0 {
+		return carefulness.Conflict
+	}
+
 	return err
 }
 
