@@ -6,7 +6,7 @@ metadata:
 spec:
   entryPoints: [web]
   routes:
-    - match: Host(`localhost`)
+    - match: Host(`grafana.dev.local`) #rage inducting
       kind: Rule
       services:
         - name: grafana
