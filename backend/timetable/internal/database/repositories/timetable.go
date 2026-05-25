@@ -42,8 +42,8 @@ func (r *bunTimetableRepository) Timetable(ctx context.Context, groupUUID string
 		TableExpr("concrete_lessons as cl").
 		Where("group_uuid = ?", groupUUID).Join("JOIN periods AS p ON p.uuid = cl.period_uuid").
 		Where("year = ?", year).Where("week_number = ?", weekNumber).Where("day_of_week = ?", day).
-		Order("position ASC").Relation("AbstractLesson")
-	Scan(ctx)
+		Order("position ASC").Relation("AbstractLesson").
+		Scan(ctx)
 	if err != nil {
 		return nil, err
 	}
