@@ -1,6 +1,7 @@
 package models
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
@@ -16,4 +17,14 @@ type GroupsMembers struct {
 	MemberUUID uuid.UUID `bun:"member_uuid,type:uuid,pk"`
 
 	JoinedAt time.Time `bun:"joined_at,default:NOW(),notnull"`
+}
+
+var _ bun.BeforeAppendModelHook = (*GroupsMembers)(nil)
+
+func (g *GroupsMembers) BeforeAppendModel(ctx context.Context, query bun.Query) error {
+	switch query.(type) {
+	case *bun.InsertQuery:
+		g.JoinedAt = time.Now()
+	}
+	return nil
 }

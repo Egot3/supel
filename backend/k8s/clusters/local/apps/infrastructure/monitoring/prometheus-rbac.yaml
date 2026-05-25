@@ -15,7 +15,7 @@ rules:
   - apiGroups: [extensions, networking.k8s.io]
     resources: [ingresses]
     verbs: [get, list, watch]
-  - nonResourceURLs: [/metrics, /metrics/cardvisor] #TODO
+  - nonResourceURLs: [/metrics, /metrics/cardvisor, .prometheus/metrics] #TODO
     verbs: [get]
 
 ---

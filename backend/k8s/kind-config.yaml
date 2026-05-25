@@ -5,13 +5,25 @@ nodes:
     extraPortMappings:
       - containerPort: 30080
         hostPort: 80
+        listenAddress: "0.0.0.0"
         protocol: TCP
       - containerPort: 30443
         hostPort: 443
+        listenAddress: "0.0.0.0"
         protocol: TCP
       - containerPort: 30088
         hostPort: 8080
+        listenAddress: "0.0.0.0"
         protocol: TCP
       - containerPort: 30900
         hostPort: 9000
+        listenAddress: "0.0.0.0"
+        protocol: TCP
+      - containerPort: 12345
+        hostPort: 12345
+        listenAddress: "0.0.0.0"
+        protocol: TCP
+      - containerPort: 3000
+        hostPort: 3000
+        listenAddress: "0.0.0.0"
         protocol: TCP
