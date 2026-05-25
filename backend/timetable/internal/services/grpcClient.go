@@ -3,7 +3,7 @@ package services
 import (
 	"context"
 
-	grpb "github.com/Egot3/supel/backend/contracts/group"
+	pb "github.com/Egot3/supel/backend/contracts"
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
@@ -11,21 +11,25 @@ import (
 
 type Client interface {
 	HasPermission(ctx context.Context, userUUID uuid.UUID, scope string, subScope *string, verb rbacpb.Verb) (bool, error)
-	UsersGroups(ctx context.Context, userUUID string) ([]string, error)
+	CheckExistance(ctx context.Context, userUUID uuid.UUID) (bool, error)
+	GetUser(ctx context.Context, userUUID uuid.UUID) (*pb.User, error)
 }
 
 type GRPCClient struct {
-	RBACStub  rbacpb.RBACServiceClient
-	GroupStub grpb.GroupServiceClient
+	RBACStub     rbacpb.RBACServiceClient
+	IdentityStub pb.IdentityServiceClient
+	UserStub     pb.UserServiceClient
 }
 
 func NewGRPCClient(i do.Injector) (Client, error) {
 	RBACStub := do.MustInvoke[rbacpb.RBACServiceClient](i)
-	GroupStub := do.MustInvoke[grpb.GroupServiceClient](i)
+	IdentityStub := do.MustInvoke[pb.IdentityServiceClient](i)
+	UserStub := do.MustInvoke[pb.UserServiceClient](i)
 
 	return &GRPCClient{
-		RBACStub:  RBACStub,
-		GroupStub: GroupStub,
+		RBACStub:     RBACStub,
+		IdentityStub: IdentityStub,
+		UserStub:     UserStub,
 	}, nil
 }
 
@@ -43,19 +47,25 @@ func (c *GRPCClient) HasPermission(ctx context.Context, userUUID uuid.UUID, scop
 	return resp.Has, err
 }
 
-func (c *GRPCClient) UsersGroups(ctx context.Context, userUUID string) ([]string, error) {
-	resp, err := c.GroupStub.MembersGroups(ctx, &grpb.MembersGroupsRequest{
-		Page:       0,
-		Size:       50,
-		MemberUUID: userUUID,
+func (c *GRPCClient) CheckExistance(ctx context.Context, userUUID uuid.UUID) (bool, error) {
+	resp, err := c.IdentityStub.CheckExistance(ctx, &pb.CheckExistanceRequest{
+		Uuid: userUUID.String(),
 	})
+	if err != nil {
+		return false, err
+	}
+
+	return resp.Exists, err
+}
+
+func (c *GRPCClient) GetUser(ctx context.Context, userUUID uuid.UUID) (*pb.User, error) {
+	resp, err := c.UserStub.GetUser(ctx, &pb.GetUserRequest{
+		Uuid: userUUID.String(),
+	})
+
 	if err != nil {
 		return nil, err
 	}
 
-	groupsUUIDs := make([]string, len(resp.Groups))
-	for i, group := range resp.Groups {
-		groupsUUIDs[i] = group.UUID
-	}
-	return groupsUUIDs, nil
+	return resp.User, nil
 }

@@ -4,14 +4,13 @@ import (
 	"fmt"
 	"os"
 
-	grpb "github.com/Egot3/supel/backend/contracts/group"
-
+	pb "github.com/Egot3/supel/backend/contracts"
 	"github.com/samber/do/v2"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
-func NewUserService(i do.Injector) (grpb.GroupServiceClient, error) {
+func NewUserService(i do.Injector) (pb.UserServiceClient, error) {
 	conn, err := grpc.NewClient(fmt.Sprintf("%v:%v", os.Getenv("USER_SERVICE_HOST"),
 		os.Getenv("USER_SERVICE_PORT")), grpc.WithTransportCredentials(
 		insecure.NewCredentials(),
@@ -20,7 +19,7 @@ func NewUserService(i do.Injector) (grpb.GroupServiceClient, error) {
 		return nil, err
 	}
 	defer conn.Close()
-	groupClient := grpb.NewGroupServiceClient(conn)
+	userClient := pb.NewUserServiceClient(conn)
 
-	return groupClient, nil
+	return userClient, nil
 }

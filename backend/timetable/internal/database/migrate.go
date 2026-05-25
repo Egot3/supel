@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/Egot3/supel/backend/timetable/internal/database/migrations"
+	"github.com/egot3/supel/backend/timetable/internal/database/migrations"
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/migrate"
 )
