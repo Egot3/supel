@@ -24,7 +24,7 @@ func (s *TimetableServer) GetPeriods(ctx context.Context, req *ttpb.GetPeriodReq
 		return nil, status.Error(codes.Internal, "couldn't get all periods for the day")
 	}
 
-	protoPeriods := make([]*ttpb.Period, periods[len(periods)-1].Position+1)
+	protoPeriods := make([]*ttpb.Period, periods[len(periods)].Position+1)
 	for i, period := range periods {
 		protoPeriods[i] = &ttpb.Period{
 			Number: uint32(period.Position),
