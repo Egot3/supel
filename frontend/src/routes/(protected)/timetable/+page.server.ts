@@ -9,7 +9,7 @@ export const load: PageServerLoad = async ({ fetch, cookies }) => {
 		return { currentWeek: -1 };
 	}
 
-	const responsePeriods = await fetch('http://localhost/v1/user/', {
+	const responsePeriods = await fetch('http://localhost/v1/timetable/periods/', {
 		headers: {
 			Authorization: `Bearer ${token}`
 		}

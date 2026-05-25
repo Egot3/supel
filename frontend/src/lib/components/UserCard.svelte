@@ -9,6 +9,14 @@
 	} = $props();
 
 	$inspect('user in component:', user);
+
+	let avatarURL = $state(user.avatarUrl);
+	let hasError = $state(false);
+
+	function handleImageError() {
+		hasError = true;
+		avatarURL = '';
+	}
 </script>
 
 <div
@@ -21,7 +29,11 @@
 >
 	<div class="h-full w-auto mr-gutter">
 		{console.log('user avatar: ', user.avatarUrl)}
-		<Avatar class="h-full w-auto rounded-2xl" src={user.avatarUrl} />
+		<Avatar
+			class="h-full w-auto rounded-2xl"
+			src={hasError ? '' : avatarURL}
+			onerror={handleImageError}
+		/>
 	</div>
 
 	<div class="flex flex-col">
