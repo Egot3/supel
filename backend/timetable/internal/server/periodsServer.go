@@ -18,7 +18,7 @@ import (
 )
 
 func (s *TimetableServer) GetPeriods(ctx context.Context, req *ttpb.GetPeriodRequest) (*ttpb.GetPeriodsResponse, error) {
-	periods, err := s.periodRepository.PeriodsByDay(ctx, uint16(req.WeekNumber), uint16(req.Year), types.Day(req.Day))
+	periods, err := s.periodRepository.PeriodsByDay(ctx, uint16(req.WeekNumber), uint16(req.Year), types.ProtoDayToDay(req.Day))
 	if err != nil {
 		log.Printf("couldn't select all periods for day: %v", err)
 		return nil, status.Error(codes.Internal, "couldn't get all periods for the day")

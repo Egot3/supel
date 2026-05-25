@@ -9,20 +9,20 @@ CREATE TYPE weekday AS ENUM (
 );
 
 -- Create "periods" table
-CREATE TABLE "periods" {
+CREATE TABLE "periods" (
   "uuid" uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "position" SMALLINT NOT NULL,
   "week_number"  SMALLINT NOT NULL,
   "day_of_week"  weekday NOT NULL,
   "year"         SMALLINT NOT NULL,
 
-  "start"      TIMESTAMPTZ UNIQUE NOT NULL,
-  "end"        TIMESTAMPTZ UNIQUE NOT NULL,
+  "start"      TIMESTAMPTZ NOT NULL,
+  "end"        TIMESTAMPTZ NOT NULL,
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
 
   UNIQUE ("position","week_number","day_of_week","year")
-}
-CREATE INDEX idx_position ON "periods" ("position")
+);
+CREATE INDEX idx_position ON "periods" ("position");
 
 -- Create "abstract_lessons" table
 CREATE TABLE "abstract_lessons" (
@@ -52,10 +52,8 @@ CREATE TABLE "concrete_lessons" (
   "updated_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
   PRIMARY KEY ("concrete_uuid")
 );
-CREATE INDEX idx_start_group_uuid   ON concrete_lessons ("week_number","group_uuid","year") WHERE deleted_at IS NULL;
-CREATE INDEX idx_start_teacher_uuid ON concrete_lessons ("week_number","teacher_uuid","year") WHERE deleted_at IS NULL;
 
--- Create "homework_attachment_keys"
+-- Create "homework_attachment"
 CREATE TABLE "homework_attachments" (
   "file_uuid"     uuid PRIMARY KEY DEFAULT gen_random_uuid(),
   "name"          character varying NOT NULL,
