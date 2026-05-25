@@ -21,14 +21,13 @@ type UserServer struct {
 	storageService storage.StorageService
 }
 
-func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
+func UserFromContext(ctx context.Context) (userID string, ok bool) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		return "", "", false
+		return "", false
 	}
 	userID = md.Get("user-uuid")[0]
-	role = md.Get("user-role")[0]
-	return userID, role, !(len(userID) == 0 && len(role) == 0)
+	return userID, !(len(userID) == 0)
 }
 
 func NewUserService(storageService storage.StorageService) *UserServer {
@@ -85,15 +84,16 @@ func (s *UserServer) GetUser(ctx context.Context, req *pb.GetUserRequest) (*pb.G
 }
 
 func (s *UserServer) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*emptypb.Empty, error) {
-	userUuid, role, ok := UserFromContext(ctx)
+	userUuid, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in deletion")
 		return nil, status.Error(codes.DataLoss, "Identity failure")
 	}
 	targetUuid := req.GetUuid()
 
-	if role != "ADMIN" && userUuid != req.GetUuid() {
-		log.Printf("user %v doesn't own %v and not an admin(%v)", userUuid, targetUuid, role)
+	//RBAC
+	if userUuid != req.GetUuid() {
+		log.Printf("user %v doesn't own %v", userUuid, targetUuid)
 		return nil, status.Error(codes.PermissionDenied, "NOT. ENOUGH. POWER")
 	}
 
@@ -107,15 +107,16 @@ func (s *UserServer) PatchUser(ctx context.Context, req *pb.PatchUserRequest) (*
 }
 
 func (s *UserServer) UploadAvatar(ctx context.Context, req *pb.UploadAvatarRequest) (*pb.UploadAvatarResponse, error) {
-	userUuid, role, ok := UserFromContext(ctx)
+	userUuid, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in avatar changing")
 		return nil, status.Error(codes.DataLoss, "Identity failure")
 	}
 	targetUuid := req.GetUuid()
 
-	if role != "ADMIN" && userUuid != req.GetUuid() {
-		log.Printf("user %v doesn't own %v and not an admin(%v)", userUuid, targetUuid, role)
+	//RBAC
+	if userUuid != req.GetUuid() {
+		log.Printf("user %v doesn't own %v and not an admin()", userUuid, targetUuid)
 		return nil, status.Error(codes.PermissionDenied, "NOT. ENOUGH. POWER")
 	}
 
@@ -136,7 +137,7 @@ func (s *UserServer) UploadAvatar(ctx context.Context, req *pb.UploadAvatarReque
 }
 
 func (s *UserServer) GetSelf(ctx context.Context, _ *emptypb.Empty) (*pb.GetSelfResponse, error) {
-	userUuid, _, ok := UserFromContext(ctx)
+	userUuid, ok := UserFromContext(ctx)
 	if !ok {
 		log.Printf("identity failure in getting self")
 		return nil, status.Error(codes.DataLoss, "Identity failure")
