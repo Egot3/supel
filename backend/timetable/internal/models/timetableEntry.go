@@ -17,7 +17,7 @@ type TimetableEntry struct {
 	DayOfWeek     int16     `bun:"day_of_week,notnull"`
 	SubjectUUID   uuid.UUID `bun:"subject_uuid,type:uuid,notnull"`
 	Place         string    `bun:"place,notnull"`
-	TeacherUUID   uuid.UUID `bun:"teacher_uuid,type:uuid"` //nullable
+	TeacherUUID   uuid.UUID `bun:"teacher_uuid,type:uuid,nullzero"` //nullable
 
 	Subject   Subject   `bun:"rel:belongs-to,join:uuid=subject_uuid"`
 	Period    Period    `bun:"rel:belongs-to,join:uuid=period_uuid"`
@@ -42,11 +42,12 @@ func (s *TimetableEntry) BeforeAppendModel(ctx context.Context, query bun.Query)
 }
 
 type TimetableEntryPatched struct {
-	UUID          uuid.UUID
-	TimetableUUID uuid.UUID
-	PeriodUUID    uuid.UUID
-	DayOfWeek     int16 //0 == nil
-	SubjectUUID   uuid.UUID
-	Place         *string
-	TeacherUUID   uuid.UUID
+	UUID           uuid.UUID
+	TimetableUUID  uuid.UUID
+	PeriodUUID     uuid.UUID
+	DayOfWeek      int16 //0 == nil
+	SubjectUUID    uuid.UUID
+	Place          *string
+	TeacherUpdated bool
+	TeacherUUID    uuid.UUID
 }
