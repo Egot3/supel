@@ -72,12 +72,9 @@ CREATE TABLE IF NOT EXISTS lessons (
 );
 
 CREATE TABLE IF NOT EXISTS "homework_attachments" (
-  "name"                 VARCHAR(100) NOT NULL,
-  "mime"                 VARCHAR(255) NOT NULL,
+  "uuid"        uuid NOT NULL PRIMARY KEY,
   "lesson_uuid" uuid NOT NULL REFERENCES lessons(uuid) ON DELETE CASCADE,
 
   "storage_key" character varying NOT NULL,
-  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now(),
-
-  PRIMARY KEY("lesson_uuid", "name")
+  "created_at" TIMESTAMPTZ NOT NULL DEFAULT now()
 );

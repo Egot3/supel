@@ -11,8 +11,7 @@ import (
 type HomeworkAttachment struct {
 	bun.BaseModel `bun:"homework_attachments,alias:ha"`
 
-	Name       string    `bun:"name,notnull"`
-	Mime       string    `bun:"mime,notnull"`
+	UUID       uuid.UUID `bun:"uuid,type:uuid,pk"`
 	LessonUUID uuid.UUID `bun:"lesson_uuid,type:uuid,notnull"`
 	StorageKey string    `bun:"storage_key,notnull"`
 
