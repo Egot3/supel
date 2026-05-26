@@ -8,297 +8,465 @@ import "google/protobuf/empty.proto";
 
 option go_package = "./";
 
-enum Day {
-    UNSPECIFIED = 0;
-    MONDAY = 1;
-    TUESDAY = 2;
-    WEDNESDAY = 3;
-    THURSDAY = 4;
-    FRIDAY = 5;
-    SATURDAY = 6;
-    SUNDAY = 7;
-}
-
-message ListTimetablesRequest {
-    uint32 week_number = 1;
-    string user_uuid = 2;
-}
-
-message GetTimetableRequest {
-    uint32 week_number = 1;
-    string user_uuid = 2;
-    Day day = 3;
-}
-
-message GetTimetableResponse {
-    ConcreteLessonShortEntry Timetable = 1;
-}
-
-message AbstractLesson {
-    string uuid = 1;
-    string name = 2;
-}
-
-message ConcreteLesson {
-    uint32 week_number = 1;
-    uint32 year = 2;
-    AbstractLesson lesson_info = 3;
-    string teacher_uuid = 4;
-    optional string homework_text_get_url= 5;
-    repeated string homework_attachments_get_urls = 6;
-    string lesson_uuid = 7;
-    repeated string marks = 8; //5- итд
-    uint32 period = 9;
-    Day day = 10;
-    optional string building = 11;
-    optional string auditorium = 12;
-}
-
-message ShortConcreteLesson {
-    uint32 week_number = 1;
-    uint32 year = 2;
-    uint32 period = 3;
-    AbstractLesson abstract_lesson = 4;
-    bool is_homework_due = 5;
-    Day day = 6;
-    optional string building = 7;
-    optional string auditorium = 8;
-}
-
-message ConcreteLessonShortEntry {
-    Day day = 1;
-    repeated ShortConcreteLesson lessons = 2;
-}
-
-
-message ListTimetableResponse {
-    repeated ConcreteLessonShortEntry Timetable = 1;
-}
-
-message CreateAbstractLessonRequest {
-    string name = 1;
+message PeriodRequest {
+    string periodUUID = 1;
 }
 
 message Period {
-    uint32 number = 1;
-    google.protobuf.Timestamp start = 2;
-    google.protobuf.Timestamp end = 3;
-    Day day = 4;
-    uint32 year = 5;
-    uint32 week_number = 6;
-    string period_uuid = 7;
+    string UUID = 1;
+    string name = 2;
+    int32 position = 3;
+    google.protobuf.Timestamp start_time = 4;
+    google.protobuf.Timestamp end_time = 5;
+
+    google.protobuf.Timestamp updated_at = 6;
+    optional google.protobuf.Timestamp deleted_at = 7;
+    google.protobuf.Timestamp created_at = 8;
 }
 
-message GetPeriodRequest {
-    uint32 week_number = 1;
-    Day day = 2;
-    uint32 year = 3;
+message PeriodResponse {
+    Period period = 1;
 }
 
-message GetPeriodsResponse {
-    repeated Period periods = 1;
+message CreaetePeriodRequest {
+    string name = 2;
+    int32 position = 3;
+    google.protobuf.Timestamp start_time = 4;
+    google.protobuf.Timestamp end_time = 5;
 }
 
 message PatchPeriodRequest {
-    string period_uuid = 7;
-    optional uint32 number = 1;
-    optional google.protobuf.Timestamp start = 2;
-    optional google.protobuf.Timestamp end = 3;
-    optional Day day = 4;
-    optional uint32 year = 5;
-    optional uint32 week_number = 6;
+    string periodUUID = 1;
+    optional string name = 2;
+    optional int32 position = 3;
+    optional google.protobuf.Timestamp start_time = 4;
+    optional google.protobuf.Timestamp end_time = 5;
 }
 
-message DeleteAbstractLessonRequest {
-    string lesson_uuid = 1;
+message DeletePeriodRequest {
+    string periodUUID = 1;
 }
 
-message GetAbstractLessonRequest {
-    string lesson_uuid = 1;
+message ListPeriodsRequest {
+    uint32 page = 1;
+    uint32 size = 2;
 }
 
-message GetAbstractLessonResponse {
-    AbstractLesson lesson = 1;
-}
-
-message PatchAbstractLessonRequest {
-    string lesson_uuid = 1;
-    optional string name = 2; //и такое бывает
-}
-
-message ListAbstractLessonsRequest {
-    uint64 size = 1;
-    uint64 page = 2;
-}
-
-message ListAbstractLessonsResponse {
-    uint64 size = 1;
-    uint64 page = 2;
+message ListPeriodsResponse {
+    uint32 page = 1;
+    uint32 size = 2;
     uint64 total = 3;
-    repeated AbstractLesson abstract_lessons = 4;
+    repeated Period periods = 4;
 }
 
-message CreateConcreteLessonRequest {
-    string abstract_lesson_uuid = 1;
-    string teacher_uuid = 2;
-    string group_uuid = 5;
-    string period_uuid = 6;
+message Subject {
+    string UUID = 1;
+    optional string name = 2;
+    optional int32 position = 3;
+
+    google.protobuf.Timestamp updated_at = 4;
+    optional google.protobuf.Timestamp deleted_at = 5;
+    google.protobuf.Timestamp created_at = 6;
 }
 
-message DeleteConcreteLessonRequest {
-    string concrete_lesson_uuid = 1;
+message SubjectRequest {
+    string subjectUUID = 1;
 }
 
-message PatchConcreteLessonRequest {
-    optional string period_uuid = 1;
-    optional string abstract_lesson_uuid = 3;
-    optional string teacher_uuid = 4;
-    string concrete_lesson_uuid = 5;
-    optional string group_uuid = 6;
-    optional string building = 7;
-    optional string auditorium = 8;
+message SubjectResponse {
+    Subject subject = 1;
 }
 
-message GetConcreteLessonRequest {
-    string concrete_lesson_uuid = 1;
+message CreateSubjectRequest {
+    string name = 1;
 }
 
-message GetConcreteLessonResponse {
-    ConcreteLesson lesson = 1;
+message PatchSubjectRequest {
+    string subjectUUID = 1;
+    optional string name = 2;
 }
 
-message HomeworkBodyPUTUrlRequest {
-    string concrete_lesson_uuid = 1;
+message DeleteSubjectRequest {
+    string subjectUUID = 1;
 }
 
-message HomeworkBodyPUTUrlResponse {
-    string homework_body_url = 1;
+message ListSubjectsRequest {
+    uint32 page = 1;
+    uint32 size = 2;
 }
 
-message HomeworkAttachmentPUTUrlRequest {
-    string concrete_lesson_uuid = 1;
+message ListSubjectsResponse {
+    uint32 page = 1;
+    uint32 size = 2;
+    uint64 total = 3;
+    repeated Subject subjects = 4;
+}
+
+message Timetable {
+    string UUID = 1;
+    string GroupUUID = 2;
+    string Name = 3;
+    google.protobuf.Timestamp assign_at = 4;
+    google.protobuf.Timestamp revoke_at = 5; 
+}
+
+message TimetableByDateRequest {
+    google.protobuf.Timestamp date = 1;
+}
+
+message TimetableByDateResponse {
+    Timetable timetable = 1;
+}
+
+message TimetableRequest {
+    string timetableUUID = 1;
+}
+
+message TimetableResponse {
+    Timetable timetable = 1;
+}
+
+message CreateTimetableRequest {
+    string GroupUUID = 2;
+    string Name = 3;
+    google.protobuf.Timestamp assign_at = 4;
+    google.protobuf.Timestamp revoke_at = 5;
+}
+
+message PatchTimetableRequest {
+    string timetableUUID = 1;
+    optional string GroupUUID = 2;
+    optional string Name = 3;
+    optional google.protobuf.Timestamp assign_at = 4;
+    optional google.protobuf.Timestamp revoke_at = 5; 
+}
+
+message DeleteTimetableRequest {
+    string timetableUUID = 1;
+}
+
+message ListTimetablesRequest {
+    uint32 page = 1;
+    uint32 size = 2;
+}
+
+message ListTimetablesResponse {
+    uint32 page = 1;
+    uint32 size = 2;
+    uint64 total = 3;
+    repeated Timetable timetables = 4;
+}
+
+message CurrentTimetableRequest {}
+
+message CurrentTimetableResponse {
+    Timetable timetable = 1;
+}
+
+message Lesson {
+    string UUID = 1;
+    string timetable_entryUUID = 2;
+    google.protobuf.Timestamp date = 3;
+    bool cancelled = 4;
+
+    google.protobuf.Timestamp created_at = 5;
+}
+
+message LessonRequest {
+    string lessonUUID = 1;
+}
+
+message LessonResponse {
+    Lesson lesson = 1;
+}
+
+message CreateLessonRequest {
+    string timetable_entryUUID = 2;
+    google.protobuf.Timestamp date = 3;
+}
+
+message PatchLessonRequest {
+    string lessonUUID = 1;
+    optional string timetable_entryUUID = 2;
+    optional google.protobuf.Timestamp date = 3;
+    optional bool cancelled = 4;
+}
+
+message DeleteLessonRequest {
+    string lessonUUID = 1;
+}
+
+message ListLessons {
+    string timetableUUID = 1;
+}
+
+enum DayOfWeek {
+  DAY_OF_WEEK_UNSPECIFIED = 0;
+  MONDAY = 1;
+  TUESDAY = 2;
+  WEDNESDAY = 3;
+  THURSDAY = 4;
+  FRIDAY = 5;
+  SATURDAY = 6;
+  SUNDAY = 7;
+}
+
+
+message TimetableEntry {
+    string UUID = 1;
+    string timetableUUID = 2;
+    string periodUUID = 3;
+    string subjectUUID = 4;
+    optional string teacherUUID = 5;
+    
+    string place = 6;
+    DayOfWeek day_of_week = 7;
+    
+    google.protobuf.Timestamp updated_at = 8;
+    optional google.protobuf.Timestamp deleted_at = 9;
+    google.protobuf.Timestamp created_at = 10;
+}
+
+message TimetableEntryRequest {
+    string timetable_entryUUID = 1;
+}
+
+message TimetableEntryResponse {
+    TimetableEntry timetable_entry = 1;
+}
+
+message TimetableEntriesByTimetableRequest {
+    string timetableUUID = 1;
+}
+
+message TimetableEntriesByTimetableResponse {
+    TimetableEntry timetable_entry = 1;
+}
+
+message CreateTimetableEntryRequest {
+    string timetableUUID = 2;
+    string periodUUID = 3;
+    string subjectUUID = 4;
+    optional string teacherUUID = 5;
+    
+    string place = 6;
+    DayOfWeek day_of_week = 7;
+}
+
+message PatchTimetableEntryRequest {
+    string timetable_entryUUID = 1;
+    optional string timetableUUID = 2;
+    optional string periodUUID = 3;
+    optional string subjectUUID = 4;
+    optional string teacherUUID = 5;
+    
+    optional string place = 6;
+    DayOfWeek day_of_week = 7;
+}
+
+message DeleteTimetableEntryRequest {
+    string timetable_entryUUID = 1;
+}
+
+message HomeworkAttachment {
+    string UUID = 1;
+    string lessonUUID = 2;
+    string strorage_key = 3;
+
+    google.protobuf.Timestamp created_at = 4;
+}
+
+message HomeworkAttachmentRequest {
+    string homework_attachmentUUID = 1;
+}
+
+message HomeworkAttachmentResponse {
+    HomeworkAttachment homeworkAttachment = 1;
+}
+
+message HomeworkAttachmentByLessonRequest {
+    string lessonUUID = 1;
+}
+
+message HomeworkAttachmentByLessonResponse {
+    repeated HomeworkAttachment homeworkAttachments = 1;
+}
+
+message AttachHomeworkRequest {
+    string name = 1;
     string mime = 2;
-    string name = 3;
+    string lessonUUID = 3;
 }
 
-message HomeworkAttachmentPUTUrlResponse {
-    string homework_attachment_url = 1;
+message AttachHomeworkResponse {
+    string upload_url = 1;
+    string file_key = 2;
 }
 
-message HomeworkAttachmentGETUrlsRequest {
-    string concrete_lesson_uuid = 1;
-}
-
-message HomeworkAttachmentGETUrlsResponse {
-    repeated string homework_attachment_urls = 1;
-}
-
-message HomeworkBodyGETUrlRequest {
-    string concrete_lesson_uuid = 1;
-}
-
-message HomeworkBodyGETUrlResponse {
-    string homework_body_uuid = 1;
+message DetachHomeworkRequest {
+    string homework_attachmentUUID = 1;
 }
 
 service TimetableService {
-    rpc ListTimetable(ListTimetablesRequest) returns (ListTimetableResponse){
+
+    rpc HomeworkAttachment(HomeworkAttachmentRequest) returns (HomeworkAttachmentResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/{user_uuid}/{week_number}"
+            get: "/v1/timetable/homework/{homework_attachmentUUID}"
         };
     };
-    rpc GetTimetable(GetTimetableRequest) returns (GetTimetableResponse){
+    rpc HomeworkAttachmentByLesson(HomeworkAttachmentByLessonRequest) returns (HomeworkAttachmentByLessonResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/{user_uuid}/{week_number}/{day}"
+            get: "/v1/timetable/homework/lesson/{lessonUUID}"
         };
     };
-
-
-    rpc CreateAbstractLesson(CreateAbstractLessonRequest) returns (google.protobuf.Empty){
+    rpc AttachHomework(AttachHomeworkRequest) returns (AttachHomeworkResponse){
         option (google.api.http) = {
-            post: "/v1/timetable/lesson/abstract"
+            post: "/v1/timetable/homework"
             body: "*"
         };
     };
-    rpc DeleteAbstractLesson(DeleteAbstractLessonRequest) returns (google.protobuf.Empty){
+    rpc DetachHomework(DetachHomeworkRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            delete: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+            delete: "/v1/timetable/homework/{homework_attachmentUUID}"
         };
     };
-    rpc GetAbstractLesson(GetAbstractLessonRequest) returns (GetAbstractLessonResponse){
+
+    rpc TimetableEntry(TimetableEntryRequest) returns (TimetableEntryResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+            get: "/v1/timetable/entry/{timetable_entryUUID}"
         };
     };
-    rpc PatchAbstractLesson(PatchAbstractLessonRequest) returns (google.protobuf.Empty){
+    rpc CreateTimetableEntry(CreateTimetableEntryRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "/v1/timetable/lesson/abstract/{lesson_uuid}"
+            post: "/v1/timetable/entry"
             body: "*"
         };
     };
-    rpc ListAbstractLessons(ListAbstractLessonsRequest) returns (ListAbstractLessonsResponse){
+    rpc PatchTimetableEntry(PatchTimetableEntryRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            get: "/v1/timetable/lesson/abstract"
-        };
-    };
-
-
-    rpc CreateConcreteLesson(CreateConcreteLessonRequest) returns (google.protobuf.Empty){
-        option (google.api.http) = {
-            post: "/v1/timetable/lesson/concrete"
+            patch: "/v1/timetable/entry/{timetable_entryUUID}"
             body: "*"
         };
     };
-    rpc DeleteConcreteLesson(DeleteConcreteLessonRequest) returns (google.protobuf.Empty){
+    rpc DeleteTimetableEntry(DeleteTimetableEntryRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            delete: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
+            delete: "/v1/timetable/entry/{timetable_entryUUID}"
         };
     };
-    rpc PatchConcreteLesson(PatchConcreteLessonRequest) returns (google.protobuf.Empty){
+    rpc TimetableEntriesByTimetable(TimetableEntriesByTimetableRequest) returns (TimetableEntriesByTimetableResponse){
         option (google.api.http) = {
-            patch: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
-        };
-    };
-    rpc GetConcreteLesson(GetConcreteLessonRequest) returns (GetConcreteLessonResponse){
-        option (google.api.http) = {
-            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}"
+            get: "/v1/timetable/entry/timetable/{timetableUUID}"
         };
     };
 
-
-    rpc GetPeriods(GetPeriodRequest) returns (GetPeriodsResponse) {
+    rpc Lesson(LessonRequest) returns (LessonResponse){
         option (google.api.http) = {
-            get: "/v1/timetable/periods/{year}/{week_number}/{day}"
+            get: "/v1/timetable/lesson/{lessonUUID}"
+        };
+    };
+    rpc CreateLesson(CreateLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable/lesson"
+        };
+    };
+    rpc PatchLesson(PatchLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/timetable/lesson/{lessonUUID}"
+            body: "*"
+        };
+    };
+    rpc DeleteLesson(DeleteLessonRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/timetable/lesson/{lessonUUID}"
+        };
+    };
+
+    rpc Timetable(TimetableRequest) returns (TimetableResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/{timetableUUID}"
+        };
+    };
+    rpc CreateTimetable(CreateTimetableRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable"
+            body: "*"
+        };
+    };
+    rpc PatchTimetable(PatchTimetableRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/timetable/{timetableUUID}"
+            body: "*"
+        };
+    };
+    rpc DeleteTimetable(DeleteTimetableRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/timetable/{timetableUUID}"
+        };
+    };
+    rpc ListTimetables(ListTimetablesRequest) returns (ListTimetablesResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable"
+        };
+    };
+    rpc TimetableByDate(TimetableByDateRequest) returns (TimetableByDateResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/at/{date}"
+        };
+    };
+
+    rpc Subject(SubjectRequest) returns (SubjectResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/subject/{subjectUUID}"
+        };
+    };
+    rpc CreateSubject(CreateSubjectRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable/subject"
+            body: "*"
+        };
+    };
+    rpc PatchSubject(PatchSubjectRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            patch: "/v1/timetable/subject/{subjectUUID}"
+            body: "*"
+        };
+    };
+    rpc DeleteSubject(DeleteSubjectRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            delete: "/v1/timetable/subject/{subjectUUID}"
+        };
+    };
+    rpc ListSubjects(ListSubjectsRequest) returns (ListSubjectsResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/subject"
+        };
+    };
+
+    rpc Period(PeriodRequest) returns (PeriodResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/period/{periodUUID}"
+        };
+    };
+    rpc CreatePeriod(CreaetePeriodRequest) returns (google.protobuf.Empty){
+        option (google.api.http) = {
+            post: "/v1/timetable/period"
+            body: "*"
         };
     };
     rpc PatchPeriod(PatchPeriodRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            patch: "/v1/timetable/periods/{period_uuid}"
+            post: "/v1/timetable/period/{periodUUID}"
             body: "*"
         };
     };
-
-
-    rpc HomeworkBodyPUTUrl(HomeworkBodyPUTUrlRequest) returns (HomeworkBodyPUTUrlResponse){
-        option (google.api.http) = {
-            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload"
+    rpc DeletePeriod(DeletePeriodRequest) returns (google.protobuf.Empty){
+         option (google.api.http) = {
+            delete: "/v1/timetable/period/{periodUUID}"
         };
     };
-    rpc HomeworkBodyGETUrl(HomeworkBodyGETUrlRequest) returns (HomeworkBodyGETUrlResponse){
-        option (google.api.http) = {
-            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework"
-        };
-    };
-
-
-    rpc HomeworkAttachmentPUTUrl(HomeworkAttachmentPUTUrlRequest) returns (HomeworkAttachmentPUTUrlResponse){
-        option (google.api.http) = {
-            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload"
-        };
-    };
-    rpc HomeworkAttachmentGETUrl(HomeworkAttachmentGETUrlsRequest) returns (HomeworkAttachmentGETUrlsResponse){
-        option (google.api.http) = {
-            get: "/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments"
+    rpc ListPeriods(ListPeriodsRequest) returns(ListPeriodsResponse){
+         option (google.api.http) = {
+            get: "/v1/timetable/period"
         };
     };
 }

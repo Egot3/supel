@@ -24,23 +24,23 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-type Day int32
+type DayOfWeek int32
 
 const (
-	Day_UNSPECIFIED Day = 0
-	Day_MONDAY      Day = 1
-	Day_TUESDAY     Day = 2
-	Day_WEDNESDAY   Day = 3
-	Day_THURSDAY    Day = 4
-	Day_FRIDAY      Day = 5
-	Day_SATURDAY    Day = 6
-	Day_SUNDAY      Day = 7
+	DayOfWeek_DAY_OF_WEEK_UNSPECIFIED DayOfWeek = 0
+	DayOfWeek_MONDAY                  DayOfWeek = 1
+	DayOfWeek_TUESDAY                 DayOfWeek = 2
+	DayOfWeek_WEDNESDAY               DayOfWeek = 3
+	DayOfWeek_THURSDAY                DayOfWeek = 4
+	DayOfWeek_FRIDAY                  DayOfWeek = 5
+	DayOfWeek_SATURDAY                DayOfWeek = 6
+	DayOfWeek_SUNDAY                  DayOfWeek = 7
 )
 
-// Enum value maps for Day.
+// Enum value maps for DayOfWeek.
 var (
-	Day_name = map[int32]string{
-		0: "UNSPECIFIED",
+	DayOfWeek_name = map[int32]string{
+		0: "DAY_OF_WEEK_UNSPECIFIED",
 		1: "MONDAY",
 		2: "TUESDAY",
 		3: "WEDNESDAY",
@@ -49,67 +49,66 @@ var (
 		6: "SATURDAY",
 		7: "SUNDAY",
 	}
-	Day_value = map[string]int32{
-		"UNSPECIFIED": 0,
-		"MONDAY":      1,
-		"TUESDAY":     2,
-		"WEDNESDAY":   3,
-		"THURSDAY":    4,
-		"FRIDAY":      5,
-		"SATURDAY":    6,
-		"SUNDAY":      7,
+	DayOfWeek_value = map[string]int32{
+		"DAY_OF_WEEK_UNSPECIFIED": 0,
+		"MONDAY":                  1,
+		"TUESDAY":                 2,
+		"WEDNESDAY":               3,
+		"THURSDAY":                4,
+		"FRIDAY":                  5,
+		"SATURDAY":                6,
+		"SUNDAY":                  7,
 	}
 )
 
-func (x Day) Enum() *Day {
-	p := new(Day)
+func (x DayOfWeek) Enum() *DayOfWeek {
+	p := new(DayOfWeek)
 	*p = x
 	return p
 }
 
-func (x Day) String() string {
+func (x DayOfWeek) String() string {
 	return protoimpl.X.EnumStringOf(x.Descriptor(), protoreflect.EnumNumber(x))
 }
 
-func (Day) Descriptor() protoreflect.EnumDescriptor {
+func (DayOfWeek) Descriptor() protoreflect.EnumDescriptor {
 	return file_proto_timetable_proto_enumTypes[0].Descriptor()
 }
 
-func (Day) Type() protoreflect.EnumType {
+func (DayOfWeek) Type() protoreflect.EnumType {
 	return &file_proto_timetable_proto_enumTypes[0]
 }
 
-func (x Day) Number() protoreflect.EnumNumber {
+func (x DayOfWeek) Number() protoreflect.EnumNumber {
 	return protoreflect.EnumNumber(x)
 }
 
-// Deprecated: Use Day.Descriptor instead.
-func (Day) EnumDescriptor() ([]byte, []int) {
+// Deprecated: Use DayOfWeek.Descriptor instead.
+func (DayOfWeek) EnumDescriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{0}
 }
 
-type ListTimetablesRequest struct {
+type PeriodRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber    uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
+	PeriodUUID    string                 `protobuf:"bytes,1,opt,name=periodUUID,proto3" json:"periodUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListTimetablesRequest) Reset() {
-	*x = ListTimetablesRequest{}
+func (x *PeriodRequest) Reset() {
+	*x = PeriodRequest{}
 	mi := &file_proto_timetable_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListTimetablesRequest) String() string {
+func (x *PeriodRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListTimetablesRequest) ProtoMessage() {}
+func (*PeriodRequest) ProtoMessage() {}
 
-func (x *ListTimetablesRequest) ProtoReflect() protoreflect.Message {
+func (x *PeriodRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_timetable_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -121,569 +120,35 @@ func (x *ListTimetablesRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListTimetablesRequest.ProtoReflect.Descriptor instead.
-func (*ListTimetablesRequest) Descriptor() ([]byte, []int) {
+// Deprecated: Use PeriodRequest.ProtoReflect.Descriptor instead.
+func (*PeriodRequest) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *ListTimetablesRequest) GetWeekNumber() uint32 {
+func (x *PeriodRequest) GetPeriodUUID() string {
 	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *ListTimetablesRequest) GetUserUuid() string {
-	if x != nil {
-		return x.UserUuid
-	}
-	return ""
-}
-
-type GetTimetableRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber    uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	UserUuid      string                 `protobuf:"bytes,2,opt,name=user_uuid,json=userUuid,proto3" json:"user_uuid,omitempty"`
-	Day           Day                    `protobuf:"varint,3,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetTimetableRequest) Reset() {
-	*x = GetTimetableRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTimetableRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTimetableRequest) ProtoMessage() {}
-
-func (x *GetTimetableRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[1]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTimetableRequest.ProtoReflect.Descriptor instead.
-func (*GetTimetableRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *GetTimetableRequest) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *GetTimetableRequest) GetUserUuid() string {
-	if x != nil {
-		return x.UserUuid
-	}
-	return ""
-}
-
-func (x *GetTimetableRequest) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-type GetTimetableResponse struct {
-	state         protoimpl.MessageState    `protogen:"open.v1"`
-	Timetable     *ConcreteLessonShortEntry `protobuf:"bytes,1,opt,name=Timetable,proto3" json:"Timetable,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetTimetableResponse) Reset() {
-	*x = GetTimetableResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetTimetableResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetTimetableResponse) ProtoMessage() {}
-
-func (x *GetTimetableResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetTimetableResponse.ProtoReflect.Descriptor instead.
-func (*GetTimetableResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *GetTimetableResponse) GetTimetable() *ConcreteLessonShortEntry {
-	if x != nil {
-		return x.Timetable
-	}
-	return nil
-}
-
-type AbstractLesson struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
-	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *AbstractLesson) Reset() {
-	*x = AbstractLesson{}
-	mi := &file_proto_timetable_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *AbstractLesson) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*AbstractLesson) ProtoMessage() {}
-
-func (x *AbstractLesson) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use AbstractLesson.ProtoReflect.Descriptor instead.
-func (*AbstractLesson) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *AbstractLesson) GetUuid() string {
-	if x != nil {
-		return x.Uuid
-	}
-	return ""
-}
-
-func (x *AbstractLesson) GetName() string {
-	if x != nil {
-		return x.Name
-	}
-	return ""
-}
-
-type ConcreteLesson struct {
-	state                      protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber                 uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	Year                       uint32                 `protobuf:"varint,2,opt,name=year,proto3" json:"year,omitempty"`
-	LessonInfo                 *AbstractLesson        `protobuf:"bytes,3,opt,name=lesson_info,json=lessonInfo,proto3" json:"lesson_info,omitempty"`
-	TeacherUuid                string                 `protobuf:"bytes,4,opt,name=teacher_uuid,json=teacherUuid,proto3" json:"teacher_uuid,omitempty"`
-	HomeworkTextGetUrl         *string                `protobuf:"bytes,5,opt,name=homework_text_get_url,json=homeworkTextGetUrl,proto3,oneof" json:"homework_text_get_url,omitempty"`
-	HomeworkAttachmentsGetUrls []string               `protobuf:"bytes,6,rep,name=homework_attachments_get_urls,json=homeworkAttachmentsGetUrls,proto3" json:"homework_attachments_get_urls,omitempty"`
-	LessonUuid                 string                 `protobuf:"bytes,7,opt,name=lesson_uuid,json=lessonUuid,proto3" json:"lesson_uuid,omitempty"`
-	Marks                      []string               `protobuf:"bytes,8,rep,name=marks,proto3" json:"marks,omitempty"` //5- итд
-	Period                     uint32                 `protobuf:"varint,9,opt,name=period,proto3" json:"period,omitempty"`
-	Day                        Day                    `protobuf:"varint,10,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	Building                   *string                `protobuf:"bytes,11,opt,name=building,proto3,oneof" json:"building,omitempty"`
-	Auditorium                 *string                `protobuf:"bytes,12,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
-	unknownFields              protoimpl.UnknownFields
-	sizeCache                  protoimpl.SizeCache
-}
-
-func (x *ConcreteLesson) Reset() {
-	*x = ConcreteLesson{}
-	mi := &file_proto_timetable_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ConcreteLesson) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ConcreteLesson) ProtoMessage() {}
-
-func (x *ConcreteLesson) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ConcreteLesson.ProtoReflect.Descriptor instead.
-func (*ConcreteLesson) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *ConcreteLesson) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *ConcreteLesson) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
-func (x *ConcreteLesson) GetLessonInfo() *AbstractLesson {
-	if x != nil {
-		return x.LessonInfo
-	}
-	return nil
-}
-
-func (x *ConcreteLesson) GetTeacherUuid() string {
-	if x != nil {
-		return x.TeacherUuid
-	}
-	return ""
-}
-
-func (x *ConcreteLesson) GetHomeworkTextGetUrl() string {
-	if x != nil && x.HomeworkTextGetUrl != nil {
-		return *x.HomeworkTextGetUrl
-	}
-	return ""
-}
-
-func (x *ConcreteLesson) GetHomeworkAttachmentsGetUrls() []string {
-	if x != nil {
-		return x.HomeworkAttachmentsGetUrls
-	}
-	return nil
-}
-
-func (x *ConcreteLesson) GetLessonUuid() string {
-	if x != nil {
-		return x.LessonUuid
-	}
-	return ""
-}
-
-func (x *ConcreteLesson) GetMarks() []string {
-	if x != nil {
-		return x.Marks
-	}
-	return nil
-}
-
-func (x *ConcreteLesson) GetPeriod() uint32 {
-	if x != nil {
-		return x.Period
-	}
-	return 0
-}
-
-func (x *ConcreteLesson) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *ConcreteLesson) GetBuilding() string {
-	if x != nil && x.Building != nil {
-		return *x.Building
-	}
-	return ""
-}
-
-func (x *ConcreteLesson) GetAuditorium() string {
-	if x != nil && x.Auditorium != nil {
-		return *x.Auditorium
-	}
-	return ""
-}
-
-type ShortConcreteLesson struct {
-	state          protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber     uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	Year           uint32                 `protobuf:"varint,2,opt,name=year,proto3" json:"year,omitempty"`
-	Period         uint32                 `protobuf:"varint,3,opt,name=period,proto3" json:"period,omitempty"`
-	AbstractLesson *AbstractLesson        `protobuf:"bytes,4,opt,name=abstract_lesson,json=abstractLesson,proto3" json:"abstract_lesson,omitempty"`
-	IsHomeworkDue  bool                   `protobuf:"varint,5,opt,name=is_homework_due,json=isHomeworkDue,proto3" json:"is_homework_due,omitempty"`
-	Day            Day                    `protobuf:"varint,6,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	Building       *string                `protobuf:"bytes,7,opt,name=building,proto3,oneof" json:"building,omitempty"`
-	Auditorium     *string                `protobuf:"bytes,8,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
-	unknownFields  protoimpl.UnknownFields
-	sizeCache      protoimpl.SizeCache
-}
-
-func (x *ShortConcreteLesson) Reset() {
-	*x = ShortConcreteLesson{}
-	mi := &file_proto_timetable_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ShortConcreteLesson) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ShortConcreteLesson) ProtoMessage() {}
-
-func (x *ShortConcreteLesson) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ShortConcreteLesson.ProtoReflect.Descriptor instead.
-func (*ShortConcreteLesson) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *ShortConcreteLesson) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *ShortConcreteLesson) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
-func (x *ShortConcreteLesson) GetPeriod() uint32 {
-	if x != nil {
-		return x.Period
-	}
-	return 0
-}
-
-func (x *ShortConcreteLesson) GetAbstractLesson() *AbstractLesson {
-	if x != nil {
-		return x.AbstractLesson
-	}
-	return nil
-}
-
-func (x *ShortConcreteLesson) GetIsHomeworkDue() bool {
-	if x != nil {
-		return x.IsHomeworkDue
-	}
-	return false
-}
-
-func (x *ShortConcreteLesson) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *ShortConcreteLesson) GetBuilding() string {
-	if x != nil && x.Building != nil {
-		return *x.Building
-	}
-	return ""
-}
-
-func (x *ShortConcreteLesson) GetAuditorium() string {
-	if x != nil && x.Auditorium != nil {
-		return *x.Auditorium
-	}
-	return ""
-}
-
-type ConcreteLessonShortEntry struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Day           Day                    `protobuf:"varint,1,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	Lessons       []*ShortConcreteLesson `protobuf:"bytes,2,rep,name=lessons,proto3" json:"lessons,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ConcreteLessonShortEntry) Reset() {
-	*x = ConcreteLessonShortEntry{}
-	mi := &file_proto_timetable_proto_msgTypes[6]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ConcreteLessonShortEntry) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ConcreteLessonShortEntry) ProtoMessage() {}
-
-func (x *ConcreteLessonShortEntry) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[6]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ConcreteLessonShortEntry.ProtoReflect.Descriptor instead.
-func (*ConcreteLessonShortEntry) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{6}
-}
-
-func (x *ConcreteLessonShortEntry) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *ConcreteLessonShortEntry) GetLessons() []*ShortConcreteLesson {
-	if x != nil {
-		return x.Lessons
-	}
-	return nil
-}
-
-type ListTimetableResponse struct {
-	state         protoimpl.MessageState      `protogen:"open.v1"`
-	Timetable     []*ConcreteLessonShortEntry `protobuf:"bytes,1,rep,name=Timetable,proto3" json:"Timetable,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *ListTimetableResponse) Reset() {
-	*x = ListTimetableResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[7]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *ListTimetableResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*ListTimetableResponse) ProtoMessage() {}
-
-func (x *ListTimetableResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[7]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use ListTimetableResponse.ProtoReflect.Descriptor instead.
-func (*ListTimetableResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{7}
-}
-
-func (x *ListTimetableResponse) GetTimetable() []*ConcreteLessonShortEntry {
-	if x != nil {
-		return x.Timetable
-	}
-	return nil
-}
-
-type CreateAbstractLessonRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateAbstractLessonRequest) Reset() {
-	*x = CreateAbstractLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[8]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateAbstractLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateAbstractLessonRequest) ProtoMessage() {}
-
-func (x *CreateAbstractLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[8]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateAbstractLessonRequest.ProtoReflect.Descriptor instead.
-func (*CreateAbstractLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{8}
-}
-
-func (x *CreateAbstractLessonRequest) GetName() string {
-	if x != nil {
-		return x.Name
+		return x.PeriodUUID
 	}
 	return ""
 }
 
 type Period struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Number        uint32                 `protobuf:"varint,1,opt,name=number,proto3" json:"number,omitempty"`
-	Start         *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start,proto3" json:"start,omitempty"`
-	End           *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end,proto3" json:"end,omitempty"`
-	Day           Day                    `protobuf:"varint,4,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	Year          uint32                 `protobuf:"varint,5,opt,name=year,proto3" json:"year,omitempty"`
-	WeekNumber    uint32                 `protobuf:"varint,6,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	PeriodUuid    string                 `protobuf:"bytes,7,opt,name=period_uuid,json=periodUuid,proto3" json:"period_uuid,omitempty"`
+	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Position      int32                  `protobuf:"varint,3,opt,name=position,proto3" json:"position,omitempty"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,7,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *Period) Reset() {
 	*x = Period{}
-	mi := &file_proto_timetable_proto_msgTypes[9]
+	mi := &file_proto_timetable_proto_msgTypes[1]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -695,7 +160,7 @@ func (x *Period) String() string {
 func (*Period) ProtoMessage() {}
 
 func (x *Period) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[9]
+	mi := &file_proto_timetable_proto_msgTypes[1]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -708,82 +173,87 @@ func (x *Period) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use Period.ProtoReflect.Descriptor instead.
 func (*Period) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{9}
+	return file_proto_timetable_proto_rawDescGZIP(), []int{1}
 }
 
-func (x *Period) GetNumber() uint32 {
+func (x *Period) GetUUID() string {
 	if x != nil {
-		return x.Number
-	}
-	return 0
-}
-
-func (x *Period) GetStart() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Start
-	}
-	return nil
-}
-
-func (x *Period) GetEnd() *timestamppb.Timestamp {
-	if x != nil {
-		return x.End
-	}
-	return nil
-}
-
-func (x *Period) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *Period) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
-func (x *Period) GetWeekNumber() uint32 {
-	if x != nil {
-		return x.WeekNumber
-	}
-	return 0
-}
-
-func (x *Period) GetPeriodUuid() string {
-	if x != nil {
-		return x.PeriodUuid
+		return x.UUID
 	}
 	return ""
 }
 
-type GetPeriodRequest struct {
+func (x *Period) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Period) GetPosition() int32 {
+	if x != nil {
+		return x.Position
+	}
+	return 0
+}
+
+func (x *Period) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *Period) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
+	}
+	return nil
+}
+
+func (x *Period) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *Period) GetDeletedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletedAt
+	}
+	return nil
+}
+
+func (x *Period) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type PeriodResponse struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	WeekNumber    uint32                 `protobuf:"varint,1,opt,name=week_number,json=weekNumber,proto3" json:"week_number,omitempty"`
-	Day           Day                    `protobuf:"varint,2,opt,name=day,proto3,enum=timetable.Day" json:"day,omitempty"`
-	Year          uint32                 `protobuf:"varint,3,opt,name=year,proto3" json:"year,omitempty"`
+	Period        *Period                `protobuf:"bytes,1,opt,name=period,proto3" json:"period,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPeriodRequest) Reset() {
-	*x = GetPeriodRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[10]
+func (x *PeriodResponse) Reset() {
+	*x = PeriodResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPeriodRequest) String() string {
+func (x *PeriodResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPeriodRequest) ProtoMessage() {}
+func (*PeriodResponse) ProtoMessage() {}
 
-func (x *GetPeriodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[10]
+func (x *PeriodResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -794,54 +264,43 @@ func (x *GetPeriodRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPeriodRequest.ProtoReflect.Descriptor instead.
-func (*GetPeriodRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{10}
+// Deprecated: Use PeriodResponse.ProtoReflect.Descriptor instead.
+func (*PeriodResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *GetPeriodRequest) GetWeekNumber() uint32 {
+func (x *PeriodResponse) GetPeriod() *Period {
 	if x != nil {
-		return x.WeekNumber
+		return x.Period
 	}
-	return 0
+	return nil
 }
 
-func (x *GetPeriodRequest) GetDay() Day {
-	if x != nil {
-		return x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *GetPeriodRequest) GetYear() uint32 {
-	if x != nil {
-		return x.Year
-	}
-	return 0
-}
-
-type GetPeriodsResponse struct {
+type CreaetePeriodRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Periods       []*Period              `protobuf:"bytes,1,rep,name=periods,proto3" json:"periods,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
+	Position      int32                  `protobuf:"varint,3,opt,name=position,proto3" json:"position,omitempty"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3" json:"start_time,omitempty"`
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3" json:"end_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetPeriodsResponse) Reset() {
-	*x = GetPeriodsResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[11]
+func (x *CreaetePeriodRequest) Reset() {
+	*x = CreaetePeriodRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetPeriodsResponse) String() string {
+func (x *CreaetePeriodRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetPeriodsResponse) ProtoMessage() {}
+func (*CreaetePeriodRequest) ProtoMessage() {}
 
-func (x *GetPeriodsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[11]
+func (x *CreaetePeriodRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -852,34 +311,53 @@ func (x *GetPeriodsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetPeriodsResponse.ProtoReflect.Descriptor instead.
-func (*GetPeriodsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{11}
+// Deprecated: Use CreaetePeriodRequest.ProtoReflect.Descriptor instead.
+func (*CreaetePeriodRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *GetPeriodsResponse) GetPeriods() []*Period {
+func (x *CreaetePeriodRequest) GetName() string {
 	if x != nil {
-		return x.Periods
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreaetePeriodRequest) GetPosition() int32 {
+	if x != nil {
+		return x.Position
+	}
+	return 0
+}
+
+func (x *CreaetePeriodRequest) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *CreaetePeriodRequest) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
 	}
 	return nil
 }
 
 type PatchPeriodRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	PeriodUuid    string                 `protobuf:"bytes,7,opt,name=period_uuid,json=periodUuid,proto3" json:"period_uuid,omitempty"`
-	Number        *uint32                `protobuf:"varint,1,opt,name=number,proto3,oneof" json:"number,omitempty"`
-	Start         *timestamppb.Timestamp `protobuf:"bytes,2,opt,name=start,proto3,oneof" json:"start,omitempty"`
-	End           *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=end,proto3,oneof" json:"end,omitempty"`
-	Day           *Day                   `protobuf:"varint,4,opt,name=day,proto3,enum=timetable.Day,oneof" json:"day,omitempty"`
-	Year          *uint32                `protobuf:"varint,5,opt,name=year,proto3,oneof" json:"year,omitempty"`
-	WeekNumber    *uint32                `protobuf:"varint,6,opt,name=week_number,json=weekNumber,proto3,oneof" json:"week_number,omitempty"`
+	PeriodUUID    string                 `protobuf:"bytes,1,opt,name=periodUUID,proto3" json:"periodUUID,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Position      *int32                 `protobuf:"varint,3,opt,name=position,proto3,oneof" json:"position,omitempty"`
+	StartTime     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=start_time,json=startTime,proto3,oneof" json:"start_time,omitempty"`
+	EndTime       *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=end_time,json=endTime,proto3,oneof" json:"end_time,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
 func (x *PatchPeriodRequest) Reset() {
 	*x = PatchPeriodRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[12]
+	mi := &file_proto_timetable_proto_msgTypes[4]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -891,7 +369,7 @@ func (x *PatchPeriodRequest) String() string {
 func (*PatchPeriodRequest) ProtoMessage() {}
 
 func (x *PatchPeriodRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[12]
+	mi := &file_proto_timetable_proto_msgTypes[4]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -904,265 +382,66 @@ func (x *PatchPeriodRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use PatchPeriodRequest.ProtoReflect.Descriptor instead.
 func (*PatchPeriodRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{12}
+	return file_proto_timetable_proto_rawDescGZIP(), []int{4}
 }
 
-func (x *PatchPeriodRequest) GetPeriodUuid() string {
+func (x *PatchPeriodRequest) GetPeriodUUID() string {
 	if x != nil {
-		return x.PeriodUuid
+		return x.PeriodUUID
 	}
 	return ""
 }
 
-func (x *PatchPeriodRequest) GetNumber() uint32 {
-	if x != nil && x.Number != nil {
-		return *x.Number
-	}
-	return 0
-}
-
-func (x *PatchPeriodRequest) GetStart() *timestamppb.Timestamp {
-	if x != nil {
-		return x.Start
-	}
-	return nil
-}
-
-func (x *PatchPeriodRequest) GetEnd() *timestamppb.Timestamp {
-	if x != nil {
-		return x.End
-	}
-	return nil
-}
-
-func (x *PatchPeriodRequest) GetDay() Day {
-	if x != nil && x.Day != nil {
-		return *x.Day
-	}
-	return Day_UNSPECIFIED
-}
-
-func (x *PatchPeriodRequest) GetYear() uint32 {
-	if x != nil && x.Year != nil {
-		return *x.Year
-	}
-	return 0
-}
-
-func (x *PatchPeriodRequest) GetWeekNumber() uint32 {
-	if x != nil && x.WeekNumber != nil {
-		return *x.WeekNumber
-	}
-	return 0
-}
-
-type DeleteAbstractLessonRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	LessonUuid    string                 `protobuf:"bytes,1,opt,name=lesson_uuid,json=lessonUuid,proto3" json:"lesson_uuid,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *DeleteAbstractLessonRequest) Reset() {
-	*x = DeleteAbstractLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[13]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteAbstractLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteAbstractLessonRequest) ProtoMessage() {}
-
-func (x *DeleteAbstractLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[13]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteAbstractLessonRequest.ProtoReflect.Descriptor instead.
-func (*DeleteAbstractLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{13}
-}
-
-func (x *DeleteAbstractLessonRequest) GetLessonUuid() string {
-	if x != nil {
-		return x.LessonUuid
-	}
-	return ""
-}
-
-type GetAbstractLessonRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	LessonUuid    string                 `protobuf:"bytes,1,opt,name=lesson_uuid,json=lessonUuid,proto3" json:"lesson_uuid,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetAbstractLessonRequest) Reset() {
-	*x = GetAbstractLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[14]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetAbstractLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetAbstractLessonRequest) ProtoMessage() {}
-
-func (x *GetAbstractLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[14]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetAbstractLessonRequest.ProtoReflect.Descriptor instead.
-func (*GetAbstractLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{14}
-}
-
-func (x *GetAbstractLessonRequest) GetLessonUuid() string {
-	if x != nil {
-		return x.LessonUuid
-	}
-	return ""
-}
-
-type GetAbstractLessonResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lesson        *AbstractLesson        `protobuf:"bytes,1,opt,name=lesson,proto3" json:"lesson,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetAbstractLessonResponse) Reset() {
-	*x = GetAbstractLessonResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[15]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetAbstractLessonResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetAbstractLessonResponse) ProtoMessage() {}
-
-func (x *GetAbstractLessonResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[15]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetAbstractLessonResponse.ProtoReflect.Descriptor instead.
-func (*GetAbstractLessonResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{15}
-}
-
-func (x *GetAbstractLessonResponse) GetLesson() *AbstractLesson {
-	if x != nil {
-		return x.Lesson
-	}
-	return nil
-}
-
-type PatchAbstractLessonRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	LessonUuid    string                 `protobuf:"bytes,1,opt,name=lesson_uuid,json=lessonUuid,proto3" json:"lesson_uuid,omitempty"`
-	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"` //и такое бывает
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *PatchAbstractLessonRequest) Reset() {
-	*x = PatchAbstractLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[16]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PatchAbstractLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PatchAbstractLessonRequest) ProtoMessage() {}
-
-func (x *PatchAbstractLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[16]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PatchAbstractLessonRequest.ProtoReflect.Descriptor instead.
-func (*PatchAbstractLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{16}
-}
-
-func (x *PatchAbstractLessonRequest) GetLessonUuid() string {
-	if x != nil {
-		return x.LessonUuid
-	}
-	return ""
-}
-
-func (x *PatchAbstractLessonRequest) GetName() string {
+func (x *PatchPeriodRequest) GetName() string {
 	if x != nil && x.Name != nil {
 		return *x.Name
 	}
 	return ""
 }
 
-type ListAbstractLessonsRequest struct {
+func (x *PatchPeriodRequest) GetPosition() int32 {
+	if x != nil && x.Position != nil {
+		return *x.Position
+	}
+	return 0
+}
+
+func (x *PatchPeriodRequest) GetStartTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.StartTime
+	}
+	return nil
+}
+
+func (x *PatchPeriodRequest) GetEndTime() *timestamppb.Timestamp {
+	if x != nil {
+		return x.EndTime
+	}
+	return nil
+}
+
+type DeletePeriodRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Size          uint64                 `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
-	Page          uint64                 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
+	PeriodUUID    string                 `protobuf:"bytes,1,opt,name=periodUUID,proto3" json:"periodUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *ListAbstractLessonsRequest) Reset() {
-	*x = ListAbstractLessonsRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[17]
+func (x *DeletePeriodRequest) Reset() {
+	*x = DeletePeriodRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[5]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListAbstractLessonsRequest) String() string {
+func (x *DeletePeriodRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListAbstractLessonsRequest) ProtoMessage() {}
+func (*DeletePeriodRequest) ProtoMessage() {}
 
-func (x *ListAbstractLessonsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[17]
+func (x *DeletePeriodRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[5]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1173,50 +452,41 @@ func (x *ListAbstractLessonsRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListAbstractLessonsRequest.ProtoReflect.Descriptor instead.
-func (*ListAbstractLessonsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{17}
+// Deprecated: Use DeletePeriodRequest.ProtoReflect.Descriptor instead.
+func (*DeletePeriodRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{5}
 }
 
-func (x *ListAbstractLessonsRequest) GetSize() uint64 {
+func (x *DeletePeriodRequest) GetPeriodUUID() string {
 	if x != nil {
-		return x.Size
+		return x.PeriodUUID
 	}
-	return 0
+	return ""
 }
 
-func (x *ListAbstractLessonsRequest) GetPage() uint64 {
-	if x != nil {
-		return x.Page
-	}
-	return 0
+type ListPeriodsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-type ListAbstractLessonsResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	Size            uint64                 `protobuf:"varint,1,opt,name=size,proto3" json:"size,omitempty"`
-	Page            uint64                 `protobuf:"varint,2,opt,name=page,proto3" json:"page,omitempty"`
-	Total           uint64                 `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
-	AbstractLessons []*AbstractLesson      `protobuf:"bytes,4,rep,name=abstract_lessons,json=abstractLessons,proto3" json:"abstract_lessons,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
-}
-
-func (x *ListAbstractLessonsResponse) Reset() {
-	*x = ListAbstractLessonsResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[18]
+func (x *ListPeriodsRequest) Reset() {
+	*x = ListPeriodsRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *ListAbstractLessonsResponse) String() string {
+func (x *ListPeriodsRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*ListAbstractLessonsResponse) ProtoMessage() {}
+func (*ListPeriodsRequest) ProtoMessage() {}
 
-func (x *ListAbstractLessonsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[18]
+func (x *ListPeriodsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1227,309 +497,120 @@ func (x *ListAbstractLessonsResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use ListAbstractLessonsResponse.ProtoReflect.Descriptor instead.
-func (*ListAbstractLessonsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{18}
+// Deprecated: Use ListPeriodsRequest.ProtoReflect.Descriptor instead.
+func (*ListPeriodsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{6}
 }
 
-func (x *ListAbstractLessonsResponse) GetSize() uint64 {
-	if x != nil {
-		return x.Size
-	}
-	return 0
-}
-
-func (x *ListAbstractLessonsResponse) GetPage() uint64 {
+func (x *ListPeriodsRequest) GetPage() uint32 {
 	if x != nil {
 		return x.Page
 	}
 	return 0
 }
 
-func (x *ListAbstractLessonsResponse) GetTotal() uint64 {
+func (x *ListPeriodsRequest) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type ListPeriodsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	Total         uint64                 `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Periods       []*Period              `protobuf:"bytes,4,rep,name=periods,proto3" json:"periods,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListPeriodsResponse) Reset() {
+	*x = ListPeriodsResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListPeriodsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListPeriodsResponse) ProtoMessage() {}
+
+func (x *ListPeriodsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListPeriodsResponse.ProtoReflect.Descriptor instead.
+func (*ListPeriodsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *ListPeriodsResponse) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListPeriodsResponse) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *ListPeriodsResponse) GetTotal() uint64 {
 	if x != nil {
 		return x.Total
 	}
 	return 0
 }
 
-func (x *ListAbstractLessonsResponse) GetAbstractLessons() []*AbstractLesson {
+func (x *ListPeriodsResponse) GetPeriods() []*Period {
 	if x != nil {
-		return x.AbstractLessons
+		return x.Periods
 	}
 	return nil
 }
 
-type CreateConcreteLessonRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	AbstractLessonUuid string                 `protobuf:"bytes,1,opt,name=abstract_lesson_uuid,json=abstractLessonUuid,proto3" json:"abstract_lesson_uuid,omitempty"`
-	TeacherUuid        string                 `protobuf:"bytes,2,opt,name=teacher_uuid,json=teacherUuid,proto3" json:"teacher_uuid,omitempty"`
-	GroupUuid          string                 `protobuf:"bytes,5,opt,name=group_uuid,json=groupUuid,proto3" json:"group_uuid,omitempty"`
-	PeriodUuid         string                 `protobuf:"bytes,6,opt,name=period_uuid,json=periodUuid,proto3" json:"period_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *CreateConcreteLessonRequest) Reset() {
-	*x = CreateConcreteLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[19]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateConcreteLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateConcreteLessonRequest) ProtoMessage() {}
-
-func (x *CreateConcreteLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[19]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateConcreteLessonRequest.ProtoReflect.Descriptor instead.
-func (*CreateConcreteLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{19}
-}
-
-func (x *CreateConcreteLessonRequest) GetAbstractLessonUuid() string {
-	if x != nil {
-		return x.AbstractLessonUuid
-	}
-	return ""
-}
-
-func (x *CreateConcreteLessonRequest) GetTeacherUuid() string {
-	if x != nil {
-		return x.TeacherUuid
-	}
-	return ""
-}
-
-func (x *CreateConcreteLessonRequest) GetGroupUuid() string {
-	if x != nil {
-		return x.GroupUuid
-	}
-	return ""
-}
-
-func (x *CreateConcreteLessonRequest) GetPeriodUuid() string {
-	if x != nil {
-		return x.PeriodUuid
-	}
-	return ""
-}
-
-type DeleteConcreteLessonRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *DeleteConcreteLessonRequest) Reset() {
-	*x = DeleteConcreteLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[20]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *DeleteConcreteLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*DeleteConcreteLessonRequest) ProtoMessage() {}
-
-func (x *DeleteConcreteLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[20]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use DeleteConcreteLessonRequest.ProtoReflect.Descriptor instead.
-func (*DeleteConcreteLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{20}
-}
-
-func (x *DeleteConcreteLessonRequest) GetConcreteLessonUuid() string {
-	if x != nil {
-		return x.ConcreteLessonUuid
-	}
-	return ""
-}
-
-type PatchConcreteLessonRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	PeriodUuid         *string                `protobuf:"bytes,1,opt,name=period_uuid,json=periodUuid,proto3,oneof" json:"period_uuid,omitempty"`
-	AbstractLessonUuid *string                `protobuf:"bytes,3,opt,name=abstract_lesson_uuid,json=abstractLessonUuid,proto3,oneof" json:"abstract_lesson_uuid,omitempty"`
-	TeacherUuid        *string                `protobuf:"bytes,4,opt,name=teacher_uuid,json=teacherUuid,proto3,oneof" json:"teacher_uuid,omitempty"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,5,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	GroupUuid          *string                `protobuf:"bytes,6,opt,name=group_uuid,json=groupUuid,proto3,oneof" json:"group_uuid,omitempty"`
-	Building           *string                `protobuf:"bytes,7,opt,name=building,proto3,oneof" json:"building,omitempty"`
-	Auditorium         *string                `protobuf:"bytes,8,opt,name=auditorium,proto3,oneof" json:"auditorium,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *PatchConcreteLessonRequest) Reset() {
-	*x = PatchConcreteLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[21]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *PatchConcreteLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*PatchConcreteLessonRequest) ProtoMessage() {}
-
-func (x *PatchConcreteLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[21]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use PatchConcreteLessonRequest.ProtoReflect.Descriptor instead.
-func (*PatchConcreteLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{21}
-}
-
-func (x *PatchConcreteLessonRequest) GetPeriodUuid() string {
-	if x != nil && x.PeriodUuid != nil {
-		return *x.PeriodUuid
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetAbstractLessonUuid() string {
-	if x != nil && x.AbstractLessonUuid != nil {
-		return *x.AbstractLessonUuid
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetTeacherUuid() string {
-	if x != nil && x.TeacherUuid != nil {
-		return *x.TeacherUuid
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetConcreteLessonUuid() string {
-	if x != nil {
-		return x.ConcreteLessonUuid
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetGroupUuid() string {
-	if x != nil && x.GroupUuid != nil {
-		return *x.GroupUuid
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetBuilding() string {
-	if x != nil && x.Building != nil {
-		return *x.Building
-	}
-	return ""
-}
-
-func (x *PatchConcreteLessonRequest) GetAuditorium() string {
-	if x != nil && x.Auditorium != nil {
-		return *x.Auditorium
-	}
-	return ""
-}
-
-type GetConcreteLessonRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *GetConcreteLessonRequest) Reset() {
-	*x = GetConcreteLessonRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[22]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetConcreteLessonRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetConcreteLessonRequest) ProtoMessage() {}
-
-func (x *GetConcreteLessonRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[22]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetConcreteLessonRequest.ProtoReflect.Descriptor instead.
-func (*GetConcreteLessonRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{22}
-}
-
-func (x *GetConcreteLessonRequest) GetConcreteLessonUuid() string {
-	if x != nil {
-		return x.ConcreteLessonUuid
-	}
-	return ""
-}
-
-type GetConcreteLessonResponse struct {
+type Subject struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
-	Lesson        *ConcreteLesson        `protobuf:"bytes,1,opt,name=lesson,proto3" json:"lesson,omitempty"`
+	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	Position      *int32                 `protobuf:"varint,3,opt,name=position,proto3,oneof" json:"position,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
 
-func (x *GetConcreteLessonResponse) Reset() {
-	*x = GetConcreteLessonResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[23]
+func (x *Subject) Reset() {
+	*x = Subject{}
+	mi := &file_proto_timetable_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *GetConcreteLessonResponse) String() string {
+func (x *Subject) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*GetConcreteLessonResponse) ProtoMessage() {}
+func (*Subject) ProtoMessage() {}
 
-func (x *GetConcreteLessonResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[23]
+func (x *Subject) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1540,40 +621,75 @@ func (x *GetConcreteLessonResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use GetConcreteLessonResponse.ProtoReflect.Descriptor instead.
-func (*GetConcreteLessonResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{23}
+// Deprecated: Use Subject.ProtoReflect.Descriptor instead.
+func (*Subject) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{8}
 }
 
-func (x *GetConcreteLessonResponse) GetLesson() *ConcreteLesson {
+func (x *Subject) GetUUID() string {
 	if x != nil {
-		return x.Lesson
+		return x.UUID
+	}
+	return ""
+}
+
+func (x *Subject) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *Subject) GetPosition() int32 {
+	if x != nil && x.Position != nil {
+		return *x.Position
+	}
+	return 0
+}
+
+func (x *Subject) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
 	}
 	return nil
 }
 
-type HomeworkBodyPUTUrlRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+func (x *Subject) GetDeletedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletedAt
+	}
+	return nil
 }
 
-func (x *HomeworkBodyPUTUrlRequest) Reset() {
-	*x = HomeworkBodyPUTUrlRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[24]
+func (x *Subject) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type SubjectRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SubjectUUID   string                 `protobuf:"bytes,1,opt,name=subjectUUID,proto3" json:"subjectUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubjectRequest) Reset() {
+	*x = SubjectRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkBodyPUTUrlRequest) String() string {
+func (x *SubjectRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkBodyPUTUrlRequest) ProtoMessage() {}
+func (*SubjectRequest) ProtoMessage() {}
 
-func (x *HomeworkBodyPUTUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[24]
+func (x *SubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1584,40 +700,40 @@ func (x *HomeworkBodyPUTUrlRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkBodyPUTUrlRequest.ProtoReflect.Descriptor instead.
-func (*HomeworkBodyPUTUrlRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{24}
+// Deprecated: Use SubjectRequest.ProtoReflect.Descriptor instead.
+func (*SubjectRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{9}
 }
 
-func (x *HomeworkBodyPUTUrlRequest) GetConcreteLessonUuid() string {
+func (x *SubjectRequest) GetSubjectUUID() string {
 	if x != nil {
-		return x.ConcreteLessonUuid
+		return x.SubjectUUID
 	}
 	return ""
 }
 
-type HomeworkBodyPUTUrlResponse struct {
-	state           protoimpl.MessageState `protogen:"open.v1"`
-	HomeworkBodyUrl string                 `protobuf:"bytes,1,opt,name=homework_body_url,json=homeworkBodyUrl,proto3" json:"homework_body_url,omitempty"`
-	unknownFields   protoimpl.UnknownFields
-	sizeCache       protoimpl.SizeCache
+type SubjectResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Subject       *Subject               `protobuf:"bytes,1,opt,name=subject,proto3" json:"subject,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HomeworkBodyPUTUrlResponse) Reset() {
-	*x = HomeworkBodyPUTUrlResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[25]
+func (x *SubjectResponse) Reset() {
+	*x = SubjectResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkBodyPUTUrlResponse) String() string {
+func (x *SubjectResponse) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkBodyPUTUrlResponse) ProtoMessage() {}
+func (*SubjectResponse) ProtoMessage() {}
 
-func (x *HomeworkBodyPUTUrlResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[25]
+func (x *SubjectResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1628,42 +744,40 @@ func (x *HomeworkBodyPUTUrlResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkBodyPUTUrlResponse.ProtoReflect.Descriptor instead.
-func (*HomeworkBodyPUTUrlResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{25}
+// Deprecated: Use SubjectResponse.ProtoReflect.Descriptor instead.
+func (*SubjectResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{10}
 }
 
-func (x *HomeworkBodyPUTUrlResponse) GetHomeworkBodyUrl() string {
+func (x *SubjectResponse) GetSubject() *Subject {
 	if x != nil {
-		return x.HomeworkBodyUrl
+		return x.Subject
 	}
-	return ""
+	return nil
 }
 
-type HomeworkAttachmentPUTUrlRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	Mime               string                 `protobuf:"bytes,2,opt,name=mime,proto3" json:"mime,omitempty"`
-	Name               string                 `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+type CreateSubjectRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HomeworkAttachmentPUTUrlRequest) Reset() {
-	*x = HomeworkAttachmentPUTUrlRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[26]
+func (x *CreateSubjectRequest) Reset() {
+	*x = CreateSubjectRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkAttachmentPUTUrlRequest) String() string {
+func (x *CreateSubjectRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkAttachmentPUTUrlRequest) ProtoMessage() {}
+func (*CreateSubjectRequest) ProtoMessage() {}
 
-func (x *HomeworkAttachmentPUTUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[26]
+func (x *CreateSubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1674,54 +788,41 @@ func (x *HomeworkAttachmentPUTUrlRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkAttachmentPUTUrlRequest.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentPUTUrlRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{26}
+// Deprecated: Use CreateSubjectRequest.ProtoReflect.Descriptor instead.
+func (*CreateSubjectRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{11}
 }
 
-func (x *HomeworkAttachmentPUTUrlRequest) GetConcreteLessonUuid() string {
-	if x != nil {
-		return x.ConcreteLessonUuid
-	}
-	return ""
-}
-
-func (x *HomeworkAttachmentPUTUrlRequest) GetMime() string {
-	if x != nil {
-		return x.Mime
-	}
-	return ""
-}
-
-func (x *HomeworkAttachmentPUTUrlRequest) GetName() string {
+func (x *CreateSubjectRequest) GetName() string {
 	if x != nil {
 		return x.Name
 	}
 	return ""
 }
 
-type HomeworkAttachmentPUTUrlResponse struct {
-	state                 protoimpl.MessageState `protogen:"open.v1"`
-	HomeworkAttachmentUrl string                 `protobuf:"bytes,1,opt,name=homework_attachment_url,json=homeworkAttachmentUrl,proto3" json:"homework_attachment_url,omitempty"`
-	unknownFields         protoimpl.UnknownFields
-	sizeCache             protoimpl.SizeCache
+type PatchSubjectRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SubjectUUID   string                 `protobuf:"bytes,1,opt,name=subjectUUID,proto3" json:"subjectUUID,omitempty"`
+	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HomeworkAttachmentPUTUrlResponse) Reset() {
-	*x = HomeworkAttachmentPUTUrlResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[27]
+func (x *PatchSubjectRequest) Reset() {
+	*x = PatchSubjectRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[12]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkAttachmentPUTUrlResponse) String() string {
+func (x *PatchSubjectRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkAttachmentPUTUrlResponse) ProtoMessage() {}
+func (*PatchSubjectRequest) ProtoMessage() {}
 
-func (x *HomeworkAttachmentPUTUrlResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[27]
+func (x *PatchSubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[12]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1732,84 +833,47 @@ func (x *HomeworkAttachmentPUTUrlResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkAttachmentPUTUrlResponse.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentPUTUrlResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{27}
+// Deprecated: Use PatchSubjectRequest.ProtoReflect.Descriptor instead.
+func (*PatchSubjectRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{12}
 }
 
-func (x *HomeworkAttachmentPUTUrlResponse) GetHomeworkAttachmentUrl() string {
+func (x *PatchSubjectRequest) GetSubjectUUID() string {
 	if x != nil {
-		return x.HomeworkAttachmentUrl
+		return x.SubjectUUID
 	}
 	return ""
 }
 
-type HomeworkAttachmentGETUrlsRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
-}
-
-func (x *HomeworkAttachmentGETUrlsRequest) Reset() {
-	*x = HomeworkAttachmentGETUrlsRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[28]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *HomeworkAttachmentGETUrlsRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*HomeworkAttachmentGETUrlsRequest) ProtoMessage() {}
-
-func (x *HomeworkAttachmentGETUrlsRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[28]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use HomeworkAttachmentGETUrlsRequest.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentGETUrlsRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{28}
-}
-
-func (x *HomeworkAttachmentGETUrlsRequest) GetConcreteLessonUuid() string {
-	if x != nil {
-		return x.ConcreteLessonUuid
+func (x *PatchSubjectRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
 	}
 	return ""
 }
 
-type HomeworkAttachmentGETUrlsResponse struct {
-	state                  protoimpl.MessageState `protogen:"open.v1"`
-	HomeworkAttachmentUrls []string               `protobuf:"bytes,1,rep,name=homework_attachment_urls,json=homeworkAttachmentUrls,proto3" json:"homework_attachment_urls,omitempty"`
-	unknownFields          protoimpl.UnknownFields
-	sizeCache              protoimpl.SizeCache
+type DeleteSubjectRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	SubjectUUID   string                 `protobuf:"bytes,1,opt,name=subjectUUID,proto3" json:"subjectUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HomeworkAttachmentGETUrlsResponse) Reset() {
-	*x = HomeworkAttachmentGETUrlsResponse{}
-	mi := &file_proto_timetable_proto_msgTypes[29]
+func (x *DeleteSubjectRequest) Reset() {
+	*x = DeleteSubjectRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[13]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkAttachmentGETUrlsResponse) String() string {
+func (x *DeleteSubjectRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkAttachmentGETUrlsResponse) ProtoMessage() {}
+func (*DeleteSubjectRequest) ProtoMessage() {}
 
-func (x *HomeworkAttachmentGETUrlsResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[29]
+func (x *DeleteSubjectRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[13]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1820,40 +884,164 @@ func (x *HomeworkAttachmentGETUrlsResponse) ProtoReflect() protoreflect.Message 
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkAttachmentGETUrlsResponse.ProtoReflect.Descriptor instead.
-func (*HomeworkAttachmentGETUrlsResponse) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{29}
+// Deprecated: Use DeleteSubjectRequest.ProtoReflect.Descriptor instead.
+func (*DeleteSubjectRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{13}
 }
 
-func (x *HomeworkAttachmentGETUrlsResponse) GetHomeworkAttachmentUrls() []string {
+func (x *DeleteSubjectRequest) GetSubjectUUID() string {
 	if x != nil {
-		return x.HomeworkAttachmentUrls
+		return x.SubjectUUID
+	}
+	return ""
+}
+
+type ListSubjectsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSubjectsRequest) Reset() {
+	*x = ListSubjectsRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSubjectsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSubjectsRequest) ProtoMessage() {}
+
+func (x *ListSubjectsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSubjectsRequest.ProtoReflect.Descriptor instead.
+func (*ListSubjectsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *ListSubjectsRequest) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListSubjectsRequest) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type ListSubjectsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	Total         uint64                 `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Subjects      []*Subject             `protobuf:"bytes,4,rep,name=subjects,proto3" json:"subjects,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListSubjectsResponse) Reset() {
+	*x = ListSubjectsResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListSubjectsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListSubjectsResponse) ProtoMessage() {}
+
+func (x *ListSubjectsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListSubjectsResponse.ProtoReflect.Descriptor instead.
+func (*ListSubjectsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *ListSubjectsResponse) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListSubjectsResponse) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *ListSubjectsResponse) GetTotal() uint64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ListSubjectsResponse) GetSubjects() []*Subject {
+	if x != nil {
+		return x.Subjects
 	}
 	return nil
 }
 
-type HomeworkBodyGETUrlRequest struct {
-	state              protoimpl.MessageState `protogen:"open.v1"`
-	ConcreteLessonUuid string                 `protobuf:"bytes,1,opt,name=concrete_lesson_uuid,json=concreteLessonUuid,proto3" json:"concrete_lesson_uuid,omitempty"`
-	unknownFields      protoimpl.UnknownFields
-	sizeCache          protoimpl.SizeCache
+type Timetable struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	GroupUUID     string                 `protobuf:"bytes,2,opt,name=GroupUUID,proto3" json:"GroupUUID,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	AssignAt      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=assign_at,json=assignAt,proto3" json:"assign_at,omitempty"`
+	RevokeAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=revoke_at,json=revokeAt,proto3" json:"revoke_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
 }
 
-func (x *HomeworkBodyGETUrlRequest) Reset() {
-	*x = HomeworkBodyGETUrlRequest{}
-	mi := &file_proto_timetable_proto_msgTypes[30]
+func (x *Timetable) Reset() {
+	*x = Timetable{}
+	mi := &file_proto_timetable_proto_msgTypes[16]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkBodyGETUrlRequest) String() string {
+func (x *Timetable) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkBodyGETUrlRequest) ProtoMessage() {}
+func (*Timetable) ProtoMessage() {}
 
-func (x *HomeworkBodyGETUrlRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_timetable_proto_msgTypes[30]
+func (x *Timetable) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[16]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1864,39 +1052,796 @@ func (x *HomeworkBodyGETUrlRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkBodyGETUrlRequest.ProtoReflect.Descriptor instead.
-func (*HomeworkBodyGETUrlRequest) Descriptor() ([]byte, []int) {
-	return file_proto_timetable_proto_rawDescGZIP(), []int{30}
+// Deprecated: Use Timetable.ProtoReflect.Descriptor instead.
+func (*Timetable) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{16}
 }
 
-func (x *HomeworkBodyGETUrlRequest) GetConcreteLessonUuid() string {
+func (x *Timetable) GetUUID() string {
 	if x != nil {
-		return x.ConcreteLessonUuid
+		return x.UUID
 	}
 	return ""
 }
 
-type HomeworkBodyGETUrlResponse struct {
-	state            protoimpl.MessageState `protogen:"open.v1"`
-	HomeworkBodyUuid string                 `protobuf:"bytes,1,opt,name=homework_body_uuid,json=homeworkBodyUuid,proto3" json:"homework_body_uuid,omitempty"`
-	unknownFields    protoimpl.UnknownFields
-	sizeCache        protoimpl.SizeCache
+func (x *Timetable) GetGroupUUID() string {
+	if x != nil {
+		return x.GroupUUID
+	}
+	return ""
 }
 
-func (x *HomeworkBodyGETUrlResponse) Reset() {
-	*x = HomeworkBodyGETUrlResponse{}
+func (x *Timetable) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *Timetable) GetAssignAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AssignAt
+	}
+	return nil
+}
+
+func (x *Timetable) GetRevokeAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RevokeAt
+	}
+	return nil
+}
+
+type TimetableByDateRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Date          *timestamppb.Timestamp `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableByDateRequest) Reset() {
+	*x = TimetableByDateRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[17]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableByDateRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableByDateRequest) ProtoMessage() {}
+
+func (x *TimetableByDateRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[17]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableByDateRequest.ProtoReflect.Descriptor instead.
+func (*TimetableByDateRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *TimetableByDateRequest) GetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Date
+	}
+	return nil
+}
+
+type TimetableByDateResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Timetable     *Timetable             `protobuf:"bytes,1,opt,name=timetable,proto3" json:"timetable,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableByDateResponse) Reset() {
+	*x = TimetableByDateResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[18]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableByDateResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableByDateResponse) ProtoMessage() {}
+
+func (x *TimetableByDateResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[18]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableByDateResponse.ProtoReflect.Descriptor instead.
+func (*TimetableByDateResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *TimetableByDateResponse) GetTimetable() *Timetable {
+	if x != nil {
+		return x.Timetable
+	}
+	return nil
+}
+
+type TimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,1,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableRequest) Reset() {
+	*x = TimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[19]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableRequest) ProtoMessage() {}
+
+func (x *TimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[19]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableRequest.ProtoReflect.Descriptor instead.
+func (*TimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *TimetableRequest) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+type TimetableResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Timetable     *Timetable             `protobuf:"bytes,1,opt,name=timetable,proto3" json:"timetable,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableResponse) Reset() {
+	*x = TimetableResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[20]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableResponse) ProtoMessage() {}
+
+func (x *TimetableResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[20]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableResponse.ProtoReflect.Descriptor instead.
+func (*TimetableResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{20}
+}
+
+func (x *TimetableResponse) GetTimetable() *Timetable {
+	if x != nil {
+		return x.Timetable
+	}
+	return nil
+}
+
+type CreateTimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupUUID     string                 `protobuf:"bytes,2,opt,name=GroupUUID,proto3" json:"GroupUUID,omitempty"`
+	Name          string                 `protobuf:"bytes,3,opt,name=Name,proto3" json:"Name,omitempty"`
+	AssignAt      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=assign_at,json=assignAt,proto3" json:"assign_at,omitempty"`
+	RevokeAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=revoke_at,json=revokeAt,proto3" json:"revoke_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTimetableRequest) Reset() {
+	*x = CreateTimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[21]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTimetableRequest) ProtoMessage() {}
+
+func (x *CreateTimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[21]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTimetableRequest.ProtoReflect.Descriptor instead.
+func (*CreateTimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{21}
+}
+
+func (x *CreateTimetableRequest) GetGroupUUID() string {
+	if x != nil {
+		return x.GroupUUID
+	}
+	return ""
+}
+
+func (x *CreateTimetableRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *CreateTimetableRequest) GetAssignAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AssignAt
+	}
+	return nil
+}
+
+func (x *CreateTimetableRequest) GetRevokeAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RevokeAt
+	}
+	return nil
+}
+
+type PatchTimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,1,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	GroupUUID     *string                `protobuf:"bytes,2,opt,name=GroupUUID,proto3,oneof" json:"GroupUUID,omitempty"`
+	Name          *string                `protobuf:"bytes,3,opt,name=Name,proto3,oneof" json:"Name,omitempty"`
+	AssignAt      *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=assign_at,json=assignAt,proto3,oneof" json:"assign_at,omitempty"`
+	RevokeAt      *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=revoke_at,json=revokeAt,proto3,oneof" json:"revoke_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *PatchTimetableRequest) Reset() {
+	*x = PatchTimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[22]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchTimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchTimetableRequest) ProtoMessage() {}
+
+func (x *PatchTimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[22]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchTimetableRequest.ProtoReflect.Descriptor instead.
+func (*PatchTimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{22}
+}
+
+func (x *PatchTimetableRequest) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableRequest) GetGroupUUID() string {
+	if x != nil && x.GroupUUID != nil {
+		return *x.GroupUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableRequest) GetName() string {
+	if x != nil && x.Name != nil {
+		return *x.Name
+	}
+	return ""
+}
+
+func (x *PatchTimetableRequest) GetAssignAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.AssignAt
+	}
+	return nil
+}
+
+func (x *PatchTimetableRequest) GetRevokeAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.RevokeAt
+	}
+	return nil
+}
+
+type DeleteTimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,1,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteTimetableRequest) Reset() {
+	*x = DeleteTimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[23]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTimetableRequest) ProtoMessage() {}
+
+func (x *DeleteTimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[23]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTimetableRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{23}
+}
+
+func (x *DeleteTimetableRequest) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+type ListTimetablesRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTimetablesRequest) Reset() {
+	*x = ListTimetablesRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[24]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTimetablesRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTimetablesRequest) ProtoMessage() {}
+
+func (x *ListTimetablesRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[24]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTimetablesRequest.ProtoReflect.Descriptor instead.
+func (*ListTimetablesRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{24}
+}
+
+func (x *ListTimetablesRequest) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListTimetablesRequest) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+type ListTimetablesResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Page          uint32                 `protobuf:"varint,1,opt,name=page,proto3" json:"page,omitempty"`
+	Size          uint32                 `protobuf:"varint,2,opt,name=size,proto3" json:"size,omitempty"`
+	Total         uint64                 `protobuf:"varint,3,opt,name=total,proto3" json:"total,omitempty"`
+	Timetables    []*Timetable           `protobuf:"bytes,4,rep,name=timetables,proto3" json:"timetables,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListTimetablesResponse) Reset() {
+	*x = ListTimetablesResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[25]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListTimetablesResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListTimetablesResponse) ProtoMessage() {}
+
+func (x *ListTimetablesResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[25]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListTimetablesResponse.ProtoReflect.Descriptor instead.
+func (*ListTimetablesResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{25}
+}
+
+func (x *ListTimetablesResponse) GetPage() uint32 {
+	if x != nil {
+		return x.Page
+	}
+	return 0
+}
+
+func (x *ListTimetablesResponse) GetSize() uint32 {
+	if x != nil {
+		return x.Size
+	}
+	return 0
+}
+
+func (x *ListTimetablesResponse) GetTotal() uint64 {
+	if x != nil {
+		return x.Total
+	}
+	return 0
+}
+
+func (x *ListTimetablesResponse) GetTimetables() []*Timetable {
+	if x != nil {
+		return x.Timetables
+	}
+	return nil
+}
+
+type CurrentTimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CurrentTimetableRequest) Reset() {
+	*x = CurrentTimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[26]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CurrentTimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CurrentTimetableRequest) ProtoMessage() {}
+
+func (x *CurrentTimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[26]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CurrentTimetableRequest.ProtoReflect.Descriptor instead.
+func (*CurrentTimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{26}
+}
+
+type CurrentTimetableResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Timetable     *Timetable             `protobuf:"bytes,1,opt,name=timetable,proto3" json:"timetable,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CurrentTimetableResponse) Reset() {
+	*x = CurrentTimetableResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CurrentTimetableResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CurrentTimetableResponse) ProtoMessage() {}
+
+func (x *CurrentTimetableResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CurrentTimetableResponse.ProtoReflect.Descriptor instead.
+func (*CurrentTimetableResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{27}
+}
+
+func (x *CurrentTimetableResponse) GetTimetable() *Timetable {
+	if x != nil {
+		return x.Timetable
+	}
+	return nil
+}
+
+type Lesson struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	UUID               string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	TimetableEntryUUID string                 `protobuf:"bytes,2,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3" json:"timetable_entryUUID,omitempty"`
+	Date               *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=date,proto3" json:"date,omitempty"`
+	Cancelled          bool                   `protobuf:"varint,4,opt,name=cancelled,proto3" json:"cancelled,omitempty"`
+	CreatedAt          *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *Lesson) Reset() {
+	*x = Lesson{}
+	mi := &file_proto_timetable_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *Lesson) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*Lesson) ProtoMessage() {}
+
+func (x *Lesson) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use Lesson.ProtoReflect.Descriptor instead.
+func (*Lesson) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *Lesson) GetUUID() string {
+	if x != nil {
+		return x.UUID
+	}
+	return ""
+}
+
+func (x *Lesson) GetTimetableEntryUUID() string {
+	if x != nil {
+		return x.TimetableEntryUUID
+	}
+	return ""
+}
+
+func (x *Lesson) GetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Date
+	}
+	return nil
+}
+
+func (x *Lesson) GetCancelled() bool {
+	if x != nil {
+		return x.Cancelled
+	}
+	return false
+}
+
+func (x *Lesson) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type LessonRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LessonUUID    string                 `protobuf:"bytes,1,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LessonRequest) Reset() {
+	*x = LessonRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LessonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LessonRequest) ProtoMessage() {}
+
+func (x *LessonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LessonRequest.ProtoReflect.Descriptor instead.
+func (*LessonRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{29}
+}
+
+func (x *LessonRequest) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+type LessonResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Lesson        *Lesson                `protobuf:"bytes,1,opt,name=lesson,proto3" json:"lesson,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LessonResponse) Reset() {
+	*x = LessonResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LessonResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LessonResponse) ProtoMessage() {}
+
+func (x *LessonResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LessonResponse.ProtoReflect.Descriptor instead.
+func (*LessonResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *LessonResponse) GetLesson() *Lesson {
+	if x != nil {
+		return x.Lesson
+	}
+	return nil
+}
+
+type CreateLessonRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntryUUID string                 `protobuf:"bytes,2,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3" json:"timetable_entryUUID,omitempty"`
+	Date               *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=date,proto3" json:"date,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *CreateLessonRequest) Reset() {
+	*x = CreateLessonRequest{}
 	mi := &file_proto_timetable_proto_msgTypes[31]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *HomeworkBodyGETUrlResponse) String() string {
+func (x *CreateLessonRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*HomeworkBodyGETUrlResponse) ProtoMessage() {}
+func (*CreateLessonRequest) ProtoMessage() {}
 
-func (x *HomeworkBodyGETUrlResponse) ProtoReflect() protoreflect.Message {
+func (x *CreateLessonRequest) ProtoReflect() protoreflect.Message {
 	mi := &file_proto_timetable_proto_msgTypes[31]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
@@ -1908,14 +1853,1089 @@ func (x *HomeworkBodyGETUrlResponse) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use HomeworkBodyGETUrlResponse.ProtoReflect.Descriptor instead.
-func (*HomeworkBodyGETUrlResponse) Descriptor() ([]byte, []int) {
+// Deprecated: Use CreateLessonRequest.ProtoReflect.Descriptor instead.
+func (*CreateLessonRequest) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{31}
 }
 
-func (x *HomeworkBodyGETUrlResponse) GetHomeworkBodyUuid() string {
+func (x *CreateLessonRequest) GetTimetableEntryUUID() string {
 	if x != nil {
-		return x.HomeworkBodyUuid
+		return x.TimetableEntryUUID
+	}
+	return ""
+}
+
+func (x *CreateLessonRequest) GetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Date
+	}
+	return nil
+}
+
+type PatchLessonRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	LessonUUID         string                 `protobuf:"bytes,1,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	TimetableEntryUUID *string                `protobuf:"bytes,2,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3,oneof" json:"timetable_entryUUID,omitempty"`
+	Date               *timestamppb.Timestamp `protobuf:"bytes,3,opt,name=date,proto3,oneof" json:"date,omitempty"`
+	Cancelled          *bool                  `protobuf:"varint,4,opt,name=cancelled,proto3,oneof" json:"cancelled,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *PatchLessonRequest) Reset() {
+	*x = PatchLessonRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[32]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchLessonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchLessonRequest) ProtoMessage() {}
+
+func (x *PatchLessonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[32]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchLessonRequest.ProtoReflect.Descriptor instead.
+func (*PatchLessonRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{32}
+}
+
+func (x *PatchLessonRequest) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+func (x *PatchLessonRequest) GetTimetableEntryUUID() string {
+	if x != nil && x.TimetableEntryUUID != nil {
+		return *x.TimetableEntryUUID
+	}
+	return ""
+}
+
+func (x *PatchLessonRequest) GetDate() *timestamppb.Timestamp {
+	if x != nil {
+		return x.Date
+	}
+	return nil
+}
+
+func (x *PatchLessonRequest) GetCancelled() bool {
+	if x != nil && x.Cancelled != nil {
+		return *x.Cancelled
+	}
+	return false
+}
+
+type DeleteLessonRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LessonUUID    string                 `protobuf:"bytes,1,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteLessonRequest) Reset() {
+	*x = DeleteLessonRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[33]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteLessonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteLessonRequest) ProtoMessage() {}
+
+func (x *DeleteLessonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[33]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteLessonRequest.ProtoReflect.Descriptor instead.
+func (*DeleteLessonRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{33}
+}
+
+func (x *DeleteLessonRequest) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+type ListLessons struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,1,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *ListLessons) Reset() {
+	*x = ListLessons{}
+	mi := &file_proto_timetable_proto_msgTypes[34]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *ListLessons) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*ListLessons) ProtoMessage() {}
+
+func (x *ListLessons) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[34]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use ListLessons.ProtoReflect.Descriptor instead.
+func (*ListLessons) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{34}
+}
+
+func (x *ListLessons) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+type TimetableEntry struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	TimetableUUID string                 `protobuf:"bytes,2,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	PeriodUUID    string                 `protobuf:"bytes,3,opt,name=periodUUID,proto3" json:"periodUUID,omitempty"`
+	SubjectUUID   string                 `protobuf:"bytes,4,opt,name=subjectUUID,proto3" json:"subjectUUID,omitempty"`
+	TeacherUUID   *string                `protobuf:"bytes,5,opt,name=teacherUUID,proto3,oneof" json:"teacherUUID,omitempty"`
+	Place         string                 `protobuf:"bytes,6,opt,name=place,proto3" json:"place,omitempty"`
+	DayOfWeek     DayOfWeek              `protobuf:"varint,7,opt,name=day_of_week,json=dayOfWeek,proto3,enum=timetable.DayOfWeek" json:"day_of_week,omitempty"`
+	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,8,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
+	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,9,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,10,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableEntry) Reset() {
+	*x = TimetableEntry{}
+	mi := &file_proto_timetable_proto_msgTypes[35]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableEntry) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableEntry) ProtoMessage() {}
+
+func (x *TimetableEntry) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[35]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableEntry.ProtoReflect.Descriptor instead.
+func (*TimetableEntry) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{35}
+}
+
+func (x *TimetableEntry) GetUUID() string {
+	if x != nil {
+		return x.UUID
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetPeriodUUID() string {
+	if x != nil {
+		return x.PeriodUUID
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetSubjectUUID() string {
+	if x != nil {
+		return x.SubjectUUID
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetTeacherUUID() string {
+	if x != nil && x.TeacherUUID != nil {
+		return *x.TeacherUUID
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetPlace() string {
+	if x != nil {
+		return x.Place
+	}
+	return ""
+}
+
+func (x *TimetableEntry) GetDayOfWeek() DayOfWeek {
+	if x != nil {
+		return x.DayOfWeek
+	}
+	return DayOfWeek_DAY_OF_WEEK_UNSPECIFIED
+}
+
+func (x *TimetableEntry) GetUpdatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.UpdatedAt
+	}
+	return nil
+}
+
+func (x *TimetableEntry) GetDeletedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.DeletedAt
+	}
+	return nil
+}
+
+func (x *TimetableEntry) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type TimetableEntryRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntryUUID string                 `protobuf:"bytes,1,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3" json:"timetable_entryUUID,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *TimetableEntryRequest) Reset() {
+	*x = TimetableEntryRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[36]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableEntryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableEntryRequest) ProtoMessage() {}
+
+func (x *TimetableEntryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[36]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableEntryRequest.ProtoReflect.Descriptor instead.
+func (*TimetableEntryRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{36}
+}
+
+func (x *TimetableEntryRequest) GetTimetableEntryUUID() string {
+	if x != nil {
+		return x.TimetableEntryUUID
+	}
+	return ""
+}
+
+type TimetableEntryResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntry *TimetableEntry        `protobuf:"bytes,1,opt,name=timetable_entry,json=timetableEntry,proto3" json:"timetable_entry,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TimetableEntryResponse) Reset() {
+	*x = TimetableEntryResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[37]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableEntryResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableEntryResponse) ProtoMessage() {}
+
+func (x *TimetableEntryResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[37]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableEntryResponse.ProtoReflect.Descriptor instead.
+func (*TimetableEntryResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{37}
+}
+
+func (x *TimetableEntryResponse) GetTimetableEntry() *TimetableEntry {
+	if x != nil {
+		return x.TimetableEntry
+	}
+	return nil
+}
+
+type TimetableEntriesByTimetableRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,1,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *TimetableEntriesByTimetableRequest) Reset() {
+	*x = TimetableEntriesByTimetableRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[38]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableEntriesByTimetableRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableEntriesByTimetableRequest) ProtoMessage() {}
+
+func (x *TimetableEntriesByTimetableRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[38]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableEntriesByTimetableRequest.ProtoReflect.Descriptor instead.
+func (*TimetableEntriesByTimetableRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{38}
+}
+
+func (x *TimetableEntriesByTimetableRequest) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+type TimetableEntriesByTimetableResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntry *TimetableEntry        `protobuf:"bytes,1,opt,name=timetable_entry,json=timetableEntry,proto3" json:"timetable_entry,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *TimetableEntriesByTimetableResponse) Reset() {
+	*x = TimetableEntriesByTimetableResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[39]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *TimetableEntriesByTimetableResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*TimetableEntriesByTimetableResponse) ProtoMessage() {}
+
+func (x *TimetableEntriesByTimetableResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[39]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use TimetableEntriesByTimetableResponse.ProtoReflect.Descriptor instead.
+func (*TimetableEntriesByTimetableResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{39}
+}
+
+func (x *TimetableEntriesByTimetableResponse) GetTimetableEntry() *TimetableEntry {
+	if x != nil {
+		return x.TimetableEntry
+	}
+	return nil
+}
+
+type CreateTimetableEntryRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	TimetableUUID string                 `protobuf:"bytes,2,opt,name=timetableUUID,proto3" json:"timetableUUID,omitempty"`
+	PeriodUUID    string                 `protobuf:"bytes,3,opt,name=periodUUID,proto3" json:"periodUUID,omitempty"`
+	SubjectUUID   string                 `protobuf:"bytes,4,opt,name=subjectUUID,proto3" json:"subjectUUID,omitempty"`
+	TeacherUUID   *string                `protobuf:"bytes,5,opt,name=teacherUUID,proto3,oneof" json:"teacherUUID,omitempty"`
+	Place         string                 `protobuf:"bytes,6,opt,name=place,proto3" json:"place,omitempty"`
+	DayOfWeek     DayOfWeek              `protobuf:"varint,7,opt,name=day_of_week,json=dayOfWeek,proto3,enum=timetable.DayOfWeek" json:"day_of_week,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *CreateTimetableEntryRequest) Reset() {
+	*x = CreateTimetableEntryRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[40]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *CreateTimetableEntryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*CreateTimetableEntryRequest) ProtoMessage() {}
+
+func (x *CreateTimetableEntryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[40]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use CreateTimetableEntryRequest.ProtoReflect.Descriptor instead.
+func (*CreateTimetableEntryRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{40}
+}
+
+func (x *CreateTimetableEntryRequest) GetTimetableUUID() string {
+	if x != nil {
+		return x.TimetableUUID
+	}
+	return ""
+}
+
+func (x *CreateTimetableEntryRequest) GetPeriodUUID() string {
+	if x != nil {
+		return x.PeriodUUID
+	}
+	return ""
+}
+
+func (x *CreateTimetableEntryRequest) GetSubjectUUID() string {
+	if x != nil {
+		return x.SubjectUUID
+	}
+	return ""
+}
+
+func (x *CreateTimetableEntryRequest) GetTeacherUUID() string {
+	if x != nil && x.TeacherUUID != nil {
+		return *x.TeacherUUID
+	}
+	return ""
+}
+
+func (x *CreateTimetableEntryRequest) GetPlace() string {
+	if x != nil {
+		return x.Place
+	}
+	return ""
+}
+
+func (x *CreateTimetableEntryRequest) GetDayOfWeek() DayOfWeek {
+	if x != nil {
+		return x.DayOfWeek
+	}
+	return DayOfWeek_DAY_OF_WEEK_UNSPECIFIED
+}
+
+type PatchTimetableEntryRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntryUUID string                 `protobuf:"bytes,1,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3" json:"timetable_entryUUID,omitempty"`
+	TimetableUUID      *string                `protobuf:"bytes,2,opt,name=timetableUUID,proto3,oneof" json:"timetableUUID,omitempty"`
+	PeriodUUID         *string                `protobuf:"bytes,3,opt,name=periodUUID,proto3,oneof" json:"periodUUID,omitempty"`
+	SubjectUUID        *string                `protobuf:"bytes,4,opt,name=subjectUUID,proto3,oneof" json:"subjectUUID,omitempty"`
+	TeacherUUID        *string                `protobuf:"bytes,5,opt,name=teacherUUID,proto3,oneof" json:"teacherUUID,omitempty"`
+	Place              *string                `protobuf:"bytes,6,opt,name=place,proto3,oneof" json:"place,omitempty"`
+	DayOfWeek          DayOfWeek              `protobuf:"varint,7,opt,name=day_of_week,json=dayOfWeek,proto3,enum=timetable.DayOfWeek" json:"day_of_week,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *PatchTimetableEntryRequest) Reset() {
+	*x = PatchTimetableEntryRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[41]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PatchTimetableEntryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PatchTimetableEntryRequest) ProtoMessage() {}
+
+func (x *PatchTimetableEntryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[41]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PatchTimetableEntryRequest.ProtoReflect.Descriptor instead.
+func (*PatchTimetableEntryRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{41}
+}
+
+func (x *PatchTimetableEntryRequest) GetTimetableEntryUUID() string {
+	if x != nil {
+		return x.TimetableEntryUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetTimetableUUID() string {
+	if x != nil && x.TimetableUUID != nil {
+		return *x.TimetableUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetPeriodUUID() string {
+	if x != nil && x.PeriodUUID != nil {
+		return *x.PeriodUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetSubjectUUID() string {
+	if x != nil && x.SubjectUUID != nil {
+		return *x.SubjectUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetTeacherUUID() string {
+	if x != nil && x.TeacherUUID != nil {
+		return *x.TeacherUUID
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetPlace() string {
+	if x != nil && x.Place != nil {
+		return *x.Place
+	}
+	return ""
+}
+
+func (x *PatchTimetableEntryRequest) GetDayOfWeek() DayOfWeek {
+	if x != nil {
+		return x.DayOfWeek
+	}
+	return DayOfWeek_DAY_OF_WEEK_UNSPECIFIED
+}
+
+type DeleteTimetableEntryRequest struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	TimetableEntryUUID string                 `protobuf:"bytes,1,opt,name=timetable_entryUUID,json=timetableEntryUUID,proto3" json:"timetable_entryUUID,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *DeleteTimetableEntryRequest) Reset() {
+	*x = DeleteTimetableEntryRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[42]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTimetableEntryRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTimetableEntryRequest) ProtoMessage() {}
+
+func (x *DeleteTimetableEntryRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[42]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTimetableEntryRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTimetableEntryRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{42}
+}
+
+func (x *DeleteTimetableEntryRequest) GetTimetableEntryUUID() string {
+	if x != nil {
+		return x.TimetableEntryUUID
+	}
+	return ""
+}
+
+type HomeworkAttachment struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
+	LessonUUID    string                 `protobuf:"bytes,2,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	StrorageKey   string                 `protobuf:"bytes,3,opt,name=strorage_key,json=strorageKey,proto3" json:"strorage_key,omitempty"`
+	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HomeworkAttachment) Reset() {
+	*x = HomeworkAttachment{}
+	mi := &file_proto_timetable_proto_msgTypes[43]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HomeworkAttachment) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HomeworkAttachment) ProtoMessage() {}
+
+func (x *HomeworkAttachment) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[43]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HomeworkAttachment.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachment) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{43}
+}
+
+func (x *HomeworkAttachment) GetUUID() string {
+	if x != nil {
+		return x.UUID
+	}
+	return ""
+}
+
+func (x *HomeworkAttachment) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+func (x *HomeworkAttachment) GetStrorageKey() string {
+	if x != nil {
+		return x.StrorageKey
+	}
+	return ""
+}
+
+func (x *HomeworkAttachment) GetCreatedAt() *timestamppb.Timestamp {
+	if x != nil {
+		return x.CreatedAt
+	}
+	return nil
+}
+
+type HomeworkAttachmentRequest struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	HomeworkAttachmentUUID string                 `protobuf:"bytes,1,opt,name=homework_attachmentUUID,json=homeworkAttachmentUUID,proto3" json:"homework_attachmentUUID,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *HomeworkAttachmentRequest) Reset() {
+	*x = HomeworkAttachmentRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[44]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HomeworkAttachmentRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HomeworkAttachmentRequest) ProtoMessage() {}
+
+func (x *HomeworkAttachmentRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[44]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HomeworkAttachmentRequest.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{44}
+}
+
+func (x *HomeworkAttachmentRequest) GetHomeworkAttachmentUUID() string {
+	if x != nil {
+		return x.HomeworkAttachmentUUID
+	}
+	return ""
+}
+
+type HomeworkAttachmentResponse struct {
+	state              protoimpl.MessageState `protogen:"open.v1"`
+	HomeworkAttachment *HomeworkAttachment    `protobuf:"bytes,1,opt,name=homeworkAttachment,proto3" json:"homeworkAttachment,omitempty"`
+	unknownFields      protoimpl.UnknownFields
+	sizeCache          protoimpl.SizeCache
+}
+
+func (x *HomeworkAttachmentResponse) Reset() {
+	*x = HomeworkAttachmentResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[45]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HomeworkAttachmentResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HomeworkAttachmentResponse) ProtoMessage() {}
+
+func (x *HomeworkAttachmentResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[45]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HomeworkAttachmentResponse.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{45}
+}
+
+func (x *HomeworkAttachmentResponse) GetHomeworkAttachment() *HomeworkAttachment {
+	if x != nil {
+		return x.HomeworkAttachment
+	}
+	return nil
+}
+
+type HomeworkAttachmentByLessonRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	LessonUUID    string                 `protobuf:"bytes,1,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *HomeworkAttachmentByLessonRequest) Reset() {
+	*x = HomeworkAttachmentByLessonRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[46]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HomeworkAttachmentByLessonRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HomeworkAttachmentByLessonRequest) ProtoMessage() {}
+
+func (x *HomeworkAttachmentByLessonRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[46]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HomeworkAttachmentByLessonRequest.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentByLessonRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{46}
+}
+
+func (x *HomeworkAttachmentByLessonRequest) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+type HomeworkAttachmentByLessonResponse struct {
+	state               protoimpl.MessageState `protogen:"open.v1"`
+	HomeworkAttachments []*HomeworkAttachment  `protobuf:"bytes,1,rep,name=homeworkAttachments,proto3" json:"homeworkAttachments,omitempty"`
+	unknownFields       protoimpl.UnknownFields
+	sizeCache           protoimpl.SizeCache
+}
+
+func (x *HomeworkAttachmentByLessonResponse) Reset() {
+	*x = HomeworkAttachmentByLessonResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[47]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *HomeworkAttachmentByLessonResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*HomeworkAttachmentByLessonResponse) ProtoMessage() {}
+
+func (x *HomeworkAttachmentByLessonResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[47]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use HomeworkAttachmentByLessonResponse.ProtoReflect.Descriptor instead.
+func (*HomeworkAttachmentByLessonResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{47}
+}
+
+func (x *HomeworkAttachmentByLessonResponse) GetHomeworkAttachments() []*HomeworkAttachment {
+	if x != nil {
+		return x.HomeworkAttachments
+	}
+	return nil
+}
+
+type AttachHomeworkRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Mime          string                 `protobuf:"bytes,2,opt,name=mime,proto3" json:"mime,omitempty"`
+	LessonUUID    string                 `protobuf:"bytes,3,opt,name=lessonUUID,proto3" json:"lessonUUID,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AttachHomeworkRequest) Reset() {
+	*x = AttachHomeworkRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[48]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AttachHomeworkRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttachHomeworkRequest) ProtoMessage() {}
+
+func (x *AttachHomeworkRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[48]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttachHomeworkRequest.ProtoReflect.Descriptor instead.
+func (*AttachHomeworkRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{48}
+}
+
+func (x *AttachHomeworkRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *AttachHomeworkRequest) GetMime() string {
+	if x != nil {
+		return x.Mime
+	}
+	return ""
+}
+
+func (x *AttachHomeworkRequest) GetLessonUUID() string {
+	if x != nil {
+		return x.LessonUUID
+	}
+	return ""
+}
+
+type AttachHomeworkResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UploadUrl     string                 `protobuf:"bytes,1,opt,name=upload_url,json=uploadUrl,proto3" json:"upload_url,omitempty"`
+	FileKey       string                 `protobuf:"bytes,2,opt,name=file_key,json=fileKey,proto3" json:"file_key,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AttachHomeworkResponse) Reset() {
+	*x = AttachHomeworkResponse{}
+	mi := &file_proto_timetable_proto_msgTypes[49]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AttachHomeworkResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AttachHomeworkResponse) ProtoMessage() {}
+
+func (x *AttachHomeworkResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[49]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AttachHomeworkResponse.ProtoReflect.Descriptor instead.
+func (*AttachHomeworkResponse) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{49}
+}
+
+func (x *AttachHomeworkResponse) GetUploadUrl() string {
+	if x != nil {
+		return x.UploadUrl
+	}
+	return ""
+}
+
+func (x *AttachHomeworkResponse) GetFileKey() string {
+	if x != nil {
+		return x.FileKey
+	}
+	return ""
+}
+
+type DetachHomeworkRequest struct {
+	state                  protoimpl.MessageState `protogen:"open.v1"`
+	HomeworkAttachmentUUID string                 `protobuf:"bytes,1,opt,name=homework_attachmentUUID,json=homeworkAttachmentUUID,proto3" json:"homework_attachmentUUID,omitempty"`
+	unknownFields          protoimpl.UnknownFields
+	sizeCache              protoimpl.SizeCache
+}
+
+func (x *DetachHomeworkRequest) Reset() {
+	*x = DetachHomeworkRequest{}
+	mi := &file_proto_timetable_proto_msgTypes[50]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DetachHomeworkRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetachHomeworkRequest) ProtoMessage() {}
+
+func (x *DetachHomeworkRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_timetable_proto_msgTypes[50]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetachHomeworkRequest.ProtoReflect.Descriptor instead.
+func (*DetachHomeworkRequest) Descriptor() ([]byte, []int) {
+	return file_proto_timetable_proto_rawDescGZIP(), []int{50}
+}
+
+func (x *DetachHomeworkRequest) GetHomeworkAttachmentUUID() string {
+	if x != nil {
+		return x.HomeworkAttachmentUUID
 	}
 	return ""
 }
@@ -1924,169 +2944,257 @@ var File_proto_timetable_proto protoreflect.FileDescriptor
 
 const file_proto_timetable_proto_rawDesc = "" +
 	"\n" +
-	"\x15proto/timetable.proto\x12\ttimetable\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"U\n" +
-	"\x15ListTimetablesRequest\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x1b\n" +
-	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\"u\n" +
-	"\x13GetTimetableRequest\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x1b\n" +
-	"\tuser_uuid\x18\x02 \x01(\tR\buserUuid\x12 \n" +
-	"\x03day\x18\x03 \x01(\x0e2\x0e.timetable.DayR\x03day\"Y\n" +
-	"\x14GetTimetableResponse\x12A\n" +
-	"\tTimetable\x18\x01 \x01(\v2#.timetable.ConcreteLessonShortEntryR\tTimetable\"8\n" +
-	"\x0eAbstractLesson\x12\x12\n" +
-	"\x04uuid\x18\x01 \x01(\tR\x04uuid\x12\x12\n" +
-	"\x04name\x18\x02 \x01(\tR\x04name\"\x8c\x04\n" +
-	"\x0eConcreteLesson\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x12\n" +
-	"\x04year\x18\x02 \x01(\rR\x04year\x12:\n" +
-	"\vlesson_info\x18\x03 \x01(\v2\x19.timetable.AbstractLessonR\n" +
-	"lessonInfo\x12!\n" +
-	"\fteacher_uuid\x18\x04 \x01(\tR\vteacherUuid\x126\n" +
-	"\x15homework_text_get_url\x18\x05 \x01(\tH\x00R\x12homeworkTextGetUrl\x88\x01\x01\x12A\n" +
-	"\x1dhomework_attachments_get_urls\x18\x06 \x03(\tR\x1ahomeworkAttachmentsGetUrls\x12\x1f\n" +
-	"\vlesson_uuid\x18\a \x01(\tR\n" +
-	"lessonUuid\x12\x14\n" +
-	"\x05marks\x18\b \x03(\tR\x05marks\x12\x16\n" +
-	"\x06period\x18\t \x01(\rR\x06period\x12 \n" +
-	"\x03day\x18\n" +
-	" \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x1f\n" +
-	"\bbuilding\x18\v \x01(\tH\x01R\bbuilding\x88\x01\x01\x12#\n" +
+	"\x15proto/timetable.proto\x12\ttimetable\x1a\x1fgoogle/protobuf/timestamp.proto\x1a\x1cgoogle/api/annotations.proto\x1a\x1bgoogle/protobuf/empty.proto\"/\n" +
+	"\rPeriodRequest\x12\x1e\n" +
 	"\n" +
-	"auditorium\x18\f \x01(\tH\x02R\n" +
-	"auditorium\x88\x01\x01B\x18\n" +
-	"\x16_homework_text_get_urlB\v\n" +
-	"\t_buildingB\r\n" +
-	"\v_auditorium\"\xd2\x02\n" +
-	"\x13ShortConcreteLesson\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12\x12\n" +
-	"\x04year\x18\x02 \x01(\rR\x04year\x12\x16\n" +
-	"\x06period\x18\x03 \x01(\rR\x06period\x12B\n" +
-	"\x0fabstract_lesson\x18\x04 \x01(\v2\x19.timetable.AbstractLessonR\x0eabstractLesson\x12&\n" +
-	"\x0fis_homework_due\x18\x05 \x01(\bR\risHomeworkDue\x12 \n" +
-	"\x03day\x18\x06 \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x1f\n" +
-	"\bbuilding\x18\a \x01(\tH\x00R\bbuilding\x88\x01\x01\x12#\n" +
+	"periodUUID\x18\x01 \x01(\tR\n" +
+	"periodUUID\"\x83\x03\n" +
+	"\x06Period\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bposition\x18\x03 \x01(\x05R\bposition\x129\n" +
 	"\n" +
-	"auditorium\x18\b \x01(\tH\x01R\n" +
-	"auditorium\x88\x01\x01B\v\n" +
-	"\t_buildingB\r\n" +
-	"\v_auditorium\"v\n" +
-	"\x18ConcreteLessonShortEntry\x12 \n" +
-	"\x03day\x18\x01 \x01(\x0e2\x0e.timetable.DayR\x03day\x128\n" +
-	"\alessons\x18\x02 \x03(\v2\x1e.timetable.ShortConcreteLessonR\alessons\"Z\n" +
-	"\x15ListTimetableResponse\x12A\n" +
-	"\tTimetable\x18\x01 \x03(\v2#.timetable.ConcreteLessonShortEntryR\tTimetable\"1\n" +
-	"\x1bCreateAbstractLessonRequest\x12\x12\n" +
-	"\x04name\x18\x01 \x01(\tR\x04name\"\xf8\x01\n" +
-	"\x06Period\x12\x16\n" +
-	"\x06number\x18\x01 \x01(\rR\x06number\x120\n" +
-	"\x05start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampR\x05start\x12,\n" +
-	"\x03end\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x03end\x12 \n" +
-	"\x03day\x18\x04 \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x12\n" +
-	"\x04year\x18\x05 \x01(\rR\x04year\x12\x1f\n" +
-	"\vweek_number\x18\x06 \x01(\rR\n" +
-	"weekNumber\x12\x1f\n" +
-	"\vperiod_uuid\x18\a \x01(\tR\n" +
-	"periodUuid\"i\n" +
-	"\x10GetPeriodRequest\x12\x1f\n" +
-	"\vweek_number\x18\x01 \x01(\rR\n" +
-	"weekNumber\x12 \n" +
-	"\x03day\x18\x02 \x01(\x0e2\x0e.timetable.DayR\x03day\x12\x12\n" +
-	"\x04year\x18\x03 \x01(\rR\x04year\"A\n" +
-	"\x12GetPeriodsResponse\x12+\n" +
-	"\aperiods\x18\x01 \x03(\v2\x11.timetable.PeriodR\aperiods\"\xe0\x02\n" +
-	"\x12PatchPeriodRequest\x12\x1f\n" +
-	"\vperiod_uuid\x18\a \x01(\tR\n" +
-	"periodUuid\x12\x1b\n" +
-	"\x06number\x18\x01 \x01(\rH\x00R\x06number\x88\x01\x01\x125\n" +
-	"\x05start\x18\x02 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\x05start\x88\x01\x01\x121\n" +
-	"\x03end\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\x03end\x88\x01\x01\x12%\n" +
-	"\x03day\x18\x04 \x01(\x0e2\x0e.timetable.DayH\x03R\x03day\x88\x01\x01\x12\x17\n" +
-	"\x04year\x18\x05 \x01(\rH\x04R\x04year\x88\x01\x01\x12$\n" +
-	"\vweek_number\x18\x06 \x01(\rH\x05R\n" +
-	"weekNumber\x88\x01\x01B\t\n" +
-	"\a_numberB\b\n" +
-	"\x06_startB\x06\n" +
-	"\x04_endB\x06\n" +
-	"\x04_dayB\a\n" +
-	"\x05_yearB\x0e\n" +
-	"\f_week_number\">\n" +
-	"\x1bDeleteAbstractLessonRequest\x12\x1f\n" +
-	"\vlesson_uuid\x18\x01 \x01(\tR\n" +
-	"lessonUuid\";\n" +
-	"\x18GetAbstractLessonRequest\x12\x1f\n" +
-	"\vlesson_uuid\x18\x01 \x01(\tR\n" +
-	"lessonUuid\"N\n" +
-	"\x19GetAbstractLessonResponse\x121\n" +
-	"\x06lesson\x18\x01 \x01(\v2\x19.timetable.AbstractLessonR\x06lesson\"_\n" +
-	"\x1aPatchAbstractLessonRequest\x12\x1f\n" +
-	"\vlesson_uuid\x18\x01 \x01(\tR\n" +
-	"lessonUuid\x12\x17\n" +
+	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\x129\n" +
+	"\n" +
+	"updated_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12>\n" +
+	"\n" +
+	"deleted_at\x18\a \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x129\n" +
+	"\n" +
+	"created_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\r\n" +
+	"\v_deleted_at\";\n" +
+	"\x0ePeriodResponse\x12)\n" +
+	"\x06period\x18\x01 \x01(\v2\x11.timetable.PeriodR\x06period\"\xb8\x01\n" +
+	"\x14CreaetePeriodRequest\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x12\x1a\n" +
+	"\bposition\x18\x03 \x01(\x05R\bposition\x129\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tstartTime\x125\n" +
+	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\aendTime\"\x9c\x02\n" +
+	"\x12PatchPeriodRequest\x12\x1e\n" +
+	"\n" +
+	"periodUUID\x18\x01 \x01(\tR\n" +
+	"periodUUID\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x1f\n" +
+	"\bposition\x18\x03 \x01(\x05H\x01R\bposition\x88\x01\x01\x12>\n" +
+	"\n" +
+	"start_time\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tstartTime\x88\x01\x01\x12:\n" +
+	"\bend_time\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x03R\aendTime\x88\x01\x01B\a\n" +
+	"\x05_nameB\v\n" +
+	"\t_positionB\r\n" +
+	"\v_start_timeB\v\n" +
+	"\t_end_time\"5\n" +
+	"\x13DeletePeriodRequest\x12\x1e\n" +
+	"\n" +
+	"periodUUID\x18\x01 \x01(\tR\n" +
+	"periodUUID\"<\n" +
+	"\x12ListPeriodsRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\"\x80\x01\n" +
+	"\x13ListPeriodsResponse\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x04R\x05total\x12+\n" +
+	"\aperiods\x18\x04 \x03(\v2\x11.timetable.PeriodR\aperiods\"\xb2\x02\n" +
+	"\aSubject\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x17\n" +
+	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x1f\n" +
+	"\bposition\x18\x03 \x01(\x05H\x01R\bposition\x88\x01\x01\x129\n" +
+	"\n" +
+	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12>\n" +
+	"\n" +
+	"deleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedAt\x88\x01\x01\x129\n" +
+	"\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\a\n" +
+	"\x05_nameB\v\n" +
+	"\t_positionB\r\n" +
+	"\v_deleted_at\"2\n" +
+	"\x0eSubjectRequest\x12 \n" +
+	"\vsubjectUUID\x18\x01 \x01(\tR\vsubjectUUID\"?\n" +
+	"\x0fSubjectResponse\x12,\n" +
+	"\asubject\x18\x01 \x01(\v2\x12.timetable.SubjectR\asubject\"*\n" +
+	"\x14CreateSubjectRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\"Y\n" +
+	"\x13PatchSubjectRequest\x12 \n" +
+	"\vsubjectUUID\x18\x01 \x01(\tR\vsubjectUUID\x12\x17\n" +
 	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01B\a\n" +
-	"\x05_name\"D\n" +
-	"\x1aListAbstractLessonsRequest\x12\x12\n" +
-	"\x04size\x18\x01 \x01(\x04R\x04size\x12\x12\n" +
-	"\x04page\x18\x02 \x01(\x04R\x04page\"\xa1\x01\n" +
-	"\x1bListAbstractLessonsResponse\x12\x12\n" +
-	"\x04size\x18\x01 \x01(\x04R\x04size\x12\x12\n" +
-	"\x04page\x18\x02 \x01(\x04R\x04page\x12\x14\n" +
-	"\x05total\x18\x03 \x01(\x04R\x05total\x12D\n" +
-	"\x10abstract_lessons\x18\x04 \x03(\v2\x19.timetable.AbstractLessonR\x0fabstractLessons\"\xb2\x01\n" +
-	"\x1bCreateConcreteLessonRequest\x120\n" +
-	"\x14abstract_lesson_uuid\x18\x01 \x01(\tR\x12abstractLessonUuid\x12!\n" +
-	"\fteacher_uuid\x18\x02 \x01(\tR\vteacherUuid\x12\x1d\n" +
+	"\x05_name\"8\n" +
+	"\x14DeleteSubjectRequest\x12 \n" +
+	"\vsubjectUUID\x18\x01 \x01(\tR\vsubjectUUID\"=\n" +
+	"\x13ListSubjectsRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\"\x84\x01\n" +
+	"\x14ListSubjectsResponse\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x04R\x05total\x12.\n" +
+	"\bsubjects\x18\x04 \x03(\v2\x12.timetable.SubjectR\bsubjects\"\xc3\x01\n" +
+	"\tTimetable\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x1c\n" +
+	"\tGroupUUID\x18\x02 \x01(\tR\tGroupUUID\x12\x12\n" +
+	"\x04Name\x18\x03 \x01(\tR\x04Name\x127\n" +
+	"\tassign_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\bassignAt\x127\n" +
+	"\trevoke_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\brevokeAt\"H\n" +
+	"\x16TimetableByDateRequest\x12.\n" +
+	"\x04date\x18\x01 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\"M\n" +
+	"\x17TimetableByDateResponse\x122\n" +
+	"\ttimetable\x18\x01 \x01(\v2\x14.timetable.TimetableR\ttimetable\"8\n" +
+	"\x10TimetableRequest\x12$\n" +
+	"\rtimetableUUID\x18\x01 \x01(\tR\rtimetableUUID\"G\n" +
+	"\x11TimetableResponse\x122\n" +
+	"\ttimetable\x18\x01 \x01(\v2\x14.timetable.TimetableR\ttimetable\"\xbc\x01\n" +
+	"\x16CreateTimetableRequest\x12\x1c\n" +
+	"\tGroupUUID\x18\x02 \x01(\tR\tGroupUUID\x12\x12\n" +
+	"\x04Name\x18\x03 \x01(\tR\x04Name\x127\n" +
+	"\tassign_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\bassignAt\x127\n" +
+	"\trevoke_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\brevokeAt\"\xa8\x02\n" +
+	"\x15PatchTimetableRequest\x12$\n" +
+	"\rtimetableUUID\x18\x01 \x01(\tR\rtimetableUUID\x12!\n" +
+	"\tGroupUUID\x18\x02 \x01(\tH\x00R\tGroupUUID\x88\x01\x01\x12\x17\n" +
+	"\x04Name\x18\x03 \x01(\tH\x01R\x04Name\x88\x01\x01\x12<\n" +
+	"\tassign_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\bassignAt\x88\x01\x01\x12<\n" +
+	"\trevoke_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x03R\brevokeAt\x88\x01\x01B\f\n" +
 	"\n" +
-	"group_uuid\x18\x05 \x01(\tR\tgroupUuid\x12\x1f\n" +
-	"\vperiod_uuid\x18\x06 \x01(\tR\n" +
-	"periodUuid\"O\n" +
-	"\x1bDeleteConcreteLessonRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"\xa2\x03\n" +
-	"\x1aPatchConcreteLessonRequest\x12$\n" +
-	"\vperiod_uuid\x18\x01 \x01(\tH\x00R\n" +
-	"periodUuid\x88\x01\x01\x125\n" +
-	"\x14abstract_lesson_uuid\x18\x03 \x01(\tH\x01R\x12abstractLessonUuid\x88\x01\x01\x12&\n" +
-	"\fteacher_uuid\x18\x04 \x01(\tH\x02R\vteacherUuid\x88\x01\x01\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x05 \x01(\tR\x12concreteLessonUuid\x12\"\n" +
+	"_GroupUUIDB\a\n" +
+	"\x05_NameB\f\n" +
 	"\n" +
-	"group_uuid\x18\x06 \x01(\tH\x03R\tgroupUuid\x88\x01\x01\x12\x1f\n" +
-	"\bbuilding\x18\a \x01(\tH\x04R\bbuilding\x88\x01\x01\x12#\n" +
+	"_assign_atB\f\n" +
 	"\n" +
-	"auditorium\x18\b \x01(\tH\x05R\n" +
-	"auditorium\x88\x01\x01B\x0e\n" +
-	"\f_period_uuidB\x17\n" +
-	"\x15_abstract_lesson_uuidB\x0f\n" +
-	"\r_teacher_uuidB\r\n" +
-	"\v_group_uuidB\v\n" +
-	"\t_buildingB\r\n" +
-	"\v_auditorium\"L\n" +
-	"\x18GetConcreteLessonRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"N\n" +
-	"\x19GetConcreteLessonResponse\x121\n" +
-	"\x06lesson\x18\x01 \x01(\v2\x19.timetable.ConcreteLessonR\x06lesson\"M\n" +
-	"\x19HomeworkBodyPUTUrlRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"H\n" +
-	"\x1aHomeworkBodyPUTUrlResponse\x12*\n" +
-	"\x11homework_body_url\x18\x01 \x01(\tR\x0fhomeworkBodyUrl\"{\n" +
-	"\x1fHomeworkAttachmentPUTUrlRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\x12\x12\n" +
-	"\x04mime\x18\x02 \x01(\tR\x04mime\x12\x12\n" +
-	"\x04name\x18\x03 \x01(\tR\x04name\"Z\n" +
-	" HomeworkAttachmentPUTUrlResponse\x126\n" +
-	"\x17homework_attachment_url\x18\x01 \x01(\tR\x15homeworkAttachmentUrl\"T\n" +
-	" HomeworkAttachmentGETUrlsRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"]\n" +
-	"!HomeworkAttachmentGETUrlsResponse\x128\n" +
-	"\x18homework_attachment_urls\x18\x01 \x03(\tR\x16homeworkAttachmentUrls\"M\n" +
-	"\x19HomeworkBodyGETUrlRequest\x120\n" +
-	"\x14concrete_lesson_uuid\x18\x01 \x01(\tR\x12concreteLessonUuid\"J\n" +
-	"\x1aHomeworkBodyGETUrlResponse\x12,\n" +
-	"\x12homework_body_uuid\x18\x01 \x01(\tR\x10homeworkBodyUuid*r\n" +
-	"\x03Day\x12\x0f\n" +
-	"\vUNSPECIFIED\x10\x00\x12\n" +
+	"_revoke_at\">\n" +
+	"\x16DeleteTimetableRequest\x12$\n" +
+	"\rtimetableUUID\x18\x01 \x01(\tR\rtimetableUUID\"?\n" +
+	"\x15ListTimetablesRequest\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\"\x8c\x01\n" +
+	"\x16ListTimetablesResponse\x12\x12\n" +
+	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
+	"\x04size\x18\x02 \x01(\rR\x04size\x12\x14\n" +
+	"\x05total\x18\x03 \x01(\x04R\x05total\x124\n" +
+	"\n" +
+	"timetables\x18\x04 \x03(\v2\x14.timetable.TimetableR\n" +
+	"timetables\"\x19\n" +
+	"\x17CurrentTimetableRequest\"N\n" +
+	"\x18CurrentTimetableResponse\x122\n" +
+	"\ttimetable\x18\x01 \x01(\v2\x14.timetable.TimetableR\ttimetable\"\xd6\x01\n" +
+	"\x06Lesson\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12/\n" +
+	"\x13timetable_entryUUID\x18\x02 \x01(\tR\x12timetableEntryUUID\x12.\n" +
+	"\x04date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\x12\x1c\n" +
+	"\tcancelled\x18\x04 \x01(\bR\tcancelled\x129\n" +
+	"\n" +
+	"created_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"/\n" +
+	"\rLessonRequest\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x01 \x01(\tR\n" +
+	"lessonUUID\";\n" +
+	"\x0eLessonResponse\x12)\n" +
+	"\x06lesson\x18\x01 \x01(\v2\x11.timetable.LessonR\x06lesson\"v\n" +
+	"\x13CreateLessonRequest\x12/\n" +
+	"\x13timetable_entryUUID\x18\x02 \x01(\tR\x12timetableEntryUUID\x12.\n" +
+	"\x04date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampR\x04date\"\xf1\x01\n" +
+	"\x12PatchLessonRequest\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x01 \x01(\tR\n" +
+	"lessonUUID\x124\n" +
+	"\x13timetable_entryUUID\x18\x02 \x01(\tH\x00R\x12timetableEntryUUID\x88\x01\x01\x123\n" +
+	"\x04date\x18\x03 \x01(\v2\x1a.google.protobuf.TimestampH\x01R\x04date\x88\x01\x01\x12!\n" +
+	"\tcancelled\x18\x04 \x01(\bH\x02R\tcancelled\x88\x01\x01B\x16\n" +
+	"\x14_timetable_entryUUIDB\a\n" +
+	"\x05_dateB\f\n" +
+	"\n" +
+	"_cancelled\"5\n" +
+	"\x13DeleteLessonRequest\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x01 \x01(\tR\n" +
+	"lessonUUID\"3\n" +
+	"\vListLessons\x12$\n" +
+	"\rtimetableUUID\x18\x01 \x01(\tR\rtimetableUUID\"\xd4\x03\n" +
+	"\x0eTimetableEntry\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12$\n" +
+	"\rtimetableUUID\x18\x02 \x01(\tR\rtimetableUUID\x12\x1e\n" +
+	"\n" +
+	"periodUUID\x18\x03 \x01(\tR\n" +
+	"periodUUID\x12 \n" +
+	"\vsubjectUUID\x18\x04 \x01(\tR\vsubjectUUID\x12%\n" +
+	"\vteacherUUID\x18\x05 \x01(\tH\x00R\vteacherUUID\x88\x01\x01\x12\x14\n" +
+	"\x05place\x18\x06 \x01(\tR\x05place\x124\n" +
+	"\vday_of_week\x18\a \x01(\x0e2\x14.timetable.DayOfWeekR\tdayOfWeek\x129\n" +
+	"\n" +
+	"updated_at\x18\b \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12>\n" +
+	"\n" +
+	"deleted_at\x18\t \x01(\v2\x1a.google.protobuf.TimestampH\x01R\tdeletedAt\x88\x01\x01\x129\n" +
+	"\n" +
+	"created_at\x18\n" +
+	" \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\x0e\n" +
+	"\f_teacherUUIDB\r\n" +
+	"\v_deleted_at\"H\n" +
+	"\x15TimetableEntryRequest\x12/\n" +
+	"\x13timetable_entryUUID\x18\x01 \x01(\tR\x12timetableEntryUUID\"\\\n" +
+	"\x16TimetableEntryResponse\x12B\n" +
+	"\x0ftimetable_entry\x18\x01 \x01(\v2\x19.timetable.TimetableEntryR\x0etimetableEntry\"J\n" +
+	"\"TimetableEntriesByTimetableRequest\x12$\n" +
+	"\rtimetableUUID\x18\x01 \x01(\tR\rtimetableUUID\"i\n" +
+	"#TimetableEntriesByTimetableResponse\x12B\n" +
+	"\x0ftimetable_entry\x18\x01 \x01(\v2\x19.timetable.TimetableEntryR\x0etimetableEntry\"\x88\x02\n" +
+	"\x1bCreateTimetableEntryRequest\x12$\n" +
+	"\rtimetableUUID\x18\x02 \x01(\tR\rtimetableUUID\x12\x1e\n" +
+	"\n" +
+	"periodUUID\x18\x03 \x01(\tR\n" +
+	"periodUUID\x12 \n" +
+	"\vsubjectUUID\x18\x04 \x01(\tR\vsubjectUUID\x12%\n" +
+	"\vteacherUUID\x18\x05 \x01(\tH\x00R\vteacherUUID\x88\x01\x01\x12\x14\n" +
+	"\x05place\x18\x06 \x01(\tR\x05place\x124\n" +
+	"\vday_of_week\x18\a \x01(\x0e2\x14.timetable.DayOfWeekR\tdayOfWeekB\x0e\n" +
+	"\f_teacherUUID\"\x87\x03\n" +
+	"\x1aPatchTimetableEntryRequest\x12/\n" +
+	"\x13timetable_entryUUID\x18\x01 \x01(\tR\x12timetableEntryUUID\x12)\n" +
+	"\rtimetableUUID\x18\x02 \x01(\tH\x00R\rtimetableUUID\x88\x01\x01\x12#\n" +
+	"\n" +
+	"periodUUID\x18\x03 \x01(\tH\x01R\n" +
+	"periodUUID\x88\x01\x01\x12%\n" +
+	"\vsubjectUUID\x18\x04 \x01(\tH\x02R\vsubjectUUID\x88\x01\x01\x12%\n" +
+	"\vteacherUUID\x18\x05 \x01(\tH\x03R\vteacherUUID\x88\x01\x01\x12\x19\n" +
+	"\x05place\x18\x06 \x01(\tH\x04R\x05place\x88\x01\x01\x124\n" +
+	"\vday_of_week\x18\a \x01(\x0e2\x14.timetable.DayOfWeekR\tdayOfWeekB\x10\n" +
+	"\x0e_timetableUUIDB\r\n" +
+	"\v_periodUUIDB\x0e\n" +
+	"\f_subjectUUIDB\x0e\n" +
+	"\f_teacherUUIDB\b\n" +
+	"\x06_place\"N\n" +
+	"\x1bDeleteTimetableEntryRequest\x12/\n" +
+	"\x13timetable_entryUUID\x18\x01 \x01(\tR\x12timetableEntryUUID\"\xa6\x01\n" +
+	"\x12HomeworkAttachment\x12\x12\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x02 \x01(\tR\n" +
+	"lessonUUID\x12!\n" +
+	"\fstrorage_key\x18\x03 \x01(\tR\vstrorageKey\x129\n" +
+	"\n" +
+	"created_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAt\"T\n" +
+	"\x19HomeworkAttachmentRequest\x127\n" +
+	"\x17homework_attachmentUUID\x18\x01 \x01(\tR\x16homeworkAttachmentUUID\"k\n" +
+	"\x1aHomeworkAttachmentResponse\x12M\n" +
+	"\x12homeworkAttachment\x18\x01 \x01(\v2\x1d.timetable.HomeworkAttachmentR\x12homeworkAttachment\"C\n" +
+	"!HomeworkAttachmentByLessonRequest\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x01 \x01(\tR\n" +
+	"lessonUUID\"u\n" +
+	"\"HomeworkAttachmentByLessonResponse\x12O\n" +
+	"\x13homeworkAttachments\x18\x01 \x03(\v2\x1d.timetable.HomeworkAttachmentR\x13homeworkAttachments\"_\n" +
+	"\x15AttachHomeworkRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x12\n" +
+	"\x04mime\x18\x02 \x01(\tR\x04mime\x12\x1e\n" +
+	"\n" +
+	"lessonUUID\x18\x03 \x01(\tR\n" +
+	"lessonUUID\"R\n" +
+	"\x16AttachHomeworkResponse\x12\x1d\n" +
+	"\n" +
+	"upload_url\x18\x01 \x01(\tR\tuploadUrl\x12\x19\n" +
+	"\bfile_key\x18\x02 \x01(\tR\afileKey\"P\n" +
+	"\x15DetachHomeworkRequest\x127\n" +
+	"\x17homework_attachmentUUID\x18\x01 \x01(\tR\x16homeworkAttachmentUUID*\x84\x01\n" +
+	"\tDayOfWeek\x12\x1b\n" +
+	"\x17DAY_OF_WEEK_UNSPECIFIED\x10\x00\x12\n" +
 	"\n" +
 	"\x06MONDAY\x10\x01\x12\v\n" +
 	"\aTUESDAY\x10\x02\x12\r\n" +
@@ -2096,26 +3204,37 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x06FRIDAY\x10\x05\x12\f\n" +
 	"\bSATURDAY\x10\x06\x12\n" +
 	"\n" +
-	"\x06SUNDAY\x10\a2\x95\x14\n" +
-	"\x10TimetableService\x12\x84\x01\n" +
-	"\rListTimetable\x12 .timetable.ListTimetablesRequest\x1a .timetable.ListTimetableResponse\"/\x82\xd3\xe4\x93\x02)\x12'/v1/timetable/{user_uuid}/{week_number}\x12\x86\x01\n" +
-	"\fGetTimetable\x12\x1e.timetable.GetTimetableRequest\x1a\x1f.timetable.GetTimetableResponse\"5\x82\xd3\xe4\x93\x02/\x12-/v1/timetable/{user_uuid}/{week_number}/{day}\x12\x80\x01\n" +
-	"\x14CreateAbstractLesson\x12&.timetable.CreateAbstractLessonRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/timetable/lesson/abstract\x12\x8b\x01\n" +
-	"\x14DeleteAbstractLesson\x12&.timetable.DeleteAbstractLessonRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-*+/v1/timetable/lesson/abstract/{lesson_uuid}\x12\x93\x01\n" +
-	"\x11GetAbstractLesson\x12#.timetable.GetAbstractLessonRequest\x1a$.timetable.GetAbstractLessonResponse\"3\x82\xd3\xe4\x93\x02-\x12+/v1/timetable/lesson/abstract/{lesson_uuid}\x12\x8c\x01\n" +
-	"\x13PatchAbstractLesson\x12%.timetable.PatchAbstractLessonRequest\x1a\x16.google.protobuf.Empty\"6\x82\xd3\xe4\x93\x020:\x01*2+/v1/timetable/lesson/abstract/{lesson_uuid}\x12\x8b\x01\n" +
-	"\x13ListAbstractLessons\x12%.timetable.ListAbstractLessonsRequest\x1a&.timetable.ListAbstractLessonsResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/timetable/lesson/abstract\x12\x80\x01\n" +
-	"\x14CreateConcreteLesson\x12&.timetable.CreateConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*\"\x1d/v1/timetable/lesson/concrete\x12\x94\x01\n" +
-	"\x14DeleteConcreteLesson\x12&.timetable.DeleteConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"<\x82\xd3\xe4\x93\x026*4/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x92\x01\n" +
-	"\x13PatchConcreteLesson\x12%.timetable.PatchConcreteLessonRequest\x1a\x16.google.protobuf.Empty\"<\x82\xd3\xe4\x93\x02624/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x9c\x01\n" +
-	"\x11GetConcreteLesson\x12#.timetable.GetConcreteLessonRequest\x1a$.timetable.GetConcreteLessonResponse\"<\x82\xd3\xe4\x93\x026\x124/v1/timetable/lesson/concrete/{concrete_lesson_uuid}\x12\x82\x01\n" +
-	"\n" +
-	"GetPeriods\x12\x1b.timetable.GetPeriodRequest\x1a\x1d.timetable.GetPeriodsResponse\"8\x82\xd3\xe4\x93\x022\x120/v1/timetable/periods/{year}/{week_number}/{day}\x12t\n" +
-	"\vPatchPeriod\x12\x1d.timetable.PatchPeriodRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*2#/v1/timetable/periods/{period_uuid}\x12\xaf\x01\n" +
-	"\x12HomeworkBodyPUTUrl\x12$.timetable.HomeworkBodyPUTUrlRequest\x1a%.timetable.HomeworkBodyPUTUrlResponse\"L\x82\xd3\xe4\x93\x02F\x12D/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework/upload\x12\xa8\x01\n" +
-	"\x12HomeworkBodyGETUrl\x12$.timetable.HomeworkBodyGETUrlRequest\x1a%.timetable.HomeworkBodyGETUrlResponse\"E\x82\xd3\xe4\x93\x02?\x12=/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/homework\x12\xc4\x01\n" +
-	"\x18HomeworkAttachmentPUTUrl\x12*.timetable.HomeworkAttachmentPUTUrlRequest\x1a+.timetable.HomeworkAttachmentPUTUrlResponse\"O\x82\xd3\xe4\x93\x02I\x12G/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachments/upload\x12\xbf\x01\n" +
-	"\x18HomeworkAttachmentGETUrl\x12+.timetable.HomeworkAttachmentGETUrlsRequest\x1a,.timetable.HomeworkAttachmentGETUrlsResponse\"H\x82\xd3\xe4\x93\x02B\x12@/v1/timetable/lesson/concrete/{concrete_lesson_uuid}/attachmentsB\x04Z\x02./b\x06proto3"
+	"\x06SUNDAY\x10\a2\xf6\x1b\n" +
+	"\x10TimetableService\x12\x9b\x01\n" +
+	"\x12HomeworkAttachment\x12$.timetable.HomeworkAttachmentRequest\x1a%.timetable.HomeworkAttachmentResponse\"8\x82\xd3\xe4\x93\x022\x120/v1/timetable/homework/{homework_attachmentUUID}\x12\xad\x01\n" +
+	"\x1aHomeworkAttachmentByLesson\x12,.timetable.HomeworkAttachmentByLessonRequest\x1a-.timetable.HomeworkAttachmentByLessonResponse\"2\x82\xd3\xe4\x93\x02,\x12*/v1/timetable/homework/lesson/{lessonUUID}\x12x\n" +
+	"\x0eAttachHomework\x12 .timetable.AttachHomeworkRequest\x1a!.timetable.AttachHomeworkResponse\"!\x82\xd3\xe4\x93\x02\x1b:\x01*\"\x16/v1/timetable/homework\x12\x84\x01\n" +
+	"\x0eDetachHomework\x12 .timetable.DetachHomeworkRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x022*0/v1/timetable/homework/{homework_attachmentUUID}\x12\x88\x01\n" +
+	"\x0eTimetableEntry\x12 .timetable.TimetableEntryRequest\x1a!.timetable.TimetableEntryResponse\"1\x82\xd3\xe4\x93\x02+\x12)/v1/timetable/entry/{timetable_entryUUID}\x12v\n" +
+	"\x14CreateTimetableEntry\x12&.timetable.CreateTimetableEntryRequest\x1a\x16.google.protobuf.Empty\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/v1/timetable/entry\x12\x8a\x01\n" +
+	"\x13PatchTimetableEntry\x12%.timetable.PatchTimetableEntryRequest\x1a\x16.google.protobuf.Empty\"4\x82\xd3\xe4\x93\x02.:\x01*2)/v1/timetable/entry/{timetable_entryUUID}\x12\x89\x01\n" +
+	"\x14DeleteTimetableEntry\x12&.timetable.DeleteTimetableEntryRequest\x1a\x16.google.protobuf.Empty\"1\x82\xd3\xe4\x93\x02+*)/v1/timetable/entry/{timetable_entryUUID}\x12\xb3\x01\n" +
+	"\x1bTimetableEntriesByTimetable\x12-.timetable.TimetableEntriesByTimetableRequest\x1a..timetable.TimetableEntriesByTimetableResponse\"5\x82\xd3\xe4\x93\x02/\x12-/v1/timetable/entry/timetable/{timetableUUID}\x12h\n" +
+	"\x06Lesson\x12\x18.timetable.LessonRequest\x1a\x19.timetable.LessonResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/timetable/lesson/{lessonUUID}\x12d\n" +
+	"\fCreateLesson\x12\x1e.timetable.CreateLessonRequest\x1a\x16.google.protobuf.Empty\"\x1c\x82\xd3\xe4\x93\x02\x16\"\x14/v1/timetable/lesson\x12r\n" +
+	"\vPatchLesson\x12\x1d.timetable.PatchLessonRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&:\x01*2!/v1/timetable/lesson/{lessonUUID}\x12q\n" +
+	"\fDeleteLesson\x12\x1e.timetable.DeleteLessonRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/timetable/lesson/{lessonUUID}\x12m\n" +
+	"\tTimetable\x12\x1b.timetable.TimetableRequest\x1a\x1c.timetable.TimetableResponse\"%\x82\xd3\xe4\x93\x02\x1f\x12\x1d/v1/timetable/{timetableUUID}\x12f\n" +
+	"\x0fCreateTimetable\x12!.timetable.CreateTimetableRequest\x1a\x16.google.protobuf.Empty\"\x18\x82\xd3\xe4\x93\x02\x12:\x01*\"\r/v1/timetable\x12t\n" +
+	"\x0ePatchTimetable\x12 .timetable.PatchTimetableRequest\x1a\x16.google.protobuf.Empty\"(\x82\xd3\xe4\x93\x02\":\x01*2\x1d/v1/timetable/{timetableUUID}\x12s\n" +
+	"\x0fDeleteTimetable\x12!.timetable.DeleteTimetableRequest\x1a\x16.google.protobuf.Empty\"%\x82\xd3\xe4\x93\x02\x1f*\x1d/v1/timetable/{timetableUUID}\x12l\n" +
+	"\x0eListTimetables\x12 .timetable.ListTimetablesRequest\x1a!.timetable.ListTimetablesResponse\"\x15\x82\xd3\xe4\x93\x02\x0f\x12\r/v1/timetable\x12y\n" +
+	"\x0fTimetableByDate\x12!.timetable.TimetableByDateRequest\x1a\".timetable.TimetableByDateResponse\"\x1f\x82\xd3\xe4\x93\x02\x19\x12\x17/v1/timetable/at/{date}\x12m\n" +
+	"\aSubject\x12\x19.timetable.SubjectRequest\x1a\x1a.timetable.SubjectResponse\"+\x82\xd3\xe4\x93\x02%\x12#/v1/timetable/subject/{subjectUUID}\x12j\n" +
+	"\rCreateSubject\x12\x1f.timetable.CreateSubjectRequest\x1a\x16.google.protobuf.Empty\" \x82\xd3\xe4\x93\x02\x1a:\x01*\"\x15/v1/timetable/subject\x12v\n" +
+	"\fPatchSubject\x12\x1e.timetable.PatchSubjectRequest\x1a\x16.google.protobuf.Empty\".\x82\xd3\xe4\x93\x02(:\x01*2#/v1/timetable/subject/{subjectUUID}\x12u\n" +
+	"\rDeleteSubject\x12\x1f.timetable.DeleteSubjectRequest\x1a\x16.google.protobuf.Empty\"+\x82\xd3\xe4\x93\x02%*#/v1/timetable/subject/{subjectUUID}\x12n\n" +
+	"\fListSubjects\x12\x1e.timetable.ListSubjectsRequest\x1a\x1f.timetable.ListSubjectsResponse\"\x1d\x82\xd3\xe4\x93\x02\x17\x12\x15/v1/timetable/subject\x12h\n" +
+	"\x06Period\x12\x18.timetable.PeriodRequest\x1a\x19.timetable.PeriodResponse\")\x82\xd3\xe4\x93\x02#\x12!/v1/timetable/period/{periodUUID}\x12h\n" +
+	"\fCreatePeriod\x12\x1f.timetable.CreaetePeriodRequest\x1a\x16.google.protobuf.Empty\"\x1f\x82\xd3\xe4\x93\x02\x19:\x01*\"\x14/v1/timetable/period\x12r\n" +
+	"\vPatchPeriod\x12\x1d.timetable.PatchPeriodRequest\x1a\x16.google.protobuf.Empty\",\x82\xd3\xe4\x93\x02&:\x01*\"!/v1/timetable/period/{periodUUID}\x12q\n" +
+	"\fDeletePeriod\x12\x1e.timetable.DeletePeriodRequest\x1a\x16.google.protobuf.Empty\")\x82\xd3\xe4\x93\x02#*!/v1/timetable/period/{periodUUID}\x12j\n" +
+	"\vListPeriods\x12\x1d.timetable.ListPeriodsRequest\x1a\x1e.timetable.ListPeriodsResponse\"\x1c\x82\xd3\xe4\x93\x02\x16\x12\x14/v1/timetable/periodB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_timetable_proto_rawDescOnce sync.Once
@@ -2130,104 +3249,170 @@ func file_proto_timetable_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_timetable_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_timetable_proto_msgTypes = make([]protoimpl.MessageInfo, 32)
+var file_proto_timetable_proto_msgTypes = make([]protoimpl.MessageInfo, 51)
 var file_proto_timetable_proto_goTypes = []any{
-	(Day)(0),                                  // 0: timetable.Day
-	(*ListTimetablesRequest)(nil),             // 1: timetable.ListTimetablesRequest
-	(*GetTimetableRequest)(nil),               // 2: timetable.GetTimetableRequest
-	(*GetTimetableResponse)(nil),              // 3: timetable.GetTimetableResponse
-	(*AbstractLesson)(nil),                    // 4: timetable.AbstractLesson
-	(*ConcreteLesson)(nil),                    // 5: timetable.ConcreteLesson
-	(*ShortConcreteLesson)(nil),               // 6: timetable.ShortConcreteLesson
-	(*ConcreteLessonShortEntry)(nil),          // 7: timetable.ConcreteLessonShortEntry
-	(*ListTimetableResponse)(nil),             // 8: timetable.ListTimetableResponse
-	(*CreateAbstractLessonRequest)(nil),       // 9: timetable.CreateAbstractLessonRequest
-	(*Period)(nil),                            // 10: timetable.Period
-	(*GetPeriodRequest)(nil),                  // 11: timetable.GetPeriodRequest
-	(*GetPeriodsResponse)(nil),                // 12: timetable.GetPeriodsResponse
-	(*PatchPeriodRequest)(nil),                // 13: timetable.PatchPeriodRequest
-	(*DeleteAbstractLessonRequest)(nil),       // 14: timetable.DeleteAbstractLessonRequest
-	(*GetAbstractLessonRequest)(nil),          // 15: timetable.GetAbstractLessonRequest
-	(*GetAbstractLessonResponse)(nil),         // 16: timetable.GetAbstractLessonResponse
-	(*PatchAbstractLessonRequest)(nil),        // 17: timetable.PatchAbstractLessonRequest
-	(*ListAbstractLessonsRequest)(nil),        // 18: timetable.ListAbstractLessonsRequest
-	(*ListAbstractLessonsResponse)(nil),       // 19: timetable.ListAbstractLessonsResponse
-	(*CreateConcreteLessonRequest)(nil),       // 20: timetable.CreateConcreteLessonRequest
-	(*DeleteConcreteLessonRequest)(nil),       // 21: timetable.DeleteConcreteLessonRequest
-	(*PatchConcreteLessonRequest)(nil),        // 22: timetable.PatchConcreteLessonRequest
-	(*GetConcreteLessonRequest)(nil),          // 23: timetable.GetConcreteLessonRequest
-	(*GetConcreteLessonResponse)(nil),         // 24: timetable.GetConcreteLessonResponse
-	(*HomeworkBodyPUTUrlRequest)(nil),         // 25: timetable.HomeworkBodyPUTUrlRequest
-	(*HomeworkBodyPUTUrlResponse)(nil),        // 26: timetable.HomeworkBodyPUTUrlResponse
-	(*HomeworkAttachmentPUTUrlRequest)(nil),   // 27: timetable.HomeworkAttachmentPUTUrlRequest
-	(*HomeworkAttachmentPUTUrlResponse)(nil),  // 28: timetable.HomeworkAttachmentPUTUrlResponse
-	(*HomeworkAttachmentGETUrlsRequest)(nil),  // 29: timetable.HomeworkAttachmentGETUrlsRequest
-	(*HomeworkAttachmentGETUrlsResponse)(nil), // 30: timetable.HomeworkAttachmentGETUrlsResponse
-	(*HomeworkBodyGETUrlRequest)(nil),         // 31: timetable.HomeworkBodyGETUrlRequest
-	(*HomeworkBodyGETUrlResponse)(nil),        // 32: timetable.HomeworkBodyGETUrlResponse
-	(*timestamppb.Timestamp)(nil),             // 33: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                     // 34: google.protobuf.Empty
+	(DayOfWeek)(0),                              // 0: timetable.DayOfWeek
+	(*PeriodRequest)(nil),                       // 1: timetable.PeriodRequest
+	(*Period)(nil),                              // 2: timetable.Period
+	(*PeriodResponse)(nil),                      // 3: timetable.PeriodResponse
+	(*CreaetePeriodRequest)(nil),                // 4: timetable.CreaetePeriodRequest
+	(*PatchPeriodRequest)(nil),                  // 5: timetable.PatchPeriodRequest
+	(*DeletePeriodRequest)(nil),                 // 6: timetable.DeletePeriodRequest
+	(*ListPeriodsRequest)(nil),                  // 7: timetable.ListPeriodsRequest
+	(*ListPeriodsResponse)(nil),                 // 8: timetable.ListPeriodsResponse
+	(*Subject)(nil),                             // 9: timetable.Subject
+	(*SubjectRequest)(nil),                      // 10: timetable.SubjectRequest
+	(*SubjectResponse)(nil),                     // 11: timetable.SubjectResponse
+	(*CreateSubjectRequest)(nil),                // 12: timetable.CreateSubjectRequest
+	(*PatchSubjectRequest)(nil),                 // 13: timetable.PatchSubjectRequest
+	(*DeleteSubjectRequest)(nil),                // 14: timetable.DeleteSubjectRequest
+	(*ListSubjectsRequest)(nil),                 // 15: timetable.ListSubjectsRequest
+	(*ListSubjectsResponse)(nil),                // 16: timetable.ListSubjectsResponse
+	(*Timetable)(nil),                           // 17: timetable.Timetable
+	(*TimetableByDateRequest)(nil),              // 18: timetable.TimetableByDateRequest
+	(*TimetableByDateResponse)(nil),             // 19: timetable.TimetableByDateResponse
+	(*TimetableRequest)(nil),                    // 20: timetable.TimetableRequest
+	(*TimetableResponse)(nil),                   // 21: timetable.TimetableResponse
+	(*CreateTimetableRequest)(nil),              // 22: timetable.CreateTimetableRequest
+	(*PatchTimetableRequest)(nil),               // 23: timetable.PatchTimetableRequest
+	(*DeleteTimetableRequest)(nil),              // 24: timetable.DeleteTimetableRequest
+	(*ListTimetablesRequest)(nil),               // 25: timetable.ListTimetablesRequest
+	(*ListTimetablesResponse)(nil),              // 26: timetable.ListTimetablesResponse
+	(*CurrentTimetableRequest)(nil),             // 27: timetable.CurrentTimetableRequest
+	(*CurrentTimetableResponse)(nil),            // 28: timetable.CurrentTimetableResponse
+	(*Lesson)(nil),                              // 29: timetable.Lesson
+	(*LessonRequest)(nil),                       // 30: timetable.LessonRequest
+	(*LessonResponse)(nil),                      // 31: timetable.LessonResponse
+	(*CreateLessonRequest)(nil),                 // 32: timetable.CreateLessonRequest
+	(*PatchLessonRequest)(nil),                  // 33: timetable.PatchLessonRequest
+	(*DeleteLessonRequest)(nil),                 // 34: timetable.DeleteLessonRequest
+	(*ListLessons)(nil),                         // 35: timetable.ListLessons
+	(*TimetableEntry)(nil),                      // 36: timetable.TimetableEntry
+	(*TimetableEntryRequest)(nil),               // 37: timetable.TimetableEntryRequest
+	(*TimetableEntryResponse)(nil),              // 38: timetable.TimetableEntryResponse
+	(*TimetableEntriesByTimetableRequest)(nil),  // 39: timetable.TimetableEntriesByTimetableRequest
+	(*TimetableEntriesByTimetableResponse)(nil), // 40: timetable.TimetableEntriesByTimetableResponse
+	(*CreateTimetableEntryRequest)(nil),         // 41: timetable.CreateTimetableEntryRequest
+	(*PatchTimetableEntryRequest)(nil),          // 42: timetable.PatchTimetableEntryRequest
+	(*DeleteTimetableEntryRequest)(nil),         // 43: timetable.DeleteTimetableEntryRequest
+	(*HomeworkAttachment)(nil),                  // 44: timetable.HomeworkAttachment
+	(*HomeworkAttachmentRequest)(nil),           // 45: timetable.HomeworkAttachmentRequest
+	(*HomeworkAttachmentResponse)(nil),          // 46: timetable.HomeworkAttachmentResponse
+	(*HomeworkAttachmentByLessonRequest)(nil),   // 47: timetable.HomeworkAttachmentByLessonRequest
+	(*HomeworkAttachmentByLessonResponse)(nil),  // 48: timetable.HomeworkAttachmentByLessonResponse
+	(*AttachHomeworkRequest)(nil),               // 49: timetable.AttachHomeworkRequest
+	(*AttachHomeworkResponse)(nil),              // 50: timetable.AttachHomeworkResponse
+	(*DetachHomeworkRequest)(nil),               // 51: timetable.DetachHomeworkRequest
+	(*timestamppb.Timestamp)(nil),               // 52: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                       // 53: google.protobuf.Empty
 }
 var file_proto_timetable_proto_depIdxs = []int32{
-	0,  // 0: timetable.GetTimetableRequest.day:type_name -> timetable.Day
-	7,  // 1: timetable.GetTimetableResponse.Timetable:type_name -> timetable.ConcreteLessonShortEntry
-	4,  // 2: timetable.ConcreteLesson.lesson_info:type_name -> timetable.AbstractLesson
-	0,  // 3: timetable.ConcreteLesson.day:type_name -> timetable.Day
-	4,  // 4: timetable.ShortConcreteLesson.abstract_lesson:type_name -> timetable.AbstractLesson
-	0,  // 5: timetable.ShortConcreteLesson.day:type_name -> timetable.Day
-	0,  // 6: timetable.ConcreteLessonShortEntry.day:type_name -> timetable.Day
-	6,  // 7: timetable.ConcreteLessonShortEntry.lessons:type_name -> timetable.ShortConcreteLesson
-	7,  // 8: timetable.ListTimetableResponse.Timetable:type_name -> timetable.ConcreteLessonShortEntry
-	33, // 9: timetable.Period.start:type_name -> google.protobuf.Timestamp
-	33, // 10: timetable.Period.end:type_name -> google.protobuf.Timestamp
-	0,  // 11: timetable.Period.day:type_name -> timetable.Day
-	0,  // 12: timetable.GetPeriodRequest.day:type_name -> timetable.Day
-	10, // 13: timetable.GetPeriodsResponse.periods:type_name -> timetable.Period
-	33, // 14: timetable.PatchPeriodRequest.start:type_name -> google.protobuf.Timestamp
-	33, // 15: timetable.PatchPeriodRequest.end:type_name -> google.protobuf.Timestamp
-	0,  // 16: timetable.PatchPeriodRequest.day:type_name -> timetable.Day
-	4,  // 17: timetable.GetAbstractLessonResponse.lesson:type_name -> timetable.AbstractLesson
-	4,  // 18: timetable.ListAbstractLessonsResponse.abstract_lessons:type_name -> timetable.AbstractLesson
-	5,  // 19: timetable.GetConcreteLessonResponse.lesson:type_name -> timetable.ConcreteLesson
-	1,  // 20: timetable.TimetableService.ListTimetable:input_type -> timetable.ListTimetablesRequest
-	2,  // 21: timetable.TimetableService.GetTimetable:input_type -> timetable.GetTimetableRequest
-	9,  // 22: timetable.TimetableService.CreateAbstractLesson:input_type -> timetable.CreateAbstractLessonRequest
-	14, // 23: timetable.TimetableService.DeleteAbstractLesson:input_type -> timetable.DeleteAbstractLessonRequest
-	15, // 24: timetable.TimetableService.GetAbstractLesson:input_type -> timetable.GetAbstractLessonRequest
-	17, // 25: timetable.TimetableService.PatchAbstractLesson:input_type -> timetable.PatchAbstractLessonRequest
-	18, // 26: timetable.TimetableService.ListAbstractLessons:input_type -> timetable.ListAbstractLessonsRequest
-	20, // 27: timetable.TimetableService.CreateConcreteLesson:input_type -> timetable.CreateConcreteLessonRequest
-	21, // 28: timetable.TimetableService.DeleteConcreteLesson:input_type -> timetable.DeleteConcreteLessonRequest
-	22, // 29: timetable.TimetableService.PatchConcreteLesson:input_type -> timetable.PatchConcreteLessonRequest
-	23, // 30: timetable.TimetableService.GetConcreteLesson:input_type -> timetable.GetConcreteLessonRequest
-	11, // 31: timetable.TimetableService.GetPeriods:input_type -> timetable.GetPeriodRequest
-	13, // 32: timetable.TimetableService.PatchPeriod:input_type -> timetable.PatchPeriodRequest
-	25, // 33: timetable.TimetableService.HomeworkBodyPUTUrl:input_type -> timetable.HomeworkBodyPUTUrlRequest
-	31, // 34: timetable.TimetableService.HomeworkBodyGETUrl:input_type -> timetable.HomeworkBodyGETUrlRequest
-	27, // 35: timetable.TimetableService.HomeworkAttachmentPUTUrl:input_type -> timetable.HomeworkAttachmentPUTUrlRequest
-	29, // 36: timetable.TimetableService.HomeworkAttachmentGETUrl:input_type -> timetable.HomeworkAttachmentGETUrlsRequest
-	8,  // 37: timetable.TimetableService.ListTimetable:output_type -> timetable.ListTimetableResponse
-	3,  // 38: timetable.TimetableService.GetTimetable:output_type -> timetable.GetTimetableResponse
-	34, // 39: timetable.TimetableService.CreateAbstractLesson:output_type -> google.protobuf.Empty
-	34, // 40: timetable.TimetableService.DeleteAbstractLesson:output_type -> google.protobuf.Empty
-	16, // 41: timetable.TimetableService.GetAbstractLesson:output_type -> timetable.GetAbstractLessonResponse
-	34, // 42: timetable.TimetableService.PatchAbstractLesson:output_type -> google.protobuf.Empty
-	19, // 43: timetable.TimetableService.ListAbstractLessons:output_type -> timetable.ListAbstractLessonsResponse
-	34, // 44: timetable.TimetableService.CreateConcreteLesson:output_type -> google.protobuf.Empty
-	34, // 45: timetable.TimetableService.DeleteConcreteLesson:output_type -> google.protobuf.Empty
-	34, // 46: timetable.TimetableService.PatchConcreteLesson:output_type -> google.protobuf.Empty
-	24, // 47: timetable.TimetableService.GetConcreteLesson:output_type -> timetable.GetConcreteLessonResponse
-	12, // 48: timetable.TimetableService.GetPeriods:output_type -> timetable.GetPeriodsResponse
-	34, // 49: timetable.TimetableService.PatchPeriod:output_type -> google.protobuf.Empty
-	26, // 50: timetable.TimetableService.HomeworkBodyPUTUrl:output_type -> timetable.HomeworkBodyPUTUrlResponse
-	32, // 51: timetable.TimetableService.HomeworkBodyGETUrl:output_type -> timetable.HomeworkBodyGETUrlResponse
-	28, // 52: timetable.TimetableService.HomeworkAttachmentPUTUrl:output_type -> timetable.HomeworkAttachmentPUTUrlResponse
-	30, // 53: timetable.TimetableService.HomeworkAttachmentGETUrl:output_type -> timetable.HomeworkAttachmentGETUrlsResponse
-	37, // [37:54] is the sub-list for method output_type
-	20, // [20:37] is the sub-list for method input_type
-	20, // [20:20] is the sub-list for extension type_name
-	20, // [20:20] is the sub-list for extension extendee
-	0,  // [0:20] is the sub-list for field type_name
+	52, // 0: timetable.Period.start_time:type_name -> google.protobuf.Timestamp
+	52, // 1: timetable.Period.end_time:type_name -> google.protobuf.Timestamp
+	52, // 2: timetable.Period.updated_at:type_name -> google.protobuf.Timestamp
+	52, // 3: timetable.Period.deleted_at:type_name -> google.protobuf.Timestamp
+	52, // 4: timetable.Period.created_at:type_name -> google.protobuf.Timestamp
+	2,  // 5: timetable.PeriodResponse.period:type_name -> timetable.Period
+	52, // 6: timetable.CreaetePeriodRequest.start_time:type_name -> google.protobuf.Timestamp
+	52, // 7: timetable.CreaetePeriodRequest.end_time:type_name -> google.protobuf.Timestamp
+	52, // 8: timetable.PatchPeriodRequest.start_time:type_name -> google.protobuf.Timestamp
+	52, // 9: timetable.PatchPeriodRequest.end_time:type_name -> google.protobuf.Timestamp
+	2,  // 10: timetable.ListPeriodsResponse.periods:type_name -> timetable.Period
+	52, // 11: timetable.Subject.updated_at:type_name -> google.protobuf.Timestamp
+	52, // 12: timetable.Subject.deleted_at:type_name -> google.protobuf.Timestamp
+	52, // 13: timetable.Subject.created_at:type_name -> google.protobuf.Timestamp
+	9,  // 14: timetable.SubjectResponse.subject:type_name -> timetable.Subject
+	9,  // 15: timetable.ListSubjectsResponse.subjects:type_name -> timetable.Subject
+	52, // 16: timetable.Timetable.assign_at:type_name -> google.protobuf.Timestamp
+	52, // 17: timetable.Timetable.revoke_at:type_name -> google.protobuf.Timestamp
+	52, // 18: timetable.TimetableByDateRequest.date:type_name -> google.protobuf.Timestamp
+	17, // 19: timetable.TimetableByDateResponse.timetable:type_name -> timetable.Timetable
+	17, // 20: timetable.TimetableResponse.timetable:type_name -> timetable.Timetable
+	52, // 21: timetable.CreateTimetableRequest.assign_at:type_name -> google.protobuf.Timestamp
+	52, // 22: timetable.CreateTimetableRequest.revoke_at:type_name -> google.protobuf.Timestamp
+	52, // 23: timetable.PatchTimetableRequest.assign_at:type_name -> google.protobuf.Timestamp
+	52, // 24: timetable.PatchTimetableRequest.revoke_at:type_name -> google.protobuf.Timestamp
+	17, // 25: timetable.ListTimetablesResponse.timetables:type_name -> timetable.Timetable
+	17, // 26: timetable.CurrentTimetableResponse.timetable:type_name -> timetable.Timetable
+	52, // 27: timetable.Lesson.date:type_name -> google.protobuf.Timestamp
+	52, // 28: timetable.Lesson.created_at:type_name -> google.protobuf.Timestamp
+	29, // 29: timetable.LessonResponse.lesson:type_name -> timetable.Lesson
+	52, // 30: timetable.CreateLessonRequest.date:type_name -> google.protobuf.Timestamp
+	52, // 31: timetable.PatchLessonRequest.date:type_name -> google.protobuf.Timestamp
+	0,  // 32: timetable.TimetableEntry.day_of_week:type_name -> timetable.DayOfWeek
+	52, // 33: timetable.TimetableEntry.updated_at:type_name -> google.protobuf.Timestamp
+	52, // 34: timetable.TimetableEntry.deleted_at:type_name -> google.protobuf.Timestamp
+	52, // 35: timetable.TimetableEntry.created_at:type_name -> google.protobuf.Timestamp
+	36, // 36: timetable.TimetableEntryResponse.timetable_entry:type_name -> timetable.TimetableEntry
+	36, // 37: timetable.TimetableEntriesByTimetableResponse.timetable_entry:type_name -> timetable.TimetableEntry
+	0,  // 38: timetable.CreateTimetableEntryRequest.day_of_week:type_name -> timetable.DayOfWeek
+	0,  // 39: timetable.PatchTimetableEntryRequest.day_of_week:type_name -> timetable.DayOfWeek
+	52, // 40: timetable.HomeworkAttachment.created_at:type_name -> google.protobuf.Timestamp
+	44, // 41: timetable.HomeworkAttachmentResponse.homeworkAttachment:type_name -> timetable.HomeworkAttachment
+	44, // 42: timetable.HomeworkAttachmentByLessonResponse.homeworkAttachments:type_name -> timetable.HomeworkAttachment
+	45, // 43: timetable.TimetableService.HomeworkAttachment:input_type -> timetable.HomeworkAttachmentRequest
+	47, // 44: timetable.TimetableService.HomeworkAttachmentByLesson:input_type -> timetable.HomeworkAttachmentByLessonRequest
+	49, // 45: timetable.TimetableService.AttachHomework:input_type -> timetable.AttachHomeworkRequest
+	51, // 46: timetable.TimetableService.DetachHomework:input_type -> timetable.DetachHomeworkRequest
+	37, // 47: timetable.TimetableService.TimetableEntry:input_type -> timetable.TimetableEntryRequest
+	41, // 48: timetable.TimetableService.CreateTimetableEntry:input_type -> timetable.CreateTimetableEntryRequest
+	42, // 49: timetable.TimetableService.PatchTimetableEntry:input_type -> timetable.PatchTimetableEntryRequest
+	43, // 50: timetable.TimetableService.DeleteTimetableEntry:input_type -> timetable.DeleteTimetableEntryRequest
+	39, // 51: timetable.TimetableService.TimetableEntriesByTimetable:input_type -> timetable.TimetableEntriesByTimetableRequest
+	30, // 52: timetable.TimetableService.Lesson:input_type -> timetable.LessonRequest
+	32, // 53: timetable.TimetableService.CreateLesson:input_type -> timetable.CreateLessonRequest
+	33, // 54: timetable.TimetableService.PatchLesson:input_type -> timetable.PatchLessonRequest
+	34, // 55: timetable.TimetableService.DeleteLesson:input_type -> timetable.DeleteLessonRequest
+	20, // 56: timetable.TimetableService.Timetable:input_type -> timetable.TimetableRequest
+	22, // 57: timetable.TimetableService.CreateTimetable:input_type -> timetable.CreateTimetableRequest
+	23, // 58: timetable.TimetableService.PatchTimetable:input_type -> timetable.PatchTimetableRequest
+	24, // 59: timetable.TimetableService.DeleteTimetable:input_type -> timetable.DeleteTimetableRequest
+	25, // 60: timetable.TimetableService.ListTimetables:input_type -> timetable.ListTimetablesRequest
+	18, // 61: timetable.TimetableService.TimetableByDate:input_type -> timetable.TimetableByDateRequest
+	10, // 62: timetable.TimetableService.Subject:input_type -> timetable.SubjectRequest
+	12, // 63: timetable.TimetableService.CreateSubject:input_type -> timetable.CreateSubjectRequest
+	13, // 64: timetable.TimetableService.PatchSubject:input_type -> timetable.PatchSubjectRequest
+	14, // 65: timetable.TimetableService.DeleteSubject:input_type -> timetable.DeleteSubjectRequest
+	15, // 66: timetable.TimetableService.ListSubjects:input_type -> timetable.ListSubjectsRequest
+	1,  // 67: timetable.TimetableService.Period:input_type -> timetable.PeriodRequest
+	4,  // 68: timetable.TimetableService.CreatePeriod:input_type -> timetable.CreaetePeriodRequest
+	5,  // 69: timetable.TimetableService.PatchPeriod:input_type -> timetable.PatchPeriodRequest
+	6,  // 70: timetable.TimetableService.DeletePeriod:input_type -> timetable.DeletePeriodRequest
+	7,  // 71: timetable.TimetableService.ListPeriods:input_type -> timetable.ListPeriodsRequest
+	46, // 72: timetable.TimetableService.HomeworkAttachment:output_type -> timetable.HomeworkAttachmentResponse
+	48, // 73: timetable.TimetableService.HomeworkAttachmentByLesson:output_type -> timetable.HomeworkAttachmentByLessonResponse
+	50, // 74: timetable.TimetableService.AttachHomework:output_type -> timetable.AttachHomeworkResponse
+	53, // 75: timetable.TimetableService.DetachHomework:output_type -> google.protobuf.Empty
+	38, // 76: timetable.TimetableService.TimetableEntry:output_type -> timetable.TimetableEntryResponse
+	53, // 77: timetable.TimetableService.CreateTimetableEntry:output_type -> google.protobuf.Empty
+	53, // 78: timetable.TimetableService.PatchTimetableEntry:output_type -> google.protobuf.Empty
+	53, // 79: timetable.TimetableService.DeleteTimetableEntry:output_type -> google.protobuf.Empty
+	40, // 80: timetable.TimetableService.TimetableEntriesByTimetable:output_type -> timetable.TimetableEntriesByTimetableResponse
+	31, // 81: timetable.TimetableService.Lesson:output_type -> timetable.LessonResponse
+	53, // 82: timetable.TimetableService.CreateLesson:output_type -> google.protobuf.Empty
+	53, // 83: timetable.TimetableService.PatchLesson:output_type -> google.protobuf.Empty
+	53, // 84: timetable.TimetableService.DeleteLesson:output_type -> google.protobuf.Empty
+	21, // 85: timetable.TimetableService.Timetable:output_type -> timetable.TimetableResponse
+	53, // 86: timetable.TimetableService.CreateTimetable:output_type -> google.protobuf.Empty
+	53, // 87: timetable.TimetableService.PatchTimetable:output_type -> google.protobuf.Empty
+	53, // 88: timetable.TimetableService.DeleteTimetable:output_type -> google.protobuf.Empty
+	26, // 89: timetable.TimetableService.ListTimetables:output_type -> timetable.ListTimetablesResponse
+	19, // 90: timetable.TimetableService.TimetableByDate:output_type -> timetable.TimetableByDateResponse
+	11, // 91: timetable.TimetableService.Subject:output_type -> timetable.SubjectResponse
+	53, // 92: timetable.TimetableService.CreateSubject:output_type -> google.protobuf.Empty
+	53, // 93: timetable.TimetableService.PatchSubject:output_type -> google.protobuf.Empty
+	53, // 94: timetable.TimetableService.DeleteSubject:output_type -> google.protobuf.Empty
+	16, // 95: timetable.TimetableService.ListSubjects:output_type -> timetable.ListSubjectsResponse
+	3,  // 96: timetable.TimetableService.Period:output_type -> timetable.PeriodResponse
+	53, // 97: timetable.TimetableService.CreatePeriod:output_type -> google.protobuf.Empty
+	53, // 98: timetable.TimetableService.PatchPeriod:output_type -> google.protobuf.Empty
+	53, // 99: timetable.TimetableService.DeletePeriod:output_type -> google.protobuf.Empty
+	8,  // 100: timetable.TimetableService.ListPeriods:output_type -> timetable.ListPeriodsResponse
+	72, // [72:101] is the sub-list for method output_type
+	43, // [43:72] is the sub-list for method input_type
+	43, // [43:43] is the sub-list for extension type_name
+	43, // [43:43] is the sub-list for extension extendee
+	0,  // [0:43] is the sub-list for field type_name
 }
 
 func init() { file_proto_timetable_proto_init() }
@@ -2235,18 +3420,22 @@ func file_proto_timetable_proto_init() {
 	if File_proto_timetable_proto != nil {
 		return
 	}
+	file_proto_timetable_proto_msgTypes[1].OneofWrappers = []any{}
 	file_proto_timetable_proto_msgTypes[4].OneofWrappers = []any{}
-	file_proto_timetable_proto_msgTypes[5].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[8].OneofWrappers = []any{}
 	file_proto_timetable_proto_msgTypes[12].OneofWrappers = []any{}
-	file_proto_timetable_proto_msgTypes[16].OneofWrappers = []any{}
-	file_proto_timetable_proto_msgTypes[21].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[22].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[32].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[35].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[40].OneofWrappers = []any{}
+	file_proto_timetable_proto_msgTypes[41].OneofWrappers = []any{}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_timetable_proto_rawDesc), len(file_proto_timetable_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   32,
+			NumMessages:   51,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

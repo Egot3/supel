@@ -20,46 +20,70 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	TimetableService_ListTimetable_FullMethodName            = "/timetable.TimetableService/ListTimetable"
-	TimetableService_GetTimetable_FullMethodName             = "/timetable.TimetableService/GetTimetable"
-	TimetableService_CreateAbstractLesson_FullMethodName     = "/timetable.TimetableService/CreateAbstractLesson"
-	TimetableService_DeleteAbstractLesson_FullMethodName     = "/timetable.TimetableService/DeleteAbstractLesson"
-	TimetableService_GetAbstractLesson_FullMethodName        = "/timetable.TimetableService/GetAbstractLesson"
-	TimetableService_PatchAbstractLesson_FullMethodName      = "/timetable.TimetableService/PatchAbstractLesson"
-	TimetableService_ListAbstractLessons_FullMethodName      = "/timetable.TimetableService/ListAbstractLessons"
-	TimetableService_CreateConcreteLesson_FullMethodName     = "/timetable.TimetableService/CreateConcreteLesson"
-	TimetableService_DeleteConcreteLesson_FullMethodName     = "/timetable.TimetableService/DeleteConcreteLesson"
-	TimetableService_PatchConcreteLesson_FullMethodName      = "/timetable.TimetableService/PatchConcreteLesson"
-	TimetableService_GetConcreteLesson_FullMethodName        = "/timetable.TimetableService/GetConcreteLesson"
-	TimetableService_GetPeriods_FullMethodName               = "/timetable.TimetableService/GetPeriods"
-	TimetableService_PatchPeriod_FullMethodName              = "/timetable.TimetableService/PatchPeriod"
-	TimetableService_HomeworkBodyPUTUrl_FullMethodName       = "/timetable.TimetableService/HomeworkBodyPUTUrl"
-	TimetableService_HomeworkBodyGETUrl_FullMethodName       = "/timetable.TimetableService/HomeworkBodyGETUrl"
-	TimetableService_HomeworkAttachmentPUTUrl_FullMethodName = "/timetable.TimetableService/HomeworkAttachmentPUTUrl"
-	TimetableService_HomeworkAttachmentGETUrl_FullMethodName = "/timetable.TimetableService/HomeworkAttachmentGETUrl"
+	TimetableService_HomeworkAttachment_FullMethodName          = "/timetable.TimetableService/HomeworkAttachment"
+	TimetableService_HomeworkAttachmentByLesson_FullMethodName  = "/timetable.TimetableService/HomeworkAttachmentByLesson"
+	TimetableService_AttachHomework_FullMethodName              = "/timetable.TimetableService/AttachHomework"
+	TimetableService_DetachHomework_FullMethodName              = "/timetable.TimetableService/DetachHomework"
+	TimetableService_TimetableEntry_FullMethodName              = "/timetable.TimetableService/TimetableEntry"
+	TimetableService_CreateTimetableEntry_FullMethodName        = "/timetable.TimetableService/CreateTimetableEntry"
+	TimetableService_PatchTimetableEntry_FullMethodName         = "/timetable.TimetableService/PatchTimetableEntry"
+	TimetableService_DeleteTimetableEntry_FullMethodName        = "/timetable.TimetableService/DeleteTimetableEntry"
+	TimetableService_TimetableEntriesByTimetable_FullMethodName = "/timetable.TimetableService/TimetableEntriesByTimetable"
+	TimetableService_Lesson_FullMethodName                      = "/timetable.TimetableService/Lesson"
+	TimetableService_CreateLesson_FullMethodName                = "/timetable.TimetableService/CreateLesson"
+	TimetableService_PatchLesson_FullMethodName                 = "/timetable.TimetableService/PatchLesson"
+	TimetableService_DeleteLesson_FullMethodName                = "/timetable.TimetableService/DeleteLesson"
+	TimetableService_Timetable_FullMethodName                   = "/timetable.TimetableService/Timetable"
+	TimetableService_CreateTimetable_FullMethodName             = "/timetable.TimetableService/CreateTimetable"
+	TimetableService_PatchTimetable_FullMethodName              = "/timetable.TimetableService/PatchTimetable"
+	TimetableService_DeleteTimetable_FullMethodName             = "/timetable.TimetableService/DeleteTimetable"
+	TimetableService_ListTimetables_FullMethodName              = "/timetable.TimetableService/ListTimetables"
+	TimetableService_TimetableByDate_FullMethodName             = "/timetable.TimetableService/TimetableByDate"
+	TimetableService_Subject_FullMethodName                     = "/timetable.TimetableService/Subject"
+	TimetableService_CreateSubject_FullMethodName               = "/timetable.TimetableService/CreateSubject"
+	TimetableService_PatchSubject_FullMethodName                = "/timetable.TimetableService/PatchSubject"
+	TimetableService_DeleteSubject_FullMethodName               = "/timetable.TimetableService/DeleteSubject"
+	TimetableService_ListSubjects_FullMethodName                = "/timetable.TimetableService/ListSubjects"
+	TimetableService_Period_FullMethodName                      = "/timetable.TimetableService/Period"
+	TimetableService_CreatePeriod_FullMethodName                = "/timetable.TimetableService/CreatePeriod"
+	TimetableService_PatchPeriod_FullMethodName                 = "/timetable.TimetableService/PatchPeriod"
+	TimetableService_DeletePeriod_FullMethodName                = "/timetable.TimetableService/DeletePeriod"
+	TimetableService_ListPeriods_FullMethodName                 = "/timetable.TimetableService/ListPeriods"
 )
 
 // TimetableServiceClient is the client API for TimetableService service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type TimetableServiceClient interface {
-	ListTimetable(ctx context.Context, in *ListTimetablesRequest, opts ...grpc.CallOption) (*ListTimetableResponse, error)
-	GetTimetable(ctx context.Context, in *GetTimetableRequest, opts ...grpc.CallOption) (*GetTimetableResponse, error)
-	CreateAbstractLesson(ctx context.Context, in *CreateAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteAbstractLesson(ctx context.Context, in *DeleteAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetAbstractLesson(ctx context.Context, in *GetAbstractLessonRequest, opts ...grpc.CallOption) (*GetAbstractLessonResponse, error)
-	PatchAbstractLesson(ctx context.Context, in *PatchAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	ListAbstractLessons(ctx context.Context, in *ListAbstractLessonsRequest, opts ...grpc.CallOption) (*ListAbstractLessonsResponse, error)
-	CreateConcreteLesson(ctx context.Context, in *CreateConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	DeleteConcreteLesson(ctx context.Context, in *DeleteConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	PatchConcreteLesson(ctx context.Context, in *PatchConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	GetConcreteLesson(ctx context.Context, in *GetConcreteLessonRequest, opts ...grpc.CallOption) (*GetConcreteLessonResponse, error)
-	GetPeriods(ctx context.Context, in *GetPeriodRequest, opts ...grpc.CallOption) (*GetPeriodsResponse, error)
+	HomeworkAttachment(ctx context.Context, in *HomeworkAttachmentRequest, opts ...grpc.CallOption) (*HomeworkAttachmentResponse, error)
+	HomeworkAttachmentByLesson(ctx context.Context, in *HomeworkAttachmentByLessonRequest, opts ...grpc.CallOption) (*HomeworkAttachmentByLessonResponse, error)
+	AttachHomework(ctx context.Context, in *AttachHomeworkRequest, opts ...grpc.CallOption) (*AttachHomeworkResponse, error)
+	DetachHomework(ctx context.Context, in *DetachHomeworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TimetableEntry(ctx context.Context, in *TimetableEntryRequest, opts ...grpc.CallOption) (*TimetableEntryResponse, error)
+	CreateTimetableEntry(ctx context.Context, in *CreateTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PatchTimetableEntry(ctx context.Context, in *PatchTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteTimetableEntry(ctx context.Context, in *DeleteTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	TimetableEntriesByTimetable(ctx context.Context, in *TimetableEntriesByTimetableRequest, opts ...grpc.CallOption) (*TimetableEntriesByTimetableResponse, error)
+	Lesson(ctx context.Context, in *LessonRequest, opts ...grpc.CallOption) (*LessonResponse, error)
+	CreateLesson(ctx context.Context, in *CreateLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PatchLesson(ctx context.Context, in *PatchLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteLesson(ctx context.Context, in *DeleteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	Timetable(ctx context.Context, in *TimetableRequest, opts ...grpc.CallOption) (*TimetableResponse, error)
+	CreateTimetable(ctx context.Context, in *CreateTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PatchTimetable(ctx context.Context, in *PatchTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteTimetable(ctx context.Context, in *DeleteTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListTimetables(ctx context.Context, in *ListTimetablesRequest, opts ...grpc.CallOption) (*ListTimetablesResponse, error)
+	TimetableByDate(ctx context.Context, in *TimetableByDateRequest, opts ...grpc.CallOption) (*TimetableByDateResponse, error)
+	Subject(ctx context.Context, in *SubjectRequest, opts ...grpc.CallOption) (*SubjectResponse, error)
+	CreateSubject(ctx context.Context, in *CreateSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	PatchSubject(ctx context.Context, in *PatchSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	DeleteSubject(ctx context.Context, in *DeleteSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListSubjects(ctx context.Context, in *ListSubjectsRequest, opts ...grpc.CallOption) (*ListSubjectsResponse, error)
+	Period(ctx context.Context, in *PeriodRequest, opts ...grpc.CallOption) (*PeriodResponse, error)
+	CreatePeriod(ctx context.Context, in *CreaetePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PatchPeriod(ctx context.Context, in *PatchPeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
-	HomeworkBodyPUTUrl(ctx context.Context, in *HomeworkBodyPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyPUTUrlResponse, error)
-	HomeworkBodyGETUrl(ctx context.Context, in *HomeworkBodyGETUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyGETUrlResponse, error)
-	HomeworkAttachmentPUTUrl(ctx context.Context, in *HomeworkAttachmentPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentPUTUrlResponse, error)
-	HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlsRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlsResponse, error)
+	DeletePeriod(ctx context.Context, in *DeletePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListPeriods(ctx context.Context, in *ListPeriodsRequest, opts ...grpc.CallOption) (*ListPeriodsResponse, error)
 }
 
 type timetableServiceClient struct {
@@ -70,120 +94,260 @@ func NewTimetableServiceClient(cc grpc.ClientConnInterface) TimetableServiceClie
 	return &timetableServiceClient{cc}
 }
 
-func (c *timetableServiceClient) ListTimetable(ctx context.Context, in *ListTimetablesRequest, opts ...grpc.CallOption) (*ListTimetableResponse, error) {
+func (c *timetableServiceClient) HomeworkAttachment(ctx context.Context, in *HomeworkAttachmentRequest, opts ...grpc.CallOption) (*HomeworkAttachmentResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListTimetableResponse)
-	err := c.cc.Invoke(ctx, TimetableService_ListTimetable_FullMethodName, in, out, cOpts...)
+	out := new(HomeworkAttachmentResponse)
+	err := c.cc.Invoke(ctx, TimetableService_HomeworkAttachment_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) GetTimetable(ctx context.Context, in *GetTimetableRequest, opts ...grpc.CallOption) (*GetTimetableResponse, error) {
+func (c *timetableServiceClient) HomeworkAttachmentByLesson(ctx context.Context, in *HomeworkAttachmentByLessonRequest, opts ...grpc.CallOption) (*HomeworkAttachmentByLessonResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetTimetableResponse)
-	err := c.cc.Invoke(ctx, TimetableService_GetTimetable_FullMethodName, in, out, cOpts...)
+	out := new(HomeworkAttachmentByLessonResponse)
+	err := c.cc.Invoke(ctx, TimetableService_HomeworkAttachmentByLesson_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) CreateAbstractLesson(ctx context.Context, in *CreateAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) AttachHomework(ctx context.Context, in *AttachHomeworkRequest, opts ...grpc.CallOption) (*AttachHomeworkResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(AttachHomeworkResponse)
+	err := c.cc.Invoke(ctx, TimetableService_AttachHomework_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) DetachHomework(ctx context.Context, in *DetachHomeworkRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_CreateAbstractLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_DetachHomework_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) DeleteAbstractLesson(ctx context.Context, in *DeleteAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) TimetableEntry(ctx context.Context, in *TimetableEntryRequest, opts ...grpc.CallOption) (*TimetableEntryResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TimetableEntryResponse)
+	err := c.cc.Invoke(ctx, TimetableService_TimetableEntry_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CreateTimetableEntry(ctx context.Context, in *CreateTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_DeleteAbstractLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_CreateTimetableEntry_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) GetAbstractLesson(ctx context.Context, in *GetAbstractLessonRequest, opts ...grpc.CallOption) (*GetAbstractLessonResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetAbstractLessonResponse)
-	err := c.cc.Invoke(ctx, TimetableService_GetAbstractLesson_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *timetableServiceClient) PatchAbstractLesson(ctx context.Context, in *PatchAbstractLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) PatchTimetableEntry(ctx context.Context, in *PatchTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_PatchAbstractLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_PatchTimetableEntry_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) ListAbstractLessons(ctx context.Context, in *ListAbstractLessonsRequest, opts ...grpc.CallOption) (*ListAbstractLessonsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(ListAbstractLessonsResponse)
-	err := c.cc.Invoke(ctx, TimetableService_ListAbstractLessons_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *timetableServiceClient) CreateConcreteLesson(ctx context.Context, in *CreateConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) DeleteTimetableEntry(ctx context.Context, in *DeleteTimetableEntryRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_CreateConcreteLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_DeleteTimetableEntry_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) DeleteConcreteLesson(ctx context.Context, in *DeleteConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) TimetableEntriesByTimetable(ctx context.Context, in *TimetableEntriesByTimetableRequest, opts ...grpc.CallOption) (*TimetableEntriesByTimetableResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TimetableEntriesByTimetableResponse)
+	err := c.cc.Invoke(ctx, TimetableService_TimetableEntriesByTimetable_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) Lesson(ctx context.Context, in *LessonRequest, opts ...grpc.CallOption) (*LessonResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(LessonResponse)
+	err := c.cc.Invoke(ctx, TimetableService_Lesson_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CreateLesson(ctx context.Context, in *CreateLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_DeleteConcreteLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_CreateLesson_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) PatchConcreteLesson(ctx context.Context, in *PatchConcreteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) PatchLesson(ctx context.Context, in *PatchLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
-	err := c.cc.Invoke(ctx, TimetableService_PatchConcreteLesson_FullMethodName, in, out, cOpts...)
+	err := c.cc.Invoke(ctx, TimetableService_PatchLesson_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) GetConcreteLesson(ctx context.Context, in *GetConcreteLessonRequest, opts ...grpc.CallOption) (*GetConcreteLessonResponse, error) {
+func (c *timetableServiceClient) DeleteLesson(ctx context.Context, in *DeleteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetConcreteLessonResponse)
-	err := c.cc.Invoke(ctx, TimetableService_GetConcreteLesson_FullMethodName, in, out, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_DeleteLesson_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) GetPeriods(ctx context.Context, in *GetPeriodRequest, opts ...grpc.CallOption) (*GetPeriodsResponse, error) {
+func (c *timetableServiceClient) Timetable(ctx context.Context, in *TimetableRequest, opts ...grpc.CallOption) (*TimetableResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetPeriodsResponse)
-	err := c.cc.Invoke(ctx, TimetableService_GetPeriods_FullMethodName, in, out, cOpts...)
+	out := new(TimetableResponse)
+	err := c.cc.Invoke(ctx, TimetableService_Timetable_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CreateTimetable(ctx context.Context, in *CreateTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_CreateTimetable_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) PatchTimetable(ctx context.Context, in *PatchTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_PatchTimetable_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) DeleteTimetable(ctx context.Context, in *DeleteTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_DeleteTimetable_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) ListTimetables(ctx context.Context, in *ListTimetablesRequest, opts ...grpc.CallOption) (*ListTimetablesResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListTimetablesResponse)
+	err := c.cc.Invoke(ctx, TimetableService_ListTimetables_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) TimetableByDate(ctx context.Context, in *TimetableByDateRequest, opts ...grpc.CallOption) (*TimetableByDateResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(TimetableByDateResponse)
+	err := c.cc.Invoke(ctx, TimetableService_TimetableByDate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) Subject(ctx context.Context, in *SubjectRequest, opts ...grpc.CallOption) (*SubjectResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(SubjectResponse)
+	err := c.cc.Invoke(ctx, TimetableService_Subject_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CreateSubject(ctx context.Context, in *CreateSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_CreateSubject_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) PatchSubject(ctx context.Context, in *PatchSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_PatchSubject_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) DeleteSubject(ctx context.Context, in *DeleteSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_DeleteSubject_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) ListSubjects(ctx context.Context, in *ListSubjectsRequest, opts ...grpc.CallOption) (*ListSubjectsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListSubjectsResponse)
+	err := c.cc.Invoke(ctx, TimetableService_ListSubjects_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) Period(ctx context.Context, in *PeriodRequest, opts ...grpc.CallOption) (*PeriodResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(PeriodResponse)
+	err := c.cc.Invoke(ctx, TimetableService_Period_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CreatePeriod(ctx context.Context, in *CreaetePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_CreatePeriod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -200,40 +364,20 @@ func (c *timetableServiceClient) PatchPeriod(ctx context.Context, in *PatchPerio
 	return out, nil
 }
 
-func (c *timetableServiceClient) HomeworkBodyPUTUrl(ctx context.Context, in *HomeworkBodyPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyPUTUrlResponse, error) {
+func (c *timetableServiceClient) DeletePeriod(ctx context.Context, in *DeletePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomeworkBodyPUTUrlResponse)
-	err := c.cc.Invoke(ctx, TimetableService_HomeworkBodyPUTUrl_FullMethodName, in, out, cOpts...)
+	out := new(emptypb.Empty)
+	err := c.cc.Invoke(ctx, TimetableService_DeletePeriod_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *timetableServiceClient) HomeworkBodyGETUrl(ctx context.Context, in *HomeworkBodyGETUrlRequest, opts ...grpc.CallOption) (*HomeworkBodyGETUrlResponse, error) {
+func (c *timetableServiceClient) ListPeriods(ctx context.Context, in *ListPeriodsRequest, opts ...grpc.CallOption) (*ListPeriodsResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomeworkBodyGETUrlResponse)
-	err := c.cc.Invoke(ctx, TimetableService_HomeworkBodyGETUrl_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *timetableServiceClient) HomeworkAttachmentPUTUrl(ctx context.Context, in *HomeworkAttachmentPUTUrlRequest, opts ...grpc.CallOption) (*HomeworkAttachmentPUTUrlResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomeworkAttachmentPUTUrlResponse)
-	err := c.cc.Invoke(ctx, TimetableService_HomeworkAttachmentPUTUrl_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *timetableServiceClient) HomeworkAttachmentGETUrl(ctx context.Context, in *HomeworkAttachmentGETUrlsRequest, opts ...grpc.CallOption) (*HomeworkAttachmentGETUrlsResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(HomeworkAttachmentGETUrlsResponse)
-	err := c.cc.Invoke(ctx, TimetableService_HomeworkAttachmentGETUrl_FullMethodName, in, out, cOpts...)
+	out := new(ListPeriodsResponse)
+	err := c.cc.Invoke(ctx, TimetableService_ListPeriods_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -244,23 +388,35 @@ func (c *timetableServiceClient) HomeworkAttachmentGETUrl(ctx context.Context, i
 // All implementations must embed UnimplementedTimetableServiceServer
 // for forward compatibility.
 type TimetableServiceServer interface {
-	ListTimetable(context.Context, *ListTimetablesRequest) (*ListTimetableResponse, error)
-	GetTimetable(context.Context, *GetTimetableRequest) (*GetTimetableResponse, error)
-	CreateAbstractLesson(context.Context, *CreateAbstractLessonRequest) (*emptypb.Empty, error)
-	DeleteAbstractLesson(context.Context, *DeleteAbstractLessonRequest) (*emptypb.Empty, error)
-	GetAbstractLesson(context.Context, *GetAbstractLessonRequest) (*GetAbstractLessonResponse, error)
-	PatchAbstractLesson(context.Context, *PatchAbstractLessonRequest) (*emptypb.Empty, error)
-	ListAbstractLessons(context.Context, *ListAbstractLessonsRequest) (*ListAbstractLessonsResponse, error)
-	CreateConcreteLesson(context.Context, *CreateConcreteLessonRequest) (*emptypb.Empty, error)
-	DeleteConcreteLesson(context.Context, *DeleteConcreteLessonRequest) (*emptypb.Empty, error)
-	PatchConcreteLesson(context.Context, *PatchConcreteLessonRequest) (*emptypb.Empty, error)
-	GetConcreteLesson(context.Context, *GetConcreteLessonRequest) (*GetConcreteLessonResponse, error)
-	GetPeriods(context.Context, *GetPeriodRequest) (*GetPeriodsResponse, error)
+	HomeworkAttachment(context.Context, *HomeworkAttachmentRequest) (*HomeworkAttachmentResponse, error)
+	HomeworkAttachmentByLesson(context.Context, *HomeworkAttachmentByLessonRequest) (*HomeworkAttachmentByLessonResponse, error)
+	AttachHomework(context.Context, *AttachHomeworkRequest) (*AttachHomeworkResponse, error)
+	DetachHomework(context.Context, *DetachHomeworkRequest) (*emptypb.Empty, error)
+	TimetableEntry(context.Context, *TimetableEntryRequest) (*TimetableEntryResponse, error)
+	CreateTimetableEntry(context.Context, *CreateTimetableEntryRequest) (*emptypb.Empty, error)
+	PatchTimetableEntry(context.Context, *PatchTimetableEntryRequest) (*emptypb.Empty, error)
+	DeleteTimetableEntry(context.Context, *DeleteTimetableEntryRequest) (*emptypb.Empty, error)
+	TimetableEntriesByTimetable(context.Context, *TimetableEntriesByTimetableRequest) (*TimetableEntriesByTimetableResponse, error)
+	Lesson(context.Context, *LessonRequest) (*LessonResponse, error)
+	CreateLesson(context.Context, *CreateLessonRequest) (*emptypb.Empty, error)
+	PatchLesson(context.Context, *PatchLessonRequest) (*emptypb.Empty, error)
+	DeleteLesson(context.Context, *DeleteLessonRequest) (*emptypb.Empty, error)
+	Timetable(context.Context, *TimetableRequest) (*TimetableResponse, error)
+	CreateTimetable(context.Context, *CreateTimetableRequest) (*emptypb.Empty, error)
+	PatchTimetable(context.Context, *PatchTimetableRequest) (*emptypb.Empty, error)
+	DeleteTimetable(context.Context, *DeleteTimetableRequest) (*emptypb.Empty, error)
+	ListTimetables(context.Context, *ListTimetablesRequest) (*ListTimetablesResponse, error)
+	TimetableByDate(context.Context, *TimetableByDateRequest) (*TimetableByDateResponse, error)
+	Subject(context.Context, *SubjectRequest) (*SubjectResponse, error)
+	CreateSubject(context.Context, *CreateSubjectRequest) (*emptypb.Empty, error)
+	PatchSubject(context.Context, *PatchSubjectRequest) (*emptypb.Empty, error)
+	DeleteSubject(context.Context, *DeleteSubjectRequest) (*emptypb.Empty, error)
+	ListSubjects(context.Context, *ListSubjectsRequest) (*ListSubjectsResponse, error)
+	Period(context.Context, *PeriodRequest) (*PeriodResponse, error)
+	CreatePeriod(context.Context, *CreaetePeriodRequest) (*emptypb.Empty, error)
 	PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error)
-	HomeworkBodyPUTUrl(context.Context, *HomeworkBodyPUTUrlRequest) (*HomeworkBodyPUTUrlResponse, error)
-	HomeworkBodyGETUrl(context.Context, *HomeworkBodyGETUrlRequest) (*HomeworkBodyGETUrlResponse, error)
-	HomeworkAttachmentPUTUrl(context.Context, *HomeworkAttachmentPUTUrlRequest) (*HomeworkAttachmentPUTUrlResponse, error)
-	HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlsRequest) (*HomeworkAttachmentGETUrlsResponse, error)
+	DeletePeriod(context.Context, *DeletePeriodRequest) (*emptypb.Empty, error)
+	ListPeriods(context.Context, *ListPeriodsRequest) (*ListPeriodsResponse, error)
 	mustEmbedUnimplementedTimetableServiceServer()
 }
 
@@ -271,56 +427,92 @@ type TimetableServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedTimetableServiceServer struct{}
 
-func (UnimplementedTimetableServiceServer) ListTimetable(context.Context, *ListTimetablesRequest) (*ListTimetableResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListTimetable not implemented")
+func (UnimplementedTimetableServiceServer) HomeworkAttachment(context.Context, *HomeworkAttachmentRequest) (*HomeworkAttachmentResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachment not implemented")
 }
-func (UnimplementedTimetableServiceServer) GetTimetable(context.Context, *GetTimetableRequest) (*GetTimetableResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetTimetable not implemented")
+func (UnimplementedTimetableServiceServer) HomeworkAttachmentByLesson(context.Context, *HomeworkAttachmentByLessonRequest) (*HomeworkAttachmentByLessonResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachmentByLesson not implemented")
 }
-func (UnimplementedTimetableServiceServer) CreateAbstractLesson(context.Context, *CreateAbstractLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateAbstractLesson not implemented")
+func (UnimplementedTimetableServiceServer) AttachHomework(context.Context, *AttachHomeworkRequest) (*AttachHomeworkResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method AttachHomework not implemented")
 }
-func (UnimplementedTimetableServiceServer) DeleteAbstractLesson(context.Context, *DeleteAbstractLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteAbstractLesson not implemented")
+func (UnimplementedTimetableServiceServer) DetachHomework(context.Context, *DetachHomeworkRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DetachHomework not implemented")
 }
-func (UnimplementedTimetableServiceServer) GetAbstractLesson(context.Context, *GetAbstractLessonRequest) (*GetAbstractLessonResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetAbstractLesson not implemented")
+func (UnimplementedTimetableServiceServer) TimetableEntry(context.Context, *TimetableEntryRequest) (*TimetableEntryResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method TimetableEntry not implemented")
 }
-func (UnimplementedTimetableServiceServer) PatchAbstractLesson(context.Context, *PatchAbstractLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method PatchAbstractLesson not implemented")
+func (UnimplementedTimetableServiceServer) CreateTimetableEntry(context.Context, *CreateTimetableEntryRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateTimetableEntry not implemented")
 }
-func (UnimplementedTimetableServiceServer) ListAbstractLessons(context.Context, *ListAbstractLessonsRequest) (*ListAbstractLessonsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method ListAbstractLessons not implemented")
+func (UnimplementedTimetableServiceServer) PatchTimetableEntry(context.Context, *PatchTimetableEntryRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchTimetableEntry not implemented")
 }
-func (UnimplementedTimetableServiceServer) CreateConcreteLesson(context.Context, *CreateConcreteLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateConcreteLesson not implemented")
+func (UnimplementedTimetableServiceServer) DeleteTimetableEntry(context.Context, *DeleteTimetableEntryRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteTimetableEntry not implemented")
 }
-func (UnimplementedTimetableServiceServer) DeleteConcreteLesson(context.Context, *DeleteConcreteLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method DeleteConcreteLesson not implemented")
+func (UnimplementedTimetableServiceServer) TimetableEntriesByTimetable(context.Context, *TimetableEntriesByTimetableRequest) (*TimetableEntriesByTimetableResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method TimetableEntriesByTimetable not implemented")
 }
-func (UnimplementedTimetableServiceServer) PatchConcreteLesson(context.Context, *PatchConcreteLessonRequest) (*emptypb.Empty, error) {
-	return nil, status.Error(codes.Unimplemented, "method PatchConcreteLesson not implemented")
+func (UnimplementedTimetableServiceServer) Lesson(context.Context, *LessonRequest) (*LessonResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Lesson not implemented")
 }
-func (UnimplementedTimetableServiceServer) GetConcreteLesson(context.Context, *GetConcreteLessonRequest) (*GetConcreteLessonResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetConcreteLesson not implemented")
+func (UnimplementedTimetableServiceServer) CreateLesson(context.Context, *CreateLessonRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateLesson not implemented")
 }
-func (UnimplementedTimetableServiceServer) GetPeriods(context.Context, *GetPeriodRequest) (*GetPeriodsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetPeriods not implemented")
+func (UnimplementedTimetableServiceServer) PatchLesson(context.Context, *PatchLessonRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchLesson not implemented")
+}
+func (UnimplementedTimetableServiceServer) DeleteLesson(context.Context, *DeleteLessonRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteLesson not implemented")
+}
+func (UnimplementedTimetableServiceServer) Timetable(context.Context, *TimetableRequest) (*TimetableResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Timetable not implemented")
+}
+func (UnimplementedTimetableServiceServer) CreateTimetable(context.Context, *CreateTimetableRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateTimetable not implemented")
+}
+func (UnimplementedTimetableServiceServer) PatchTimetable(context.Context, *PatchTimetableRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchTimetable not implemented")
+}
+func (UnimplementedTimetableServiceServer) DeleteTimetable(context.Context, *DeleteTimetableRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteTimetable not implemented")
+}
+func (UnimplementedTimetableServiceServer) ListTimetables(context.Context, *ListTimetablesRequest) (*ListTimetablesResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListTimetables not implemented")
+}
+func (UnimplementedTimetableServiceServer) TimetableByDate(context.Context, *TimetableByDateRequest) (*TimetableByDateResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method TimetableByDate not implemented")
+}
+func (UnimplementedTimetableServiceServer) Subject(context.Context, *SubjectRequest) (*SubjectResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Subject not implemented")
+}
+func (UnimplementedTimetableServiceServer) CreateSubject(context.Context, *CreateSubjectRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreateSubject not implemented")
+}
+func (UnimplementedTimetableServiceServer) PatchSubject(context.Context, *PatchSubjectRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method PatchSubject not implemented")
+}
+func (UnimplementedTimetableServiceServer) DeleteSubject(context.Context, *DeleteSubjectRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeleteSubject not implemented")
+}
+func (UnimplementedTimetableServiceServer) ListSubjects(context.Context, *ListSubjectsRequest) (*ListSubjectsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListSubjects not implemented")
+}
+func (UnimplementedTimetableServiceServer) Period(context.Context, *PeriodRequest) (*PeriodResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method Period not implemented")
+}
+func (UnimplementedTimetableServiceServer) CreatePeriod(context.Context, *CreaetePeriodRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method CreatePeriod not implemented")
 }
 func (UnimplementedTimetableServiceServer) PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method PatchPeriod not implemented")
 }
-func (UnimplementedTimetableServiceServer) HomeworkBodyPUTUrl(context.Context, *HomeworkBodyPUTUrlRequest) (*HomeworkBodyPUTUrlResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method HomeworkBodyPUTUrl not implemented")
+func (UnimplementedTimetableServiceServer) DeletePeriod(context.Context, *DeletePeriodRequest) (*emptypb.Empty, error) {
+	return nil, status.Error(codes.Unimplemented, "method DeletePeriod not implemented")
 }
-func (UnimplementedTimetableServiceServer) HomeworkBodyGETUrl(context.Context, *HomeworkBodyGETUrlRequest) (*HomeworkBodyGETUrlResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method HomeworkBodyGETUrl not implemented")
-}
-func (UnimplementedTimetableServiceServer) HomeworkAttachmentPUTUrl(context.Context, *HomeworkAttachmentPUTUrlRequest) (*HomeworkAttachmentPUTUrlResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachmentPUTUrl not implemented")
-}
-func (UnimplementedTimetableServiceServer) HomeworkAttachmentGETUrl(context.Context, *HomeworkAttachmentGETUrlsRequest) (*HomeworkAttachmentGETUrlsResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method HomeworkAttachmentGETUrl not implemented")
+func (UnimplementedTimetableServiceServer) ListPeriods(context.Context, *ListPeriodsRequest) (*ListPeriodsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListPeriods not implemented")
 }
 func (UnimplementedTimetableServiceServer) mustEmbedUnimplementedTimetableServiceServer() {}
 func (UnimplementedTimetableServiceServer) testEmbeddedByValue()                          {}
@@ -343,218 +535,470 @@ func RegisterTimetableServiceServer(s grpc.ServiceRegistrar, srv TimetableServic
 	s.RegisterService(&TimetableService_ServiceDesc, srv)
 }
 
-func _TimetableService_ListTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _TimetableService_HomeworkAttachment_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomeworkAttachmentRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).HomeworkAttachment(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_HomeworkAttachment_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).HomeworkAttachment(ctx, req.(*HomeworkAttachmentRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_HomeworkAttachmentByLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(HomeworkAttachmentByLessonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).HomeworkAttachmentByLesson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_HomeworkAttachmentByLesson_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).HomeworkAttachmentByLesson(ctx, req.(*HomeworkAttachmentByLessonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_AttachHomework_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(AttachHomeworkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).AttachHomework(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_AttachHomework_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).AttachHomework(ctx, req.(*AttachHomeworkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_DetachHomework_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetachHomeworkRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).DetachHomework(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_DetachHomework_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).DetachHomework(ctx, req.(*DetachHomeworkRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_TimetableEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimetableEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).TimetableEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_TimetableEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).TimetableEntry(ctx, req.(*TimetableEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_CreateTimetableEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTimetableEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).CreateTimetableEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_CreateTimetableEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).CreateTimetableEntry(ctx, req.(*CreateTimetableEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_PatchTimetableEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchTimetableEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).PatchTimetableEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_PatchTimetableEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).PatchTimetableEntry(ctx, req.(*PatchTimetableEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_DeleteTimetableEntry_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTimetableEntryRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).DeleteTimetableEntry(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_DeleteTimetableEntry_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).DeleteTimetableEntry(ctx, req.(*DeleteTimetableEntryRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_TimetableEntriesByTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimetableEntriesByTimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).TimetableEntriesByTimetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_TimetableEntriesByTimetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).TimetableEntriesByTimetable(ctx, req.(*TimetableEntriesByTimetableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_Lesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(LessonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).Lesson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_Lesson_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).Lesson(ctx, req.(*LessonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_CreateLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateLessonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).CreateLesson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_CreateLesson_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).CreateLesson(ctx, req.(*CreateLessonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_PatchLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchLessonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).PatchLesson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_PatchLesson_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).PatchLesson(ctx, req.(*PatchLessonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_DeleteLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteLessonRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).DeleteLesson(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_DeleteLesson_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).DeleteLesson(ctx, req.(*DeleteLessonRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_Timetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).Timetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_Timetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).Timetable(ctx, req.(*TimetableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_CreateTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateTimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).CreateTimetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_CreateTimetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).CreateTimetable(ctx, req.(*CreateTimetableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_PatchTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchTimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).PatchTimetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_PatchTimetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).PatchTimetable(ctx, req.(*PatchTimetableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_DeleteTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteTimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).DeleteTimetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_DeleteTimetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).DeleteTimetable(ctx, req.(*DeleteTimetableRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_ListTimetables_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(ListTimetablesRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).ListTimetable(ctx, in)
+		return srv.(TimetableServiceServer).ListTimetables(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_ListTimetable_FullMethodName,
+		FullMethod: TimetableService_ListTimetables_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).ListTimetable(ctx, req.(*ListTimetablesRequest))
+		return srv.(TimetableServiceServer).ListTimetables(ctx, req.(*ListTimetablesRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_GetTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetTimetableRequest)
+func _TimetableService_TimetableByDate_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(TimetableByDateRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).GetTimetable(ctx, in)
+		return srv.(TimetableServiceServer).TimetableByDate(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_GetTimetable_FullMethodName,
+		FullMethod: TimetableService_TimetableByDate_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).GetTimetable(ctx, req.(*GetTimetableRequest))
+		return srv.(TimetableServiceServer).TimetableByDate(ctx, req.(*TimetableByDateRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_CreateAbstractLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateAbstractLessonRequest)
+func _TimetableService_Subject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(SubjectRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).CreateAbstractLesson(ctx, in)
+		return srv.(TimetableServiceServer).Subject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_CreateAbstractLesson_FullMethodName,
+		FullMethod: TimetableService_Subject_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).CreateAbstractLesson(ctx, req.(*CreateAbstractLessonRequest))
+		return srv.(TimetableServiceServer).Subject(ctx, req.(*SubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_DeleteAbstractLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteAbstractLessonRequest)
+func _TimetableService_CreateSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateSubjectRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).DeleteAbstractLesson(ctx, in)
+		return srv.(TimetableServiceServer).CreateSubject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_DeleteAbstractLesson_FullMethodName,
+		FullMethod: TimetableService_CreateSubject_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).DeleteAbstractLesson(ctx, req.(*DeleteAbstractLessonRequest))
+		return srv.(TimetableServiceServer).CreateSubject(ctx, req.(*CreateSubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_GetAbstractLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetAbstractLessonRequest)
+func _TimetableService_PatchSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PatchSubjectRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).GetAbstractLesson(ctx, in)
+		return srv.(TimetableServiceServer).PatchSubject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_GetAbstractLesson_FullMethodName,
+		FullMethod: TimetableService_PatchSubject_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).GetAbstractLesson(ctx, req.(*GetAbstractLessonRequest))
+		return srv.(TimetableServiceServer).PatchSubject(ctx, req.(*PatchSubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_PatchAbstractLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PatchAbstractLessonRequest)
+func _TimetableService_DeleteSubject_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteSubjectRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).PatchAbstractLesson(ctx, in)
+		return srv.(TimetableServiceServer).DeleteSubject(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_PatchAbstractLesson_FullMethodName,
+		FullMethod: TimetableService_DeleteSubject_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).PatchAbstractLesson(ctx, req.(*PatchAbstractLessonRequest))
+		return srv.(TimetableServiceServer).DeleteSubject(ctx, req.(*DeleteSubjectRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_ListAbstractLessons_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(ListAbstractLessonsRequest)
+func _TimetableService_ListSubjects_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListSubjectsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).ListAbstractLessons(ctx, in)
+		return srv.(TimetableServiceServer).ListSubjects(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_ListAbstractLessons_FullMethodName,
+		FullMethod: TimetableService_ListSubjects_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).ListAbstractLessons(ctx, req.(*ListAbstractLessonsRequest))
+		return srv.(TimetableServiceServer).ListSubjects(ctx, req.(*ListSubjectsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_CreateConcreteLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateConcreteLessonRequest)
+func _TimetableService_Period_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).CreateConcreteLesson(ctx, in)
+		return srv.(TimetableServiceServer).Period(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_CreateConcreteLesson_FullMethodName,
+		FullMethod: TimetableService_Period_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).CreateConcreteLesson(ctx, req.(*CreateConcreteLessonRequest))
+		return srv.(TimetableServiceServer).Period(ctx, req.(*PeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_DeleteConcreteLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(DeleteConcreteLessonRequest)
+func _TimetableService_CreatePeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreaetePeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).DeleteConcreteLesson(ctx, in)
+		return srv.(TimetableServiceServer).CreatePeriod(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_DeleteConcreteLesson_FullMethodName,
+		FullMethod: TimetableService_CreatePeriod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).DeleteConcreteLesson(ctx, req.(*DeleteConcreteLessonRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TimetableService_PatchConcreteLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(PatchConcreteLessonRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TimetableServiceServer).PatchConcreteLesson(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TimetableService_PatchConcreteLesson_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).PatchConcreteLesson(ctx, req.(*PatchConcreteLessonRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TimetableService_GetConcreteLesson_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetConcreteLessonRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TimetableServiceServer).GetConcreteLesson(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TimetableService_GetConcreteLesson_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).GetConcreteLesson(ctx, req.(*GetConcreteLessonRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TimetableService_GetPeriods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetPeriodRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TimetableServiceServer).GetPeriods(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TimetableService_GetPeriods_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).GetPeriods(ctx, req.(*GetPeriodRequest))
+		return srv.(TimetableServiceServer).CreatePeriod(ctx, req.(*CreaetePeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -577,74 +1021,38 @@ func _TimetableService_PatchPeriod_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_HomeworkBodyPUTUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomeworkBodyPUTUrlRequest)
+func _TimetableService_DeletePeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeletePeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).HomeworkBodyPUTUrl(ctx, in)
+		return srv.(TimetableServiceServer).DeletePeriod(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_HomeworkBodyPUTUrl_FullMethodName,
+		FullMethod: TimetableService_DeletePeriod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).HomeworkBodyPUTUrl(ctx, req.(*HomeworkBodyPUTUrlRequest))
+		return srv.(TimetableServiceServer).DeletePeriod(ctx, req.(*DeletePeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _TimetableService_HomeworkBodyGETUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomeworkBodyGETUrlRequest)
+func _TimetableService_ListPeriods_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListPeriodsRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(TimetableServiceServer).HomeworkBodyGETUrl(ctx, in)
+		return srv.(TimetableServiceServer).ListPeriods(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: TimetableService_HomeworkBodyGETUrl_FullMethodName,
+		FullMethod: TimetableService_ListPeriods_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).HomeworkBodyGETUrl(ctx, req.(*HomeworkBodyGETUrlRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TimetableService_HomeworkAttachmentPUTUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomeworkAttachmentPUTUrlRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TimetableServiceServer).HomeworkAttachmentPUTUrl(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TimetableService_HomeworkAttachmentPUTUrl_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).HomeworkAttachmentPUTUrl(ctx, req.(*HomeworkAttachmentPUTUrlRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _TimetableService_HomeworkAttachmentGETUrl_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(HomeworkAttachmentGETUrlsRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(TimetableServiceServer).HomeworkAttachmentGETUrl(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: TimetableService_HomeworkAttachmentGETUrl_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).HomeworkAttachmentGETUrl(ctx, req.(*HomeworkAttachmentGETUrlsRequest))
+		return srv.(TimetableServiceServer).ListPeriods(ctx, req.(*ListPeriodsRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -657,72 +1065,120 @@ var TimetableService_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*TimetableServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "ListTimetable",
-			Handler:    _TimetableService_ListTimetable_Handler,
+			MethodName: "HomeworkAttachment",
+			Handler:    _TimetableService_HomeworkAttachment_Handler,
 		},
 		{
-			MethodName: "GetTimetable",
-			Handler:    _TimetableService_GetTimetable_Handler,
+			MethodName: "HomeworkAttachmentByLesson",
+			Handler:    _TimetableService_HomeworkAttachmentByLesson_Handler,
 		},
 		{
-			MethodName: "CreateAbstractLesson",
-			Handler:    _TimetableService_CreateAbstractLesson_Handler,
+			MethodName: "AttachHomework",
+			Handler:    _TimetableService_AttachHomework_Handler,
 		},
 		{
-			MethodName: "DeleteAbstractLesson",
-			Handler:    _TimetableService_DeleteAbstractLesson_Handler,
+			MethodName: "DetachHomework",
+			Handler:    _TimetableService_DetachHomework_Handler,
 		},
 		{
-			MethodName: "GetAbstractLesson",
-			Handler:    _TimetableService_GetAbstractLesson_Handler,
+			MethodName: "TimetableEntry",
+			Handler:    _TimetableService_TimetableEntry_Handler,
 		},
 		{
-			MethodName: "PatchAbstractLesson",
-			Handler:    _TimetableService_PatchAbstractLesson_Handler,
+			MethodName: "CreateTimetableEntry",
+			Handler:    _TimetableService_CreateTimetableEntry_Handler,
 		},
 		{
-			MethodName: "ListAbstractLessons",
-			Handler:    _TimetableService_ListAbstractLessons_Handler,
+			MethodName: "PatchTimetableEntry",
+			Handler:    _TimetableService_PatchTimetableEntry_Handler,
 		},
 		{
-			MethodName: "CreateConcreteLesson",
-			Handler:    _TimetableService_CreateConcreteLesson_Handler,
+			MethodName: "DeleteTimetableEntry",
+			Handler:    _TimetableService_DeleteTimetableEntry_Handler,
 		},
 		{
-			MethodName: "DeleteConcreteLesson",
-			Handler:    _TimetableService_DeleteConcreteLesson_Handler,
+			MethodName: "TimetableEntriesByTimetable",
+			Handler:    _TimetableService_TimetableEntriesByTimetable_Handler,
 		},
 		{
-			MethodName: "PatchConcreteLesson",
-			Handler:    _TimetableService_PatchConcreteLesson_Handler,
+			MethodName: "Lesson",
+			Handler:    _TimetableService_Lesson_Handler,
 		},
 		{
-			MethodName: "GetConcreteLesson",
-			Handler:    _TimetableService_GetConcreteLesson_Handler,
+			MethodName: "CreateLesson",
+			Handler:    _TimetableService_CreateLesson_Handler,
 		},
 		{
-			MethodName: "GetPeriods",
-			Handler:    _TimetableService_GetPeriods_Handler,
+			MethodName: "PatchLesson",
+			Handler:    _TimetableService_PatchLesson_Handler,
+		},
+		{
+			MethodName: "DeleteLesson",
+			Handler:    _TimetableService_DeleteLesson_Handler,
+		},
+		{
+			MethodName: "Timetable",
+			Handler:    _TimetableService_Timetable_Handler,
+		},
+		{
+			MethodName: "CreateTimetable",
+			Handler:    _TimetableService_CreateTimetable_Handler,
+		},
+		{
+			MethodName: "PatchTimetable",
+			Handler:    _TimetableService_PatchTimetable_Handler,
+		},
+		{
+			MethodName: "DeleteTimetable",
+			Handler:    _TimetableService_DeleteTimetable_Handler,
+		},
+		{
+			MethodName: "ListTimetables",
+			Handler:    _TimetableService_ListTimetables_Handler,
+		},
+		{
+			MethodName: "TimetableByDate",
+			Handler:    _TimetableService_TimetableByDate_Handler,
+		},
+		{
+			MethodName: "Subject",
+			Handler:    _TimetableService_Subject_Handler,
+		},
+		{
+			MethodName: "CreateSubject",
+			Handler:    _TimetableService_CreateSubject_Handler,
+		},
+		{
+			MethodName: "PatchSubject",
+			Handler:    _TimetableService_PatchSubject_Handler,
+		},
+		{
+			MethodName: "DeleteSubject",
+			Handler:    _TimetableService_DeleteSubject_Handler,
+		},
+		{
+			MethodName: "ListSubjects",
+			Handler:    _TimetableService_ListSubjects_Handler,
+		},
+		{
+			MethodName: "Period",
+			Handler:    _TimetableService_Period_Handler,
+		},
+		{
+			MethodName: "CreatePeriod",
+			Handler:    _TimetableService_CreatePeriod_Handler,
 		},
 		{
 			MethodName: "PatchPeriod",
 			Handler:    _TimetableService_PatchPeriod_Handler,
 		},
 		{
-			MethodName: "HomeworkBodyPUTUrl",
-			Handler:    _TimetableService_HomeworkBodyPUTUrl_Handler,
+			MethodName: "DeletePeriod",
+			Handler:    _TimetableService_DeletePeriod_Handler,
 		},
 		{
-			MethodName: "HomeworkBodyGETUrl",
-			Handler:    _TimetableService_HomeworkBodyGETUrl_Handler,
-		},
-		{
-			MethodName: "HomeworkAttachmentPUTUrl",
-			Handler:    _TimetableService_HomeworkAttachmentPUTUrl_Handler,
-		},
-		{
-			MethodName: "HomeworkAttachmentGETUrl",
-			Handler:    _TimetableService_HomeworkAttachmentGETUrl_Handler,
+			MethodName: "ListPeriods",
+			Handler:    _TimetableService_ListPeriods_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
