@@ -18,7 +18,8 @@ type Lesson struct {
 
 	CreatedAt time.Time `bun:"created_at,default:NOW(),notnull"`
 
-	TimetableEntry TimetableEntry `bun:"rel:belongs-to,join:uuid=timetable_entry_uuid"`
+	TimetableEntry     TimetableEntry       `bun:"rel:belongs-to,join:uuid=timetable_entry_uuid"`
+	HomeworkAttachment []HomeworkAttachment `bun:"rel:has-many,join:uuid=lesson_uuid"`
 }
 
 var _ bun.BeforeAppendModelHook = (*Lesson)(nil)

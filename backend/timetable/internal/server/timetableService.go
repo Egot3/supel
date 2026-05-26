@@ -9,6 +9,7 @@ import (
 	"github.com/egot3/supel/backend/timetable/internal/database/repositories/timetable"
 	"github.com/egot3/supel/backend/timetable/internal/database/repositories/timetableentry"
 	grpcutils "github.com/egot3/supel/backend/timetable/internal/grpcUtils"
+	storage "github.com/egot3/supel/backend/timetable/internal/s3"
 	"github.com/egot3/supel/backend/timetable/internal/services"
 	"github.com/samber/do/v2"
 )
@@ -23,6 +24,8 @@ type TimetableService struct {
 	lessonRepository             lesson.LessonRepository
 	homeworkAttachmentRepository homeworkattachment.HomeworkAttachmentRepository
 
+	storage storage.StorageService
+
 	grpcClient services.Client
 	su         grpcutils.ServerUtils
 }
@@ -35,6 +38,8 @@ func NewPuddleService(i do.Injector) (TimetableService, error) {
 	leRepo := do.MustInvoke[lesson.LessonRepository](i)
 	haRepo := do.MustInvoke[homeworkattachment.HomeworkAttachmentRepository](i) //all are named by their initials
 
+	storage := do.MustInvoke[storage.StorageService](i)
+
 	grpcClient := do.MustInvoke[services.Client](i)
 	su := do.MustInvoke[grpcutils.ServerUtils](i)
 	return TimetableService{
@@ -44,6 +49,7 @@ func NewPuddleService(i do.Injector) (TimetableService, error) {
 		timetableEntryRepository:     teRepo,
 		lessonRepository:             leRepo,
 		homeworkAttachmentRepository: haRepo,
+		storage:                      storage,
 
 		grpcClient: grpcClient,
 		su:         su,
