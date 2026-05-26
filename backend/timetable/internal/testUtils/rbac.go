@@ -5,7 +5,7 @@ import (
 
 	pb "github.com/Egot3/supel/backend/contracts"
 	rbacpb "github.com/Egot3/supel/backend/contracts/rbac"
-	"github.com/egot3/supel/backend/group/internal/services"
+	"github.com/egot3/supel/backend/timetable/internal/services"
 	"github.com/samber/do/v2"
 
 	"github.com/google/uuid"

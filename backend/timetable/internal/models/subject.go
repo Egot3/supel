@@ -33,9 +33,6 @@ func (s *Subject) BeforeAppendModel(ctx context.Context, query bun.Query) error 
 }
 
 type SubjectPatched struct {
-	UUID      uuid.UUID
-	Name      *string
-	Position  *int16
-	StartTime *time.Time
-	EndTime   *time.Time
+	UUID uuid.UUID
+	Name *string //there is just nothing more to it now
 }

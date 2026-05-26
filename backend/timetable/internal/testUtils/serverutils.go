@@ -3,7 +3,7 @@ package testutils
 import (
 	"context"
 
-	grpcutils "github.com/egot3/supel/backend/group/internal/grpcUtils"
+	grpcutils "github.com/egot3/supel/backend/timetable/internal/grpcUtils"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
 )

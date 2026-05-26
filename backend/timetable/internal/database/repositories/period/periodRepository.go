@@ -13,4 +13,5 @@ type PeriodRepository interface {
 	Period(ctx context.Context, periodUUID uuid.UUID) (*models.Period, error)
 	PatchPeriod(ctx context.Context, patch models.PeriodPatched) error
 	DeletePeriod(ctx context.Context, periodUUID uuid.UUID) error
+	ListPeriods(ctx context.Context, page, size uint32) ([]models.Period, int, error)
 }

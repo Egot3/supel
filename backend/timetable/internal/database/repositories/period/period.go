@@ -69,3 +69,13 @@ func (r *bunPeriodRepository) DeletePeriod(ctx context.Context, periodUUID uuid.
 	_, err := r.db.NewDelete().Model(&models.Period{UUID: periodUUID}).WherePK().Exec(ctx)
 	return err
 }
+
+func (r *bunPeriodRepository) ListPeriods(ctx context.Context, page, size uint32) ([]models.Period, int, error) {
+	var periods []models.Period
+	total, err := r.db.NewSelect().Model(&periods).Limit(int(size)).Offset(int(page * size)).ScanAndCount(ctx)
+	if err != nil {
+		return nil, 0, err
+	}
+
+	return periods, total, nil
+}
