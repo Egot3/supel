@@ -1,5 +1,5 @@
-github.com/Egot3/supel/backend/contracts v0.3.4 h1:B686DTx/N2AzCfhYyAV9h5ChF5rlc5F4cZGquelxEJk=
-github.com/Egot3/supel/backend/contracts v0.3.4/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
+github.com/Egot3/supel/backend/contracts v0.3.6 h1:cpYDI30VM80XJ4UL1IjHvox3qhoOexYUAKeTSj9u0K0=
+github.com/Egot3/supel/backend/contracts v0.3.6/go.mod h1:9naWqrGoRLsjsD3v8UPw7R8xNA3sLbG5ES/7b7lz9ng=
 github.com/cespare/xxhash/v2 v2.3.0 h1:UL815xU9SqsFlibzuggzjXhog7bL6oX9BbNZnL2UFvs=
 github.com/cespare/xxhash/v2 v2.3.0/go.mod h1:VGX0DQ3Q6kWi7AoAeZDth3/j3BFtOZR5XLFGgcrjCOs=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=

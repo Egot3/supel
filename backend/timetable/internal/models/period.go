@@ -39,7 +39,7 @@ func (p *Period) BeforeAppendModel(ctx context.Context, query bun.Query) error {
 type PeriodPatched struct {
 	UUID      uuid.UUID
 	Name      *string
-	Position  *int16
+	Position  *int32
 	StartTime *time.Time
 	EndTime   *time.Time
 }
