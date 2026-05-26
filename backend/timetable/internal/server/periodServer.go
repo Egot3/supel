@@ -76,7 +76,7 @@ func (s *TimetableService) CreatePeriod(ctx context.Context, req *ttpb.CreatePer
 		return nil, status.Error(codes.Internal, "couldn't check user's permissions")
 	}
 	if !can {
-		return nil, status.Error(codes.PermissionDenied, "user doesn't have enough permissions for puddle creation")
+		return nil, status.Error(codes.PermissionDenied, "user doesn't have enough permissions for period creation")
 	}
 
 	err = s.periodRepository.CreatePeriod(ctx, req.Name, int16(req.Position), req.StartTime.AsTime(), req.StartTime.AsTime())
@@ -100,7 +100,7 @@ func (s *TimetableService) PatchPeriod(ctx context.Context, req *ttpb.PatchPerio
 	}
 
 	subscope := "period"
-	can, err := s.grpcClient.HasPermission(ctx, ownUUID, "timetable", &subscope, rbacpb.Verb_POST)
+	can, err := s.grpcClient.HasPermission(ctx, ownUUID, "timetable", &subscope, rbacpb.Verb_PATCH)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't check user's permissions")
 	}
