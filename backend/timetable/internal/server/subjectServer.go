@@ -44,7 +44,7 @@ func (s *TimetableService) Subject(ctx context.Context, req *ttpb.SubjectRequest
 
 	return &ttpb.SubjectResponse{
 		Subject: &ttpb.Subject{
-			Name: &subject.Name,
+			Name: subject.Name,
 			UUID: subject.UUID.String(),
 		},
 	}, nil
@@ -173,7 +173,7 @@ func (s *TimetableService) ListSubjects(ctx context.Context, req *ttpb.ListSubje
 	for i, subject := range subjects {
 		subjectsProto[i] = &ttpb.Subject{
 			UUID: subject.UUID.String(),
-			Name: &subject.Name,
+			Name: subject.Name,
 		}
 	}
 

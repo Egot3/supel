@@ -15,4 +15,5 @@ type TimetableRepository interface {
 	DeleteTimetable(ctx context.Context, timetableUUID uuid.UUID) error
 	ListTimetables(ctx context.Context, page, size uint32) ([]models.Timetable, int, error)
 	CurrentTimetable(ctx context.Context, groupUUID uuid.UUID) (*models.Timetable, error)
+	TimetableByDate(ctx context.Context, groupUUID uuid.UUID, date time.Time) (*models.Timetable, error)
 }

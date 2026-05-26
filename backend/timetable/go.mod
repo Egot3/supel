@@ -3,7 +3,7 @@ module github.com/egot3/supel/backend/timetable
 go 1.26.1
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.3.6
+	github.com/Egot3/supel/backend/contracts v0.3.7
 	github.com/google/uuid v1.6.0
 	github.com/stretchr/testify v1.11.1
 	github.com/uptrace/bun v1.2.18

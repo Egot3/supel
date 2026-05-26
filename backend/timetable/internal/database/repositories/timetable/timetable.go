@@ -93,3 +93,16 @@ func (r *bunTimetableRepository) CurrentTimetable(ctx context.Context, groupUUID
 
 	return &timetable, nil
 }
+
+func (r *bunTimetableRepository) TimetableByDate(ctx context.Context, groupUUID uuid.UUID, date time.Time) (*models.Timetable, error) {
+	var timetable models.Timetable
+
+	err := r.db.NewSelect().Model(&timetable).
+		Where("group_uuid = ?", groupUUID).WhereAllWithDeleted().Where("? BETWEEN assign_at AND revoke_at", date).
+		Scan(ctx)
+	if err != nil {
+		return nil, err
+	}
+
+	return &timetable, nil
+}
