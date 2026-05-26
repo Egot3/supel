@@ -33,12 +33,14 @@ const (
 	TimetableService_CreateLesson_FullMethodName                = "/timetable.TimetableService/CreateLesson"
 	TimetableService_PatchLesson_FullMethodName                 = "/timetable.TimetableService/PatchLesson"
 	TimetableService_DeleteLesson_FullMethodName                = "/timetable.TimetableService/DeleteLesson"
+	TimetableService_ListLessons_FullMethodName                 = "/timetable.TimetableService/ListLessons"
 	TimetableService_Timetable_FullMethodName                   = "/timetable.TimetableService/Timetable"
 	TimetableService_CreateTimetable_FullMethodName             = "/timetable.TimetableService/CreateTimetable"
 	TimetableService_PatchTimetable_FullMethodName              = "/timetable.TimetableService/PatchTimetable"
 	TimetableService_DeleteTimetable_FullMethodName             = "/timetable.TimetableService/DeleteTimetable"
 	TimetableService_ListTimetables_FullMethodName              = "/timetable.TimetableService/ListTimetables"
 	TimetableService_TimetableByDate_FullMethodName             = "/timetable.TimetableService/TimetableByDate"
+	TimetableService_CurrentTimetable_FullMethodName            = "/timetable.TimetableService/CurrentTimetable"
 	TimetableService_Subject_FullMethodName                     = "/timetable.TimetableService/Subject"
 	TimetableService_CreateSubject_FullMethodName               = "/timetable.TimetableService/CreateSubject"
 	TimetableService_PatchSubject_FullMethodName                = "/timetable.TimetableService/PatchSubject"
@@ -68,19 +70,21 @@ type TimetableServiceClient interface {
 	CreateLesson(ctx context.Context, in *CreateLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PatchLesson(ctx context.Context, in *PatchLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteLesson(ctx context.Context, in *DeleteLessonRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	ListLessons(ctx context.Context, in *ListLessonsRequest, opts ...grpc.CallOption) (*ListLessonsResponse, error)
 	Timetable(ctx context.Context, in *TimetableRequest, opts ...grpc.CallOption) (*TimetableResponse, error)
 	CreateTimetable(ctx context.Context, in *CreateTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PatchTimetable(ctx context.Context, in *PatchTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteTimetable(ctx context.Context, in *DeleteTimetableRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListTimetables(ctx context.Context, in *ListTimetablesRequest, opts ...grpc.CallOption) (*ListTimetablesResponse, error)
 	TimetableByDate(ctx context.Context, in *TimetableByDateRequest, opts ...grpc.CallOption) (*TimetableByDateResponse, error)
+	CurrentTimetable(ctx context.Context, in *CurrentTimetableRequest, opts ...grpc.CallOption) (*CurrentTimetableResponse, error)
 	Subject(ctx context.Context, in *SubjectRequest, opts ...grpc.CallOption) (*SubjectResponse, error)
 	CreateSubject(ctx context.Context, in *CreateSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PatchSubject(ctx context.Context, in *PatchSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeleteSubject(ctx context.Context, in *DeleteSubjectRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListSubjects(ctx context.Context, in *ListSubjectsRequest, opts ...grpc.CallOption) (*ListSubjectsResponse, error)
 	Period(ctx context.Context, in *PeriodRequest, opts ...grpc.CallOption) (*PeriodResponse, error)
-	CreatePeriod(ctx context.Context, in *CreaetePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
+	CreatePeriod(ctx context.Context, in *CreatePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	PatchPeriod(ctx context.Context, in *PatchPeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DeletePeriod(ctx context.Context, in *DeletePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	ListPeriods(ctx context.Context, in *ListPeriodsRequest, opts ...grpc.CallOption) (*ListPeriodsResponse, error)
@@ -224,6 +228,16 @@ func (c *timetableServiceClient) DeleteLesson(ctx context.Context, in *DeleteLes
 	return out, nil
 }
 
+func (c *timetableServiceClient) ListLessons(ctx context.Context, in *ListLessonsRequest, opts ...grpc.CallOption) (*ListLessonsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(ListLessonsResponse)
+	err := c.cc.Invoke(ctx, TimetableService_ListLessons_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *timetableServiceClient) Timetable(ctx context.Context, in *TimetableRequest, opts ...grpc.CallOption) (*TimetableResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TimetableResponse)
@@ -278,6 +292,16 @@ func (c *timetableServiceClient) TimetableByDate(ctx context.Context, in *Timeta
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(TimetableByDateResponse)
 	err := c.cc.Invoke(ctx, TimetableService_TimetableByDate_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *timetableServiceClient) CurrentTimetable(ctx context.Context, in *CurrentTimetableRequest, opts ...grpc.CallOption) (*CurrentTimetableResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(CurrentTimetableResponse)
+	err := c.cc.Invoke(ctx, TimetableService_CurrentTimetable_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -344,7 +368,7 @@ func (c *timetableServiceClient) Period(ctx context.Context, in *PeriodRequest, 
 	return out, nil
 }
 
-func (c *timetableServiceClient) CreatePeriod(ctx context.Context, in *CreaetePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
+func (c *timetableServiceClient) CreatePeriod(ctx context.Context, in *CreatePeriodRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	out := new(emptypb.Empty)
 	err := c.cc.Invoke(ctx, TimetableService_CreatePeriod_FullMethodName, in, out, cOpts...)
@@ -401,19 +425,21 @@ type TimetableServiceServer interface {
 	CreateLesson(context.Context, *CreateLessonRequest) (*emptypb.Empty, error)
 	PatchLesson(context.Context, *PatchLessonRequest) (*emptypb.Empty, error)
 	DeleteLesson(context.Context, *DeleteLessonRequest) (*emptypb.Empty, error)
+	ListLessons(context.Context, *ListLessonsRequest) (*ListLessonsResponse, error)
 	Timetable(context.Context, *TimetableRequest) (*TimetableResponse, error)
 	CreateTimetable(context.Context, *CreateTimetableRequest) (*emptypb.Empty, error)
 	PatchTimetable(context.Context, *PatchTimetableRequest) (*emptypb.Empty, error)
 	DeleteTimetable(context.Context, *DeleteTimetableRequest) (*emptypb.Empty, error)
 	ListTimetables(context.Context, *ListTimetablesRequest) (*ListTimetablesResponse, error)
 	TimetableByDate(context.Context, *TimetableByDateRequest) (*TimetableByDateResponse, error)
+	CurrentTimetable(context.Context, *CurrentTimetableRequest) (*CurrentTimetableResponse, error)
 	Subject(context.Context, *SubjectRequest) (*SubjectResponse, error)
 	CreateSubject(context.Context, *CreateSubjectRequest) (*emptypb.Empty, error)
 	PatchSubject(context.Context, *PatchSubjectRequest) (*emptypb.Empty, error)
 	DeleteSubject(context.Context, *DeleteSubjectRequest) (*emptypb.Empty, error)
 	ListSubjects(context.Context, *ListSubjectsRequest) (*ListSubjectsResponse, error)
 	Period(context.Context, *PeriodRequest) (*PeriodResponse, error)
-	CreatePeriod(context.Context, *CreaetePeriodRequest) (*emptypb.Empty, error)
+	CreatePeriod(context.Context, *CreatePeriodRequest) (*emptypb.Empty, error)
 	PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error)
 	DeletePeriod(context.Context, *DeletePeriodRequest) (*emptypb.Empty, error)
 	ListPeriods(context.Context, *ListPeriodsRequest) (*ListPeriodsResponse, error)
@@ -466,6 +492,9 @@ func (UnimplementedTimetableServiceServer) PatchLesson(context.Context, *PatchLe
 func (UnimplementedTimetableServiceServer) DeleteLesson(context.Context, *DeleteLessonRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteLesson not implemented")
 }
+func (UnimplementedTimetableServiceServer) ListLessons(context.Context, *ListLessonsRequest) (*ListLessonsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method ListLessons not implemented")
+}
 func (UnimplementedTimetableServiceServer) Timetable(context.Context, *TimetableRequest) (*TimetableResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Timetable not implemented")
 }
@@ -483,6 +512,9 @@ func (UnimplementedTimetableServiceServer) ListTimetables(context.Context, *List
 }
 func (UnimplementedTimetableServiceServer) TimetableByDate(context.Context, *TimetableByDateRequest) (*TimetableByDateResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method TimetableByDate not implemented")
+}
+func (UnimplementedTimetableServiceServer) CurrentTimetable(context.Context, *CurrentTimetableRequest) (*CurrentTimetableResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method CurrentTimetable not implemented")
 }
 func (UnimplementedTimetableServiceServer) Subject(context.Context, *SubjectRequest) (*SubjectResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Subject not implemented")
@@ -502,7 +534,7 @@ func (UnimplementedTimetableServiceServer) ListSubjects(context.Context, *ListSu
 func (UnimplementedTimetableServiceServer) Period(context.Context, *PeriodRequest) (*PeriodResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method Period not implemented")
 }
-func (UnimplementedTimetableServiceServer) CreatePeriod(context.Context, *CreaetePeriodRequest) (*emptypb.Empty, error) {
+func (UnimplementedTimetableServiceServer) CreatePeriod(context.Context, *CreatePeriodRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method CreatePeriod not implemented")
 }
 func (UnimplementedTimetableServiceServer) PatchPeriod(context.Context, *PatchPeriodRequest) (*emptypb.Empty, error) {
@@ -769,6 +801,24 @@ func _TimetableService_DeleteLesson_Handler(srv interface{}, ctx context.Context
 	return interceptor(ctx, in, info, handler)
 }
 
+func _TimetableService_ListLessons_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ListLessonsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).ListLessons(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_ListLessons_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).ListLessons(ctx, req.(*ListLessonsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _TimetableService_Timetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(TimetableRequest)
 	if err := dec(in); err != nil {
@@ -873,6 +923,24 @@ func _TimetableService_TimetableByDate_Handler(srv interface{}, ctx context.Cont
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(TimetableServiceServer).TimetableByDate(ctx, req.(*TimetableByDateRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _TimetableService_CurrentTimetable_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CurrentTimetableRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(TimetableServiceServer).CurrentTimetable(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: TimetableService_CurrentTimetable_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(TimetableServiceServer).CurrentTimetable(ctx, req.(*CurrentTimetableRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -986,7 +1054,7 @@ func _TimetableService_Period_Handler(srv interface{}, ctx context.Context, dec 
 }
 
 func _TimetableService_CreatePeriod_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreaetePeriodRequest)
+	in := new(CreatePeriodRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -998,7 +1066,7 @@ func _TimetableService_CreatePeriod_Handler(srv interface{}, ctx context.Context
 		FullMethod: TimetableService_CreatePeriod_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(TimetableServiceServer).CreatePeriod(ctx, req.(*CreaetePeriodRequest))
+		return srv.(TimetableServiceServer).CreatePeriod(ctx, req.(*CreatePeriodRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -1117,6 +1185,10 @@ var TimetableService_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _TimetableService_DeleteLesson_Handler,
 		},
 		{
+			MethodName: "ListLessons",
+			Handler:    _TimetableService_ListLessons_Handler,
+		},
+		{
 			MethodName: "Timetable",
 			Handler:    _TimetableService_Timetable_Handler,
 		},
@@ -1139,6 +1211,10 @@ var TimetableService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "TimetableByDate",
 			Handler:    _TimetableService_TimetableByDate_Handler,
+		},
+		{
+			MethodName: "CurrentTimetable",
+			Handler:    _TimetableService_CurrentTimetable_Handler,
 		},
 		{
 			MethodName: "Subject",

@@ -28,7 +28,7 @@ message PeriodResponse {
     Period period = 1;
 }
 
-message CreaetePeriodRequest {
+message CreatePeriodRequest {
     string name = 2;
     int32 position = 3;
     google.protobuf.Timestamp start_time = 4;
@@ -104,14 +104,14 @@ message ListSubjectsResponse {
 
 message Timetable {
     string UUID = 1;
-    string GroupUUID = 2;
-    string Name = 3;
+    string groupUUID = 2;
+    string name = 3;
     google.protobuf.Timestamp assign_at = 4;
     google.protobuf.Timestamp revoke_at = 5; 
 }
 
 message TimetableByDateRequest {
-    google.protobuf.Timestamp date = 1;
+    string date = 1;
 }
 
 message TimetableByDateResponse {
@@ -127,8 +127,8 @@ message TimetableResponse {
 }
 
 message CreateTimetableRequest {
-    string GroupUUID = 2;
-    string Name = 3;
+    string groupUUID = 2;
+    string name = 3;
     google.protobuf.Timestamp assign_at = 4;
     google.protobuf.Timestamp revoke_at = 5;
 }
@@ -196,8 +196,12 @@ message DeleteLessonRequest {
     string lessonUUID = 1;
 }
 
-message ListLessons {
+message ListLessonsRequest {
     string timetableUUID = 1;
+}
+
+message ListLessonsResponse {
+    repeated Lesson lessons = 1;
 }
 
 enum DayOfWeek {
@@ -240,7 +244,7 @@ message TimetableEntriesByTimetableRequest {
 }
 
 message TimetableEntriesByTimetableResponse {
-    TimetableEntry timetable_entry = 1;
+    repeated TimetableEntry timetable_entries = 1;
 }
 
 message CreateTimetableEntryRequest {
@@ -271,7 +275,7 @@ message DeleteTimetableEntryRequest {
 message HomeworkAttachment {
     string UUID = 1;
     string lessonUUID = 2;
-    string strorage_key = 3;
+    string storage_key = 3;
 
     google.protobuf.Timestamp created_at = 4;
 }
@@ -367,6 +371,7 @@ service TimetableService {
     rpc CreateLesson(CreateLessonRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/timetable/lesson"
+            body: "*"
         };
     };
     rpc PatchLesson(PatchLessonRequest) returns (google.protobuf.Empty){
@@ -378,6 +383,11 @@ service TimetableService {
     rpc DeleteLesson(DeleteLessonRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             delete: "/v1/timetable/lesson/{lessonUUID}"
+        };
+    };
+    rpc ListLessons(ListLessonsRequest) returns (ListLessonsResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/lesson/timetable/{timetableUUID}"
         };
     };
 
@@ -411,6 +421,11 @@ service TimetableService {
     rpc TimetableByDate(TimetableByDateRequest) returns (TimetableByDateResponse){
         option (google.api.http) = {
             get: "/v1/timetable/at/{date}"
+        };
+    };
+    rpc CurrentTimetable(CurrentTimetableRequest) returns (CurrentTimetableResponse){
+        option (google.api.http) = {
+            get: "/v1/timetable/current"
         };
     };
 
@@ -447,7 +462,7 @@ service TimetableService {
             get: "/v1/timetable/period/{periodUUID}"
         };
     };
-    rpc CreatePeriod(CreaetePeriodRequest) returns (google.protobuf.Empty){
+    rpc CreatePeriod(CreatePeriodRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/timetable/period"
             body: "*"
@@ -455,7 +470,7 @@ service TimetableService {
     };
     rpc PatchPeriod(PatchPeriodRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
-            post: "/v1/timetable/period/{periodUUID}"
+            patch: "/v1/timetable/period/{periodUUID}"
             body: "*"
         };
     };
