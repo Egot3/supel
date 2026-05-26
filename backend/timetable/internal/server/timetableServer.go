@@ -239,7 +239,7 @@ func (s *TimetableService) DeleteTimetable(ctx context.Context, req *ttpb.Delete
 		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
 	}
 
-	can, err := s.grpcClient.HasPermission(ctx, ownUUID, "timetable", nil, rbacpb.Verb_POST)
+	can, err := s.grpcClient.HasPermission(ctx, ownUUID, "timetable", nil, rbacpb.Verb_DELETE)
 	if err != nil {
 		return nil, status.Error(codes.Internal, "couldn't check user's permissions")
 	}

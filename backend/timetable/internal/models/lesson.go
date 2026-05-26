@@ -34,6 +34,6 @@ func (l *Lesson) BeforeAppendModel(ctx context.Context, query bun.Query) error {
 type LessonPatched struct {
 	UUID               uuid.UUID
 	Date               *time.Time
-	Cancelled          bool //musthave
+	Cancelled          *bool
 	TimetableEntryUUID uuid.UUID
 }

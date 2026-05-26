@@ -22,7 +22,7 @@ func NewTimetableRepository(i do.Injector) (TimetableRepository, error) {
 func (r *bunTimetableRepository) Timetable(ctx context.Context, timetableUUID uuid.UUID) (*models.Timetable, error) {
 	timetable := models.Timetable{UUID: timetableUUID}
 
-	err := r.db.NewSelect().Model(&timetable).WherePK().WhereAllWithDeleted().Scan(ctx)
+	err := r.db.NewSelect().Model(&timetable).WherePK().Relation("TimetableEntry").WhereAllWithDeleted().Scan(ctx)
 	if err != nil {
 		return nil, err
 	}

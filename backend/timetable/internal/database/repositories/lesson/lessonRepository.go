@@ -13,4 +13,5 @@ type LessonRepository interface {
 	CreateLesson(ctx context.Context, timetableEntryUUID uuid.UUID, date time.Time) error
 	PatchLesson(ctx context.Context, pathced models.LessonPatched) error
 	DeleteLesson(ctx context.Context, lessonUUID uuid.UUID) error
+	LessonByEntry(ctx context.Context, entryUUId uuid.UUID) (*models.Lesson, error)
 }

@@ -17,6 +17,8 @@ type Timetable struct {
 	AssignAt  *time.Time `bun:"assign_at"`
 	RevokeAt  *time.Time `bun:"revoke_at"`
 
+	TimetableEntries []TimetableEntry `bun:"rel:has-many,join:uuid=timetable_uuid"`
+
 	UpdatedAt time.Time `bun:"updated_at,default:NOW(),notnull"`
 	CreatedAt time.Time `bun:"created_at,default:NOW(),notnull"`
 }
