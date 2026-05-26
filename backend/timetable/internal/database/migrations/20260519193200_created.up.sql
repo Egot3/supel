@@ -27,7 +27,7 @@ CREATE UNIQUE INDEX uq_subjects_name ON subjects (lower("name"));
 CREATE TABLE IF NOT EXISTS "timetables" (
     uuid UUID PRIMARY KEY,
     group_uuid UUID NOT NULL, --SAGA
-    name       VARCHAR(45) NOT NULL,
+    name       VARCHAR(65) NOT NULL,
     assign_at DATE,
     revoke_at  DATE,
 
