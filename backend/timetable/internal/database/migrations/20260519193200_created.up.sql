@@ -1,4 +1,5 @@
 -- +migrate Up
+CREATE EXTENSION IF NOT EXISTS btree_gist;
 
 CREATE TABLE IF NOT EXISTS "periods" (
     uuid       UUID PRIMARY KEY,
@@ -36,6 +37,10 @@ CREATE TABLE IF NOT EXISTS "timetables" (
 
     CONSTRAINT timetable_valid_range CHECK (
         assign_at IS NULL OR revoke_at IS NULL OR assign_at<=revoke_at
+    ),
+    CONSTRAINT no_overlappingGroupTimetables EXCLUDE USING gist (
+        group_uuid WITH =,
+        daterange(assign_at, revoke_at, '[]') WITH &&
     )
 );
 CREATE INDEX idx_timetable_group_uuid ON "timetables" ("group_uuid");

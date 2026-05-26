@@ -3,6 +3,7 @@ package subject
 import (
 	"context"
 
+	"github.com/egot3/supel/backend/timetable/internal/carefulness"
 	"github.com/egot3/supel/backend/timetable/internal/models"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
@@ -20,9 +21,13 @@ func NewSubjectRepository(i do.Injector) (SubjectRepository, error) {
 
 func (r *bunSubjectRepository) Subject(ctx context.Context, subjectUUID uuid.UUID) (*models.Subject, error) {
 	subject := models.Subject{UUID: subjectUUID}
-	err := r.db.NewSelect().Model(&subject).WherePK().Scan(ctx)
+	err := r.db.NewSelect().Model(&subject).WherePK().WhereAllWithDeleted().Scan(ctx)
 	if err != nil {
 		return nil, err
+	}
+
+	if subject.DeletedAt != nil {
+		return nil, carefulness.Gone
 	}
 
 	return &subject, nil

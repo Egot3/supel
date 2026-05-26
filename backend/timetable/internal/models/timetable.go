@@ -11,11 +11,11 @@ import (
 type Timetable struct {
 	bun.BaseModel `bun:"tabletimetables:"`
 
-	UUID      uuid.UUID `bun:"uuid,type:uuid,pk"`
-	GroupUUID uuid.UUID `bun:"group_uuid,type:uuid,notnull"`
-	Name      string    `bun:"name,notnull"`
-	AssignAt  time.Time `bun:"assign_at"`
-	RevokeAt  time.Time `bun:"revoke_at"`
+	UUID      uuid.UUID  `bun:"uuid,type:uuid,pk"`
+	GroupUUID uuid.UUID  `bun:"group_uuid,type:uuid,notnull"`
+	Name      string     `bun:"name,notnull"`
+	AssignAt  *time.Time `bun:"assign_at"`
+	RevokeAt  *time.Time `bun:"revoke_at"`
 
 	UpdatedAt time.Time `bun:"updated_at,default:NOW(),notnull"`
 	CreatedAt time.Time `bun:"created_at,default:NOW(),notnull"`
@@ -35,9 +35,11 @@ func (t *Timetable) BeforeAppendModel(ctx context.Context, query bun.Query) erro
 }
 
 type TimetablePatched struct {
-	UUID      uuid.UUID
-	GroupUUID uuid.UUID //uuid.Nil exists
-	Name      *string
-	AssignAt  *time.Time
-	RevokeAt  *time.Time
+	UUID             uuid.UUID
+	GroupUUID        uuid.UUID //uuid.Nil exists
+	Name             *string
+	AssignAtUpdated  bool
+	RevokeAtUpdatged bool
+	AssignAt         *time.Time
+	RevokeAt         *time.Time
 }
