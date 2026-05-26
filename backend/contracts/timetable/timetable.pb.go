@@ -587,8 +587,7 @@ func (x *ListPeriodsResponse) GetPeriods() []*Period {
 type Subject struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	UUID          string                 `protobuf:"bytes,1,opt,name=UUID,proto3" json:"UUID,omitempty"`
-	Name          *string                `protobuf:"bytes,2,opt,name=name,proto3,oneof" json:"name,omitempty"`
-	Position      *int32                 `protobuf:"varint,3,opt,name=position,proto3,oneof" json:"position,omitempty"`
+	Name          string                 `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 	UpdatedAt     *timestamppb.Timestamp `protobuf:"bytes,4,opt,name=updated_at,json=updatedAt,proto3" json:"updated_at,omitempty"`
 	DeletedAt     *timestamppb.Timestamp `protobuf:"bytes,5,opt,name=deleted_at,json=deletedAt,proto3,oneof" json:"deleted_at,omitempty"`
 	CreatedAt     *timestamppb.Timestamp `protobuf:"bytes,6,opt,name=created_at,json=createdAt,proto3" json:"created_at,omitempty"`
@@ -634,17 +633,10 @@ func (x *Subject) GetUUID() string {
 }
 
 func (x *Subject) GetName() string {
-	if x != nil && x.Name != nil {
-		return *x.Name
+	if x != nil {
+		return x.Name
 	}
 	return ""
-}
-
-func (x *Subject) GetPosition() int32 {
-	if x != nil && x.Position != nil {
-		return *x.Position
-	}
-	return 0
 }
 
 func (x *Subject) GetUpdatedAt() *timestamppb.Timestamp {
@@ -1095,6 +1087,7 @@ func (x *Timetable) GetRevokeAt() *timestamppb.Timestamp {
 type TimetableByDateRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Date          string                 `protobuf:"bytes,1,opt,name=date,proto3" json:"date,omitempty"`
+	GroupUUID     string                 `protobuf:"bytes,2,opt,name=groupUUID,proto3" json:"groupUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1132,6 +1125,13 @@ func (*TimetableByDateRequest) Descriptor() ([]byte, []int) {
 func (x *TimetableByDateRequest) GetDate() string {
 	if x != nil {
 		return x.Date
+	}
+	return ""
+}
+
+func (x *TimetableByDateRequest) GetGroupUUID() string {
+	if x != nil {
+		return x.GroupUUID
 	}
 	return ""
 }
@@ -1578,6 +1578,7 @@ func (x *ListTimetablesResponse) GetTimetables() []*Timetable {
 
 type CurrentTimetableRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
+	GroupUUID     string                 `protobuf:"bytes,1,opt,name=groupUUID,proto3" json:"groupUUID,omitempty"`
 	unknownFields protoimpl.UnknownFields
 	sizeCache     protoimpl.SizeCache
 }
@@ -1610,6 +1611,13 @@ func (x *CurrentTimetableRequest) ProtoReflect() protoreflect.Message {
 // Deprecated: Use CurrentTimetableRequest.ProtoReflect.Descriptor instead.
 func (*CurrentTimetableRequest) Descriptor() ([]byte, []int) {
 	return file_proto_timetable_proto_rawDescGZIP(), []int{26}
+}
+
+func (x *CurrentTimetableRequest) GetGroupUUID() string {
+	if x != nil {
+		return x.GroupUUID
+	}
+	return ""
 }
 
 type CurrentTimetableResponse struct {
@@ -3039,19 +3047,16 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x04page\x18\x01 \x01(\rR\x04page\x12\x12\n" +
 	"\x04size\x18\x02 \x01(\rR\x04size\x12\x14\n" +
 	"\x05total\x18\x03 \x01(\x04R\x05total\x12+\n" +
-	"\aperiods\x18\x04 \x03(\v2\x11.timetable.PeriodR\aperiods\"\xb2\x02\n" +
+	"\aperiods\x18\x04 \x03(\v2\x11.timetable.PeriodR\aperiods\"\xf6\x01\n" +
 	"\aSubject\x12\x12\n" +
-	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x17\n" +
-	"\x04name\x18\x02 \x01(\tH\x00R\x04name\x88\x01\x01\x12\x1f\n" +
-	"\bposition\x18\x03 \x01(\x05H\x01R\bposition\x88\x01\x01\x129\n" +
+	"\x04UUID\x18\x01 \x01(\tR\x04UUID\x12\x12\n" +
+	"\x04name\x18\x02 \x01(\tR\x04name\x129\n" +
 	"\n" +
 	"updated_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\tupdatedAt\x12>\n" +
 	"\n" +
-	"deleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x02R\tdeletedAt\x88\x01\x01\x129\n" +
+	"deleted_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampH\x00R\tdeletedAt\x88\x01\x01\x129\n" +
 	"\n" +
-	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\a\n" +
-	"\x05_nameB\v\n" +
-	"\t_positionB\r\n" +
+	"created_at\x18\x06 \x01(\v2\x1a.google.protobuf.TimestampR\tcreatedAtB\r\n" +
 	"\v_deleted_at\"2\n" +
 	"\x0eSubjectRequest\x12 \n" +
 	"\vsubjectUUID\x18\x01 \x01(\tR\vsubjectUUID\"?\n" +
@@ -3078,9 +3083,10 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\tgroupUUID\x18\x02 \x01(\tR\tgroupUUID\x12\x12\n" +
 	"\x04name\x18\x03 \x01(\tR\x04name\x127\n" +
 	"\tassign_at\x18\x04 \x01(\v2\x1a.google.protobuf.TimestampR\bassignAt\x127\n" +
-	"\trevoke_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\brevokeAt\",\n" +
+	"\trevoke_at\x18\x05 \x01(\v2\x1a.google.protobuf.TimestampR\brevokeAt\"J\n" +
 	"\x16TimetableByDateRequest\x12\x12\n" +
-	"\x04date\x18\x01 \x01(\tR\x04date\"M\n" +
+	"\x04date\x18\x01 \x01(\tR\x04date\x12\x1c\n" +
+	"\tgroupUUID\x18\x02 \x01(\tR\tgroupUUID\"M\n" +
 	"\x17TimetableByDateResponse\x122\n" +
 	"\ttimetable\x18\x01 \x01(\v2\x14.timetable.TimetableR\ttimetable\"8\n" +
 	"\x10TimetableRequest\x12$\n" +
@@ -3116,8 +3122,9 @@ const file_proto_timetable_proto_rawDesc = "" +
 	"\x05total\x18\x03 \x01(\x04R\x05total\x124\n" +
 	"\n" +
 	"timetables\x18\x04 \x03(\v2\x14.timetable.TimetableR\n" +
-	"timetables\"\x19\n" +
-	"\x17CurrentTimetableRequest\"N\n" +
+	"timetables\"7\n" +
+	"\x17CurrentTimetableRequest\x12\x1c\n" +
+	"\tgroupUUID\x18\x01 \x01(\tR\tgroupUUID\"N\n" +
 	"\x18CurrentTimetableResponse\x122\n" +
 	"\ttimetable\x18\x01 \x01(\v2\x14.timetable.TimetableR\ttimetable\"\xd6\x01\n" +
 	"\x06Lesson\x12\x12\n" +

@@ -742,6 +742,8 @@ func local_request_TimetableService_ListTimetables_0(ctx context.Context, marsha
 	return msg, metadata, err
 }
 
+var filter_TimetableService_TimetableByDate_0 = &utilities.DoubleArray{Encoding: map[string]int{"date": 0}, Base: []int{1, 1, 0}, Check: []int{0, 1, 2}}
+
 func request_TimetableService_TimetableByDate_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
 		protoReq TimetableByDateRequest
@@ -758,6 +760,12 @@ func request_TimetableService_TimetableByDate_0(ctx context.Context, marshaler r
 	protoReq.Date, err = runtime.String(val)
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "date", err)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_TimetableByDate_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.TimetableByDate(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -777,9 +785,17 @@ func local_request_TimetableService_TimetableByDate_0(ctx context.Context, marsh
 	if err != nil {
 		return nil, metadata, status.Errorf(codes.InvalidArgument, "type mismatch, parameter: %s, error: %v", "date", err)
 	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_TimetableByDate_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 	msg, err := server.TimetableByDate(ctx, &protoReq)
 	return msg, metadata, err
 }
+
+var filter_TimetableService_CurrentTimetable_0 = &utilities.DoubleArray{Encoding: map[string]int{}, Base: []int(nil), Check: []int(nil)}
 
 func request_TimetableService_CurrentTimetable_0(ctx context.Context, marshaler runtime.Marshaler, client TimetableServiceClient, req *http.Request, pathParams map[string]string) (proto.Message, runtime.ServerMetadata, error) {
 	var (
@@ -788,6 +804,12 @@ func request_TimetableService_CurrentTimetable_0(ctx context.Context, marshaler 
 	)
 	if req.Body != nil {
 		_, _ = io.Copy(io.Discard, req.Body)
+	}
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_CurrentTimetable_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
 	}
 	msg, err := client.CurrentTimetable(ctx, &protoReq, grpc.Header(&metadata.HeaderMD), grpc.Trailer(&metadata.TrailerMD))
 	return msg, metadata, err
@@ -798,6 +820,12 @@ func local_request_TimetableService_CurrentTimetable_0(ctx context.Context, mars
 		protoReq CurrentTimetableRequest
 		metadata runtime.ServerMetadata
 	)
+	if err := req.ParseForm(); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
+	if err := runtime.PopulateQueryParameters(&protoReq, req.Form, filter_TimetableService_CurrentTimetable_0); err != nil {
+		return nil, metadata, status.Errorf(codes.InvalidArgument, "%v", err)
+	}
 	msg, err := server.CurrentTimetable(ctx, &protoReq)
 	return msg, metadata, err
 }

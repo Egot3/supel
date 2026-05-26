@@ -61,8 +61,7 @@ message ListPeriodsResponse {
 
 message Subject {
     string UUID = 1;
-    optional string name = 2;
-    optional int32 position = 3;
+     string name = 2;
 
     google.protobuf.Timestamp updated_at = 4;
     optional google.protobuf.Timestamp deleted_at = 5;
@@ -112,6 +111,7 @@ message Timetable {
 
 message TimetableByDateRequest {
     string date = 1;
+    string groupUUID = 2;
 }
 
 message TimetableByDateResponse {
@@ -157,7 +157,9 @@ message ListTimetablesResponse {
     repeated Timetable timetables = 4;
 }
 
-message CurrentTimetableRequest {}
+message CurrentTimetableRequest {
+    string groupUUID = 1;
+}
 
 message CurrentTimetableResponse {
     Timetable timetable = 1;
