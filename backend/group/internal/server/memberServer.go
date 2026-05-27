@@ -189,3 +189,37 @@ func (s *GroupService) ListMembers(ctx context.Context, req *grpb.ListMembersReq
 		Size:    req.Size,
 	}, nil
 }
+
+func (s *GroupService) OwnGroupsRequest(ctx context.Context, req *grpb.OwnGroupsRequest) (*grpb.OwnGroupsResponse, error) {
+	logger := logctx.LoggerFromContext(ctx).With(
+		slog.String("layer", "handler"),
+		slog.String("who?", "me"),
+	)
+	ctx = logctx.WithLogger(ctx, logger)
+
+	ownUUID, ok := s.su.UserFromContext(ctx)
+	if !ok {
+		return nil, status.Error(codes.Internal, "unable to get own uuid from token")
+	}
+
+	groupUUIDs, _, err := s.MemberRepository.MembersGroups(ctx, ownUUID, 0, 500)
+	if err != nil {
+		if errors.Is(sql.ErrNoRows, err) {
+			return nil, status.Error(codes.NotFound, "couldn't find member with this uuid being in groups")
+		}
+		return nil, status.Error(codes.Internal, "couldn't get groups for member")
+	}
+
+	groupsProto := make([]*grpb.Group, len(groupUUIDs))
+	for i, groupUUID := range groupUUIDs {
+		group, err := s.GroupRepository.Group(ctx, groupUUID)
+		if err != nil {
+			return nil, status.Error(codes.Internal, "couldn't get one group for member")
+		}
+		groupsProto[i] = moprconv.GroupMoToPr(group)
+	}
+
+	return &grpb.OwnGroupsResponse{
+		Groups: groupsProto,
+	}, nil
+}
