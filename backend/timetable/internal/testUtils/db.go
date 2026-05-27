@@ -2,7 +2,6 @@ package testutils
 
 import (
 	"database/sql"
-	"fmt"
 	"testing"
 
 	"github.com/samber/do/v2"
@@ -15,7 +14,7 @@ import (
 func NewTestInjector(t *testing.T) do.Injector {
 	t.Helper()
 
-	dsn := fmt.Sprintf("file::memory:?cache=private", t.Name())
+	dsn := "file::memory:?cache=private"
 
 	sqldb, err := sql.Open(sqliteshim.ShimName, dsn)
 	require.NoError(t, err)

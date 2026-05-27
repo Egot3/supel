@@ -2,8 +2,10 @@ package period
 
 import (
 	"context"
+	"log/slog"
 	"time"
 
+	"github.com/egot3/supel/backend/timetable/internal/logctx"
 	"github.com/egot3/supel/backend/timetable/internal/models"
 	"github.com/google/uuid"
 	"github.com/samber/do/v2"
@@ -20,8 +22,15 @@ func NewPeriodRepository(i do.Injector) (PeriodRepository, error) {
 }
 
 func (r *bunPeriodRepository) CreatePeriod(ctx context.Context, name string, position int16, startTime, endTime time.Time) error {
+	logger := logctx.LoggerFromContext(ctx).With(
+		slog.String("layer", "repository"),
+	)
+	ctx = logctx.WithLogger(ctx, logger)
+
 	_, err := r.db.NewInsert().Model(&models.Period{Name: name, Position: position, StartTime: startTime, EndTime: endTime}).
 		Exec(ctx)
+
+	// logger.ErrorContext(ctx, err.Error())
 	return err
 }
 

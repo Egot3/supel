@@ -120,9 +120,9 @@ func (s *TimetableService) PatchPeriod(ctx context.Context, req *ttpb.PatchPerio
 	}
 
 	var endTimePtr *time.Time = nil
-	if req.StartTime != nil {
-		endTime := req.StartTime.AsTime()
-		startTimePtr = &endTime
+	if req.EndTime != nil {
+		endTime := req.EndTime.AsTime()
+		endTimePtr = &endTime
 	}
 
 	err = s.periodRepository.PatchPeriod(ctx, models.PeriodPatched{
