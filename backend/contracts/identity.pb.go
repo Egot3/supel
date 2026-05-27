@@ -245,6 +245,86 @@ func (x *DisableUserRequest) GetUuid() string {
 	return ""
 }
 
+type OwnUUIDRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OwnUUIDRequest) Reset() {
+	*x = OwnUUIDRequest{}
+	mi := &file_proto_identity_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OwnUUIDRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OwnUUIDRequest) ProtoMessage() {}
+
+func (x *OwnUUIDRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_identity_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OwnUUIDRequest.ProtoReflect.Descriptor instead.
+func (*OwnUUIDRequest) Descriptor() ([]byte, []int) {
+	return file_proto_identity_proto_rawDescGZIP(), []int{4}
+}
+
+type OwnUUIDResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Uuid          string                 `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OwnUUIDResponse) Reset() {
+	*x = OwnUUIDResponse{}
+	mi := &file_proto_identity_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OwnUUIDResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OwnUUIDResponse) ProtoMessage() {}
+
+func (x *OwnUUIDResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_identity_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OwnUUIDResponse.ProtoReflect.Descriptor instead.
+func (*OwnUUIDResponse) Descriptor() ([]byte, []int) {
+	return file_proto_identity_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *OwnUUIDResponse) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
 type LoginRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
@@ -255,7 +335,7 @@ type LoginRequest struct {
 
 func (x *LoginRequest) Reset() {
 	*x = LoginRequest{}
-	mi := &file_proto_identity_proto_msgTypes[4]
+	mi := &file_proto_identity_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -267,7 +347,7 @@ func (x *LoginRequest) String() string {
 func (*LoginRequest) ProtoMessage() {}
 
 func (x *LoginRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_identity_proto_msgTypes[4]
+	mi := &file_proto_identity_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -280,7 +360,7 @@ func (x *LoginRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
 func (*LoginRequest) Descriptor() ([]byte, []int) {
-	return file_proto_identity_proto_rawDescGZIP(), []int{4}
+	return file_proto_identity_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *LoginRequest) GetEmail() string {
@@ -308,7 +388,7 @@ type RegisterRequest struct {
 
 func (x *RegisterRequest) Reset() {
 	*x = RegisterRequest{}
-	mi := &file_proto_identity_proto_msgTypes[5]
+	mi := &file_proto_identity_proto_msgTypes[7]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -320,7 +400,7 @@ func (x *RegisterRequest) String() string {
 func (*RegisterRequest) ProtoMessage() {}
 
 func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_identity_proto_msgTypes[5]
+	mi := &file_proto_identity_proto_msgTypes[7]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -333,7 +413,7 @@ func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
 func (*RegisterRequest) Descriptor() ([]byte, []int) {
-	return file_proto_identity_proto_rawDescGZIP(), []int{5}
+	return file_proto_identity_proto_rawDescGZIP(), []int{7}
 }
 
 func (x *RegisterRequest) GetEmail() string {
@@ -366,7 +446,7 @@ type CheckExistanceRequest struct {
 
 func (x *CheckExistanceRequest) Reset() {
 	*x = CheckExistanceRequest{}
-	mi := &file_proto_identity_proto_msgTypes[6]
+	mi := &file_proto_identity_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -378,7 +458,7 @@ func (x *CheckExistanceRequest) String() string {
 func (*CheckExistanceRequest) ProtoMessage() {}
 
 func (x *CheckExistanceRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_identity_proto_msgTypes[6]
+	mi := &file_proto_identity_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -391,7 +471,7 @@ func (x *CheckExistanceRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExistanceRequest.ProtoReflect.Descriptor instead.
 func (*CheckExistanceRequest) Descriptor() ([]byte, []int) {
-	return file_proto_identity_proto_rawDescGZIP(), []int{6}
+	return file_proto_identity_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *CheckExistanceRequest) GetUuid() string {
@@ -410,7 +490,7 @@ type CheckExistanceResponse struct {
 
 func (x *CheckExistanceResponse) Reset() {
 	*x = CheckExistanceResponse{}
-	mi := &file_proto_identity_proto_msgTypes[7]
+	mi := &file_proto_identity_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -422,7 +502,7 @@ func (x *CheckExistanceResponse) String() string {
 func (*CheckExistanceResponse) ProtoMessage() {}
 
 func (x *CheckExistanceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_identity_proto_msgTypes[7]
+	mi := &file_proto_identity_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -435,7 +515,7 @@ func (x *CheckExistanceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CheckExistanceResponse.ProtoReflect.Descriptor instead.
 func (*CheckExistanceResponse) Descriptor() ([]byte, []int) {
-	return file_proto_identity_proto_rawDescGZIP(), []int{7}
+	return file_proto_identity_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *CheckExistanceResponse) GetExists() bool {
@@ -457,6 +537,9 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\fTokenPayload\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"(\n" +
 	"\x12DisableUserRequest\x12\x12\n" +
+	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"\x10\n" +
+	"\x0eOwnUUIDRequest\"%\n" +
+	"\x0fOwnUUIDResponse\x12\x12\n" +
 	"\x04uuid\x18\x01 \x01(\tR\x04uuid\"@\n" +
 	"\fLoginRequest\x12\x14\n" +
 	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
@@ -471,14 +554,15 @@ const file_proto_identity_proto_rawDesc = "" +
 	"\x06exists\x18\x01 \x01(\bR\x06exists*\x1b\n" +
 	"\x04Role\x12\b\n" +
 	"\x04USER\x10\x00\x12\t\n" +
-	"\x05ADMIN\x10\x012\x8d\x04\n" +
+	"\x05ADMIN\x10\x012\xe8\x04\n" +
 	"\x0fIdentityService\x12/\n" +
 	"\vRemintToken\x12\x0f.identity.Token\x1a\x0f.identity.Token\x12]\n" +
 	"\rValidateToken\x12\x0f.identity.Token\x1a\x16.identity.TokenPayload\"#\x82\xd3\xe4\x93\x02\x1d\x12\x1b/v1/public/validate/{token}\x12T\n" +
 	"\x05Login\x12\x16.identity.LoginRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15:\x01*\"\x10/v1/public/login\x12]\n" +
 	"\bRegister\x12\x19.identity.RegisterRequest\x1a\x16.google.protobuf.Empty\"\x1e\x82\xd3\xe4\x93\x02\x18:\x01*\"\x13/v1/public/register\x12`\n" +
 	"\vDisableUser\x12\x1c.identity.DisableUserRequest\x1a\x16.google.protobuf.Empty\"\x1b\x82\xd3\xe4\x93\x02\x15*\x13/v1/identity/{uuid}\x12S\n" +
-	"\x0eCheckExistance\x12\x1f.identity.CheckExistanceRequest\x1a .identity.CheckExistanceResponseB\x04Z\x02./b\x06proto3"
+	"\x0eCheckExistance\x12\x1f.identity.CheckExistanceRequest\x1a .identity.CheckExistanceResponse\x12Y\n" +
+	"\aOwnUUID\x12\x18.identity.OwnUUIDRequest\x1a\x19.identity.OwnUUIDResponse\"\x19\x82\xd3\xe4\x93\x02\x13\x12\x11/v1/identity/selfB\x04Z\x02./b\x06proto3"
 
 var (
 	file_proto_identity_proto_rawDescOnce sync.Once
@@ -493,37 +577,41 @@ func file_proto_identity_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_identity_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_identity_proto_msgTypes = make([]protoimpl.MessageInfo, 10)
 var file_proto_identity_proto_goTypes = []any{
 	(Role)(0),                      // 0: identity.Role
 	(*TokenRequest)(nil),           // 1: identity.TokenRequest
 	(*Token)(nil),                  // 2: identity.Token
 	(*TokenPayload)(nil),           // 3: identity.TokenPayload
 	(*DisableUserRequest)(nil),     // 4: identity.DisableUserRequest
-	(*LoginRequest)(nil),           // 5: identity.LoginRequest
-	(*RegisterRequest)(nil),        // 6: identity.RegisterRequest
-	(*CheckExistanceRequest)(nil),  // 7: identity.CheckExistanceRequest
-	(*CheckExistanceResponse)(nil), // 8: identity.CheckExistanceResponse
-	(*emptypb.Empty)(nil),          // 9: google.protobuf.Empty
+	(*OwnUUIDRequest)(nil),         // 5: identity.OwnUUIDRequest
+	(*OwnUUIDResponse)(nil),        // 6: identity.OwnUUIDResponse
+	(*LoginRequest)(nil),           // 7: identity.LoginRequest
+	(*RegisterRequest)(nil),        // 8: identity.RegisterRequest
+	(*CheckExistanceRequest)(nil),  // 9: identity.CheckExistanceRequest
+	(*CheckExistanceResponse)(nil), // 10: identity.CheckExistanceResponse
+	(*emptypb.Empty)(nil),          // 11: google.protobuf.Empty
 }
 var file_proto_identity_proto_depIdxs = []int32{
-	2, // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
-	2, // 1: identity.IdentityService.ValidateToken:input_type -> identity.Token
-	5, // 2: identity.IdentityService.Login:input_type -> identity.LoginRequest
-	6, // 3: identity.IdentityService.Register:input_type -> identity.RegisterRequest
-	4, // 4: identity.IdentityService.DisableUser:input_type -> identity.DisableUserRequest
-	7, // 5: identity.IdentityService.CheckExistance:input_type -> identity.CheckExistanceRequest
-	2, // 6: identity.IdentityService.RemintToken:output_type -> identity.Token
-	3, // 7: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
-	9, // 8: identity.IdentityService.Login:output_type -> google.protobuf.Empty
-	9, // 9: identity.IdentityService.Register:output_type -> google.protobuf.Empty
-	9, // 10: identity.IdentityService.DisableUser:output_type -> google.protobuf.Empty
-	8, // 11: identity.IdentityService.CheckExistance:output_type -> identity.CheckExistanceResponse
-	6, // [6:12] is the sub-list for method output_type
-	0, // [0:6] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2,  // 0: identity.IdentityService.RemintToken:input_type -> identity.Token
+	2,  // 1: identity.IdentityService.ValidateToken:input_type -> identity.Token
+	7,  // 2: identity.IdentityService.Login:input_type -> identity.LoginRequest
+	8,  // 3: identity.IdentityService.Register:input_type -> identity.RegisterRequest
+	4,  // 4: identity.IdentityService.DisableUser:input_type -> identity.DisableUserRequest
+	9,  // 5: identity.IdentityService.CheckExistance:input_type -> identity.CheckExistanceRequest
+	5,  // 6: identity.IdentityService.OwnUUID:input_type -> identity.OwnUUIDRequest
+	2,  // 7: identity.IdentityService.RemintToken:output_type -> identity.Token
+	3,  // 8: identity.IdentityService.ValidateToken:output_type -> identity.TokenPayload
+	11, // 9: identity.IdentityService.Login:output_type -> google.protobuf.Empty
+	11, // 10: identity.IdentityService.Register:output_type -> google.protobuf.Empty
+	11, // 11: identity.IdentityService.DisableUser:output_type -> google.protobuf.Empty
+	10, // 12: identity.IdentityService.CheckExistance:output_type -> identity.CheckExistanceResponse
+	6,  // 13: identity.IdentityService.OwnUUID:output_type -> identity.OwnUUIDResponse
+	7,  // [7:14] is the sub-list for method output_type
+	0,  // [0:7] is the sub-list for method input_type
+	0,  // [0:0] is the sub-list for extension type_name
+	0,  // [0:0] is the sub-list for extension extendee
+	0,  // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_proto_identity_proto_init() }
@@ -537,7 +625,7 @@ func file_proto_identity_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_identity_proto_rawDesc), len(file_proto_identity_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   8,
+			NumMessages:   10,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

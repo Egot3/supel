@@ -165,8 +165,28 @@ message CuratorsGroupsResponse {
     repeated Group groups = 1;
 }
 
+message WhoAmIRequest {}
+message WhoAmIResponse {
+    string role = 1;
+}
+
+message OwnGroupsRequest {}
+message OwnGroupsResponse {
+    repeated Group groups = 1;
+}
 
 service GroupService {
+    rpc WhoAmI(WhoAmIRequest) returns (WhoAmIResponse){
+        option (google.api.http) = {
+            get: "/v1/group/self/role"
+        };
+    };
+    rpc OwnGroups(OwnGroupsRequest) returns (OwnGroupsResponse){
+        option (google.api.http) = {
+            get: "/v1/group/self"
+        };
+    };
+
     rpc AssignCuratorToSenior(AssignCuratorToSeniorRequest) returns (google.protobuf.Empty){
         option (google.api.http) = {
             post: "/v1/group/curator/{seniorUUID}/{subordinateUUID}"

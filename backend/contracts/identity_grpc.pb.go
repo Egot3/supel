@@ -26,6 +26,7 @@ const (
 	IdentityService_Register_FullMethodName       = "/identity.IdentityService/Register"
 	IdentityService_DisableUser_FullMethodName    = "/identity.IdentityService/DisableUser"
 	IdentityService_CheckExistance_FullMethodName = "/identity.IdentityService/CheckExistance"
+	IdentityService_OwnUUID_FullMethodName        = "/identity.IdentityService/OwnUUID"
 )
 
 // IdentityServiceClient is the client API for IdentityService service.
@@ -38,6 +39,7 @@ type IdentityServiceClient interface {
 	Register(ctx context.Context, in *RegisterRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	DisableUser(ctx context.Context, in *DisableUserRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	CheckExistance(ctx context.Context, in *CheckExistanceRequest, opts ...grpc.CallOption) (*CheckExistanceResponse, error)
+	OwnUUID(ctx context.Context, in *OwnUUIDRequest, opts ...grpc.CallOption) (*OwnUUIDResponse, error)
 }
 
 type identityServiceClient struct {
@@ -108,6 +110,16 @@ func (c *identityServiceClient) CheckExistance(ctx context.Context, in *CheckExi
 	return out, nil
 }
 
+func (c *identityServiceClient) OwnUUID(ctx context.Context, in *OwnUUIDRequest, opts ...grpc.CallOption) (*OwnUUIDResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OwnUUIDResponse)
+	err := c.cc.Invoke(ctx, IdentityService_OwnUUID_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // IdentityServiceServer is the server API for IdentityService service.
 // All implementations must embed UnimplementedIdentityServiceServer
 // for forward compatibility.
@@ -118,6 +130,7 @@ type IdentityServiceServer interface {
 	Register(context.Context, *RegisterRequest) (*emptypb.Empty, error)
 	DisableUser(context.Context, *DisableUserRequest) (*emptypb.Empty, error)
 	CheckExistance(context.Context, *CheckExistanceRequest) (*CheckExistanceResponse, error)
+	OwnUUID(context.Context, *OwnUUIDRequest) (*OwnUUIDResponse, error)
 	mustEmbedUnimplementedIdentityServiceServer()
 }
 
@@ -145,6 +158,9 @@ func (UnimplementedIdentityServiceServer) DisableUser(context.Context, *DisableU
 }
 func (UnimplementedIdentityServiceServer) CheckExistance(context.Context, *CheckExistanceRequest) (*CheckExistanceResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method CheckExistance not implemented")
+}
+func (UnimplementedIdentityServiceServer) OwnUUID(context.Context, *OwnUUIDRequest) (*OwnUUIDResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method OwnUUID not implemented")
 }
 func (UnimplementedIdentityServiceServer) mustEmbedUnimplementedIdentityServiceServer() {}
 func (UnimplementedIdentityServiceServer) testEmbeddedByValue()                         {}
@@ -275,6 +291,24 @@ func _IdentityService_CheckExistance_Handler(srv interface{}, ctx context.Contex
 	return interceptor(ctx, in, info, handler)
 }
 
+func _IdentityService_OwnUUID_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnUUIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(IdentityServiceServer).OwnUUID(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: IdentityService_OwnUUID_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(IdentityServiceServer).OwnUUID(ctx, req.(*OwnUUIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // IdentityService_ServiceDesc is the grpc.ServiceDesc for IdentityService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -305,6 +339,10 @@ var IdentityService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "CheckExistance",
 			Handler:    _IdentityService_CheckExistance_Handler,
+		},
+		{
+			MethodName: "OwnUUID",
+			Handler:    _IdentityService_OwnUUID_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

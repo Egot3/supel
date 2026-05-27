@@ -20,6 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	GroupService_WhoAmI_FullMethodName                  = "/group.GroupService/WhoAmI"
+	GroupService_OwnGroups_FullMethodName               = "/group.GroupService/OwnGroups"
 	GroupService_AssignCuratorToSenior_FullMethodName   = "/group.GroupService/AssignCuratorToSenior"
 	GroupService_AssignCuratorToGroup_FullMethodName    = "/group.GroupService/AssignCuratorToGroup"
 	GroupService_RevokeCuratorFromSenior_FullMethodName = "/group.GroupService/RevokeCuratorFromSenior"
@@ -44,6 +46,8 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type GroupServiceClient interface {
+	WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error)
+	OwnGroups(ctx context.Context, in *OwnGroupsRequest, opts ...grpc.CallOption) (*OwnGroupsResponse, error)
 	AssignCuratorToSenior(ctx context.Context, in *AssignCuratorToSeniorRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	AssignCuratorToGroup(ctx context.Context, in *AssignCuratorToGroupRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	RevokeCuratorFromSenior(ctx context.Context, in *RevokeCuratorFromSeniorRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
@@ -70,6 +74,26 @@ type groupServiceClient struct {
 
 func NewGroupServiceClient(cc grpc.ClientConnInterface) GroupServiceClient {
 	return &groupServiceClient{cc}
+}
+
+func (c *groupServiceClient) WhoAmI(ctx context.Context, in *WhoAmIRequest, opts ...grpc.CallOption) (*WhoAmIResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WhoAmIResponse)
+	err := c.cc.Invoke(ctx, GroupService_WhoAmI_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *groupServiceClient) OwnGroups(ctx context.Context, in *OwnGroupsRequest, opts ...grpc.CallOption) (*OwnGroupsResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(OwnGroupsResponse)
+	err := c.cc.Invoke(ctx, GroupService_OwnGroups_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *groupServiceClient) AssignCuratorToSenior(ctx context.Context, in *AssignCuratorToSeniorRequest, opts ...grpc.CallOption) (*emptypb.Empty, error) {
@@ -256,6 +280,8 @@ func (c *groupServiceClient) PatchGroup(ctx context.Context, in *PatchGroupReque
 // All implementations must embed UnimplementedGroupServiceServer
 // for forward compatibility.
 type GroupServiceServer interface {
+	WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error)
+	OwnGroups(context.Context, *OwnGroupsRequest) (*OwnGroupsResponse, error)
 	AssignCuratorToSenior(context.Context, *AssignCuratorToSeniorRequest) (*emptypb.Empty, error)
 	AssignCuratorToGroup(context.Context, *AssignCuratorToGroupRequest) (*emptypb.Empty, error)
 	RevokeCuratorFromSenior(context.Context, *RevokeCuratorFromSeniorRequest) (*emptypb.Empty, error)
@@ -284,6 +310,12 @@ type GroupServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedGroupServiceServer struct{}
 
+func (UnimplementedGroupServiceServer) WhoAmI(context.Context, *WhoAmIRequest) (*WhoAmIResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method WhoAmI not implemented")
+}
+func (UnimplementedGroupServiceServer) OwnGroups(context.Context, *OwnGroupsRequest) (*OwnGroupsResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method OwnGroups not implemented")
+}
 func (UnimplementedGroupServiceServer) AssignCuratorToSenior(context.Context, *AssignCuratorToSeniorRequest) (*emptypb.Empty, error) {
 	return nil, status.Error(codes.Unimplemented, "method AssignCuratorToSenior not implemented")
 }
@@ -357,6 +389,42 @@ func RegisterGroupServiceServer(s grpc.ServiceRegistrar, srv GroupServiceServer)
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&GroupService_ServiceDesc, srv)
+}
+
+func _GroupService_WhoAmI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WhoAmIRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).WhoAmI(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GroupService_WhoAmI_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).WhoAmI(ctx, req.(*WhoAmIRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _GroupService_OwnGroups_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(OwnGroupsRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GroupServiceServer).OwnGroups(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: GroupService_OwnGroups_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GroupServiceServer).OwnGroups(ctx, req.(*OwnGroupsRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _GroupService_AssignCuratorToSenior_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -690,6 +758,14 @@ var GroupService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "group.GroupService",
 	HandlerType: (*GroupServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "WhoAmI",
+			Handler:    _GroupService_WhoAmI_Handler,
+		},
+		{
+			MethodName: "OwnGroups",
+			Handler:    _GroupService_OwnGroups_Handler,
+		},
 		{
 			MethodName: "AssignCuratorToSenior",
 			Handler:    _GroupService_AssignCuratorToSenior_Handler,

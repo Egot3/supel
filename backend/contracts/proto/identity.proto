@@ -28,6 +28,11 @@ message DisableUserRequest {
     string uuid = 1;
 }
 
+message OwnUUIDRequest {}
+message OwnUUIDResponse {
+    string uuid = 1;
+}
+
 service IdentityService {
     rpc RemintToken(Token) returns (Token);
     rpc ValidateToken(Token) returns (TokenPayload){
@@ -53,6 +58,11 @@ service IdentityService {
         };
     };
     rpc CheckExistance(CheckExistanceRequest) returns (CheckExistanceResponse);
+    rpc OwnUUID(OwnUUIDRequest) returns (OwnUUIDResponse){
+        option (google.api.http) = {
+            get: "/v1/identity/self"
+        };
+    };
 }
 
 message LoginRequest {

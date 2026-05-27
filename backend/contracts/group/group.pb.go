@@ -1573,6 +1573,166 @@ func (x *CuratorsGroupsResponse) GetGroups() []*Group {
 	return nil
 }
 
+type WhoAmIRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WhoAmIRequest) Reset() {
+	*x = WhoAmIRequest{}
+	mi := &file_proto_group_proto_msgTypes[27]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WhoAmIRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WhoAmIRequest) ProtoMessage() {}
+
+func (x *WhoAmIRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_group_proto_msgTypes[27]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WhoAmIRequest.ProtoReflect.Descriptor instead.
+func (*WhoAmIRequest) Descriptor() ([]byte, []int) {
+	return file_proto_group_proto_rawDescGZIP(), []int{27}
+}
+
+type WhoAmIResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Role          string                 `protobuf:"bytes,1,opt,name=role,proto3" json:"role,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *WhoAmIResponse) Reset() {
+	*x = WhoAmIResponse{}
+	mi := &file_proto_group_proto_msgTypes[28]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *WhoAmIResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*WhoAmIResponse) ProtoMessage() {}
+
+func (x *WhoAmIResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_group_proto_msgTypes[28]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use WhoAmIResponse.ProtoReflect.Descriptor instead.
+func (*WhoAmIResponse) Descriptor() ([]byte, []int) {
+	return file_proto_group_proto_rawDescGZIP(), []int{28}
+}
+
+func (x *WhoAmIResponse) GetRole() string {
+	if x != nil {
+		return x.Role
+	}
+	return ""
+}
+
+type OwnGroupsRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OwnGroupsRequest) Reset() {
+	*x = OwnGroupsRequest{}
+	mi := &file_proto_group_proto_msgTypes[29]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OwnGroupsRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OwnGroupsRequest) ProtoMessage() {}
+
+func (x *OwnGroupsRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_group_proto_msgTypes[29]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OwnGroupsRequest.ProtoReflect.Descriptor instead.
+func (*OwnGroupsRequest) Descriptor() ([]byte, []int) {
+	return file_proto_group_proto_rawDescGZIP(), []int{29}
+}
+
+type OwnGroupsResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Groups        []*Group               `protobuf:"bytes,1,rep,name=groups,proto3" json:"groups,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *OwnGroupsResponse) Reset() {
+	*x = OwnGroupsResponse{}
+	mi := &file_proto_group_proto_msgTypes[30]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *OwnGroupsResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*OwnGroupsResponse) ProtoMessage() {}
+
+func (x *OwnGroupsResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_group_proto_msgTypes[30]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use OwnGroupsResponse.ProtoReflect.Descriptor instead.
+func (*OwnGroupsResponse) Descriptor() ([]byte, []int) {
+	return file_proto_group_proto_rawDescGZIP(), []int{30}
+}
+
+func (x *OwnGroupsResponse) GetGroups() []*Group {
+	if x != nil {
+		return x.Groups
+	}
+	return nil
+}
+
 var File_proto_group_proto protoreflect.FileDescriptor
 
 const file_proto_group_proto_rawDesc = "" +
@@ -1693,12 +1853,20 @@ const file_proto_group_proto_rawDesc = "" +
 	"\x15CuratorsGroupsRequest\x12 \n" +
 	"\vcuratorUUID\x18\x01 \x01(\tR\vcuratorUUID\">\n" +
 	"\x16CuratorsGroupsResponse\x12$\n" +
+	"\x06groups\x18\x01 \x03(\v2\f.group.GroupR\x06groups\"\x0f\n" +
+	"\rWhoAmIRequest\"$\n" +
+	"\x0eWhoAmIResponse\x12\x12\n" +
+	"\x04role\x18\x01 \x01(\tR\x04role\"\x12\n" +
+	"\x10OwnGroupsRequest\"9\n" +
+	"\x11OwnGroupsResponse\x12$\n" +
 	"\x06groups\x18\x01 \x03(\v2\f.group.GroupR\x06groups*1\n" +
 	"\tGroupType\x12\x0f\n" +
 	"\vUNSPECIFIED\x10\x00\x12\t\n" +
 	"\x05GROUP\x10\x01\x12\b\n" +
-	"\x04CLUB\x10\x022\xda\x0f\n" +
-	"\fGroupService\x12\x8e\x01\n" +
+	"\x04CLUB\x10\x022\x86\x11\n" +
+	"\fGroupService\x12R\n" +
+	"\x06WhoAmI\x12\x14.group.WhoAmIRequest\x1a\x15.group.WhoAmIResponse\"\x1b\x82\xd3\xe4\x93\x02\x15\x12\x13/v1/group/self/role\x12V\n" +
+	"\tOwnGroups\x12\x17.group.OwnGroupsRequest\x1a\x18.group.OwnGroupsResponse\"\x16\x82\xd3\xe4\x93\x02\x10\x12\x0e/v1/group/self\x12\x8e\x01\n" +
 	"\x15AssignCuratorToSenior\x12#.group.AssignCuratorToSeniorRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x022\"0/v1/group/curator/{seniorUUID}/{subordinateUUID}\x12\x87\x01\n" +
 	"\x14AssignCuratorToGroup\x12\".group.AssignCuratorToGroupRequest\x1a\x16.google.protobuf.Empty\"3\x82\xd3\xe4\x93\x02-\"+/v1/group/{groupUUID}/curator/{curatorUUID}\x12\x92\x01\n" +
 	"\x17RevokeCuratorFromSenior\x12%.group.RevokeCuratorFromSeniorRequest\x1a\x16.google.protobuf.Empty\"8\x82\xd3\xe4\x93\x022*0/v1/group/curator/{seniorUUID}/{subordinateUUID}\x12\x8b\x01\n" +
@@ -1734,7 +1902,7 @@ func file_proto_group_proto_rawDescGZIP() []byte {
 }
 
 var file_proto_group_proto_enumTypes = make([]protoimpl.EnumInfo, 1)
-var file_proto_group_proto_msgTypes = make([]protoimpl.MessageInfo, 27)
+var file_proto_group_proto_msgTypes = make([]protoimpl.MessageInfo, 31)
 var file_proto_group_proto_goTypes = []any{
 	(GroupType)(0),                         // 0: group.GroupType
 	(*Group)(nil),                          // 1: group.Group
@@ -1764,14 +1932,18 @@ var file_proto_group_proto_goTypes = []any{
 	(*GroupsCuratorsResponse)(nil),         // 25: group.GroupsCuratorsResponse
 	(*CuratorsGroupsRequest)(nil),          // 26: group.CuratorsGroupsRequest
 	(*CuratorsGroupsResponse)(nil),         // 27: group.CuratorsGroupsResponse
-	(*timestamppb.Timestamp)(nil),          // 28: google.protobuf.Timestamp
-	(*emptypb.Empty)(nil),                  // 29: google.protobuf.Empty
+	(*WhoAmIRequest)(nil),                  // 28: group.WhoAmIRequest
+	(*WhoAmIResponse)(nil),                 // 29: group.WhoAmIResponse
+	(*OwnGroupsRequest)(nil),               // 30: group.OwnGroupsRequest
+	(*OwnGroupsResponse)(nil),              // 31: group.OwnGroupsResponse
+	(*timestamppb.Timestamp)(nil),          // 32: google.protobuf.Timestamp
+	(*emptypb.Empty)(nil),                  // 33: google.protobuf.Empty
 }
 var file_proto_group_proto_depIdxs = []int32{
 	0,  // 0: group.Group.group_type:type_name -> group.GroupType
-	28, // 1: group.Group.UpdatedAt:type_name -> google.protobuf.Timestamp
-	28, // 2: group.Group.CreatedAt:type_name -> google.protobuf.Timestamp
-	28, // 3: group.Group.DeletedAt:type_name -> google.protobuf.Timestamp
+	32, // 1: group.Group.UpdatedAt:type_name -> google.protobuf.Timestamp
+	32, // 2: group.Group.CreatedAt:type_name -> google.protobuf.Timestamp
+	32, // 3: group.Group.DeletedAt:type_name -> google.protobuf.Timestamp
 	1,  // 4: group.GroupResponse.group:type_name -> group.Group
 	0,  // 5: group.CreateGroupRequest.group_type:type_name -> group.GroupType
 	1,  // 6: group.SearchGroupResponse.groups:type_name -> group.Group
@@ -1779,51 +1951,56 @@ var file_proto_group_proto_depIdxs = []int32{
 	1,  // 8: group.ListGroupsResponse.groups:type_name -> group.Group
 	0,  // 9: group.PatchGroupRequest.group_type:type_name -> group.GroupType
 	1,  // 10: group.MembersGroupsResponse.groups:type_name -> group.Group
-	28, // 11: group.User.created_at:type_name -> google.protobuf.Timestamp
+	32, // 11: group.User.created_at:type_name -> google.protobuf.Timestamp
 	16, // 12: group.ListMembersResponse.Members:type_name -> group.User
 	16, // 13: group.GroupsCuratorsResponse.curators:type_name -> group.User
 	1,  // 14: group.CuratorsGroupsResponse.groups:type_name -> group.Group
-	18, // 15: group.GroupService.AssignCuratorToSenior:input_type -> group.AssignCuratorToSeniorRequest
-	20, // 16: group.GroupService.AssignCuratorToGroup:input_type -> group.AssignCuratorToGroupRequest
-	19, // 17: group.GroupService.RevokeCuratorFromSenior:input_type -> group.RevokeCuratorFromSeniorRequest
-	21, // 18: group.GroupService.RevokeCuratorFromGroup:input_type -> group.RevokeCuratorFromGroupRequest
-	22, // 19: group.GroupService.AddCurator:input_type -> group.AddCuratorRequest
-	23, // 20: group.GroupService.RevokeCurator:input_type -> group.RevokeCuratorRequest
-	24, // 21: group.GroupService.GroupsCurators:input_type -> group.GroupsCuratorsRequest
-	11, // 22: group.GroupService.AddMember:input_type -> group.AddMemberRequest
-	12, // 23: group.GroupService.RemoveMember:input_type -> group.RemoveMemberRequest
-	13, // 24: group.GroupService.MembersGroups:input_type -> group.MembersGroupsRequest
-	15, // 25: group.GroupService.ListMembers:input_type -> group.ListMembersRequest
-	2,  // 26: group.GroupService.Group:input_type -> group.GroupRequest
-	4,  // 27: group.GroupService.CreateGroup:input_type -> group.CreateGroupRequest
-	5,  // 28: group.GroupService.SearchGroup:input_type -> group.SearchGroupRequest
-	7,  // 29: group.GroupService.DeleteGroup:input_type -> group.DeleteGroupRequest
-	8,  // 30: group.GroupService.ListGroups:input_type -> group.ListGroupsRequest
-	26, // 31: group.GroupService.CuratorsGroups:input_type -> group.CuratorsGroupsRequest
-	10, // 32: group.GroupService.PatchGroup:input_type -> group.PatchGroupRequest
-	29, // 33: group.GroupService.AssignCuratorToSenior:output_type -> google.protobuf.Empty
-	29, // 34: group.GroupService.AssignCuratorToGroup:output_type -> google.protobuf.Empty
-	29, // 35: group.GroupService.RevokeCuratorFromSenior:output_type -> google.protobuf.Empty
-	29, // 36: group.GroupService.RevokeCuratorFromGroup:output_type -> google.protobuf.Empty
-	29, // 37: group.GroupService.AddCurator:output_type -> google.protobuf.Empty
-	29, // 38: group.GroupService.RevokeCurator:output_type -> google.protobuf.Empty
-	25, // 39: group.GroupService.GroupsCurators:output_type -> group.GroupsCuratorsResponse
-	29, // 40: group.GroupService.AddMember:output_type -> google.protobuf.Empty
-	29, // 41: group.GroupService.RemoveMember:output_type -> google.protobuf.Empty
-	14, // 42: group.GroupService.MembersGroups:output_type -> group.MembersGroupsResponse
-	17, // 43: group.GroupService.ListMembers:output_type -> group.ListMembersResponse
-	3,  // 44: group.GroupService.Group:output_type -> group.GroupResponse
-	29, // 45: group.GroupService.CreateGroup:output_type -> google.protobuf.Empty
-	6,  // 46: group.GroupService.SearchGroup:output_type -> group.SearchGroupResponse
-	29, // 47: group.GroupService.DeleteGroup:output_type -> google.protobuf.Empty
-	9,  // 48: group.GroupService.ListGroups:output_type -> group.ListGroupsResponse
-	27, // 49: group.GroupService.CuratorsGroups:output_type -> group.CuratorsGroupsResponse
-	29, // 50: group.GroupService.PatchGroup:output_type -> google.protobuf.Empty
-	33, // [33:51] is the sub-list for method output_type
-	15, // [15:33] is the sub-list for method input_type
-	15, // [15:15] is the sub-list for extension type_name
-	15, // [15:15] is the sub-list for extension extendee
-	0,  // [0:15] is the sub-list for field type_name
+	1,  // 15: group.OwnGroupsResponse.groups:type_name -> group.Group
+	28, // 16: group.GroupService.WhoAmI:input_type -> group.WhoAmIRequest
+	30, // 17: group.GroupService.OwnGroups:input_type -> group.OwnGroupsRequest
+	18, // 18: group.GroupService.AssignCuratorToSenior:input_type -> group.AssignCuratorToSeniorRequest
+	20, // 19: group.GroupService.AssignCuratorToGroup:input_type -> group.AssignCuratorToGroupRequest
+	19, // 20: group.GroupService.RevokeCuratorFromSenior:input_type -> group.RevokeCuratorFromSeniorRequest
+	21, // 21: group.GroupService.RevokeCuratorFromGroup:input_type -> group.RevokeCuratorFromGroupRequest
+	22, // 22: group.GroupService.AddCurator:input_type -> group.AddCuratorRequest
+	23, // 23: group.GroupService.RevokeCurator:input_type -> group.RevokeCuratorRequest
+	24, // 24: group.GroupService.GroupsCurators:input_type -> group.GroupsCuratorsRequest
+	11, // 25: group.GroupService.AddMember:input_type -> group.AddMemberRequest
+	12, // 26: group.GroupService.RemoveMember:input_type -> group.RemoveMemberRequest
+	13, // 27: group.GroupService.MembersGroups:input_type -> group.MembersGroupsRequest
+	15, // 28: group.GroupService.ListMembers:input_type -> group.ListMembersRequest
+	2,  // 29: group.GroupService.Group:input_type -> group.GroupRequest
+	4,  // 30: group.GroupService.CreateGroup:input_type -> group.CreateGroupRequest
+	5,  // 31: group.GroupService.SearchGroup:input_type -> group.SearchGroupRequest
+	7,  // 32: group.GroupService.DeleteGroup:input_type -> group.DeleteGroupRequest
+	8,  // 33: group.GroupService.ListGroups:input_type -> group.ListGroupsRequest
+	26, // 34: group.GroupService.CuratorsGroups:input_type -> group.CuratorsGroupsRequest
+	10, // 35: group.GroupService.PatchGroup:input_type -> group.PatchGroupRequest
+	29, // 36: group.GroupService.WhoAmI:output_type -> group.WhoAmIResponse
+	31, // 37: group.GroupService.OwnGroups:output_type -> group.OwnGroupsResponse
+	33, // 38: group.GroupService.AssignCuratorToSenior:output_type -> google.protobuf.Empty
+	33, // 39: group.GroupService.AssignCuratorToGroup:output_type -> google.protobuf.Empty
+	33, // 40: group.GroupService.RevokeCuratorFromSenior:output_type -> google.protobuf.Empty
+	33, // 41: group.GroupService.RevokeCuratorFromGroup:output_type -> google.protobuf.Empty
+	33, // 42: group.GroupService.AddCurator:output_type -> google.protobuf.Empty
+	33, // 43: group.GroupService.RevokeCurator:output_type -> google.protobuf.Empty
+	25, // 44: group.GroupService.GroupsCurators:output_type -> group.GroupsCuratorsResponse
+	33, // 45: group.GroupService.AddMember:output_type -> google.protobuf.Empty
+	33, // 46: group.GroupService.RemoveMember:output_type -> google.protobuf.Empty
+	14, // 47: group.GroupService.MembersGroups:output_type -> group.MembersGroupsResponse
+	17, // 48: group.GroupService.ListMembers:output_type -> group.ListMembersResponse
+	3,  // 49: group.GroupService.Group:output_type -> group.GroupResponse
+	33, // 50: group.GroupService.CreateGroup:output_type -> google.protobuf.Empty
+	6,  // 51: group.GroupService.SearchGroup:output_type -> group.SearchGroupResponse
+	33, // 52: group.GroupService.DeleteGroup:output_type -> google.protobuf.Empty
+	9,  // 53: group.GroupService.ListGroups:output_type -> group.ListGroupsResponse
+	27, // 54: group.GroupService.CuratorsGroups:output_type -> group.CuratorsGroupsResponse
+	33, // 55: group.GroupService.PatchGroup:output_type -> google.protobuf.Empty
+	36, // [36:56] is the sub-list for method output_type
+	16, // [16:36] is the sub-list for method input_type
+	16, // [16:16] is the sub-list for extension type_name
+	16, // [16:16] is the sub-list for extension extendee
+	0,  // [0:16] is the sub-list for field type_name
 }
 
 func init() { file_proto_group_proto_init() }
@@ -1840,7 +2017,7 @@ func file_proto_group_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_group_proto_rawDesc), len(file_proto_group_proto_rawDesc)),
 			NumEnums:      1,
-			NumMessages:   27,
+			NumMessages:   31,
 			NumExtensions: 0,
 			NumServices:   1,
 		},

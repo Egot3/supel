@@ -20,6 +20,7 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
+	RBACService_WhatAmI_FullMethodName            = "/RBAC.RBACService/WhatAmI"
 	RBACService_HasPermission_FullMethodName      = "/RBAC.RBACService/HasPermission"
 	RBACService_DeleteRole_FullMethodName         = "/RBAC.RBACService/DeleteRole"
 	RBACService_Role_FullMethodName               = "/RBAC.RBACService/Role"
@@ -42,6 +43,7 @@ const (
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type RBACServiceClient interface {
+	WhatAmI(ctx context.Context, in *WhatAmIRequest, opts ...grpc.CallOption) (*WhatAmIResponse, error)
 	HasPermission(ctx context.Context, in *HasPermissionQuestion, opts ...grpc.CallOption) (*HasPermissionAnswer, error)
 	DeleteRole(ctx context.Context, in *DeleteRoleRequest, opts ...grpc.CallOption) (*emptypb.Empty, error)
 	Role(ctx context.Context, in *RoleRequest, opts ...grpc.CallOption) (*RoleResponse, error)
@@ -66,6 +68,16 @@ type rBACServiceClient struct {
 
 func NewRBACServiceClient(cc grpc.ClientConnInterface) RBACServiceClient {
 	return &rBACServiceClient{cc}
+}
+
+func (c *rBACServiceClient) WhatAmI(ctx context.Context, in *WhatAmIRequest, opts ...grpc.CallOption) (*WhatAmIResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(WhatAmIResponse)
+	err := c.cc.Invoke(ctx, RBACService_WhatAmI_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
 }
 
 func (c *rBACServiceClient) HasPermission(ctx context.Context, in *HasPermissionQuestion, opts ...grpc.CallOption) (*HasPermissionAnswer, error) {
@@ -232,6 +244,7 @@ func (c *rBACServiceClient) Action(ctx context.Context, in *ActionRequest, opts 
 // All implementations must embed UnimplementedRBACServiceServer
 // for forward compatibility.
 type RBACServiceServer interface {
+	WhatAmI(context.Context, *WhatAmIRequest) (*WhatAmIResponse, error)
 	HasPermission(context.Context, *HasPermissionQuestion) (*HasPermissionAnswer, error)
 	DeleteRole(context.Context, *DeleteRoleRequest) (*emptypb.Empty, error)
 	Role(context.Context, *RoleRequest) (*RoleResponse, error)
@@ -258,6 +271,9 @@ type RBACServiceServer interface {
 // pointer dereference when methods are called.
 type UnimplementedRBACServiceServer struct{}
 
+func (UnimplementedRBACServiceServer) WhatAmI(context.Context, *WhatAmIRequest) (*WhatAmIResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method WhatAmI not implemented")
+}
 func (UnimplementedRBACServiceServer) HasPermission(context.Context, *HasPermissionQuestion) (*HasPermissionAnswer, error) {
 	return nil, status.Error(codes.Unimplemented, "method HasPermission not implemented")
 }
@@ -325,6 +341,24 @@ func RegisterRBACServiceServer(s grpc.ServiceRegistrar, srv RBACServiceServer) {
 		t.testEmbeddedByValue()
 	}
 	s.RegisterService(&RBACService_ServiceDesc, srv)
+}
+
+func _RBACService_WhatAmI_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(WhatAmIRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(RBACServiceServer).WhatAmI(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: RBACService_WhatAmI_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(RBACServiceServer).WhatAmI(ctx, req.(*WhatAmIRequest))
+	}
+	return interceptor(ctx, in, info, handler)
 }
 
 func _RBACService_HasPermission_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
@@ -622,6 +656,10 @@ var RBACService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "RBAC.RBACService",
 	HandlerType: (*RBACServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "WhatAmI",
+			Handler:    _RBACService_WhatAmI_Handler,
+		},
 		{
 			MethodName: "HasPermission",
 			Handler:    _RBACService_HasPermission_Handler,

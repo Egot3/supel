@@ -142,7 +142,16 @@ message RevokeRoleRequest {
     string roleUUID = 2;
 }
 
+message WhatAmIRequest {}
+message WhatAmIResponse {}
+
 service RBACService {
+    rpc WhatAmI(WhatAmIRequest) returns (WhatAmIResponse){
+        option (google.api.http) = {
+            get: "/v1/RBAC/roles/self"
+        };
+    };
+
     rpc HasPermission(HasPermissionQuestion) returns (HasPermissionAnswer);
     
     rpc DeleteRole(DeleteRoleRequest) returns (google.protobuf.Empty){
