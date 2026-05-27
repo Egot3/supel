@@ -1,9 +1,9 @@
 -- +migrate Up
 CREATE EXTENSION IF NOT EXISTS pg_trgm;
-CREATE TYPE IF NOT EXISTS group_type AS ENUM {
+CREATE TYPE group_type AS ENUM (
     'GROUP',
     'CLUB'
-};
+);
 
 CREATE TABLE IF NOT EXISTS "groups" (
     uuid                UUID        PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS "groups" (
     deleted_at     TIMESTAMPTZ NULL,
     updated_at     TIMESTAMPTZ DEFAULT NOW() NOT NULL,
     created_at     TIMESTAMPTZ DEFAULT NOW() NOT NULL
-); --да, я люблю структурировать бд
+); 
 CREATE INDEX idx_groups_name_trgm ON groups USING GIN ("name" gin_trgm_ops);
 
 CREATE TABLE IF NOT EXISTS "groups_members" (
@@ -40,6 +40,6 @@ CREATE TABLE IF NOT EXISTS "curators_hierarchy" (
     created_at TIMESTAMPTZ DEFAULT NOW() NOT NULL,
 
     PRIMARY KEY(senior_uuid, subordinate_uuid),
-    CHECK senior_uuid!=subordinate_uuid --так тоже можно
+    CHECK(senior_uuid!=subordinate_uuid)
 );
 CREATE INDEX idx_curators_hierarchy_subordinate_uuid ON "curators_hierarchy" ("subordinate_uuid");

@@ -43,7 +43,8 @@ export const actions: Actions = {
 			// console.log('resp: ', resp);
 
 			let imageKey: string = '';
-			if (image) {
+			if (image.size > 0) {
+				console.log('getting an image: ', image);
 				console.log('image name:', image.name);
 				const imagePutRequestCfg = withAuth('http://localhost/v1/news/images', 'post', token, {
 					images: [
@@ -59,6 +60,7 @@ export const actions: Actions = {
 				const putUrl = imagePutResponse.data.targets[0].uploadUrl;
 				imageKey = imagePutResponse.data.targets[0].fileKey;
 
+				console.log('key and url: ', imageKey, putUrl);
 				const buffer = Buffer.from(await image.arrayBuffer());
 				const { width, height } = await sharp(buffer).metadata();
 				if (height / width > 20 || width / height > 20) {
@@ -79,7 +81,7 @@ export const actions: Actions = {
 				caption: caption,
 				bodyKey: bodyKey,
 				bodySize: bodyBytes.byteLength,
-				imageKeys: [imageKey]
+				imageKeys: imageKey === '' ? [] : [imageKey]
 			});
 
 			axios(cfg);

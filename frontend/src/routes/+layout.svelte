@@ -31,7 +31,7 @@
 			window.removeEventListener('pointermove', handlePointerMove);
 		};
 	});
-	$inspect(coords);
+	//$inspect(coords);
 </script>
 
 <div class="grid grid-cols-12 grid-rows-12 gap-gutter">

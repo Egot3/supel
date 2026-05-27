@@ -8,7 +8,7 @@
 
 	let user = $state(((data.user as User) ?? {}) as User);
 	try {
-		console.log('user and ctx: ', user, getUserContext());
+		/* console.log('user and ctx: ', user, getUserContext()); */
 
 		if (user != getUserContext()) {
 			setUserContext(user);
@@ -17,7 +17,7 @@
 		setUserContext(user);
 	}
 
-	$inspect(user);
+	/* $inspect(user); */
 </script>
 
 <a
