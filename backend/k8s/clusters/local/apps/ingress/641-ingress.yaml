@@ -6,7 +6,7 @@ metadata:
 spec:
   entryPoints: [web]
   routes:
-    - match: PathPrefix(`/v1/timetable`)
+    - match: PathPrefix(`/v1/timetable/`)
       kind: Rule
       middlewares:
         - name: jwt-forward-auth
