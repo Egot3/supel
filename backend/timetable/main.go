@@ -17,7 +17,6 @@ import (
 	storage "github.com/egot3/supel/backend/timetable/internal/s3"
 	"github.com/egot3/supel/backend/timetable/internal/server"
 	"github.com/egot3/supel/backend/timetable/internal/services"
-	testutils "github.com/egot3/supel/backend/timetable/internal/testUtils"
 	"github.com/samber/do/v2"
 	"github.com/uptrace/bun"
 
@@ -55,9 +54,6 @@ func main() {
 	do.Provide(injector, storage.NewPresignedClient)
 
 	do.Provide(injector, storage.NewStorageService)
-
-	do.Provide(injector, testutils.AllowAllStub)
-	do.Provide(injector, testutils.AllowAllUsers)
 
 	do.Provide(injector, services.NewRBACClient)
 	do.Provide(injector, services.NewUserService)
