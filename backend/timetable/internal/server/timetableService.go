@@ -30,7 +30,7 @@ type TimetableService struct {
 	su         grpcutils.ServerUtils
 }
 
-func NewPuddleService(i do.Injector) (TimetableService, error) {
+func NewTimetableService(i do.Injector) (*TimetableService, error) {
 	peRepo := do.MustInvoke[period.PeriodRepository](i)
 	suRepo := do.MustInvoke[subject.SubjectRepository](i)
 	ttRepo := do.MustInvoke[timetable.TimetableRepository](i)
@@ -42,7 +42,7 @@ func NewPuddleService(i do.Injector) (TimetableService, error) {
 
 	grpcClient := do.MustInvoke[services.Client](i)
 	su := do.MustInvoke[grpcutils.ServerUtils](i)
-	return TimetableService{
+	return &TimetableService{
 		periodRepository:             peRepo,
 		subjectRepository:            suRepo,
 		timetableRepository:          ttRepo,

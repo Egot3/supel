@@ -15,10 +15,12 @@ import (
 func NewTestInjector(t *testing.T) do.Injector {
 	t.Helper()
 
-	dsn := fmt.Sprintf("file:%s?mode=memory&cache=shared", t.Name())
+	dsn := fmt.Sprintf("file::memory:?cache=private", t.Name())
 
 	sqldb, err := sql.Open(sqliteshim.ShimName, dsn)
 	require.NoError(t, err)
+
+	sqldb.SetMaxOpenConns(1)
 
 	db := bun.NewDB(sqldb, sqlitedialect.New())
 
