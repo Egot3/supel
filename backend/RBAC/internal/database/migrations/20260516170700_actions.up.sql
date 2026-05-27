@@ -44,4 +44,4 @@ INSERT INTO actions (scope, sub_scope, verb) VALUES --ai gen
 ('group', 'group.curator', 'POST'),
 ('group', 'group.curator', 'DELETE'),
 ('group', 'curator.heirarchy', 'POST'),
-('group', 'curator.heirarchy', 'DELETE'),;
+('group', 'curator.heirarchy', 'DELETE');
