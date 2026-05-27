@@ -64,6 +64,9 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 
 	imageUrls := make([]string, len(fileKeys))
 	for _, key := range fileKeys {
+		if len(key) == 0 {
+			return nil, status.Error(codes.InvalidArgument, "can't have image with no key")
+		}
 		imageLink, err := s.storageService.GETurl(ctx, key)
 		if err != nil {
 			log.Printf("couldn't create key for image: %v", err)
