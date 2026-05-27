@@ -11,7 +11,7 @@ require (
 require go.opentelemetry.io/otel v1.40.0 // indirect
 
 require (
-	github.com/Egot3/supel/backend/contracts v0.3.7
+	github.com/Egot3/supel/backend/contracts v0.3.8
 	golang.org/x/net v0.49.0 // indirect
 	golang.org/x/sys v0.41.0 // indirect
 	golang.org/x/text v0.34.0 // indirect
