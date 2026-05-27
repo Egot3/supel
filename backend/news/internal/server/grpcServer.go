@@ -25,14 +25,13 @@ type NewsSever struct {
 	storageService storage.StorageService
 }
 
-func UserFromContext(ctx context.Context) (userID string, role string, ok bool) {
+func UserFromContext(ctx context.Context) (userID string, ok bool) {
 	md, ok := metadata.FromIncomingContext(ctx)
 	if !ok {
-		return "", "", false
+		return "", false
 	}
 	userID = md.Get("user-uuid")[0]
-	role = md.Get("user-role")[0]
-	return userID, role, !(len(userID) == 0 && len(role) == 0)
+	return userID, !(len(userID) == 0)
 }
 
 func NewNewsService(storageService storage.StorageService) *NewsSever {
@@ -46,9 +45,9 @@ func (s *NewsSever) CreateNew(ctx context.Context, req *pb.CreateNewRequest) (*p
 	fileKeys := req.GetImageKeys()
 	log.Printf("fKeys: %v", fileKeys)
 
-	userUuid, role, ok := UserFromContext(ctx)
+	userUuid, ok := UserFromContext(ctx)
 	if !ok {
-		log.Println("bad creditantials: ", userUuid, role)
+		log.Println("bad creditantials: ", userUuid)
 		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
 	}
 
@@ -239,25 +238,12 @@ func (s *NewsSever) ListNews(ctx context.Context, req *pb.ListNewsRequest) (*pb.
 }
 
 func (s *NewsSever) DeleteNew(ctx context.Context, req *pb.DeleteNewRequest) (*emptypb.Empty, error) {
-	userUuid, role, ok := UserFromContext(ctx)
+	userUuid, ok := UserFromContext(ctx)
 	if !ok {
-		log.Println("bad creditantials: ", userUuid, role)
+		log.Println("bad creditantials: ", userUuid)
 		return nil, status.Error(codes.Unauthenticated, "user id is not ok")
 	}
 	newUUID := req.NewId
-
-	if role != "ADMIN" {
-		is, err := repositories.IsCreator(ctx, userUuid, newUUID)
-		if err != nil {
-			log.Printf("couldn't check if user has access to deleting new: %v", err.Error())
-			return nil, status.Error(codes.Internal, "failed to check ownership")
-		}
-
-		if !is {
-			log.Printf("user %v doesn't own post %v and not an admin(%v)", userUuid, newUUID, role)
-			return nil, status.Error(codes.PermissionDenied, "not enough POWER")
-		}
-	}
 
 	err := repositories.DeleteNew(ctx, newUUID)
 	if err != nil {
